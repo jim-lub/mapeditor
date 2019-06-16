@@ -1,14 +1,14 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 
+import ProtectedRoute from 'hoc/ProtectedRoute';
 import Sidebar from 'components/Sidebar';
 
 import * as ROUTES from 'constants/routes';
 
-// import { listenToAuthChanges } from 'actions';
+import { listenToAuthChanges } from 'actions/auth';
 
 export const App = ({ store }) => {
-  // store.dispatch(listenToAuthChanges());
+  store.dispatch(listenToAuthChanges());
   console.log(store.getState());
 
   return (
@@ -23,10 +23,12 @@ export const App = ({ store }) => {
             Object.values(ROUTES)
               .map((route, index) => {
                 return (
-                  <Route
+                  <ProtectedRoute
                     key={index}
                     exact={route.exact}
                     path={route.route}
+                    rules={route.authorization_rules}
+                    redirect={route.authorization_redirect}
                     component={route.container}
                   />
                 )

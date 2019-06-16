@@ -14,7 +14,7 @@ export const DASHBOARD = {
   exact: true,
   container: Dashboard,
   authorization_rules: ['IS_SIGNED_IN'],
-  authorization_redirect: 'AUTH_SIGN_IN'
+  authorization_redirect: '/auth/signin'
 }
 
 export const AUTH_SIGN_IN = {
@@ -22,7 +22,7 @@ export const AUTH_SIGN_IN = {
   exact: false,
   container: SignIn,
   authorization_rules: ['IS_NOT_SIGNED_IN'],
-  authorization_redirect: 'DASHBOARD'
+  authorization_redirect: '/'
 }
 
 export const EDITOR = {
@@ -30,7 +30,7 @@ export const EDITOR = {
   exact: true,
   container: Editor,
   authorization_rules: ['IS_SIGNED_IN'],
-  authorization_redirect: 'AUTH_SIGN_IN'
+  authorization_redirect: '/auth/signin'
 }
 
 export const EDITOR_WORKSPACE = {
@@ -38,7 +38,7 @@ export const EDITOR_WORKSPACE = {
   exact: false,
   container: Workspace,
   authorization_rules: ['IS_SIGNED_IN'],
-  authorization_redirect: 'AUTH_SIGN_IN'
+  authorization_redirect: '/auth/signin'
 }
 
 export const EDITOR_PROJECTS = {
@@ -46,7 +46,7 @@ export const EDITOR_PROJECTS = {
   exact: false,
   container: Projects,
   authorization_rules: ['IS_SIGNED_IN'],
-  authorization_redirect: 'AUTH_SIGN_IN'
+  authorization_redirect: '/auth/signin'
 }
 
 export const EDITOR_TILESETS = {
@@ -54,5 +54,5 @@ export const EDITOR_TILESETS = {
   exact: false,
   container: Tilesets,
   authorization_rules: ['IS_SIGNED_IN'],
-  authorization_redirect: 'AUTH_SIGN_IN'
+  authorization_redirect: '/auth/signin'
 }

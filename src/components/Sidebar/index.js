@@ -1,20 +1,22 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { signOut } from 'actions/auth';
 import { getAuthUserSelector } from 'reducers/auth';
 
 import SIDEBAR_NAV_LINKS from 'constants/sidebar';
 
-const Sidebar = () => {
+const Sidebar = ({ authUser, actions }) => {
   return (
     <div className="">
-      <SidebarNavlinks />
+      <SidebarNavlinks authUser={authUser} actions={actions} />
     </div>
   )
 }
 
-const SidebarNavlinks = () => {
+const SidebarNavlinks = ({ authUser, actions }) => {
   return (
     <ul>
       {
@@ -35,6 +37,9 @@ const SidebarNavlinks = () => {
             )
           })
       }
+      <li>--------</li>
+      <li>{(authUser) ? "True" : "False"}</li>
+      <li>{(authUser) ? <span style={{textDecoration: "underline", cursor: "pointer"}} onClick={() => actions.signOut()}>Sign Out</span> : ""}</li>
     </ul>
   )
 }
@@ -45,4 +50,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Sidebar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ signOut }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

@@ -1,3 +1,11 @@
 export const getAuthUserSelector = (state) => {
-  return null;
+  return state.auth.authUser;
+}
+
+export const getAuthIsInitializedSelector = (state) => {
+  return state.auth.initialized;
+}
+
+export const getAuthErrorSelector = (state) => {
+  return state.auth.error;
 }
