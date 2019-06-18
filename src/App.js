@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ProtectedRoute from 'hoc/ProtectedRoute';
-import Sidebar from 'components/Sidebar';
+import { Sidebar } from 'components/Sidebar';
 
 import * as ROUTES from 'constants/routes';
 

@@ -35,4 +35,12 @@ export class Firebase {
 
   users = () =>
     this.db.collection('users');
+
+
+  /*** Project & Scenes API ***/
+  project = uid => this.db.doc(`projects/${uid}`);
+  projects = () => this.db.collection('projects');
+  scene = uid => this.db.doc(`scenes/${uid}`);
+  scenes = () => this.db.collection('scenes');
+
 }

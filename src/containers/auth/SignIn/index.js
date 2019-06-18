@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SignInWithProviderButton from './components/SignInWithProviderButton';
+import { SignInWithProviderButton } from './components/SignInWithProviderButton';
 
 import { signInWithGoogle } from 'actions/auth';
 
