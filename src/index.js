@@ -2,16 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
 
-import { App } from 'App';
-import rootReducer from './reducers';
 
-import 'css';
+import { App } from 'views/App';
+import configureStore from 'state/store';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -19,5 +15,5 @@ ReactDOM.render(
       <App store={store} />
     </BrowserRouter>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('app-root')
 )
