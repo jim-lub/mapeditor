@@ -11,7 +11,7 @@ const defaultState = {
   error: null
 }
 
-const authReducer = createReducer( defaultState )({
+export default createReducer( defaultState )({
   [ types.SET_AUTH_USER ]: ( state, action ) =>
     reducers.setAuthUser(state, action),
 
@@ -25,9 +25,22 @@ const authReducer = createReducer( defaultState )({
     reducers.clearAuthError(state, action),
 });
 
-export {
-  selectors as authSelectors,
-  operations as authOperations
-}
+/*** OPERATIONS ***/
+export const listenToAuthChanges = () =>
+  operations.listenToAuthChanges();
 
-export default authReducer;
+export const signInWithGoogle = () =>
+  operations.signInWithGoogle();
+
+export const signOut = () =>
+  operations.signOut();
+
+/*** SELECTORS ***/
+export const getAuthUser = ( state ) =>
+  selectors.getAuthUser(state);
+
+export const getAuthStatus = ( state ) =>
+  selectors.getAuthStatus(state);
+
+export const getAuthError = ( state ) =>
+  selectors.getAuthError(state);

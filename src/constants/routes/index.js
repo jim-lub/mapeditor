@@ -32,13 +32,13 @@ const routes = [
 ];
 
 const nav = [
-  { name: "Dashboard", path: routes[0].path, auth: true },
+  { name: "Dashboard", route: routes[0], auth: true },
 
-  { name: "Sign In", path: routes[1].path, auth: false },
+  { name: "Sign In", route: routes[1], auth: false },
 
-  { name: "Workspace", path: routes[2].path, auth: true },
-  { name: "Projects", path: routes[3].path, auth: true },
-  { name: "Tilesets", path: routes[4].path, auth: true },
+  { name: "Workspace", route: routes[2], auth: true },
+  { name: "Projects", route: routes[3], auth: true },
+  { name: "Tilesets", route: routes[4], auth: true },
 ]
 
 

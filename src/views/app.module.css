@@ -1,0 +1,17 @@
+.windowWrapper {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 100px auto;
+  grid-template-rows: 100vh;
+}
+
+.sidebarWrapper {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.contentWrapper {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}

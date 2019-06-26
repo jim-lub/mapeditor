@@ -1,0 +1,61 @@
+input {
+  background-color: #ffffff;
+  border: solid 1px #d7d9e0;
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: #6e768f;
+  font-size: 13px;
+}
+
+input:focus {
+  border: solid 1px #29b4b6;
+}
+
+input[type="text"] {
+
+}
+
+input[type="password"] {
+
+}
+
+input[type="number"] {
+
+}
+
+label {
+  display: block;
+  margin: 5px 10px;
+  color: #a5abc5;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+input.validation-false {
+  background-image: url(../../assets/static/icons/form/validation-false.png);
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: right;
+}
+
+input.validation-true {
+  background-image: url(../../assets/static/icons/form/validation-true.png);
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: right;
+}
+
+
+textarea {
+  background-color: #ffffff;
+  border: solid 1px #d7d9e0;
+  border-radius: 5px;
+  padding: 8px 10px;
+  color: #6e768f;
+  font-size: 13px;
+  resize: none;
+}
+
+textarea:focus {
+  border: solid 1px #29b4b6;
+}
