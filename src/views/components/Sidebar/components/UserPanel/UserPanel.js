@@ -14,17 +14,7 @@ const UserPanel = ({ authUser, authStatus, actions }) => {
   if (!authUser) {
     return (
       <div className={styles.container}>
-        Not signed in<br />
-
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            actions.signInWithGoogle();
-          }}
-          className="green"
-        >
-          Sign In Google
-        </button>
+        Not Signed In..
       </div>
     )
   }
@@ -33,12 +23,11 @@ const UserPanel = ({ authUser, authStatus, actions }) => {
     <div className={styles.container}>
       { authUser.username }<br />
 
-      <button onClick={(e) => {
-        e.preventDefault();
+      <div onClick={() => {
         actions.signOut();
-      }}>
-        <img src={require('../../../../../assets/static/icons/sidebar/sign-out.png')} alt="" />
-      </button>
+      }} className={styles.link}>
+        <img src={require('../../../../../assets/static/icons/sidebar/sign-out.png')} alt="" width={12} height={12}/> Sign Out
+      </div>
     </div>
   )
 }

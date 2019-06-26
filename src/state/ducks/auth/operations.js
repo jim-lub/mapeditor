@@ -2,12 +2,18 @@ import { firebase } from 'state/lib/firebase';
 
 import {
   setAuthUser,
-  setAuthError
+  clearAuthUser,
+  setAuthError,
+  clearAuthError
 } from './actions';
+
 
 import {
   updateDbUser
 } from './utils';
+
+import { initializeStore } from 'state/lib/initialize-terminate-store/initializeStore';
+import { terminateStore } from 'state/lib/initialize-terminate-store/terminateStore';
 
 export const listenToAuthChanges = () => (dispatch) => {
   firebase.auth.onAuthStateChanged(authUser => {
@@ -26,9 +32,16 @@ export const listenToAuthChanges = () => (dispatch) => {
               }
             })
           );
+
+          dispatch(
+            initializeStore({
+              userId: authUser.uid
+            })
+          )
         })
     } else {
-      dispatch(setAuthUser({ authUser: null }));
+      dispatch(clearAuthUser());
+      dispatch(terminateStore());
     }
 
   })

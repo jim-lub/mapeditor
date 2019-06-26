@@ -21,12 +21,12 @@ export const App = ({ store }) => {
 
       <div className={styles.contentWrapper}>
         <Switch>
-        {
-          routes.map((route, index) =>
-            <Route key={index} exact={route.exact} path={route.path} component={route.component}/>
-          )
-        }
-        <Route component={PageNotFound} />
+          {
+            routes.map((route, index) =>
+              <Route key={index} exact={route.exact} path={route.path} component={route.component}/>
+            )
+          }
+          <Route component={PageNotFound} />
         </Switch>
       </div>
     </div>
