@@ -1,0 +1,15 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 200px auto;
+  grid-template-rows: 100vh;
+}
+
+.projectBarWrapper {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.sceneBarWrapper {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}

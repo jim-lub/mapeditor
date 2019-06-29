@@ -26,8 +26,8 @@ export const initializeProjectsCollection = ({ userId }) =>
 export const terminateProjectsCollection = () =>
   operations.terminateProjectsCollection();
 
-export const insertProject = ({ userId, projectName, ProjectDesc }) =>
-  operations.insertProject({ userId, projectName, ProjectDesc });
+export const createProject = ({ userId, projectName, projectDesc }) =>
+  operations.createProject({ userId, projectName, projectDesc });
 
 export const deleteProject = ({ userId, projectId }) =>
   operations.deleteProject({ userId, projectId });
@@ -36,3 +36,5 @@ export const renameProject = ({ userId, projectId, projectName }) =>
   operations.renameProject({ userId, projectId, projectName });
 
 /*** SELECTORS ***/
+export const getProjectsCollection = (state) =>
+  selectors.getProjectsCollection(state);
