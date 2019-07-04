@@ -12,6 +12,7 @@ export const setAuthUser = (state, action) => {
 export const clearAuthUser = (state, action) => {
   return {
     ...state,
+    initialized: true,
     authUser: null
   };
 }

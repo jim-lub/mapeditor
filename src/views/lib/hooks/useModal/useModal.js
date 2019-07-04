@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from 'react';
-import ReactDOM from 'react-dom';
 
 import { Modal } from 'views/components/Modal';
 

@@ -3,8 +3,7 @@ import { firebase } from 'state/lib/firebase';
 import {
   setAuthUser,
   clearAuthUser,
-  setAuthError,
-  clearAuthError
+  setAuthError
 } from './actions';
 
 

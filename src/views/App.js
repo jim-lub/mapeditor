@@ -7,7 +7,7 @@ import { PageNotFound } from 'views/pages/404';
 
 import routes from 'constants/routes';
 import styles from './app.module.css';
-
+import withAuthorization from 'views/lib/authorization/withAuthorization';
 import { listenToAuthChanges } from 'state/ducks/auth';
 
 export const App = ({ store }) => {
@@ -23,7 +23,7 @@ export const App = ({ store }) => {
         <Switch>
           {
             routes.map((route, index) =>
-              <Route key={index} exact={route.exact} path={route.path} component={route.component}/>
+              <Route key={index} exact={route.exact} path={route.path} component={withAuthorization(route.component, route.ruleset, route.redirectTo)}/>
             )
           }
           <Route component={PageNotFound} />
