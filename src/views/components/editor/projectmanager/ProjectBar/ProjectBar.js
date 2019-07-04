@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -12,15 +12,28 @@ import {
 } from 'state/ducks/editor/projects';
 
 import { ProjectNode, CreateNewProjectModal } from './components';
+
+import { useModal } from 'views/lib/hooks/useModal';
+
 import styles from './projectbar.module.css';
 
 const ProjectBar = ({ actions, authUser, projectsCollection, activeProjectId }) => {
-  const handleSubmit_newProject = ({ projectName, projectDescription }) => {
+  const formStateRef = useRef('');
+
+  const [openModal_newProject, CreateNewProjectModalComponent] = useModal({
+    type: 'FORM_SINGLE',
+    modalWidth: 500,
+    ref: formStateRef,
+    onSubmitAction: () => handleNewProjectSubmit(),
+    Component: CreateNewProjectModal
+  });
+
+  const handleNewProjectSubmit = () => {
     actions.createProject({
       userId: authUser.uid,
-      projectName,
-      projectDesc: projectDescription
-    })
+      projectName: formStateRef.current.name,
+      projectDesc: formStateRef.current.desc
+    });
   }
 
   return (
@@ -42,8 +55,10 @@ const ProjectBar = ({ actions, authUser, projectsCollection, activeProjectId }) 
         }
       </div>
       <div className={styles.optionbar}>
-        <CreateNewProjectModal onSubmit={handleSubmit_newProject}/>
+        <span onClick={(e) => { e.stopPropagation(); openModal_newProject()}} className={styles.optionButton}>New project..</span>&nbsp;
       </div>
+
+      <CreateNewProjectModalComponent />
     </div>
   )
 }

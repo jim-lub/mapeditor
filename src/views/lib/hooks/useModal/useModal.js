@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { forwardRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Modal } from 'views/components/Modal';
 
-export default ({ type, onCloseAction = null, onSubmitAction = null, Component = null, properties, ...rest }) => {
+export default ({ type, modalWidth, modalHeight, onCloseAction = null, onSubmitAction = null, Component = null, ref, componentProps = {}, ...rest }) => {
   const [isVisible, setVisibility] = useState(false);
 
   const handleOpen = () => {
@@ -23,21 +23,31 @@ export default ({ type, onCloseAction = null, onSubmitAction = null, Component =
   }
 
   if (isVisible && Component) {
+    Component = (ref)
+      ? forwardRef(Component)
+      : Component
 
     return [
       handleOpen,
       () => (
-        <Modal type={type} isVisible={isVisible} onClose={handleClose} onSubmit={handleSubmit}>
-          <Component {...properties } />
+        <Modal
+          modalType={type}
+          modalWidth={modalWidth}
+          modalHeight={modalHeight}
+          isVisible={isVisible}
+          onClose={handleClose}
+          onSubmit={handleSubmit}
+        >
+          {
+            (ref)
+              ? <Component {...componentProps} ref={ref} />
+              : <Component {...componentProps} />
+          }
         </Modal>
       ),
       isVisible,
     ];
   }
 
-  return [handleOpen, Empty, isVisible]
-}
-
-const Empty = () => {
-  return null;
+  return [handleOpen, () => null, isVisible]
 }

@@ -18,7 +18,16 @@
   position: absolute;
   width: 100%;
   bottom: 0px;
-  height: 60px;
+  height: auto;
   background-color: #f2f2f2;
   border-top: solid 1px #e5e5e5;
+}
+
+.optionButton {
+  margin: 6px;
+}
+
+.optionButton:hover {
+  text-decoration: underline;
+  background-color: #e5e5e5;
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { Modal } from 'views/components/Modal';
 import styles from './projectnode.module.css';
 
 import { DeleteProjectModal } from '../DeleteProjectModal';
@@ -8,11 +7,11 @@ import { useModal } from 'views/lib/hooks/useModal';
 
 export default ({ projectId, userId, name, description, deleteAction, onSelect, isActive }) => {
   const [deleteModalToggle, DeleteModalComponent] = useModal({
-    type: 'confirm_delete',
-    onCloseAction: () => console.log('Modal closed.'),
+    type: 'DELETE',
+    modalWidth: 500,
     onSubmitAction: () => deleteAction({ userId, projectId }),
     Component: DeleteProjectModal,
-    properties: {
+    componentProps: {
       name
     }
   });
@@ -27,7 +26,7 @@ export default ({ projectId, userId, name, description, deleteAction, onSelect, 
   return (
     <>
       {/* OPEN MODAL BUTTON*/}
-      <div className={styles.container} style={(isActive) ? {backgroundColor: "blue"} : null} onClick={handleSelect}>
+      <div className={styles.container} style={(isActive) ? {backgroundColor: "#e4f5f7"} : null} onClick={handleSelect}>
         <div className={styles.titlebar}>{ name || "null" }</div>
         <div className={styles.descriptionbar}>{ description || "null" }</div>
         <div className={styles.optionbar}>
