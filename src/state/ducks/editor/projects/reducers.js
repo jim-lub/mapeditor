@@ -15,3 +15,12 @@ export const clearProjectsCollection = (state, action) => {
     initialized: true
   }
 }
+
+export const setActiveProject = (state, action) => {
+  const { projectId } = action.payload;
+
+  return {
+    ...state,
+    active: projectId
+  }
+}

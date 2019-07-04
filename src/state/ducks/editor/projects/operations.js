@@ -2,27 +2,23 @@ import { firebase } from 'state/lib/firebase';
 
 import { getProjectsCollectionByUserId } from './utils';
 
-import {
-  setProjectsCollection,
-  clearProjectsCollection
-} from './actions';
+import * as actions from './actions';
 
 export const initializeProjectsCollection = ({ userId }) => (dispatch) => {
   return getProjectsCollectionByUserId({ userId })
     .then(collection => {
       dispatch(
-        setProjectsCollection({ collection })
+        actions.setProjectsCollection({ collection })
       )
     })
     .catch(e => console.error(e));
 }
 
 export const terminateProjectsCollection = () => (dispatch) => {
-  dispatch(clearProjectsCollection());
+  dispatch(actions.clearProjectsCollection());
 }
 
 export const createProject = ({ userId, projectName, projectDesc }) => (dispatch) => {
-  console.log(userId, projectName, projectDesc)
   firebase.projects()
     .add({
       owner: {
@@ -34,7 +30,7 @@ export const createProject = ({ userId, projectName, projectDesc }) => (dispatch
     .then(() => getProjectsCollectionByUserId({ userId }))
     .then(collection => {
       dispatch(
-        setProjectsCollection({ collection })
+        actions.setProjectsCollection({ collection })
       );
     })
     .catch(e => console.error(e));
@@ -46,7 +42,7 @@ export const deleteProject = ({ userId, projectId }) => (dispatch) => {
     .then(() => getProjectsCollectionByUserId({ userId }))
     .then(collection => {
       dispatch(
-        setProjectsCollection({ collection })
+        actions.setProjectsCollection({ collection })
       );
     })
     .catch(e => console.error(e));
@@ -54,4 +50,10 @@ export const deleteProject = ({ userId, projectId }) => (dispatch) => {
 
 export const renameProject = () => (dispatch) => {
 
+}
+
+export const setActiveProject = ({ projectId }) => (dispatch) => {
+  dispatch(
+    actions.setActiveProject({ projectId })
+  )
 }

@@ -11,7 +11,7 @@ export default ({ type, children, onClose, onSubmit, width = "auto", height = "a
       <div className={styles.subcontainer}>{children}</div>
 
       <div className={styles.bottomcontainer}>
-        <button style={{width: 100}} onClick={onClose}>Close</button>
+        <button style={{width: 100}} onClick={onClose}>Cancel</button>
 
         {
           (type === 'confirm')

@@ -7,6 +7,7 @@ import { createReducer } from 'state/lib/utils';
 
 const defaultState = {
   collection: [],
+  active: null,
   initialized: false
 }
 
@@ -16,6 +17,9 @@ export default createReducer( defaultState )({
 
   [ types.CLEAR_PROJECTS_COLLECTION ]: ( state, action ) =>
     reducers.clearProjectsCollection(state, action),
+
+  [ types.SET_ACTIVE_PROJECT ]: ( state, action ) =>
+    reducers.setActiveProject(state, action),
 });
 
 
@@ -35,6 +39,12 @@ export const deleteProject = ({ userId, projectId }) =>
 export const renameProject = ({ userId, projectId, projectName }) =>
   operations.renameProject({ userId, projectId, projectName });
 
+export const setActiveProject = ({ projectId }) =>
+  operations.setActiveProject({ projectId });
+
 /*** SELECTORS ***/
 export const getProjectsCollection = (state) =>
   selectors.getProjectsCollection(state);
+
+export const getActiveProject = (state) =>
+  selectors.getActiveProject(state);

@@ -3,47 +3,40 @@ import React, { useState } from 'react';
 import { Modal } from 'views/components/Modal';
 import styles from './projectnode.module.css';
 
-export default ({ projectId, userId, name, description, deleteAction }) => {
-  const [visiblity, setVisibility] = useState(false);
+import { DeleteProjectModal } from '../DeleteProjectModal';
+import { useModal } from 'views/lib/hooks/useModal';
 
-  const handleClose = () => {
-      setVisibility(false);
-  }
+export default ({ projectId, userId, name, description, deleteAction, onSelect, isActive }) => {
+  const [deleteModalToggle, DeleteModalComponent] = useModal({
+    type: 'confirm_delete',
+    onCloseAction: () => console.log('Modal closed.'),
+    onSubmitAction: () => deleteAction({ userId, projectId }),
+    Component: DeleteProjectModal,
+    properties: {
+      name
+    }
+  });
 
-  const handleSubmit = () => {
-    deleteAction({
-      userId,
+  const handleSelect = (e) => {
+    e.stopPropagation();
+    onSelect({
       projectId
-    });
-    
-    setVisibility(false);
+    })
   }
 
   return (
     <>
       {/* OPEN MODAL BUTTON*/}
-      <div className={styles.container}>
+      <div className={styles.container} style={(isActive) ? {backgroundColor: "blue"} : null} onClick={handleSelect}>
         <div className={styles.titlebar}>{ name || "null" }</div>
         <div className={styles.descriptionbar}>{ description || "null" }</div>
         <div className={styles.optionbar}>
-          <span onClick={() => setVisibility(true)}>delete</span>
+          <span onClick={(e) => { e.stopPropagation(); deleteModalToggle()}} className={styles.deleteButton}>delete</span>&nbsp;
         </div>
       </div>
 
       {/* MODAL */}
-      {
-        (visiblity)
-        ? <Modal
-            type="confirm_delete"
-            width={500}
-            isVisible={true}
-            onClose={handleClose}
-            onSubmit={handleSubmit}
-          >
-            <div>Are you sure you want to delete project #{projectId}?</div>
-          </Modal>
-        : null
-      }
+      <DeleteModalComponent />
     </>
   )
 }

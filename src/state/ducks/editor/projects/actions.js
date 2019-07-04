@@ -14,3 +14,12 @@ export const clearProjectsCollection = () => {
     type: types.CLEAR_PROJECTS_COLLECTION
   }
 }
+
+export const setActiveProject = ({ projectId }) => {
+  return {
+    type: types.SET_ACTIVE_PROJECT,
+    payload: {
+      projectId
+    }
+  }
+}

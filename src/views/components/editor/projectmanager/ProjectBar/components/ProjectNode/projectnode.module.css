@@ -16,6 +16,19 @@
 }
 
 .optionbar {
-  background-color: #f1f1f1;
   font-size: 11px;
+}
+
+.deleteButton {
+
+}
+
+.deleteButton:hover {
+  text-decoration: underline;
+  background-color: #ffc4c4;
+}
+
+.renameButton:hover {
+  text-decoration: underline;
+  background-color: #d1f5ff;
 }
