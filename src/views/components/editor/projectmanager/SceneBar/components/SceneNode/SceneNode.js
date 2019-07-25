@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
-import styles from './projectnode.module.css';
+import styles from './scenenode.module.css';
 
-import { DeleteProjectModal } from '../DeleteProjectModal';
+import { DeleteSceneModal } from '../DeleteSceneModal';
 import { useModal } from 'views/lib/hooks/useModal';
 
-export default ({ projectId, userId, name, description, deleteAction, onSelect, isActive }) => {
-  const [openModal_deleteProject, DeleteModalComponent] = useModal({
+export default ({ userId, projectId, sceneId, name, description, deleteAction, onSelect, isActive }) => {
+  const [openModal_deleteScene, DeleteModalComponent] = useModal({
     type: 'DELETE',
     modalWidth: 500,
-    onSubmitAction: () => deleteAction({ userId, projectId }),
-    Component: DeleteProjectModal,
+    onSubmitAction: () => deleteAction({ userId, projectId, sceneId }),
+    Component: DeleteSceneModal,
     componentProps: {
       name
     }
@@ -19,7 +19,7 @@ export default ({ projectId, userId, name, description, deleteAction, onSelect, 
   const handleSelect = (e) => {
     e.stopPropagation();
     onSelect({
-      projectId
+      sceneId
     })
   }
 
@@ -30,7 +30,7 @@ export default ({ projectId, userId, name, description, deleteAction, onSelect, 
         <div className={styles.titlebar}>{ name || "null" }</div>
         <div className={styles.descriptionbar}>{ description || "null" }</div>
         <div className={styles.optionbar}>
-          <span onClick={(e) => { e.stopPropagation(); openModal_deleteProject()}} className={styles.deleteButton}>delete</span>&nbsp;
+          <span onClick={(e) => { e.stopPropagation(); openModal_deleteScene()}} className={styles.deleteButton}>delete</span>&nbsp;
         </div>
       </div>
 

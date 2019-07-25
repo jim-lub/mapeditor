@@ -54,8 +54,8 @@ const ProjectBar = ({ actions, authUser, projectsCollection, activeProjectId }) 
           })
         }
       </div>
-      <div className={styles.optionbar}>
-        <span onClick={(e) => { e.stopPropagation(); openModal_newProject()}} className={styles.optionButton}>New project..</span>&nbsp;
+      <div className={styles.optionbar + " clearfix"}>
+        <button onClick={(e) => { e.stopPropagation(); openModal_newProject()}} className={styles.optionButton}>+</button>
       </div>
 
       <CreateNewProjectModalComponent />

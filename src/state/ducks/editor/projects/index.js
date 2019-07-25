@@ -19,7 +19,7 @@ export default createReducer( defaultState )({
     reducers.clearProjectsCollection(state, action),
 
   [ types.SET_ACTIVE_PROJECT ]: ( state, action ) =>
-    reducers.setActiveProject(state, action),
+    reducers.setActiveProject(state, action)
 });
 
 

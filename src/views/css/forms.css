@@ -1,14 +1,14 @@
 input {
   background-color: #ffffff;
   border: solid 1px #d7d9e0;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 8px 10px;
   color: #6e768f;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 input:focus {
-  border: solid 1px #29b4b6;
+  border: solid 1px #5ab0ee;
 }
 
 input[type="text"] {
@@ -25,10 +25,38 @@ input[type="number"] {
 
 label {
   display: block;
-  margin: 5px 10px;
+  margin: 5px 0px;
+  padding: 3px;
   color: #a5abc5;
   font-weight: 900;
   font-size: 12px;
+  background-color: #f9f9f9;
+  border-top: solid 1px #e5e5e5;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+label.warning {
+  display: block;
+  margin: 5px 0px;
+  padding: 3px;
+  color: #f1f1f1;
+  font-weight: 500;
+  font-size: 11px;
+  background-color: #d77a80;
+  border-top: solid 1px #b2676b;
+  border-bottom: solid 1px #b2676b;
+}
+
+label.description {
+  display: block;
+  margin: 5px 0px;
+  padding: 3px;
+  color: #a5abc5;
+  font-weight: 400;
+  font-size: 11px;
+  background-color: #f9f9f9;
+  border-top: solid 1px #e5e5e5;
+  border-bottom: solid 1px #e5e5e5;
 }
 
 input.validation-false {
@@ -49,13 +77,26 @@ input.validation-true {
 textarea {
   background-color: #ffffff;
   border: solid 1px #d7d9e0;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 8px 10px;
   color: #6e768f;
-  font-size: 13px;
+  font-size: 12px;
   resize: none;
 }
 
 textarea:focus {
   border: solid 1px #29b4b6;
+}
+
+select {
+  background-color: #ffffff;
+  border: solid 1px #d7d9e0;
+  border-radius: 2px;
+  padding: 8px 10px;
+  color: #6e768f;
+  font-size: 12px;
+}
+
+select:focus {
+  border: solid 1px #5ab0ee;
 }
