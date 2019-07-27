@@ -1,14 +1,50 @@
+.form-wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 10px 0;
+}
+
+.form-field-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.form-error-wrapper {
+  padding-left: 110px;
+}
+
+.form-error-li {
+  font-size: 10px;
+  color: #b2676b;
+}
+
+label {
+  width: 100px;
+  padding: 3px;
+  color: #a5abc5;
+  font-size: 12px;
+  font-style: italic;
+  flex-grow: 0;
+  /* border-top: solid 1px #e5e5e5; */
+}
+
+
 input {
   background-color: #ffffff;
   border: solid 1px #d7d9e0;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 8px 10px;
   color: #6e768f;
   font-size: 12px;
+  flex-grow: 1;
 }
 
 input:focus {
   border: solid 1px #5ab0ee;
+  background-color: #f9f9f9;
 }
 
 input[type="text"] {
@@ -23,47 +59,12 @@ input[type="number"] {
 
 }
 
-label {
-  display: block;
-  margin: 5px 0px;
-  padding: 3px;
-  color: #a5abc5;
-  font-weight: 900;
-  font-size: 12px;
-  background-color: #f9f9f9;
-  border-top: solid 1px #e5e5e5;
-  border-bottom: solid 1px #e5e5e5;
-}
-
-label.warning {
-  display: block;
-  margin: 5px 0px;
-  padding: 3px;
-  color: #f1f1f1;
-  font-weight: 500;
-  font-size: 11px;
-  background-color: #d77a80;
-  border-top: solid 1px #b2676b;
-  border-bottom: solid 1px #b2676b;
-}
-
-label.description {
-  display: block;
-  margin: 5px 0px;
-  padding: 3px;
-  color: #a5abc5;
-  font-weight: 400;
-  font-size: 11px;
-  background-color: #f9f9f9;
-  border-top: solid 1px #e5e5e5;
-  border-bottom: solid 1px #e5e5e5;
-}
-
 input.validation-false {
   background-image: url(../../assets/static/icons/form/validation-false.png);
   background-repeat: no-repeat;
   background-size: 28px 28px;
   background-position: right;
+  border-color: #d77a80;
 }
 
 input.validation-true {
@@ -77,15 +78,17 @@ input.validation-true {
 textarea {
   background-color: #ffffff;
   border: solid 1px #d7d9e0;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 8px 10px;
   color: #6e768f;
   font-size: 12px;
   resize: none;
+  flex-grow: 1;
 }
 
 textarea:focus {
-  border: solid 1px #29b4b6;
+  border: solid 1px #5ab0ee;
+  background-color: #f9f9f9;
 }
 
 select {

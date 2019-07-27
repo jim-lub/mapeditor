@@ -29,10 +29,11 @@ const ProjectBar = ({ actions, authUser, projectsCollection, activeProjectId }) 
   });
 
   const handleNewProjectSubmit = () => {
+    console.log(formStateRef.current)
     actions.createProject({
       userId: authUser.uid,
-      projectName: formStateRef.current.name,
-      projectDesc: formStateRef.current.desc
+      projectName: formStateRef.current.getName(),
+      projectDesc: formStateRef.current.getDesc()
     });
   }
 

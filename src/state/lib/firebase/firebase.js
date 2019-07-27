@@ -38,9 +38,15 @@ export class Firebase {
 
 
   /*** Project & Scenes API ***/
-  project = uid => this.db.doc(`projects/${uid}`);
-  projects = () => this.db.collection('projects');
-  scene = uid => this.db.doc(`scenes/${uid}`);
-  scenes = () => this.db.collection('scenes');
+  project = uid =>
+    this.db.doc(`projects/${uid}`);
+  projects = () =>
+    this.db.collection('projects');
+
+  scene = uid =>
+    this.db.doc(`scenes/${uid}`);
+
+  scenes = () =>
+    this.db.collection('scenes');
 
 }

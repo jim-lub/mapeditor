@@ -12,7 +12,8 @@ export default ({ projectId, userId, name, description, deleteAction, onSelect, 
     onSubmitAction: () => deleteAction({ userId, projectId }),
     Component: DeleteProjectModal,
     componentProps: {
-      name
+      name,
+      childScenes: [1, 0]
     }
   });
 
