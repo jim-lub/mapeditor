@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 
-import { useFormValidation } from 'views/lib/form-validation';
+import { useFormValidation } from 'views/lib/form-validation/useFormValidation';
 
-export default ({ onStateChange: setParentState, name, label, placeholder, matches, required }) => {
+export default forwardRef(({ name, label, placeholder , required }, ref) => {
   const [initialized, setInitialized] = useState(false);
   const [value, setValue, errors] = useFormValidation({
     name,
-    match: matches,
     required
   });
+
+  useImperativeHandle(ref, () => ({
+    type: "text",
+    name,
+    value
+  }));
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -18,15 +23,6 @@ export default ({ onStateChange: setParentState, name, label, placeholder, match
   const handleBlur = () => {
     setInitialized(true);
   }
-
-  useEffect(() => {
-    if (setParentState) {
-      setParentState({
-        value,
-        errors
-      });
-    }
-  }, [value, errors, setParentState])
 
   const renderErrors = errors.map((message, index) => {
     return <li key={index} className="form-error-li">{message}</li>;
@@ -59,4 +55,4 @@ export default ({ onStateChange: setParentState, name, label, placeholder, match
       </div>
     </div>
   )
-};
+});

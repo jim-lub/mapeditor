@@ -29,6 +29,8 @@
   border-left: solid 1px #e5e5e5;
   border-radius: 0px;
   width: auto;
+  padding: 12px 16px;
+  font-weight: 400;
 }
 
 .optionButton:hover {

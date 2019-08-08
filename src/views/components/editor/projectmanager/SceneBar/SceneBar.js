@@ -76,7 +76,7 @@ const SceneBar = ({ actions, authUser, scenesCollection, activeProjectId, active
           className={styles.optionButton}
           disabled={!activeProjectId}
         >
-          +
+          + scene..
         </button>
       </div>
 

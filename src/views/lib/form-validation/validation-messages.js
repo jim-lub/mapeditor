@@ -14,6 +14,7 @@ export default {
     },
     projectDesc: {
       rule: {
+        matches: 'Field should match the value provided in the project name field',
         maxLength: 'Project name can\'t be over 100 characters long'
       }
     }

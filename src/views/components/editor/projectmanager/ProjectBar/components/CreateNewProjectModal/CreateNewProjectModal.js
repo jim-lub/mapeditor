@@ -1,14 +1,21 @@
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useImperativeHandle } from 'react';
 
 import Form, { Field } from 'views/components/Forms';
+import { monitorFieldStateErrors } from 'views/lib/form-validation';
 
 export default (props, ref) => {
-  const projectNameRef = useRef('');
-  const projectDescRef = useRef('');
+  const [nameFieldRef, setNameFieldRef] = useState({});
+  const [descFieldRef, setDescFieldRef] = useState({});
+  const [formDisable, setFormDisable] = useState(false);
+  const fieldStateGroup = [nameFieldRef, descFieldRef];
+
+  useEffect(() => {
+    monitorFieldStateErrors(fieldStateGroup, (isError) => setFormDisable(!!isError));
+  }, [fieldStateGroup]);
 
   useImperativeHandle(ref, () => ({
-    getName: () => projectNameRef.current.value,
-    getDesc: () => projectDescRef.current.value,
+    getName: () => nameFieldRef.value,
+    getDesc: () => descFieldRef.value,
   }));
 
   return (
@@ -20,15 +27,15 @@ export default (props, ref) => {
             name="projectName"
             label="Name*"
             placeholder="project name.."
-            ref={projectNameRef}
+            onStateChange={setNameFieldRef}
             required
           />
 
-          <Field.TextArea
+          <Field.Text
             name="projectDesc"
             label="Description"
             placeholder="project description.."
-            ref={projectDescRef}
+            onStateChange={setDescFieldRef}
           />
 
         </Form.Group>
