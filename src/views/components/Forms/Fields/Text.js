@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
+import { FieldErrorList } from '../Other';
 import { useFormValidation } from 'views/lib/form-validation';
 
-export default ({ onStateChange: setParentState, name, label, placeholder, matches, required }) => {
+export default ({ name, label, placeholder, match, required, initialValue = '', onStateChange: setParentState }) => {
   const [initialized, setInitialized] = useState(false);
-  const [value, setValue, errors] = useFormValidation({
-    name,
-    match: matches,
-    required
-  });
+  const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });
 
   const handleChange = (e) => {
     setValue(e.target.value);
     setInitialized(true);
   }
-
-  const handleBlur = () => {
-    setInitialized(true);
-  }
+  const handleBlur = () => setInitialized(true);
 
   useEffect(() => {
-    if (setParentState) {
-      setParentState({
-        value,
-        errors
-      });
-    }
-  }, [value, errors, setParentState])
-
-  const renderErrors = errors.map((message, index) => {
-    return <li key={index} className="form-error-li">{message}</li>;
-  })
+    setParentState({ value, errors })
+  }, [value, errors, setParentState]);
 
   return (
     <div className="form-wrapper">
@@ -50,13 +35,7 @@ export default ({ onStateChange: setParentState, name, label, placeholder, match
         />
       </div>
 
-      <div className="form-error-wrapper">
-        {
-          (initialized && errors.length > 0)
-            ? <ul>{renderErrors}</ul>
-            : null
-        }
-      </div>
+      <FieldErrorList initialized={initialized} errors={errors} />
     </div>
   )
 };

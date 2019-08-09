@@ -18,8 +18,16 @@
 }
 
 .link {
+  font-size: 12px;
   margin: 3px;
   text-decoration: none;
+}
+
+.linkLocked {
+  font-size: 12px;
+  margin: 3px;
+  text-decoration: none;
+  opacity: 0.5;
 }
 
 .link:hover {

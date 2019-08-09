@@ -4,8 +4,8 @@ import rules from './validation-rules';
 
 import { validateFormFieldsByName, fetchValidationMessage } from './utils';
 
-export const useFormValidation = ({ name, match = null, required = false }) => {
-  const [value, setValue] = useState('');
+export const useFormValidation = ({ initialValue, name, match = null, required = false }) => {
+  const [value, setValue] = useState(initialValue);
   const [error, setError] = useState([]);
 
  useEffect(() => {

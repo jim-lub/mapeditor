@@ -1,32 +1,21 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useFormValidation } from 'views/lib/form-validation/useFormValidation';
+import { FieldErrorList } from '../Other';
+import { useFormValidation } from 'views/lib/form-validation';
 
-export default forwardRef(({ name, label, placeholder , required }, ref) => {
+export default ({ name, label, placeholder, match, required, initialValue = '', onStateChange: setParentState }) => {
   const [initialized, setInitialized] = useState(false);
-  const [value, setValue, errors] = useFormValidation({
-    name,
-    required
-  });
-
-  useImperativeHandle(ref, () => ({
-    type: "textarea",
-    name,
-    value
-  }));
+  const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });
 
   const handleChange = (e) => {
     setValue(e.target.value);
     setInitialized(true);
   }
+  const handleBlur = () => setInitialized(true);
 
-  const handleBlur = () => {
-    setInitialized(true);
-  }
-
-  const renderErrors = errors.map((message, index) => {
-    return <li key={index} className="form-error-li">{message}</li>;
-  })
+  useEffect(() => {
+    setParentState({ value, errors })
+  }, [value, errors, setParentState]);
 
   return (
     <div className="form-wrapper">
@@ -46,13 +35,7 @@ export default forwardRef(({ name, label, placeholder , required }, ref) => {
         />
       </div>
 
-      <div className="form-error-wrapper">
-        {
-          (initialized && errors.length > 0)
-            ? <ul>{renderErrors}</ul>
-            : null
-        }
-      </div>
+      <FieldErrorList initialized={initialized} errors={errors} />
     </div>
   )
-});
+};

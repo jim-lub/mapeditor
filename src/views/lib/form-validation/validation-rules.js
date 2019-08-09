@@ -5,11 +5,11 @@ export default {
       maxLength: ({ value }) => (value.length <= 30)
     },
     'projectDesc': {
-      // matches: ({ value, match }) => (value === match),
+      matches: ({ value, match }) => (value === match),
       maxLength: ({ value }) => (value.length <= 100)
     },
     'projectNumber': {
-      number: ({ value }) => (!isNaN(value))
+      isNumber: ({ value }) => (!isNaN(value))
     },
     'sceneDesc': {
 
