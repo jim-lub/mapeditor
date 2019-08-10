@@ -10,7 +10,6 @@ export default {
 
   name: {
     'projectName': {
-      required: "A project name is required",
       minLength: "The project name should have a minimum length of 3 characters",
       maxLength: "The project name should have a maximum length of 30 characters",
     },

@@ -1,8 +1,11 @@
 import React from 'react';
 
+import '../../default.module.css';
+import formStyles from '../../form.module.css';
+
 export default ({ initialized = true, errors }) => {
   return (
-    <div className="form-error-wrapper">
+    <div className={formStyles.errorWrapper}>
       {
         (initialized && errors.length > 0)
           ? <ul><ErrorList errors={errors} /></ul>
@@ -17,7 +20,7 @@ const ErrorList = ({ errors }) => {
     errors.map((message, index) => (
       <li
         key={index}
-        className="form-error-li">
+        className={formStyles.errorListItem}>
           {message}
       </li>
     ))

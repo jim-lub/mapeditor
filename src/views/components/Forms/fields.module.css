@@ -1,0 +1,34 @@
+.text {
+
+}
+
+.textArea {
+
+}
+
+.number {
+
+}
+
+.password {
+
+}
+
+.select {
+
+}
+
+.validationError {
+  background-image: url(../../../assets/static/icons/form/validation-false.png);
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: right;
+  border-color: #d77a80;
+}
+
+.validationSucces {
+  background-image: url(../../../assets/static/icons/form/validation-true.png);
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: right;
+}
