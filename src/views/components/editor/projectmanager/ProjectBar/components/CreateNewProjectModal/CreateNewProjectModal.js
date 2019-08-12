@@ -9,6 +9,8 @@ export default (props, ref) => {
   const [formDisable, setFormDisable] = useState(false);
   const fieldStateGroup = [nameFieldRef, descFieldRef];
 
+  const submitForm = () => console.log('new project created');
+
   useEffect(() => {
     monitorFieldStateErrors(fieldStateGroup, (isError) => setFormDisable(!!isError));
   }, [fieldStateGroup]);
@@ -22,7 +24,7 @@ export default (props, ref) => {
     <div>
       <div style={{marginBottom: 10}}><h2>Create new project</h2></div>
       <div>
-        <Form.Group>
+        <Form.Group onSubmit={submitForm}>
           <Field.Text
             name="projectName"
             label="Name*"
@@ -38,6 +40,7 @@ export default (props, ref) => {
             onStateChange={setDescFieldRef}
           />
 
+          <button type="submit" disabled={formDisable}>Submit</button>
         </Form.Group>
       </div>
     </div>

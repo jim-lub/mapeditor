@@ -1,8 +1,13 @@
 import React from 'react';
 
-export default ({ children }) => {
+export default ({ onSubmit, children }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    onSubmit();
+  }
   return (
-    <form onSubmit={e => { e.preventDefault(); }}>
+    <form onSubmit={e => handleSubmit(e)}>
       { children }
     </form>
   );

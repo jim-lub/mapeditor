@@ -8,6 +8,7 @@ import { monitorFieldStateErrors } from 'views/lib/form-validation';
 
 export default () => {
   const [nameFieldState, setNameFieldState] = useState({});
+  const [nameFieldState2, setNameFieldState2] = useState({});
   const [descFieldState, setDescFieldState] = useState({});
   const [numberFieldState, setNumberFieldState] = useState({ value: 20 });
   const [checkboxFieldState, setCheckboxFieldState] = useState({ value: true });
@@ -31,13 +32,22 @@ export default () => {
       <div className={styles.sceneBarWrapper}><SceneBar /></div>
       <div>
         <div style={{width: 500}}>
-          <Form.Group>
+          <Form.Group onSubmit={handleSubmit}>
             <Field.Text
               name="projectName"
               label="Name"
               placeholder="project name.."
               onStateChange={setNameFieldState}
               required
+            />
+
+            <Field.Text
+              name="projectName2"
+              label="Name 2"
+              placeholder="project name2.."
+              onStateChange={setNameFieldState2}
+              required
+              match={nameFieldState.value}
             />
 
             <Field.Select
@@ -69,14 +79,15 @@ export default () => {
               required
             />
 
+            <button
+              type="submit"
+              disabled={formDisable}
+            >
+            Submit
+            </button>
+
           </Form.Group>
 
-          <button
-            onClick={handleSubmit}
-            disabled={formDisable}
-          >
-            Submit
-          </button>
         </div>
       </div>
     </div>
