@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useImperativeHandle } from 'react';
 
 import Form, { Field } from 'views/components/Forms';
-import { monitorFieldStateErrors } from 'views/lib/form-validation';
 
 export default (props, ref) => {
   const [nameFieldRef, setNameFieldRef] = useState({});
@@ -10,10 +9,6 @@ export default (props, ref) => {
   const fieldStateGroup = [nameFieldRef, descFieldRef];
 
   const submitForm = () => console.log('new project created');
-
-  useEffect(() => {
-    monitorFieldStateErrors(fieldStateGroup, (isError) => setFormDisable(!!isError));
-  }, [fieldStateGroup]);
 
   useImperativeHandle(ref, () => ({
     getName: () => nameFieldRef.value,

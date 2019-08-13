@@ -1,20 +1,22 @@
+import * as validationTypes from './validationTypes';
+
 export default {
   generic: {
-    required: 'Please provide the required field',
-    invalid: 'The value you have provided is invalid'
-  },
-
-  type: {
-
+    [ validationTypes.REQUIRED ]: 'Please provide the required field',
+    [ validationTypes.MATCH]: 'Field (a) and (b) should match',
+    [ validationTypes.INVALID ]: 'The value you have provided is invalid'
   },
 
   name: {
     'projectName': {
-      minLength: "The project name should have a minimum length of 3 characters",
-      maxLength: "The project name should have a maximum length of 30 characters",
+      [ validationTypes.MIN_LENGTH ]: "The project name should have a minimum length of 3 characters",
+      [ validationTypes.MAX_LENGTH ]: "The project name should have a maximum length of 30 characters",
+    },
+    'projectName2': {
+
     },
     'projectDescription': {
-      maxLength: "The project description should have a maximum length of 200 characters"
+      [ validationTypes.MAX_LENGTH ]: "The project description should have a maximum length of 200 characters"
     },
 
     'sceneName': {
@@ -22,9 +24,6 @@ export default {
     },
     'sceneDescription': {
 
-    },
-    'scenePresets': {
-      isValidOption: "The chosen preset seems to contain an invalid value. Please refresh the form."
     }
   }
 }

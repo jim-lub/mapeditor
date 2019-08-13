@@ -3,10 +3,9 @@ import validator from 'validator';
 //   isBoolean, isRequired, minValue, maxValue,
 // } from 'lib/validation';
 
-import * as errorTypes from './errorTypes';
+import * as validationTypes from './validationTypes';
 
 const { isNumeric, isLength, isIn } = validator;
-
 
 /***
 * @ Validation rules`
@@ -16,18 +15,13 @@ const { isNumeric, isLength, isIn } = validator;
 * `options` object. Use destructuring to pull of custom properties where needed
 **/
 export default {
-  type: {
-    'number': {
-      [ errorTypes.NAN ]: (value) => isNumeric(value),
-    }
-  },
   name: {
     'projectName': {
-      [ errorTypes.MIN_LENGTH ]: (value) => isLength(value, { min: 3 }),
-      [ errorTypes.MAX_LENGTH ]: (value) => isLength(value, { max: 30 }),
+      [ validationTypes.MIN_LENGTH ]: (value) => isLength(value, { min: 3 }),
+      [ validationTypes.MAX_LENGTH ]: (value) => isLength(value, { max: 30 }),
     },
     'projectDescription': {
-      [ errorTypes.MAX_LENGTH ]: (value) => isLength(value, { max: 200 }),
+      [ validationTypes.MAX_LENGTH ]: (value) => isLength(value, { max: 200 }),
     },
 
     'sceneName': {

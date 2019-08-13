@@ -1,83 +1,59 @@
 import { useState, useEffect } from 'react';
 
-import validateFieldRulesByType from './validateFieldRulesByType';
 import validateFieldRulesByName from './validateFieldRulesByName';
-
-import getGenericValidationMessage from './getGenericValidationMessage';
-import getValidationMessageByType from './getValidationMessageByType';
 import getValidationMessageByName from './getValidationMessageByName';
 
 import { isEmpty, isExactMatch } from './utils';
 
-import * as errorTypes from './errorTypes';
+import * as validationTypes from './validationTypes';
 
-export default ({ initialValue = null, type, name, match, required }) => {
+export default ({ initialValue = '', type, name: fieldName, match, required }) => {
   const [value, setValue] = useState(initialValue);
-  const [error, setError] = useState([]);
+  const [errors, setErrors] = useState([]);
   const [errorMessages, setErrorMessages] = useState([]);
 
+  // validate field value; required -> match -> custom rules
   useEffect(() => {
     if (required && isEmpty(value)) {
-      setError([{
-        fieldType: type,
-        fieldName: name,
-        fieldTypeError: false,
-        fieldNameError: false,
-        error: errorTypes.IS_REQUIRED,
-        value: [value]
+      setErrors([{
+        fieldName: fieldName,
+        value: [value],
+        error: validationTypes.REQUIRED
       }]);
 
       return;
     }
 
     if (match && !isExactMatch(value, match)) {
-      setError([{
-        fieldType: type,
-        fieldName: name,
-        fieldTypeError: false,
-        fieldNameError: false,
-        error: errorTypes.NO_MATCH,
-        value: [value, match]
+      setErrors([{
+        fieldName: fieldName,
+        value: [value, match],
+        error: validationTypes.MATCH
       }]);
 
       return;
-    };
+    }
 
-    // const fieldTypeValidation = validateFieldRulesByType(type);
-    // if (type && fieldTypeValidation.errors) {
-    //   return setError(fieldTypeValidation.errors);
-    // };
-    //
-    // const fieldNameValidation = validateFieldRulesByName(name);
-    // if (name && fieldNameValidation.errors) {
-    //   return setError(fieldNameValidation.errors);
-    // };
+    const fieldNameValidation = validateFieldRulesByName(fieldName, value);
+    if (fieldName && fieldNameValidation) {
+      return setErrors(fieldNameValidation.errors);
+    }
 
-    setError([]);
-  }, [value, type, name, match, required]);
+    setErrors([]);
+  }, [value, type, fieldName, match, required]);
 
+  // get error message
   useEffect(() => {
-    console.log(error);
-  }, [error])
+    const findErrorMessageByName = errors.map((obj) =>
+      getValidationMessageByName(fieldName, obj.error)
+    );
 
-  // useEffect(() => {
-  //   const errorMessagesArr = error.map((error) => {
-  //     const typeErrorMessage = getValidationMessageByType(error.type, error.short_name);
-  //     if (typeErrorMessage) {
-  //       return typeErrorMessage;
-  //     };
-  //
-  //     const nameErrorMessage = getValidationMessageByName(error.name, error);
-  //     if (nameErrorMessage) {
-  //       return nameErrorMessage;
-  //     };
-  //
-  //     return getGenericValidationMessage(error);
-  //   });
-  //
-  //
-  //   setErrorMessages(errorMessagesArr);
-  // }, [error]);
+    if (findErrorMessageByName) {
+      setErrorMessages(findErrorMessageByName);
+
+      return;
+    }
+  }, [fieldName, errors]);
 
   return [value, setValue, errorMessages];
-}
+};
