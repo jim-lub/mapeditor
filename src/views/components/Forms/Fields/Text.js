@@ -8,22 +8,23 @@ import '../default.module.css';
 import fieldStyles from '../fields.module.css';
 import formStyles from '../form.module.css';
 
-/***
-* @ Field Properties
-* @name = required
-* @label = required
-* @placeholder = optional
-* @initialValue = optional
-* @match = optional : set a reference to the field it should match
-* @required = optional : field is required
-* @onStateChange = required : manually create an useState hook and pass the set function
-* @labelStyle = optional : override default label styles
-* @fieldStyle = optional : override default field styles
+/**
+* Field.Text component with form validation
+* @module Text
 *
-* Rules other than @match & @required should be set in lib/validation/rules.js
-* Custom validation messages can be set in lib/validation/messages.js. If none are specified
-* the validation will fallback to generic messages.
-***/
+* @param {string} name Field name
+* @param {string} label Field label
+* @param {string} placeholder Field placeholder
+* @param {string} initialValue The field value will be set to this at creation
+* @param {string} match Pass the value of the field that the current field should match
+* @param {boolean} required - Pass this prop to make the text field required
+* @param {function} onStateChange - Pass the `set` function of the useState hook to manage state in the parent component
+* @param {object} labelStyle Override the default label styling by passing a style object as a prop
+* @param {object} fieldStyle Override the default field styling by passing a style object as a prop
+*
+* @return {Component} Text
+*
+*/
 export default ({ name, label, placeholder, initialValue = '', match, required, labelStyle = {}, fieldStyle = {}, onStateChange: setParentState }) => {
   const [initialized, setInitialized] = useState(false);
   const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });

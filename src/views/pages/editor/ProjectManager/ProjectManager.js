@@ -36,6 +36,14 @@ export default () => {
               required
             />
 
+            <Field.Password
+              name="projectName"
+              label="Name"
+              placeholder="project name.."
+              onStateChange={setDescFieldState}
+              required
+            />
+
             <button
               type="submit"
               disabled={formDisable}
