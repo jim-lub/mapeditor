@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { nav } from 'constants/routes';
+import { nav } from 'lib/routes';
 
 import { UserPanel } from './components/UserPanel';
 import { getAuthUser, getAuthStatus } from 'state/ducks/auth';

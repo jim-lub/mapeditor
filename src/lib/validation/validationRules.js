@@ -8,7 +8,6 @@ import * as validationTypes from './validationTypes';
 const { isNumeric, isLength, isIn } = validator;
 
 /***
-* @ Validation rules`
 * Required and match rules need to be set on the components. Any other rules you
 * want to enforce will be handled in this file. You can set rules for a field `type`
 * or apply them by `name`. The rules have acces to the fieldvalue prop and an optional

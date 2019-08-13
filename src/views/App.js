@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Sidebar } from 'views/components'
 import { PageNotFound } from 'views/pages/404';
 
-import routes from 'constants/routes';
+import routes from 'lib/routes';
 import styles from './app.module.css';
 import withAuthorization from 'views/lib/authorization/withAuthorization';
 import { listenToAuthChanges } from 'state/ducks/auth';

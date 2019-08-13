@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 
-import scenePresetsArr from 'constants/scenePresets';
+import scenePresetsArr from 'lib/constants/scenePresets';
 
 export default (props, ref) => {
   const [sceneName, setSceneName] = useState('');
