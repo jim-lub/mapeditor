@@ -1,0 +1,25 @@
+.wrapper {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 0.7;
+}
+
+.modalWrapper {
+  position: relative;
+}
+
+.modal {
+  margin: 150px auto;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { ReactComponent as GoogleLogo } from 'assets/static/icons/svg/google.svg';
-import { ReactComponent as FacebookLogo } from 'assets/static/icons/svg/facebook.svg';
-import { ReactComponent as GithubLogo } from 'assets/static/icons/svg/github.svg';
+// import { ReactComponent as FacebookLogo } from 'assets/static/icons/svg/facebook.svg';
+// import { ReactComponent as GithubLogo } from 'assets/static/icons/svg/github.svg';
 
 import styles from './signinwithproviderbutton.module.css';
 

@@ -5,7 +5,7 @@ import validator from 'validator';
 
 import * as validationTypes from './validationTypes';
 
-const { isNumeric, isLength, isIn } = validator;
+const { isLength, isIn } = validator;
 
 /***
 * Required and match rules need to be set on the components. Any other rules you
