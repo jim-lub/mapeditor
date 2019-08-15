@@ -60,6 +60,12 @@ button.blue {
     background-color: #56a2d8;
   }
 
+  button.blue:disabled {
+    color: #a5abc5;
+    background-color: #e1e1e1;
+    border: solid 1px #d7d8e0;
+  }
+
 button.red {
   background-color: #d77a80;
   border: solid 1px #b2676b;

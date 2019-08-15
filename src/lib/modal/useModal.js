@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Modal } from 'views/components/Modal2';
+import Modal from 'views/components/Modal';
 
-export default (Component, properties) => {
+export default (Component, props) => {
   const [isVisible, setVisibility] = useState(false);
 
   const handleOpen = () => setVisibility(true);
   const handleClose = () => setVisibility(false);
 
-  useEffect(() => {
-    console.log('isVisible: ', isVisible)
-  }, [isVisible]);
-
   if (isVisible && Component) {
     return [
       () => (
         <Modal onClose={handleClose}>
-          <Component {...properties}/>
+          <Component onClose={handleClose} {...props}/>
         </Modal>
       ),
       handleOpen

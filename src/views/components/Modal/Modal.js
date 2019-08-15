@@ -1,64 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import FocusTrap from 'focus-trap-react';
 
-import {
-  Wrapper,
-  ConfirmModal,
-  DeleteModal,
-  SingleFormModal,
-  MultiFormModal
-} from './components';
+import { Modals } from './Modals';
 
-const Modal = ({ modalType, onClose, onSubmit, children }) => {
-  const modalMethods = {
-    handleClose: () => onClose(),
-    handleSubmit: () => onSubmit()
-  }
+import styles from './modal.module.css';
 
-  switch (modalType) {
-    case 'CONFIRM':
-      return (
-        <ConfirmModal {...modalMethods}>
-          { children }
-        </ConfirmModal>
-      );
+export default ({ children, type, width = 500, height = "auto", onClose }) => {
+  const handleClose = (e) => {
+    e.stopPropagation();
+    onClose();
+  };
 
-    case 'DELETE':
-      return (
-        <DeleteModal {...modalMethods}>
-          { children }
-        </DeleteModal>
-      );
+  const ModalType = () => {
+    switch(type) {
+      case 'custom':
+        return null;
+      default:
+        return (
+          <Modals.Basic onClose={onClose}>
+            { children }
+          </Modals.Basic>
+        );
+    }
+  };
 
-    case 'FORM_SINGLE':
-      return (
-        <SingleFormModal {...modalMethods}>
-          { children }
-        </SingleFormModal>
-      );
-
-    case 'FORM_MULTI':
-      return (
-        <MultiFormModal {...modalMethods}>
-          { children }
-        </MultiFormModal>
-      );
-
-    default:
-      return (
-        <>
-          { children }
-        </>
-      );
-  }
-}
-
-export default ({ modalWidth, modalHeight, ...rest }) => {
   return ReactDOM.createPortal(
-    <Wrapper width={modalWidth} height={modalHeight}>
-      <Modal {...rest} />
-    </Wrapper>,
+    <FocusTrap>
+      <div className={styles.wrapper}>
+        <div className={styles.overlay} onClick={handleClose} />
 
-    document.getElementById('modal-root')
+        <div className={styles.modalWrapper}>
+          <div className={styles.modal} style={{width, height}}>
+            { <ModalType /> }
+          </div>
+        </div>
+      </div>
+    </FocusTrap>
+  ,
+  document.getElementById('modal-root')
   );
-}
+};
