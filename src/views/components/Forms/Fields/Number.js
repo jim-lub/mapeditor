@@ -44,6 +44,8 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
 
   const handleBlur = () => setInitialized(true);
 
+  const errorMessages = errors.map(error => error.message);
+
   const textInputClassNames = concatClassNames([
     fieldStyles.number,
     (initialized && errors.length > 0) ? fieldStyles.validationError : ""
@@ -68,7 +70,7 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
         />
       </div>
 
-      <FieldErrorList initialized={initialized} errors={errors} />
+      <FieldErrorList initialized={initialized} errors={errorMessages} />
     </div>
   );
 };

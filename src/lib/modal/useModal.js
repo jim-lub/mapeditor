@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Modal from 'views/components/Modal';
+import ModalWrapper from 'views/components/Modal';
 
 export default (Component, props) => {
   const [isVisible, setVisibility] = useState(false);
@@ -11,9 +11,9 @@ export default (Component, props) => {
   if (isVisible && Component) {
     return [
       () => (
-        <Modal onClose={handleClose}>
+        <ModalWrapper onClose={handleClose}>
           <Component onClose={handleClose} {...props}/>
-        </Modal>
+        </ModalWrapper>
       ),
       handleOpen
     ];

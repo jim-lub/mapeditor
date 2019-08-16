@@ -8,12 +8,12 @@
   padding: 10px;
 }
 
-.buttonClose {
+.buttonLeft {
   float: left;
   width: 100px;
 }
 
-.buttonSubmit {
+.buttonRight {
   float: right;
   width: 100px;
 }

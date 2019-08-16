@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default ({ children = 'Confirm', className, disabled, onClick}) => {
-  if (onClick) {
+export default ({ children = 'Close', color, action, disabled }) => {
+  if (action) {
     return (
       <button
-        className={"blue " + className}
-        onClick={onClick}
+        className={color}
+        onClick={action}
         disabled={disabled}
       >
         { children }

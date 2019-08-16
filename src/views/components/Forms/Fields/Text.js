@@ -31,14 +31,15 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
 
   useEffect(() => {
     setParentState({ value, errors });
-  }, [value, errors, setParentState]);
+  }, [value, name, errors, setParentState]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
     setInitialized(true);
   };
-
   const handleBlur = () => setInitialized(true);
+
+  const errorMessages = errors.map(error => error.message);
 
   const textInputClassNames = concatClassNames([
     fieldStyles.text,
@@ -49,7 +50,7 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
     <div className={formStyles.wrapper}>
       <div className={formStyles.fieldWrapper}>
         <label htmlFor={name} style={labelStyle}>
-          {label}
+          { `${label}${(required) ? "*" : ""}` }
         </label>
 
         <input
@@ -64,7 +65,7 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
         />
       </div>
 
-      <FieldErrorList initialized={initialized} errors={errors} />
+      <FieldErrorList initialized={initialized} errors={errorMessages} />
     </div>
   );
 };

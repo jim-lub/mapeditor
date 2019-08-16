@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default ({ children = 'Submit', className, disabled, form}) => {
+export default ({ children = 'Submit', color, form, disabled }) => {
 
   if (form) {
     return (
       <button
-        className={"blue " + className}
+        className={color}
         type="submit"
         form={form}
         disabled={disabled}

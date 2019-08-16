@@ -15,6 +15,7 @@ export default (fieldName, value, options) => {
 
     if (filterErrors.length > 0) {
       return {
+        fieldName,
         errors: filterErrors
       };
     }

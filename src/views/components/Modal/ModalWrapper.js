@@ -2,27 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FocusTrap from 'focus-trap-react';
 
-import { Modals } from './Modals';
-
-import styles from './modal.module.css';
+import styles from './modalwrapper.module.css';
 
 export default ({ children, type, width = 500, height = "auto", onClose }) => {
   const handleClose = (e) => {
     e.stopPropagation();
     onClose();
-  };
-
-  const ModalType = () => {
-    switch(type) {
-      case 'custom':
-        return null;
-      default:
-        return (
-          <Modals.Basic onClose={onClose}>
-            { children }
-          </Modals.Basic>
-        );
-    }
   };
 
   return ReactDOM.createPortal(
@@ -32,7 +17,7 @@ export default ({ children, type, width = 500, height = "auto", onClose }) => {
 
         <div className={styles.modalWrapper}>
           <div className={styles.modal} style={{width, height}}>
-            { <ModalType /> }
+            { children }
           </div>
         </div>
       </div>

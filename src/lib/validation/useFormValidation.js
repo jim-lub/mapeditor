@@ -45,13 +45,16 @@ export default ({ initialValue = '', type, name: fieldName, match, required }) =
   // get error message
   useEffect(() => {
     const findErrorMessageByName = errors.map((obj) =>
-      getValidationMessageByName(fieldName, obj.error)
+      ({
+        fieldName: obj.fieldName,
+        value: obj.value,
+        error: obj.error,
+        message: getValidationMessageByName(fieldName, obj.error)
+      })
     );
 
     if (findErrorMessageByName) {
       setErrorMessages(findErrorMessageByName);
-
-      return;
     }
   }, [fieldName, errors]);
 

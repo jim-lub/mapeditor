@@ -13,7 +13,7 @@
   bottom: 0px;
   left: 0px;
   background-color: black;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .modalWrapper {
@@ -24,6 +24,6 @@
   margin: 150px auto;
   background-color: #ffffff;
   border: solid 1px #e5e5e5;
-  border-radius: 4px;
-  box-shadow: 0px 0px 3px black;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1px black;
 }

@@ -1,7 +1,7 @@
-import Modal from './Modal';
+import ModalWrapper from './ModalWrapper';
 import { ModalComponent } from './ModalComponents';
 
-export default Modal;
+export default ModalWrapper;
 
 export {
   ModalComponent
