@@ -46,5 +46,5 @@ export const setActiveProject = ({ projectId }) =>
 export const getProjectsCollection = (state) =>
   selectors.getProjectsCollection(state);
 
-export const getActiveProject = (state) =>
+export const getActiveProjectId = (state) =>
   selectors.getActiveProject(state);

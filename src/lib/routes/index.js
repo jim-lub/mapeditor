@@ -1,4 +1,4 @@
-import { SignIn, Dashboard, ProjectManager, TilesetManager, Workspace } from 'views/pages';
+import { SignIn, Dashboard, Projects, TilesetManager, Workspace } from 'views/pages';
 import * as ruleTypes from 'views/lib/authorization/ruleTypes';
 
 const routes = [
@@ -28,7 +28,7 @@ const routes = [
   {
     path: "/editor/projects",
     exact: true,
-    component: ProjectManager,
+    component: Projects,
     ruleset: [ ruleTypes.IS_SIGNED_IN ],
     redirectTo: '/auth/signin'
   },

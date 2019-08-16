@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  grid-template-columns: 200px 200px auto;
+  grid-template-rows: 100vh;
+}
+
+.projectSelector {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.sceneSelector {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
