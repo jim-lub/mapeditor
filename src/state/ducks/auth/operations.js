@@ -32,11 +32,11 @@ export const listenToAuthChanges = () => (dispatch) => {
             })
           );
 
-          dispatch(
-            initializeStore({
-              userId: authUser.uid
-            })
-          )
+          // dispatch(
+          //   initializeStore({
+          //     userId: authUser.uid
+          //   })
+          // )
         })
     } else {
       dispatch(clearAuthUser());

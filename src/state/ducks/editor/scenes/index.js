@@ -24,6 +24,9 @@ export default createReducer( defaultState )({
 
 
 /*** OPERATIONS ***/
+export const initializeScenesCollection = () =>
+  operations.initializeScenesCollection();
+
 export const loadScenesCollection = ({ projectId }) =>
   operations.loadScenesCollection({ projectId });
 

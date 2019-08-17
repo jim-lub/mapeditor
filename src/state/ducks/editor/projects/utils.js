@@ -1,19 +1,21 @@
 import { firebase } from 'state/lib/firebase';
 
-export const getProjectsCollectionByUserId = ({ userId }) => {
+export const fetchProjectsByOwnerId = ({ userId, sortBy = 'createdAt', sortOrder = 'desc'}) => {
   return firebase.projects()
-    .where("owner.id", "==", userId)
+    .where("ownerId", "==", userId)
+    .orderBy(sortBy, sortOrder)
     .get()
     .then(snapshot => {
-      const collection = [];
+      return snapshot.docs.map(doc => {
+        const { name, description, createdAt } = doc.data();
 
-      snapshot.docs.forEach(doc => {
-        collection.push({
+        return {
           uid: doc.id,
-          ...doc.data()
-        });
+          name: name,
+          description: description,
+          createdAt: createdAt.toDate()
+        }
       });
-
-      return collection;
     })
-}
+
+};

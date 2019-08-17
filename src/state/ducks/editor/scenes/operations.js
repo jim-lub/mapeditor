@@ -4,6 +4,29 @@ import { getScenesCollectionByProjectId } from './utils';
 
 import * as actions from './actions';
 
+export const initializeScenesCollection = () => (dispatch, getState) => {
+  const projectIds = getState().editor.projects.collection.map(data => data.uid);
+
+  return projectIds.map(projectId => {
+    return getScenesCollectionByProjectId({ projectId })
+      .then(collection => {
+        console.log(collection);
+        return collection;
+      })
+  });
+}
+
+const func = (dispatch, projectId) => {
+  getScenesCollectionByProjectId({ projectId })
+    .then(collection => {
+      console.log(collection)
+      dispatch(
+        actions.setScenesCollection({ collection })
+      )
+    })
+    .catch(e => console.error(e));
+}
+
 export const loadScenesCollection = ({ projectId }) => (dispatch) => {
   return getScenesCollectionByProjectId({ projectId })
     .then(collection => {

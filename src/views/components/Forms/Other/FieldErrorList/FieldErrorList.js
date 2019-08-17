@@ -3,7 +3,9 @@ import React from 'react';
 import '../../default.module.css';
 import formStyles from '../../form.module.css';
 
-export default ({ initialized = true, errors }) => {
+export default ({ initialized = true, errors, displayErrors = true }) => {
+  if (!displayErrors) return null;
+  
   return (
     <div className={formStyles.errorWrapper}>
       {

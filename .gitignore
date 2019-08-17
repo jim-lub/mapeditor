@@ -3,7 +3,6 @@
 /.firebase
 /.firebaserc
 /database.rules.json
-/firestore.indexes.json
 /firestore.rules
 /storage.rules
 /.pnp

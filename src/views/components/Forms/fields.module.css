@@ -26,6 +26,10 @@
   border-color: #d77a80;
 }
 
+.validationError:focus {
+  border-color: #d77a80;
+}
+
 .validationSucces {
   background-image: url(../../../assets/static/icons/form/validation-true.png);
   background-repeat: no-repeat;

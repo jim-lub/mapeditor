@@ -9,7 +9,7 @@ import styles from './deleteprojectmodal.module.css';
 
 export default ({ userId, projectId, projectName, onDelete, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const fieldStateArray = [fieldStateName];
 
   const handleDelete = () => {
@@ -48,9 +48,10 @@ export default ({ userId, projectId, projectName, onDelete, onClose }) => {
           <div className={styles.confirmationForm}>
             <Form.Group id="deleteProjectForm" onSubmit={handleDelete}>
               <Field.Text
-              name="deleteProjectConfirmation"
-              onStateChange={setFieldStateName}
-              match={projectName}
+                name="deleteProjectConfirmation"
+                onStateChange={setFieldStateName}
+                match={projectName}
+                displayErrors={false}
               />
             </Form.Group>
           </div>

@@ -1,20 +1,31 @@
-export const setProjectsCollection = (state, action) => {
-  const { collection } = action.payload;
+export const fetchProjectsBegin = (state, action) => {
+  return {
+    ...state,
+    loading: true,
+    error: null
+  }
+};
+
+export const fetchProjectsSuccess = (state, action) => {
+  const { projects } = action.payload;
 
   return {
     ...state,
-    collection: [...collection],
-    initialized: true
+    loading: false,
+    collection: projects
   }
-}
+};
 
-export const clearProjectsCollection = (state, action) => {
+export const fetchProjectsFailure = (state, action) => {
+  const { error } = action.payload;
+
   return {
     ...state,
-    collection: [],
-    initialized: true
+    loading: false,
+    error,
+    collection: []
   }
-}
+};
 
 export const setActiveProject = (state, action) => {
   const { projectId } = action.payload;
@@ -23,4 +34,13 @@ export const setActiveProject = (state, action) => {
     ...state,
     active: projectId
   }
-}
+};
+
+export const clearProjects = (state, action) => {
+  return {
+    ...state,
+    loading: false,
+    error: null,
+    collection: []
+  }
+};

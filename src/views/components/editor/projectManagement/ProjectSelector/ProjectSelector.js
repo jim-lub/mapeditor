@@ -6,16 +6,17 @@ import { getAuthUser } from 'state/ducks/auth';
 import {
   createProject,
   deleteProject,
-  getProjectsCollection,
   setActiveProject,
-  getActiveProjectId
+  getProjects,
+  getActiveProjectId,
+  getProjectFetchStatus
 } from 'state/ducks/editor/projects';
 
 import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, actions }) => {
+const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, projectFetchStatus, actions }) => {
 
   const RenderProjectNodes = () =>
     projectsCollection.map(project => {
@@ -39,11 +40,19 @@ const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, action
   return (
     <div className={styles.container}>
       <div className={styles.scrollContainer}>
+        {
+          (projectFetchStatus.loading)
+            ? <div className={styles.loading}>Loading..</div>
+            : null
+        }
         <RenderProjectNodes />
       </div>
 
       <div className={styles.toolbarContainer}>
-        <Toolbar />
+        <Toolbar
+          userId={authUser.uid}
+          onCreateProject={actions.createProject}
+        />
       </div>
     </div>
   );
@@ -52,7 +61,8 @@ const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, action
 const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
-    projectsCollection: getProjectsCollection(state),
+    projectsCollection: getProjects(state),
+    projectFetchStatus: getProjectFetchStatus(state),
     activeProjectId: getActiveProjectId(state)
   }
 };

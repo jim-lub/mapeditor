@@ -22,6 +22,10 @@ export class Firebase {
     this.googleProvider.addScope('email');
   }
 
+  /*** Utils ***/
+  timestamp = app.firestore.FieldValue.serverTimestamp();
+  serverTimestamp = app.firestore.FieldValue.serverTimestamp();
+
   /*** Auth API ***/
   doSignInWithGoogle = () =>
     this.auth.signInWithPopup(this.googleProvider);

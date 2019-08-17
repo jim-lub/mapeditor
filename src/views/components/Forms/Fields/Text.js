@@ -25,7 +25,7 @@ import formStyles from '../form.module.css';
 * @return {Component} Text
 *
 */
-export default ({ name, label, placeholder, initialValue = '', match, required, labelStyle = {}, fieldStyle = {}, onStateChange: setParentState }) => {
+export default ({ name, label, placeholder, initialValue = '', match, required, labelStyle = {}, fieldStyle = {}, displayErrors = true, onStateChange: setParentState }) => {
   const [initialized, setInitialized] = useState(false);
   const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });
 
@@ -58,7 +58,7 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
               )
             : null
         }
-        
+
         <input
           type="text"
           name={name}
@@ -71,7 +71,7 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
         />
       </div>
 
-      <FieldErrorList initialized={initialized} errors={errorMessages} />
+      <FieldErrorList initialized={initialized} errors={errorMessages} displayErrors={displayErrors}/>
     </div>
   );
 };
