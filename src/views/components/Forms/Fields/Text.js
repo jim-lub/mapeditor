@@ -49,10 +49,16 @@ export default ({ name, label, placeholder, initialValue = '', match, required, 
   return (
     <div className={formStyles.wrapper}>
       <div className={formStyles.fieldWrapper}>
-        <label htmlFor={name} style={labelStyle}>
-          { `${label}${(required) ? "*" : ""}` }
-        </label>
-
+        {
+          (label)
+            ? (
+                <label htmlFor={name} style={labelStyle}>
+                  { `${label}${(required) ? "*" : ""}` }
+                </label>
+              )
+            : null
+        }
+        
         <input
           type="text"
           name={name}

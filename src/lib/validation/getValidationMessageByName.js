@@ -20,5 +20,5 @@ export default (fieldName, error) => {
     }
   }
 
-  return null;
+  return validationMessages.generic[validationTypes.INVALID];
 };

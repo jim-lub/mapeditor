@@ -4,6 +4,7 @@ import ModalWrapper from 'views/components/Modal';
 
 export default (Component, props) => {
   const [isVisible, setVisibility] = useState(false);
+  const { height, width } = props;
 
   const handleOpen = () => setVisibility(true);
   const handleClose = () => setVisibility(false);
@@ -11,7 +12,7 @@ export default (Component, props) => {
   if (isVisible && Component) {
     return [
       () => (
-        <ModalWrapper onClose={handleClose}>
+        <ModalWrapper onClose={handleClose} width={width} height={height}>
           <Component onClose={handleClose} {...props}/>
         </ModalWrapper>
       ),

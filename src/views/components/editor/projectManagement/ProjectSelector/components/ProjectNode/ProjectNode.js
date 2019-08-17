@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useModal } from 'lib/modal';
 import { concatClassNames } from 'lib/utils';
@@ -8,9 +8,10 @@ import { DeleteProjectModalTemplate } from '../../modals';
 import styles from './projectnode.module.css';
 
 export default ({ name, description, projectId, userId, isActive, onSelect, onDelete }) => {
+  const [scenes, setScenes] = useState(Math.floor(Math.random() * 10))
   const [DeleteProjectModal, openModal_deleteProject] = useModal(
     DeleteProjectModalTemplate,
-    { projectId, userId, projectName: name, onDelete }
+    { projectId, userId, projectName: name, onDelete, width: 400 }
   );
 
   const handleSelect = (e) => {
@@ -22,8 +23,6 @@ export default ({ name, description, projectId, userId, isActive, onSelect, onDe
     e.stopPropagation();
     openModal_deleteProject();
   };
-
-  const fetchChildScenes = Math.floor(Math.random() * 10);
 
   const projectNodeClassName = concatClassNames([
     styles.container,
@@ -42,7 +41,7 @@ export default ({ name, description, projectId, userId, isActive, onSelect, onDe
         </div>
 
         <div className={"clearfix " + styles.tagsContainer}>
-          <div className={styles.tag}><span style={{fontWeight: "bold"}}>{ fetchChildScenes }</span> Scene(s)</div>
+          <div className={styles.tag}><span style={{fontWeight: "bold"}}>{ scenes }</span> Scene(s)</div>
           <span className={styles.deleteButton} onClick={openDeleteModal}>Delete</span>
         </div>
 

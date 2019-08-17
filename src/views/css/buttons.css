@@ -45,6 +45,12 @@ button.green {
     background-color: #29b4b6;
   }
 
+  button.green:disabled {
+    color: #a5abc5;
+    background-color: #e1e1e1;
+    border: solid 1px #d7d8e0;
+  }
+
 button.blue {
   background-color: #5ab0ee;
   border: solid 1px #4f9cd3;
@@ -79,4 +85,10 @@ button.red {
 
   button.red:active {
     background-color: #c06f74;
+  }
+
+  button.red:disabled {
+    color: #a5abc5;
+    background-color: #e1e1e1;
+    border: solid 1px #d7d8e0;
   }
