@@ -4,15 +4,26 @@ import thunk from 'redux-thunk';
 
 import * as reducers from './ducks';
 
-export default function configureStore( initialState = {} ) {
-    const rootReducer = combineReducers(reducers);
+const appReducer = combineReducers(reducers);
 
-    return createStore(
-        rootReducer,
-        initialState,
-        applyMiddleware(
-            thunk,
-            logger
-        ),
-    );
+const rootReducer = (state, action) => {
+  // clear store if authUser === null;
+  // action only dispatched from state/ducks/auth/operations/listenToAuthChanges()
+  if (action.type === 'CLEAR_STORE') {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+}
+
+export default function configureStore( initialState = {} ) {
+
+  return createStore(
+      rootReducer,
+      initialState,
+      applyMiddleware(
+          thunk,
+          logger
+      ),
+  );
 }

@@ -17,6 +17,9 @@ import { ProjectNode, Toolbar } from './components';
 import styles from './projectselector.module.css';
 
 const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, projectFetchStatus, actions }) => {
+  if (!projectsCollection) {
+    
+  }
 
   const RenderProjectNodes = () =>
     projectsCollection.map(project => {

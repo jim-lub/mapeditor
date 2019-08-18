@@ -1,18 +1,12 @@
 import { firebase } from 'state/lib/firebase';
 
-import {
-  setAuthUser,
-  clearAuthUser,
-  setAuthError
-} from './actions';
-
+import * as actions from './actions';
 
 import {
   updateDbUser
 } from './utils';
 
-import { initializeStore } from 'state/lib/initialize-terminate-store/initializeStore';
-import { terminateStore } from 'state/lib/initialize-terminate-store/terminateStore';
+import { initializeStore } from 'state/lib/utils/initializeStore';
 
 export const listenToAuthChanges = () => (dispatch) => {
   firebase.auth.onAuthStateChanged(authUser => {
@@ -24,7 +18,7 @@ export const listenToAuthChanges = () => (dispatch) => {
           const dbUser = snapshot.data();
 
           dispatch(
-            setAuthUser({
+            actions.setAuthUser({
               authUser: {
                 ...dbUser,
                 uid: authUser.uid
@@ -32,15 +26,13 @@ export const listenToAuthChanges = () => (dispatch) => {
             })
           );
 
-          // dispatch(
-          //   initializeStore({
-          //     userId: authUser.uid
-          //   })
-          // )
+          dispatch(
+            initializeStore()
+          )
         })
     } else {
-      dispatch(clearAuthUser());
-      dispatch(terminateStore());
+      dispatch({ type: 'CLEAR_STORE'});
+      dispatch(actions.clearAuthUser());
     }
 
   })
@@ -59,10 +51,10 @@ export const signInWithGoogle = () => (dispatch) => {
         })
       )
     })
-    .catch(e => dispatch(setAuthError({ error: e })))
+    .catch(e => dispatch(actions.setAuthError({ error: e })))
 }
 
 export const signOut = () => dispatch => {
   firebase.doSignOut()
-    .catch(e => dispatch(setAuthError({ error: e })));
+    .catch(e => dispatch(actions.setAuthError({ error: e })));
 }
