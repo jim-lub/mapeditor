@@ -9,6 +9,7 @@ import {
   setActiveProject,
   getProjects,
   getActiveProjectId,
+  getProjectById,
   getProjectFetchStatus
 } from 'state/ducks/editor/projects';
 
@@ -16,15 +17,14 @@ import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, projectFetchStatus, actions }) => {
-  if (!projectsCollection) {
-    
-  }
+const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, getProjectById, projectFetchStatus, actions }) => {
 
   const RenderProjectNodes = () =>
     projectsCollection.map(project => {
       const { uid, name, description } = project;
       const isActive = (uid === activeProjectId);
+
+      // console.log(getProjectById(uid))
 
       return (
         <ProjectNode
@@ -66,7 +66,8 @@ const mapStateToProps = (state) => {
     authUser: getAuthUser(state),
     projectsCollection: getProjects(state),
     projectFetchStatus: getProjectFetchStatus(state),
-    activeProjectId: getActiveProjectId(state)
+    activeProjectId: getActiveProjectId(state),
+    getProjectById: (uid) => getProjectById(state, uid)
   }
 };
 

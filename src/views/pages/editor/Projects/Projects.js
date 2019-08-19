@@ -11,7 +11,7 @@ export default () => {
       <div className={styles.projectSelector}>
         <ProjectSelector />
       </div>
-      
+
       <div className={styles.sceneSelector}>2</div>
 
     </div>

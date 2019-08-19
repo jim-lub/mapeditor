@@ -1,8 +1,8 @@
 import { firebase } from 'state/lib/firebase';
 
-export const fetchProjectsByOwnerId = ({ userId, sortBy = 'createdAt', sortOrder = 'desc'}) => {
-  return firebase.projects()
-    .where("ownerId", "==", userId)
+export const fetchScenesByProjectId = ({ projectId, sortBy = 'createdAt', sortOrder = 'desc' }) => {
+  return firebase.scenes()
+    .where("projectId", "==", projectId)
     .orderBy(sortBy, sortOrder)
     .get()
     .then(snapshot => {

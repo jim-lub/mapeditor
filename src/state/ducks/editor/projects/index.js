@@ -38,6 +38,6 @@ export const setActiveProject = props => operations.setActiveProject(props);
 /*** SELECTORS ***/
 export const getProjects = state => selectors.getProjects(state);
 export const getProjectIds = state => selectors.getProjectIds(state);
+export const getProjectById = (state, uid) => selectors.getProjectById(state, uid);
 export const getProjectFetchStatus = state => selectors.getProjectFetchStatus(state);
-export const getActiveProject = state => selectors.getActiveProject(state);
 export const getActiveProjectId = state => selectors.getActiveProjectId(state);
