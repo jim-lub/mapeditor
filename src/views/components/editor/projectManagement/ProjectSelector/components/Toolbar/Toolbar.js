@@ -5,10 +5,10 @@ import { CreateProjectModalTemplate } from '../../modals';
 
 import styles from './toolbar.module.css';
 
-export default ({ userId, onCreateProject }) => {
+export default ({ onCreateProject }) => {
   const [CreateProjectModal, openModal_createProject] = useModal(
     CreateProjectModalTemplate,
-    { userId, onCreateProject }
+    { onCreateProject }
   );
 
   return (

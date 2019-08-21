@@ -1,0 +1,52 @@
+.container {
+  width: 100%;
+  padding: 5px;
+  border-bottom: solid 1px #d5d5d5;
+  background-color: #ffffff;
+}
+
+.active {
+  background-color: #ddedec;
+}
+
+.nameContainer {
+  font-weight: bold;
+}
+
+.descriptionContainer {
+  height: 15px;
+  line-height: 1;
+  font-size: 10px;
+  overflow: hidden;
+}
+
+.tagsContainer {
+
+}
+
+  .tag {
+    float: left;
+    margin: 1px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background-color: #d5d5d5;
+    font-size: 11px;
+  }
+
+.toolbarContainer {
+
+}
+
+.deleteButton {
+  float: left;
+  margin: 1px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  font-size: 11px;
+}
+
+.deleteButton:hover {
+  text-decoration: underline;
+  background-color: #ea8a90;
+}

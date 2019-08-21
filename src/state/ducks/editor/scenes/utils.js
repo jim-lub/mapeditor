@@ -1,19 +1,21 @@
 import { firebase } from 'state/lib/firebase';
 
-export const getScenesCollectionByProjectId = ({ projectId }) => {
+export const fetchScenesByProjectId = ({ projectId, sortBy = 'createdAt', sortOrder = 'desc' }) => {
   return firebase.scenes()
-    .where("project.id", "==", projectId)
+    .where("projectId", "==", projectId)
+    .orderBy(sortBy, sortOrder)
     .get()
     .then(snapshot => {
-      const collection = [];
+      return snapshot.docs.map(doc => {
+        const { name, description, createdAt } = doc.data();
 
-      snapshot.docs.forEach(doc => {
-        collection.push({
+        return {
           uid: doc.id,
-          ...doc.data()
-        });
+          projectId,
+          name: name,
+          description: description,
+          createdAt: createdAt.toDate()
+        }
       });
-
-      return collection;
-    })
-}
+    });
+};

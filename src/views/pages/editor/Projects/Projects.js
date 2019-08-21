@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ProjectSelector } from 'views/components/editor/projectManagement';
+import { SceneSelector } from 'views/components/editor/projectManagement';
 
 import styles from './projects.module.css';
 
@@ -12,7 +13,9 @@ export default () => {
         <ProjectSelector />
       </div>
 
-      <div className={styles.sceneSelector}>2</div>
+      <div className={styles.sceneSelector}>
+        <SceneSelector />
+      </div>
 
     </div>
   );

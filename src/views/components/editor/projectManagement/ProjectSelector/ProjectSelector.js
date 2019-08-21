@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getAuthUser } from 'state/ducks/auth';
 import {
   createProject,
-  deleteProject,
+  deleteProjectAndChildScenes,
   setActiveProject,
   getProjects,
   getActiveProjectId,
@@ -13,18 +12,22 @@ import {
   getProjectFetchStatus
 } from 'state/ducks/editor/projects';
 
+import {
+  getScenes
+} from 'state/ducks/editor/scenes';
+
 import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, getProjectById, projectFetchStatus, actions }) => {
+const ProjectSelector = ({ projectsCollection, activeProjectId, getProjectById, projectFetchStatus, sceneCollection, actions }) => {
 
   const RenderProjectNodes = () =>
     projectsCollection.map(project => {
       const { uid, name, description } = project;
       const isActive = (uid === activeProjectId);
 
-      // console.log(getProjectById(uid))
+      const childScenes = sceneCollection.filter(data => data.projectId === uid);
 
       return (
         <ProjectNode
@@ -32,10 +35,10 @@ const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, getPro
           name={name}
           description={description}
           projectId={uid}
-          userId={authUser.uid}
           isActive={isActive}
+          childScenes={childScenes}
           onSelect={actions.setActiveProject}
-          onDelete={actions.deleteProject}
+          onDelete={actions.deleteProjectAndChildScenes}
         />
       );
   });
@@ -53,7 +56,6 @@ const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, getPro
 
       <div className={styles.toolbarContainer}>
         <Toolbar
-          userId={authUser.uid}
           onCreateProject={actions.createProject}
         />
       </div>
@@ -63,17 +65,17 @@ const ProjectSelector = ({ authUser, projectsCollection, activeProjectId, getPro
 
 const mapStateToProps = (state) => {
   return {
-    authUser: getAuthUser(state),
     projectsCollection: getProjects(state),
     projectFetchStatus: getProjectFetchStatus(state),
     activeProjectId: getActiveProjectId(state),
-    getProjectById: (uid) => getProjectById(state, uid)
+    getProjectById: (uid) => getProjectById(state, uid),
+    sceneCollection: getScenes(state)
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createProject, deleteProject, setActiveProject }, dispatch)
+    actions: bindActionCreators({ createProject, deleteProjectAndChildScenes, setActiveProject }, dispatch)
   }
 };
 

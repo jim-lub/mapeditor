@@ -1,82 +1,94 @@
 import { firebase } from 'state/lib/firebase';
 
-import { getScenesCollectionByProjectId } from './utils';
-
 import * as actions from './actions';
+import * as selectors from './selectors';
+import { fetchScenesByProjectId } from './utils';
 
-export const initializeScenesCollection = () => (dispatch, getState) => {
-  const projectIds = getState().editor.projects.collection.map(data => data.uid);
+import { getProjectIds, getActiveProjectId } from 'state/ducks/editor/projects';
 
-  return projectIds.map(projectId => {
-    return getScenesCollectionByProjectId({ projectId })
-      .then(collection => {
-        console.log(collection);
-        return collection;
-      })
-  });
-}
+export const fetchScenes = ({ sortBy, sortOrder } = {}) => (dispatch, getState) => {
+  dispatch(
+    actions.fetchScenesBegin()
+  );
 
-const func = (dispatch, projectId) => {
-  getScenesCollectionByProjectId({ projectId })
-    .then(collection => {
-      console.log(collection)
+  const projectIds = getProjectIds(getState());
+
+  const scenes = projectIds
+    .map(projectId => fetchScenesByProjectId({ projectId, sortBy, sortOrder }));
+
+  Promise.all(scenes)
+    .then(scenes => scenes.filter(arr => arr.length > 0))
+    .then(scenes => {
       dispatch(
-        actions.setScenesCollection({ collection })
-      )
+        actions.fetchScenesSuccess({ scenes })
+      );
     })
-    .catch(e => console.error(e));
-}
-
-export const loadScenesCollection = ({ projectId }) => (dispatch) => {
-  return getScenesCollectionByProjectId({ projectId })
-    .then(collection => {
+    .catch(e => {
       dispatch(
-        actions.setScenesCollection({ collection })
-      )
-    })
-    .catch(e => console.error(e));
-}
+        actions.fetchScenesFailure({ error: 'error/LOADING_SCENES_FAILED' })
+      );
+      console.error(e);
+    });
+};
 
-export const terminateScenesCollection = () => (dispatch) => {
-  dispatch(actions.clearScenesCollection());
-}
+export const createScene = ({ name, description }) => (dispatch, getState) => {
+  const activeProjectId = getActiveProjectId(getState());
 
-export const createScene = ({ userId, projectId, sceneName, sceneDesc }) => (dispatch) => {
+  if (!activeProjectId) return Promise.reject('error/NO_ACTIVE_PROJECT_ID_FOUND');
+
   firebase.scenes()
     .add({
-      project: {
-        id: projectId
-      },
-      name: sceneName,
-      description: sceneDesc
+      projectId: activeProjectId,
+      createdAt: firebase.serverTimestamp,
+      name,
+      description
     })
-    .then(() => getScenesCollectionByProjectId({ projectId }))
-    .then(collection => {
-      dispatch(
-        actions.setScenesCollection({ collection })
-      );
+    .then(ref => {
+      dispatch( setActiveScene({ sceneId : ref.id }) );
+      dispatch( fetchScenes() );
     })
     .catch(e => console.error(e));
-}
+};
 
-export const deleteScene = ({ userId, projectId, sceneId }) => (dispatch) => {
-  firebase.scenes().doc(sceneId)
+export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
+  const activeSceneId = selectors.getActiveSceneId( getState() );
+
+  firebase.scene(sceneId)
     .delete()
-    .then(() => getScenesCollectionByProjectId({ projectId }))
-    .then(collection => {
-      dispatch(
-        actions.setScenesCollection({ collection })
-      );
+    .then(() => {
+      if (activeSceneId === sceneId) {
+        dispatch( setActiveScene({ sceneId: null }) );
+      }
+
+      dispatch( fetchScenes() );
     })
     .catch(e => console.error(e));
-}
+};
 
-export const renameScene = () => (dispatch) => {
+export const deleteMultipleScenes = ({ sceneIds }) => (dispatch, getState) => {
+  const activeSceneId = selectors.getActiveSceneId( getState() );
+  let resetActiveSceneId = false;
 
-}
+  const deleteScenes = sceneIds.map(sceneId => {
+    if (activeSceneId === sceneId) {
+      resetActiveSceneId = true;
+    }
 
-export const setActiveScene = ({ sceneId }) => (dispatch) => {
+    return firebase.scene(sceneId).delete();
+  });
+
+  return Promise.all(deleteScenes)
+    .then(() => {
+      if (resetActiveSceneId) {
+        dispatch( setActiveScene({ sceneId: null }) );
+      }
+
+      dispatch( fetchScenes() );
+    });
+};
+
+export const setActiveScene = ({ sceneId }) => (dispatch, getState) => {
   dispatch(
     actions.setActiveScene({ sceneId })
   )
-}
+};

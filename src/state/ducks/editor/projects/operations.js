@@ -1,9 +1,12 @@
 import { firebase } from 'state/lib/firebase';
 
 import * as actions from './actions';
+import * as selectors from './selectors';
 import { fetchProjectsByOwnerId } from './utils';
 
-export const fetchProjects = ({ sortBy, sortOrder } = { sortBy: 'createdAt', sortOrder: 'desc'}) => (dispatch, getState) => {
+import { getScenes, deleteMultipleScenes } from 'state/ducks/editor/scenes';
+
+export const fetchProjects = ({ sortBy, sortOrder } = {}) => (dispatch, getState) => {
   const { uid: userId } = getState().auth.authUser;
 
   dispatch(
@@ -12,15 +15,10 @@ export const fetchProjects = ({ sortBy, sortOrder } = { sortBy: 'createdAt', sor
 
   return fetchProjectsByOwnerId({ userId, sortBy, sortOrder })
     .then(projects => {
-      dispatch(
-        actions.fetchProjectsSuccess({ projects })
-      );
+      dispatch( actions.fetchProjectsSuccess({ projects }) );
     })
     .catch(e => {
-      dispatch(
-        actions.fetchProjectsFailure({ error: 'error/LOADING_PROJECTS_FAILED' })
-      );
-      console.error(e);
+      dispatch( actions.fetchProjectsFailure({ error: 'error/LOADING_PROJECTS_FAILED' }) );
     });
 };
 
@@ -34,44 +32,45 @@ export const createProject = ({ name, description }) => (dispatch, getState) => 
         name,
         description
     })
-    .then(() => {
-      dispatch(
-        fetchProjects()
-      );
+    .then(ref => {
+      dispatch( setActiveProject({ projectId : ref.id }) );
+      dispatch( fetchProjects() );
     })
     .catch(e => console.error(e));
 };
 
-export const deleteProject = ({ projectId }) => (dispatch, getState) => {
-  const { uid: userId } = getState().auth.authUser;
+export const deleteProjectAndChildScenes = ({ projectId }) => (dispatch, getState) => {
+  // fetch scenes where projectId matches and map uids to array
+  const sceneIds = getScenes(getState())
+    .filter(data => data.projectId === projectId)
+    .map(data => data.uid);
 
-  firebase.project(projectId)
-    .get()
-    .then(doc => {
-
-      if (doc.data().ownerId === userId) {
-        return doc.id;
-      } else {
-        Promise.reject('error/match/AUTH_ID,!==,OWNER_ID');
-      }
-
-    })
-    .then(projectId => {
-
-      firebase.project(projectId)
-        .delete()
-        .then(() => {
-          dispatch(
-            fetchProjects()
-          );
-        })
-        .catch(e => console.log(e));
-
-    })
-    .catch(e => console.log(e));
+  if (sceneIds.length > 0) {
+    dispatch( deleteMultipleScenes({ sceneIds }) )
+      .then(() => {
+        dispatch( _deleteProject({ projectId }));
+      })
+      .catch(e => console.error(e));
+  } else {
+    dispatch( _deleteProject({ projectId}) );
+  }
 };
 
-export const setActiveProject = ({ projectId }) => (dispatch, getState) => {
+export const _deleteProject = ({ projectId }) => (dispatch, getState) => {
+  const activeProjectId = selectors.getActiveProjectId( getState() );
+
+  firebase.project(projectId)
+    .delete()
+    .then(() => {
+      if (activeProjectId === projectId) {
+        dispatch( setActiveProject({ projectId: null }) );
+      }
+
+      dispatch( fetchProjects() );
+    })
+};
+
+export const setActiveProject = ({ projectId }) => dispatch => {
   dispatch(
     actions.setActiveProject({ projectId })
   );

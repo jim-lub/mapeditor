@@ -1,20 +1,31 @@
-export const setScenesCollection = (state, action) => {
-  const { collection } = action.payload;
+export const fetchScenesBegin = (state, action) => {
+  return {
+    ...state,
+    loading: true,
+    error: null
+  }
+};
+
+export const fetchScenesSuccess = (state, action) => {
+  const { scenes } = action.payload;
 
   return {
     ...state,
-    collection: [...collection],
-    initialized: true
+    loading: false,
+    collection: [].concat(...scenes)
   }
-}
+};
 
-export const clearScenesCollection = (state, action) => {
+export const fetchScenesFailure = (state, action) => {
+  const { error } = action.payload;
+
   return {
     ...state,
-    collection: [],
-    initialized: true
+    loading: false,
+    error,
+    collection: []
   }
-}
+};
 
 export const setActiveScene = (state, action) => {
   const { sceneId } = action.payload;
@@ -23,4 +34,4 @@ export const setActiveScene = (state, action) => {
     ...state,
     active: sceneId
   }
-}
+};

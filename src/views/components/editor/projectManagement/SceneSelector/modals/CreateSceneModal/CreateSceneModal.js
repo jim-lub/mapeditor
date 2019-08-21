@@ -5,16 +5,16 @@ import { getFieldStateErrors } from 'lib/validation';
 import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms'
 
-import styles from './createprojectmodal.module.css';
+import styles from './createscenemodal.module.css';
 
-export default ({ onCreateProject, onClose }) => {
+export default ({ onCreateScene, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateDesc, setFieldStateDesc] = useState();
   const [disabled, setDisabled] = useState(true);
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
   const handleSubmit = () => {
-    onCreateProject({
+    onCreateScene({
       name: fieldStateName.value,
       description: fieldStateDesc.value
     });
@@ -36,16 +36,16 @@ export default ({ onCreateProject, onClose }) => {
         <div className={styles.header}><h1>Create project</h1></div>
 
         <div className={styles.form}>
-          <Form.Group id="createProjectForm" onSubmit={handleSubmit}>
+          <Form.Group id="createSceneForm" onSubmit={handleSubmit}>
             <Field.Text
-              name="projectName"
+              name="sceneName"
               label="Name"
               onStateChange={setFieldStateName}
               required
             />
 
             <Field.TextArea
-              name="projectDescription"
+              name="sceneDescription"
               label="Description"
               onStateChange={setFieldStateDesc}
             />
@@ -56,7 +56,7 @@ export default ({ onCreateProject, onClose }) => {
 
       <ModalComponent.Footer
         buttonLeft={{ text: "Cancel", action: onClose }}
-        buttonRight={{ text: "Create", color: "blue", form: "createProjectForm", disabled }}
+        buttonRight={{ text: "Create", color: "blue", form: "createSceneForm", disabled }}
       />
     </>
   );

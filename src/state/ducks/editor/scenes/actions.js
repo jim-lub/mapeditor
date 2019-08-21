@@ -1,25 +1,26 @@
 import * as types from './types';
 
-export const setScenesCollection = ({ collection = [] }) => {
-  return {
-    type: types.SET_SCENES_COLLECTION,
-    payload: {
-      collection
-    }
-  }
-}
+export const fetchScenesBegin = () => ({
+  type: types.FETCH_SCENES_BEGIN,
+});
 
-export const clearScenesCollection = () => {
-  return {
-    type: types.CLEAR_SCENES_COLLECTION
+export const fetchScenesSuccess = ({ scenes }) => ({
+  type: types.FETCH_SCENES_SUCCESS,
+  payload: {
+    scenes
   }
-}
+});
 
-export const setActiveScene = ({ sceneId }) => {
-  return {
-    type: types.SET_ACTIVE_SCENE,
-    payload: {
-      sceneId
-    }
+export const fetchScenesFailure = ({ error }) => ({
+  type: types.FETCH_SCENES_FAILURE,
+  payload: {
+    error
   }
-}
+});
+
+export const setActiveScene = ({ sceneId }) => ({
+  type: types.SET_ACTIVE_SCENE,
+  payload: {
+    sceneId
+  }
+});

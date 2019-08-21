@@ -3,34 +3,34 @@ import React from 'react';
 import { useModal } from 'lib/modal';
 import { concatClassNames } from 'lib/utils';
 
-import { DeleteProjectModalTemplate } from '../../modals';
+import { DeleteSceneModalTemplate } from '../../modals';
 
-import styles from './projectnode.module.css';
+import styles from './scenenode.module.css';
 
-export default ({ name, description, projectId, isActive, childScenes, onSelect, onDelete }) => {
-  const [DeleteProjectModal, openModal_deleteProject] = useModal(
-    DeleteProjectModalTemplate,
-    { projectId, projectName: name, childScenes, onDelete, width: 400 }
+export default ({ name, description, sceneId, isActive, onSelect, onDelete }) => {
+  const [DeleteSceneModal, openModal_deleteScene] = useModal(
+    DeleteSceneModalTemplate,
+    { sceneId, sceneName: name, onDelete, width: 400 }
   );
 
   const handleSelect = (e) => {
     e.stopPropagation();
-    onSelect({ projectId });
+    onSelect({ sceneId });
   };
 
   const openDeleteModal = (e) => {
     e.stopPropagation();
-    openModal_deleteProject();
+    openModal_deleteScene();
   };
 
-  const projectNodeClassName = concatClassNames([
+  const sceneNodeClassName = concatClassNames([
     styles.container,
     (isActive) ? styles.active : null
   ]);
 
   return (
     <>
-      <div className={projectNodeClassName} onClick={handleSelect}>
+      <div className={sceneNodeClassName} onClick={handleSelect}>
         <div className={styles.nameContainer}>
           { name || "null" }
         </div>
@@ -40,7 +40,6 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
         </div>
 
         <div className={"clearfix " + styles.tagsContainer}>
-          <div className={styles.tag}><span style={{fontWeight: "bold"}}>{ childScenes.length }</span> Scene(s)</div>
           <span className={styles.deleteButton} onClick={openDeleteModal}>Delete</span>
         </div>
 
@@ -48,7 +47,7 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
         </div>
       </div>
 
-      <DeleteProjectModal />
+      <DeleteSceneModal />
     </>
   );
 };

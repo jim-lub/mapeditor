@@ -32,7 +32,7 @@ export default createReducer( initialState )({
 /*** OPERATIONS ***/
 export const fetchProjects = props => operations.fetchProjects(props);
 export const createProject = props => operations.createProject(props);
-export const deleteProject = props => operations.deleteProject(props);
+export const deleteProjectAndChildScenes = props => operations.deleteProjectAndChildScenes(props);
 export const setActiveProject = props => operations.setActiveProject(props);
 
 /*** SELECTORS ***/
