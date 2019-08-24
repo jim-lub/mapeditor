@@ -3,6 +3,8 @@ import React from 'react';
 import { ProjectSelector } from 'views/components/editor/projectManagement';
 import { SceneSelector } from 'views/components/editor/projectManagement';
 
+import FirestoreOptions from 'views/components/_dev/firestore/FirestoreOptions';
+
 import styles from './projects.module.css';
 
 export default () => {
@@ -15,6 +17,10 @@ export default () => {
 
       <div className={styles.sceneSelector}>
         <SceneSelector />
+      </div>
+
+      <div>
+        <FirestoreOptions />
       </div>
 
     </div>

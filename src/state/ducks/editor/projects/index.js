@@ -2,6 +2,7 @@ import * as types from './types';
 import * as operations from './operations';
 import * as reducers from './reducers';
 import * as selectors from './selectors';
+import * as utils from './utils';
 
 import { createReducer } from 'state/lib/utils';
 
@@ -41,3 +42,6 @@ export const getProjectIds = state => selectors.getProjectIds(state);
 export const getProjectById = (state, uid) => selectors.getProjectById(state, uid);
 export const getProjectFetchStatus = state => selectors.getProjectFetchStatus(state);
 export const getActiveProjectId = state => selectors.getActiveProjectId(state);
+
+export const listenToProjectChanges = () => utils.onProjectStateChange();
+export const listenToProjectChanges2 = (userId) => utils.onProjectStateChange2({ userId });

@@ -27,7 +27,7 @@ export default ({ projectId, projectName, childScenes, onDelete, onClose }) => {
 
   const RenderScenesList = () => {
     if (childScenes.length === 0) return null;
-    
+
     return (
       <div className={styles.scenesList}>
         <span style={{fontWeight: "bold"}}>The following scene(s) will also be deleted:</span>
@@ -53,7 +53,7 @@ export default ({ projectId, projectName, childScenes, onDelete, onClose }) => {
         <div className={styles.warning}>
           <div className={styles.message}>
             This action <span className={styles.bold}>cannot</span> be undone. This will permanently
-            delete the <span className={styles.bold}>{ projectName }</span> project.
+            delete the <span className={styles.bold}>{ projectName }</span> project and all it's child scenes.
             Please type in the name of the project to confirm.
           </div>
 

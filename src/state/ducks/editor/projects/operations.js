@@ -9,17 +9,18 @@ import { getScenes, deleteMultipleScenes } from 'state/ducks/editor/scenes';
 export const fetchProjects = ({ sortBy, sortOrder } = {}) => (dispatch, getState) => {
   const { uid: userId } = getState().auth.authUser;
 
-  dispatch(
-    actions.fetchProjectsBegin()
-  );
-
-  return fetchProjectsByOwnerId({ userId, sortBy, sortOrder })
-    .then(projects => {
-      dispatch( actions.fetchProjectsSuccess({ projects }) );
-    })
-    .catch(e => {
-      dispatch( actions.fetchProjectsFailure({ error: 'error/LOADING_PROJECTS_FAILED' }) );
-    });
+  return null;
+  // dispatch(
+  //   actions.fetchProjectsBegin()
+  // );
+  //
+  // return fetchProjectsByOwnerId({ userId, sortBy, sortOrder })
+  //   .then(projects => {
+  //     dispatch( actions.fetchProjectsSuccess({ projects }) );
+  //   })
+  //   .catch(e => {
+  //     dispatch( actions.fetchProjectsFailure({ error: 'error/LOADING_PROJECTS_FAILED' }) );
+  //   });
 };
 
 export const createProject = ({ name, description }) => (dispatch, getState) => {

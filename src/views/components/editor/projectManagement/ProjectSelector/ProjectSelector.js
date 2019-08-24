@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  createProject,
+  getAuthUser
+} from 'state/ducks/auth';
+
+import {
+  // createProject,
   deleteProjectAndChildScenes,
-  setActiveProject,
+  // setActiveProject,
   getProjects,
-  getActiveProjectId,
+  // getActiveProjectId,
   getProjectById,
   getProjectFetchStatus
 } from 'state/ducks/editor/projects';
+
+import {
+  listenToProjectChanges,
+  createProject,
+  setActiveProject,
+  getProjectDataById,
+  getProjectSortOrder,
+  getActiveProjectId
+} from 'state/ducks/editor/_projects';
 
 import {
   getScenes
@@ -20,21 +33,27 @@ import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ projectsCollection, activeProjectId, getProjectById, projectFetchStatus, sceneCollection, actions }) => {
+const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, projectFetchStatus, sceneCollection, actions }) => {
+  useEffect(() => {
+    const unsubscribe = actions.listenToProjectChanges({ userId: authUser.uid });
+
+    return () => unsubscribe();
+  }, [authUser]);
 
   const RenderProjectNodes = () =>
-    projectsCollection.map(project => {
-      const { uid, name, description } = project;
-      const isActive = (uid === activeProjectId);
+    projectSortOrder.map(projectId => {
+      const { name, description } = getProjectDataById(projectId);
+      const isActive = (projectId === activeProjectId);
 
-      const childScenes = sceneCollection.filter(data => data.projectId === uid);
+      // const childScenes = sceneCollection.filter(data => data.projectId === uid);
+      const childScenes = [];
 
       return (
         <ProjectNode
-          key={uid}
+          key={projectId}
           name={name}
           description={description}
-          projectId={uid}
+          projectId={projectId}
           isActive={isActive}
           childScenes={childScenes}
           onSelect={actions.setActiveProject}
@@ -65,17 +84,20 @@ const ProjectSelector = ({ projectsCollection, activeProjectId, getProjectById, 
 
 const mapStateToProps = (state) => {
   return {
-    projectsCollection: getProjects(state),
+    authUser: getAuthUser(state),
+    projectsCollection: state.editor._projects.collection,
     projectFetchStatus: getProjectFetchStatus(state),
+    sceneCollection: getScenes(state),
+
     activeProjectId: getActiveProjectId(state),
-    getProjectById: (uid) => getProjectById(state, uid),
-    sceneCollection: getScenes(state)
+    getProjectDataById: (uid) => getProjectDataById(state, uid),
+    projectSortOrder: getProjectSortOrder(state)
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createProject, deleteProjectAndChildScenes, setActiveProject }, dispatch)
+    actions: bindActionCreators({ createProject, listenToProjectChanges, deleteProjectAndChildScenes, setActiveProject }, dispatch)
   }
 };
 

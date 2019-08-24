@@ -7,7 +7,7 @@ import { fetchScenes } from 'state/ducks/editor/scenes';
 export const initializeStore = () => (dispatch, getState) => {
   const initialize = [
     // dispatch(fetchProjects()),
-    dispatch(fetchProjects()).then(() => dispatch(fetchScenes()))
+    // dispatch(fetchProjects()).then(() => dispatch(fetchScenes()))
   ];
 
   Promise.all(initialize)
