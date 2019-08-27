@@ -1,47 +1,58 @@
-import * as types from './types';
-import * as operations from './operations';
-import * as reducers from './reducers';
-import * as selectors from './selectors';
-import * as utils from './utils';
-
 import { createReducer } from 'state/lib/utils';
 
+import * as types from './types';
+import * as operations from './operations';
+import * as selectors from './selectors';
+import * as reducers from './reducers';
+
 const initialState = {
-  collection: [],
-  active: null,
-  loading: false,
-  error: null,
+  status: {
+    setProjectCollection: { loading: false, error: null },
+    createProject: { loading: false, error: null },
+    deleteProject: { loading: false, error: null },
+    updateProject: { loading: false, error: null },
+  },
+
+  sortOrder: [],
+  collection: {},
+  active: null
 }
 
+/*** Reducer ***/
 export default createReducer( initialState )({
-  [ types.FETCH_PROJECTS_BEGIN ]: (state, action) =>
-    reducers.fetchProjectsBegin(state, action),
+  [ types.setProjectCollectionRequest ]: (state, action) => reducers.setProjectCollectionRequest(state, action),
+  [ types.setProjectCollectionSuccess ]: (state, action) => reducers.setProjectCollectionSuccess(state, action),
+  [ types.setProjectCollectionFailure ]: (state, action) => reducers.setProjectCollectionFailure(state, action),
 
-  [ types.FETCH_PROJECTS_SUCCESS ]: (state, action) =>
-    reducers.fetchProjectsSuccess(state, action),
+  [ types.createProjectRequest ]: (state, action) => reducers.createProjectRequest(state, action),
+  [ types.createProjectSuccess ]: (state, action) => reducers.createProjectSuccess(state, action),
+  [ types.createProjectFailure ]: (state, action) => reducers.createProjectFailure(state, action),
 
-  [ types.FETCH_PROJECTS_FAILURE ]: (state, action) =>
-    reducers.fetchProjectsFailure(state, action),
+  [ types.deleteProjectRequest ]: (state, action) => reducers.deleteProjectRequest(state, action),
+  [ types.deleteProjectSuccess ]: (state, action) => reducers.deleteProjectSuccess(state, action),
+  [ types.deleteProjectFailure ]: (state, action) => reducers.deleteProjectFailure(state, action),
 
-  [ types.SET_ACTIVE_PROJECT ]: (state, action) =>
-    reducers.setActiveProject(state, action),
+  [ types.updateProjectRequest ]: (state, action) => reducers.updateProjectRequest(state, action),
+  [ types.updateProjectSuccess ]: (state, action) => reducers.updateProjectSuccess(state, action),
+  [ types.updateProjectFailure ]: (state, action) => reducers.updateProjectFailure(state, action),
 
-  [ types.CLEAR_PROJECTS ]: ( state, action ) =>
-    reducers.clearProjects(state, action),
-});
+  [ types.setActiveProject ]: (state, action) => reducers.setActiveProject(state, action),
+})
 
-/*** OPERATIONS ***/
-export const fetchProjects = props => operations.fetchProjects(props);
-export const createProject = props => operations.createProject(props);
-export const deleteProjectAndChildScenes = props => operations.deleteProjectAndChildScenes(props);
-export const setActiveProject = props => operations.setActiveProject(props);
+/*** Operations ***/
+export const listenToProjectChanges = ({ userId }) => operations.listenToProjectChanges({ userId });
+export const createProject = ({ name, description }) => operations.createProject({ name, description });
+export const deleteProject = ({ projectId }) => operations.deleteProject({ projectId });
+export const updateProject = ({ projectId, name, description }) => operations.updateProject({ projectId, name, description });
+export const setActiveProject = ({ projectId }) => operations.setActiveProject({ projectId });
 
-/*** SELECTORS ***/
-export const getProjects = state => selectors.getProjects(state);
-export const getProjectIds = state => selectors.getProjectIds(state);
-export const getProjectById = (state, uid) => selectors.getProjectById(state, uid);
-export const getProjectFetchStatus = state => selectors.getProjectFetchStatus(state);
+/*** Selectors ***/
+export const getProjectDataById = (state, projectId) => selectors.getProjectDataById(state, projectId);
+export const getProjectCollection = state => selectors.getProjectCollection(state);
+export const getProjectSortOrder = state => selectors.getProjectSortOrder(state);
 export const getActiveProjectId = state => selectors.getActiveProjectId(state);
 
-export const listenToProjectChanges = () => utils.onProjectStateChange();
-export const listenToProjectChanges2 = (userId) => utils.onProjectStateChange2({ userId });
+export const getSetProjectCollectionStatus = state => selectors.getSetProjectCollectionStatus(state);
+export const getCreateProjectStatus = state => selectors.getCreateProjectStatus(state);
+export const getDeleteProjectStatus = state => selectors.getDeleteProjectStatus(state);
+export const getUpdateProjectStatus = state => selectors.getUpdateProjectStatus(state);

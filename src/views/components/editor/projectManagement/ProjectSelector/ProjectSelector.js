@@ -7,18 +7,9 @@ import {
 } from 'state/ducks/auth';
 
 import {
-  // createProject,
-  deleteProjectAndChildScenes,
-  // setActiveProject,
-  getProjects,
-  // getActiveProjectId,
-  getProjectById,
-  getProjectFetchStatus
-} from 'state/ducks/editor/projects';
-
-import {
   listenToProjectChanges,
   createProject,
+  deleteProject,
   setActiveProject,
   getProjectDataById,
   getProjectSortOrder,
@@ -33,7 +24,7 @@ import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, projectFetchStatus, sceneCollection, actions }) => {
+const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, sceneCollection, actions }) => {
   useEffect(() => {
     const unsubscribe = actions.listenToProjectChanges({ userId: authUser.uid });
 
@@ -57,7 +48,7 @@ const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activ
           isActive={isActive}
           childScenes={childScenes}
           onSelect={actions.setActiveProject}
-          onDelete={actions.deleteProjectAndChildScenes}
+          onDelete={actions.deleteProject}
         />
       );
   });
@@ -66,9 +57,11 @@ const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activ
     <div className={styles.container}>
       <div className={styles.scrollContainer}>
         {
+            /*
           (projectFetchStatus.loading)
             ? <div className={styles.loading}>Loading..</div>
             : null
+            */
         }
         <RenderProjectNodes />
       </div>
@@ -85,8 +78,7 @@ const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activ
 const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
-    projectsCollection: state.editor._projects.collection,
-    projectFetchStatus: getProjectFetchStatus(state),
+    projectsCollection: state.editor.projects.collection,
     sceneCollection: getScenes(state),
 
     activeProjectId: getActiveProjectId(state),
@@ -97,7 +89,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createProject, listenToProjectChanges, deleteProjectAndChildScenes, setActiveProject }, dispatch)
+    actions: bindActionCreators({ createProject, deleteProject, listenToProjectChanges, setActiveProject }, dispatch)
   }
 };
 

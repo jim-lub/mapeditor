@@ -1,30 +1,74 @@
 import * as types from './types';
 
-export const fetchProjectsBegin = () => ({
-  type: types.FETCH_PROJECTS_BEGIN,
+export const setProjectCollectionRequest = () => ({
+  type: types.setProjectCollectionRequest
 });
 
-export const fetchProjectsSuccess = ({ projects }) => ({
-  type: types.FETCH_PROJECTS_SUCCESS,
+export const setProjectCollectionSuccess = ({ projectCollection }) => ({
+  type: types.setProjectCollectionSuccess,
   payload: {
-    projects
+    projectCollection
   }
 });
 
-export const fetchProjectsFailure = ({ error }) => ({
-  type: types.FETCH_PROJECTS_FAILURE,
+export const setProjectCollectionFailure = error => ({
+  type: types.setProjectCollectionFailure,
+  payload: {
+    error
+  }
+});
+
+export const createProjectRequest = () => ({
+  type: types.createProjectRequest
+});
+
+export const createProjectSuccess = ({ projectId }) => ({
+  type: types.createProjectSuccess,
+  payload: {
+    projectId
+  }
+});
+
+export const createProjectFailure = ({ error }) => ({
+  type: types.createProjectFailure,
+  payload: {
+    error
+  }
+});
+
+export const deleteProjectRequest = () => ({
+  type: types.deleteProjectRequest
+});
+
+export const deleteProjectSuccess = () => ({
+  type: types.deleteProjectSuccess,
+});
+
+export const deleteProjectFailure = ({ error }) => ({
+  type: types.deleteProjectFailure,
+  payload: {
+    error
+  }
+});
+
+export const updateProjectRequest = () => ({
+  type: types.updateProjectRequest
+});
+
+export const updateProjectSuccess = () => ({
+  type: types.updateProjectSuccess,
+});
+
+export const updateProjectFailure = ({ error }) => ({
+  type: types.updateProjectFailure,
   payload: {
     error
   }
 });
 
 export const setActiveProject = ({ projectId }) => ({
-  type: types.SET_ACTIVE_PROJECT,
+  type: types.setActiveProject,
   payload: {
     projectId
   }
-});
-
-export const clearProjects = () => ({
-  type: types.CLEAR_PROJECTS
 });

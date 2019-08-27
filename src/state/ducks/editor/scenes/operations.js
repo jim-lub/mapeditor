@@ -4,14 +4,14 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { fetchScenesByProjectId } from './utils';
 
-import { getProjectIds, getActiveProjectId } from 'state/ducks/editor/projects';
+import { getProjectSortOrder, getActiveProjectId } from 'state/ducks/editor/projects';
 
 export const fetchScenes = ({ sortBy, sortOrder } = {}) => (dispatch, getState) => {
   dispatch(
     actions.fetchScenesBegin()
   );
 
-  const projectIds = getProjectIds(getState());
+  const projectIds = getProjectSortOrder(getState());
 
   const scenes = projectIds
     .map(projectId => fetchScenesByProjectId({ projectId, sortBy, sortOrder }));

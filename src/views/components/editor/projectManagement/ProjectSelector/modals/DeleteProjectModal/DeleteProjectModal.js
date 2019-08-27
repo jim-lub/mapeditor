@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getFieldStateErrors } from 'lib/validation';
 
 import { ModalComponent } from 'views/components/Modal';
-import Form, { Field } from 'views/components/Forms'
+import Form, { Field } from 'views/components/Forms';
 
 import styles from './deleteprojectmodal.module.css';
 
