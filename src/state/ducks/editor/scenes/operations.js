@@ -22,6 +22,9 @@ export const listenToSceneChanges = ({ userId, projectId }) => (dispatch, getSta
       const sceneCollection = [];
 
       snapshot.forEach(doc => {
+        // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+        // console.log(source, " data: ", doc.data());
+
         const { projectId, name, description, createdAt } = doc.data();
 
         sceneCollection.push({
