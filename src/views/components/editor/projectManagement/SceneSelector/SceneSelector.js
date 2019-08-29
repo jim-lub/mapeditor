@@ -1,40 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import {
+  getAuthUser
+} from 'state/ducks/auth';
 
 import {
   getActiveProjectId
 } from 'state/ducks/editor/projects';
 
 import {
+  listenToSceneChanges,
   createScene,
   deleteScene,
   setActiveScene,
-  getScenes,
+  getSceneSortOrder,
+  getSceneCollection,
   getActiveSceneId,
-  getSceneById,
-  getSceneFetchStatus
+  getSceneDataById,
+  getSetSceneCollectionStatus
 } from 'state/ducks/editor/scenes';
 
 import { SceneNode, Toolbar } from './components';
 
 import styles from './sceneselector.module.css';
 
-const SceneSelector = ({ sceneCollection, activeProjectId, activeSceneId, getSceneById, sceneFetchStatus, actions }) => {
+const SceneSelector = ({ authUser, sceneSortOrder, sceneCollection, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
+
+  useEffect(() => {
+    // console.log(activeProjectId)
+    const unsubscribe = actions.listenToSceneChanges({
+      userId: authUser.uid,
+      projectId: activeProjectId
+    });
+
+    return () => unsubscribe();
+  }, [authUser, activeProjectId, actions]);
 
   const RenderSceneNodes = () =>
-    sceneCollection
-      .filter(scene => scene.projectId === activeProjectId)
-      .map(scene => {
-        const { uid, name, description } = scene;
-        const isActive = (uid === activeSceneId);
+    sceneSortOrder
+      .map(sceneId => {
+        const { name, description } = getSceneDataById(sceneId);
+        const isActive = (sceneId === activeSceneId);
 
         return (
           <SceneNode
-            key={uid}
+            key={sceneId}
             name={name}
             description={description}
-            sceneId={uid}
+            sceneId={sceneId}
             isActive={isActive}
             onSelect={actions.setActiveScene}
             onDelete={actions.deleteScene}
@@ -46,7 +61,7 @@ const SceneSelector = ({ sceneCollection, activeProjectId, activeSceneId, getSce
     <div className={styles.container}>
       <div className={styles.scrollContainer}>
         {
-          (sceneFetchStatus.loading)
+          (status.collection.loading)
             ? <div className={styles.loading}>Loading..</div>
             : null
         }
@@ -65,17 +80,21 @@ const SceneSelector = ({ sceneCollection, activeProjectId, activeSceneId, getSce
 
 const mapStateToProps = (state) => {
   return {
-    sceneCollection: getScenes(state),
-    sceneFetchStatus: getSceneFetchStatus(state),
+    authUser: getAuthUser(state),
+    sceneSortOrder: getSceneSortOrder(state),
+    sceneCollection: getSceneCollection(state),
     activeProjectId: getActiveProjectId(state),
     activeSceneId: getActiveSceneId(state),
-    getSceneById: (uid) => getSceneById(state, uid)
+    getSceneDataById: (uid) => getSceneDataById(state, uid),
+    status: {
+      collection: getSetSceneCollectionStatus(state)
+    }
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createScene, deleteScene, setActiveScene }, dispatch)
+    actions: bindActionCreators({ listenToSceneChanges, createScene, deleteScene, setActiveScene }, dispatch)
   }
 };
 

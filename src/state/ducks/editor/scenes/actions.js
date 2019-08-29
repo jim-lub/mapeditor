@@ -1,25 +1,73 @@
 import * as types from './types';
 
-export const fetchScenesBegin = () => ({
-  type: types.FETCH_SCENES_BEGIN,
+export const setSceneCollectionRequest = () => ({
+  type: types.setSceneCollectionRequest
 });
 
-export const fetchScenesSuccess = ({ scenes }) => ({
-  type: types.FETCH_SCENES_SUCCESS,
+export const setSceneCollectionSuccess = ({ sceneCollection }) => ({
+  type: types.setSceneCollectionSuccess,
   payload: {
-    scenes
+    sceneCollection
   }
 });
 
-export const fetchScenesFailure = ({ error }) => ({
-  type: types.FETCH_SCENES_FAILURE,
+export const setSceneCollectionFailure = error => ({
+  type: types.setSceneCollectionFailure,
+  payload: {
+    error
+  }
+});
+
+export const createSceneRequest = () => ({
+  type: types.createSceneRequest
+});
+
+export const createSceneSuccess = ({ sceneId }) => ({
+  type: types.createSceneSuccess,
+  payload: {
+    sceneId
+  }
+});
+
+export const createSceneFailure = ({ error }) => ({
+  type: types.createSceneFailure,
+  payload: {
+    error
+  }
+});
+
+export const deleteSceneRequest = () => ({
+  type: types.deleteSceneRequest
+});
+
+export const deleteSceneSuccess = () => ({
+  type: types.deleteSceneSuccess,
+});
+
+export const deleteSceneFailure = ({ error }) => ({
+  type: types.deleteSceneFailure,
+  payload: {
+    error
+  }
+});
+
+export const updateSceneRequest = () => ({
+  type: types.updateSceneRequest
+});
+
+export const updateSceneSuccess = () => ({
+  type: types.updateSceneSuccess,
+});
+
+export const updateSceneFailure = ({ error }) => ({
+  type: types.updateSceneFailure,
   payload: {
     error
   }
 });
 
 export const setActiveScene = ({ sceneId }) => ({
-  type: types.SET_ACTIVE_SCENE,
+  type: types.setActiveScene,
   payload: {
     sceneId
   }

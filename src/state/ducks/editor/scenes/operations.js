@@ -2,93 +2,90 @@ import { firebase } from 'state/lib/firebase';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import { fetchScenesByProjectId } from './utils';
 
-import { getProjectSortOrder, getActiveProjectId } from 'state/ducks/editor/projects';
+import {
+  getActiveProjectId
+} from 'state/ducks/editor/projects';
 
-export const fetchScenes = ({ sortBy, sortOrder } = {}) => (dispatch, getState) => {
-  dispatch(
-    actions.fetchScenesBegin()
-  );
+export const listenToSceneChanges = ({ userId, projectId }) => (dispatch, getState) => {
+  if (!userId) return () => null;
+  if (!projectId) return () => null;
+  console.log(projectId)
 
-  const projectIds = getProjectSortOrder(getState());
+  return firebase.scenes()
+    .where("ownerId", "==", userId)
+    .where("projectId", "==", projectId)
+    .orderBy("createdAt", "desc")
+    .onSnapshot(snapshot => {
+      dispatch( actions.setSceneCollectionRequest() );
 
-  const scenes = projectIds
-    .map(projectId => fetchScenesByProjectId({ projectId, sortBy, sortOrder }));
+      const sceneCollection = [];
 
-  Promise.all(scenes)
-    .then(scenes => scenes.filter(arr => arr.length > 0))
-    .then(scenes => {
-      dispatch(
-        actions.fetchScenesSuccess({ scenes })
-      );
-    })
-    .catch(e => {
-      dispatch(
-        actions.fetchScenesFailure({ error: 'error/LOADING_SCENES_FAILED' })
-      );
-      console.error(e);
+      snapshot.forEach(doc => {
+        const { projectId, name, description, createdAt } = doc.data();
+
+        sceneCollection.push({
+          uid: doc.id,
+          projectId,
+          name,
+          description,
+          createdAt
+        });
+      });
+
+      try {
+        dispatch( actions.setSceneCollectionSuccess({ sceneCollection }) );
+      } catch (error) {
+        dispatch( actions.setSceneCollectionFailure({ error }) );
+      }
     });
 };
 
 export const createScene = ({ name, description }) => (dispatch, getState) => {
-  const activeProjectId = getActiveProjectId(getState());
+  const currentState = getState();
+  const { uid: userId } = currentState.auth.authUser;
+  const projectId = getActiveProjectId( currentState );
+  console.log(userId, projectId)
 
-  if (!activeProjectId) return Promise.reject('error/NO_ACTIVE_PROJECT_ID_FOUND');
+  dispatch( actions.createSceneRequest() );
 
   firebase.scenes()
     .add({
-      projectId: activeProjectId,
+      ownerId: userId,
+      projectId,
       createdAt: firebase.serverTimestamp,
       name,
       description
     })
-    .then(ref => {
-      dispatch( setActiveScene({ sceneId : ref.id }) );
-      dispatch( fetchScenes() );
+    .then(sceneRef => {
+      dispatch( actions.createSceneSuccess({ sceneId: sceneRef.id }) );
     })
-    .catch(e => console.error(e));
+    .catch(error => {
+      dispatch( actions.createSceneFailure({ error }) );
+    })
 };
 
 export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
   const activeSceneId = selectors.getActiveSceneId( getState() );
 
+  dispatch( actions.deleteSceneRequest() );
+
   firebase.scene(sceneId)
     .delete()
     .then(() => {
-      if (activeSceneId === sceneId) {
-        dispatch( setActiveScene({ sceneId: null }) );
+      if (sceneId === activeSceneId) {
+        dispatch( setActiveScene({ sceneId: null }));
       }
 
-      dispatch( fetchScenes() );
+      dispatch( actions.deleteSceneSuccess() );
     })
-    .catch(e => console.error(e));
-};
-
-export const deleteMultipleScenes = ({ sceneIds }) => (dispatch, getState) => {
-  const activeSceneId = selectors.getActiveSceneId( getState() );
-  let resetActiveSceneId = false;
-
-  const deleteScenes = sceneIds.map(sceneId => {
-    if (activeSceneId === sceneId) {
-      resetActiveSceneId = true;
-    }
-
-    return firebase.scene(sceneId).delete();
-  });
-
-  return Promise.all(deleteScenes)
-    .then(() => {
-      if (resetActiveSceneId) {
-        dispatch( setActiveScene({ sceneId: null }) );
-      }
-
-      dispatch( fetchScenes() );
+    .catch(() => {
+      dispatch( actions.deleteSceneFailure() );
     });
 };
 
-export const setActiveScene = ({ sceneId }) => (dispatch, getState) => {
-  dispatch(
-    actions.setActiveScene({ sceneId })
-  )
+export const updateScene = ({ sceneId, name, description }) => (dispatch) => {
+  console.log('Update scene: ' + sceneId);
 };
+
+export const setActiveScene = actions.setActiveScene;

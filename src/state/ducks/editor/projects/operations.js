@@ -3,6 +3,10 @@ import { firebase } from 'state/lib/firebase';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import {
+  deleteScene
+} from 'state/ducks/editor/scenes';
+
 export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return null;
 
@@ -54,27 +58,37 @@ export const createProject = ({ name, description }) => (dispatch, getState) => 
 };
 
 export const deleteProject = ({ projectId }) => (dispatch, getState) => {
-  const activeProjectId = selectors.getActiveProjectId( getState() );
-  console.log(projectId);
-
-  /*
-    --> DELETE CHILD SCENES HERE <--
-  */
+  const currentState = getState();
+  const { uid: userId } = currentState.auth.authUser;
+  const activeProjectId = selectors.getActiveProjectId( currentState );
 
   dispatch( actions.deleteProjectRequest() );
 
-  firebase.project(projectId)
-    .delete()
+  dispatch( _deleteChildScenes({ userId, projectId }) )
     .then(() => {
-      if (projectId === activeProjectId) {
-        dispatch( setActiveProject({ projectId: null }));
-      }
+      firebase.project(projectId)
+        .delete()
+        .then(() => {
+          if (projectId === activeProjectId) {
+            dispatch( setActiveProject({ projectId: null }));
+          }
 
-      dispatch( actions.deleteProjectSuccess() );
-    })
-    .catch(() => {
-      dispatch( actions.deleteProjectFailure() );
+          dispatch( actions.deleteProjectSuccess() );
+        })
+        .catch(() => {
+          dispatch( actions.deleteProjectFailure() );
+        });
     });
+};
+
+const _deleteChildScenes = ({ userId, projectId }) => dispatch => {
+  return firebase.scenes()
+    .where("ownerId", "==", userId)
+    .where("projectId", "==", projectId)
+    .get()
+    .then(querySnapshot =>
+      querySnapshot.docs.map(doc => firebase.scene(doc.id).delete())
+    )
 };
 
 export const updateProject = ({ projectId, name, description }) => (dispatch) => {

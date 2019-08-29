@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import {
   getProjectDataById,
   getActiveProjectId
-} from 'state/ducks/editor/_projects';
+} from 'state/ducks/editor/projects';
 
 import Form, { Field } from 'views/components/Forms';
 import { ModalComponent } from 'views/components/Modal';
@@ -23,7 +23,7 @@ const Component = ({ activeProjectId, getProjectDataById, actions }) => {
     const projectData = getProjectDataById( activeProjectId );
 
     if (projectData) {
-      console.log("Project Data: ", projectData);
+      // console.log("Project Data: ", projectData);
     }
 
   }, [activeProjectId, getProjectDataById]);

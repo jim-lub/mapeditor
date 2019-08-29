@@ -14,17 +14,17 @@ import {
   getProjectDataById,
   getProjectSortOrder,
   getActiveProjectId
-} from 'state/ducks/editor/_projects';
+} from 'state/ducks/editor/projects';
 
-import {
-  getScenes
-} from 'state/ducks/editor/scenes';
+// import {
+//   getScenes
+// } from 'state/ducks/editor/scenes';
 
 import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, sceneCollection, actions }) => {
+const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, actions }) => {
   useEffect(() => {
     const unsubscribe = actions.listenToProjectChanges({ userId: authUser.uid });
 
@@ -79,8 +79,6 @@ const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
     projectsCollection: state.editor.projects.collection,
-    sceneCollection: getScenes(state),
-
     activeProjectId: getActiveProjectId(state),
     getProjectDataById: (uid) => getProjectDataById(state, uid),
     projectSortOrder: getProjectSortOrder(state)

@@ -37,7 +37,7 @@ export default createReducer( initialState )({
   [ types.updateProjectFailure ]: (state, action) => reducers.updateProjectFailure(state, action),
 
   [ types.setActiveProject ]: (state, action) => reducers.setActiveProject(state, action),
-})
+});
 
 /*** Operations ***/
 export const listenToProjectChanges = ({ userId }) => operations.listenToProjectChanges({ userId });
