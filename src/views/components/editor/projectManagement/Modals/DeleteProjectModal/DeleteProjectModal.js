@@ -12,10 +12,6 @@ import {
   getDeleteProjectStatus
 } from 'state/ducks/editor/projects';
 
-import {
-  fetchScenesByProjectId
-} from 'state/ducks/editor/scenes';
-
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';
 
@@ -49,16 +45,6 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
   useEffect(() => {
     setProjectData( getProjectDataById(projectId) );
   }, [projectId, getProjectDataById, setProjectData]);
-
-  useEffect(() => {
-    fetchScenesByProjectId(projectId)
-      .then(scenes => {
-        setChildScenes({
-          initialized: true,
-          scenes
-        })
-      });
-  }, [projectId, fetchScenesByProjectId]);
 
   const handleSubmit = () => {
     initializeRequest(true);
@@ -119,8 +105,7 @@ const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
     getProjectDataById: (uid) => getProjectDataById(state, uid),
-    createProjectStatus: getDeleteProjectStatus(state),
-    fetchScenesByProjectId: (projectId) => fetchScenesByProjectId(projectId)
+    createProjectStatus: getDeleteProjectStatus(state)
   }
 }
 
