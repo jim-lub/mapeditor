@@ -8,7 +8,7 @@ import {
 } from 'state/ducks/editor/projects';
 
 import { getFieldStateErrors } from 'lib/validation';
-import { useAwaitModalSubmit } from 'lib/modal';
+import { useAsyncRequestHelper } from 'lib/hooks';
 
 import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
@@ -20,7 +20,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateDesc, setFieldStateDesc] = useState();
   const [disabledFormSubmit, setDisabledFormSubmit] = useState(true);
-  const [submitStatus, initializeSubmit] = useAwaitModalSubmit({ ...createProjectStatus, onSuccess: onClose });
+  const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...createProjectStatus, onSuccess: onClose });
 
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
@@ -31,7 +31,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
   }, [fieldStateArray]);
 
   const handleSubmit = () => {
-    initializeSubmit(true);
+    initializeRequest(true);
 
     actions.createProject({
       name: fieldStateName.value,
@@ -46,7 +46,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
           <h1>Create project</h1>
 
           {
-            (submitStatus === 'REQUEST')
+            (requestStatus === 'REQUEST')
               ? <div className={styles.loaderContainer}><Loader.Simple /></div>
               : null
           }
@@ -58,7 +58,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
               name="projectName"
               label="Name"
               onStateChange={setFieldStateName}
-              disabled={(submitStatus === 'REQUEST')}
+              disabled={(requestStatus === 'REQUEST')}
               required
             />
 
@@ -66,7 +66,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
               name="projectDescription"
               label="Description"
               onStateChange={setFieldStateDesc}
-              disabled={(submitStatus === 'REQUEST')}
+              disabled={(requestStatus === 'REQUEST')}
             />
           </Form.Group>
         </div>
@@ -74,8 +74,8 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
       </div>
 
       <ModalComponent.Footer
-        buttonLeft={{ text: "Cancel", action: onClose, disabled: (submitStatus === 'REQUEST') }}
-        buttonRight={{ text: "Create", color: "blue", form: "createProjectForm", disabled: disabledFormSubmit || (submitStatus === 'REQUEST') }}
+        buttonLeft={{ text: "Cancel", action: onClose, disabled: (requestStatus === 'REQUEST') }}
+        buttonRight={{ text: "Create", color: "blue", form: "createProjectForm", disabled: disabledFormSubmit || (requestStatus === 'REQUEST') }}
       />
     </>
   )

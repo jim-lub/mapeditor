@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useModal } from 'lib/modal';
+import { useModal } from 'lib/hooks';
 import { concatClassNames } from 'lib/utils';
 
 import { DeleteSceneModalTemplate } from '../../modals';

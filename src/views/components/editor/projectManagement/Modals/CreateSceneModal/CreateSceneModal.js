@@ -13,7 +13,7 @@ import {
 } from 'state/ducks/editor/scenes';
 
 import { getFieldStateErrors } from 'lib/validation';
-import { useAwaitModalSubmit } from 'lib/modal';
+import { useAsyncRequestHelper } from 'lib/hooks';
 
 import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
@@ -26,7 +26,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   const [fieldStateDesc, setFieldStateDesc] = useState();
   const [projectData, setProjectData] = useState();
   const [disabledFormSubmit, setDisabledFormSubmit] = useState(true);
-  const [submitStatus, initializeSubmit] = useAwaitModalSubmit({ ...createSceneStatus, onSuccess: onClose });
+  const [submitStatus, initializeSubmit] = useAsyncRequestHelper({ ...createSceneStatus, onSuccess: onClose });
 
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
@@ -37,12 +37,14 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   }, [fieldStateArray]);
 
   useEffect(() => {
-    setProjectData(
-      getProjectDataById(projectId || activeProjectId)
-    );
-  }, [projectId, activeProjectId, getProjectDataById]);
+    const projectData = getProjectDataById(projectId || activeProjectId);
 
-  useEffect(() => console.log(projectData), [projectData])
+    if (projectData) {
+      setProjectData({
+        name: projectData.name
+      });
+    }
+  }, [projectId, activeProjectId, getProjectDataById]);
 
   const handleSubmit = () => {
     initializeSubmit(true);
@@ -55,24 +57,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   };
 
   if (!projectData) {
-    return (
-      <>
-        <div className={styles.container}>
-          <div className={styles.header}>
-            <h1>Create scene</h1>
-          </div>
-
-          <div className={styles.warningContainer}>
-            All scenes need to be assigned to a project. An error occured while trying to find a project for this scene, please try again.
-          </div>
-
-        </div>
-
-        <ModalComponent.Footer
-          buttonLeft={{ text: "Cancel", action: onClose, disabled: (submitStatus === 'REQUEST') }}
-        />
-      </>
-    )
+    return <NoProjectFound onClose={onClose} submitStatus={submitStatus} />
   }
 
   return (
@@ -81,11 +66,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
         <div className={styles.header}>
           <h1>Create scene</h1>
 
-          {
-            (submitStatus === 'REQUEST')
-              ? <div className={styles.loaderContainer}><Loader.Simple /></div>
-              : null
-          }
+          {(submitStatus === 'REQUEST') ? <div className={styles.loaderContainer}><Loader.Simple /></div> : null}
         </div>
 
         <div className={styles.form}>
@@ -102,6 +83,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               label="Name"
               onStateChange={setFieldStateName}
               disabled={(submitStatus === 'REQUEST')}
+              autoFocus={true}
               required
             />
 
@@ -139,3 +121,24 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
+
+const NoProjectFound = ({ onClose, submitStatus }) => {
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>Create scene</h1>
+        </div>
+
+        <div className={styles.warningContainer}>
+          All scenes need to be assigned to a project. An error occured while trying to find a project for this scene. Please try again.
+        </div>
+
+      </div>
+
+      <ModalComponent.Footer
+        buttonLeft={{ text: "Cancel", action: onClose, disabled: (submitStatus === 'REQUEST') }}
+      />
+    </>
+  )
+}

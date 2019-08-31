@@ -4,6 +4,7 @@ import * as types from './types';
 import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
+import * as utils from './utils';
 
 const initialState = {
   status: {
@@ -55,3 +56,6 @@ export const getSetSceneCollectionStatus = state => selectors.getSetSceneCollect
 export const getCreateSceneStatus = state => selectors.getCreateSceneStatus(state);
 export const getDeleteSceneStatus = state => selectors.getDeleteSceneStatus(state);
 export const getUpdateSceneStatus = state => selectors.getUpdateSceneStatus(state);
+
+/*** Utils ***/
+export const fetchScenesByProjectId = (projectId) => utils.fetchScenesByProjectId(projectId)

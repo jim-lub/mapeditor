@@ -25,13 +25,13 @@ import formStyles from '../form.module.css';
 * @return {Component} Text
 *
 */
-export default ({ name, label, placeholder, initialValue = '', disabled, match, required, labelStyle = {}, fieldStyle = {}, displayErrors = true, onStateChange: setParentState }) => {
+export default ({ name, label, placeholder, initialValue = '', autoFocus, disabled, match, required, labelStyle = {}, fieldStyle = {}, displayErrors = true, onStateChange: setParentState }) => {
   const [initialized, setInitialized] = useState(false);
   const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });
 
   useEffect(() => {
     if (!setParentState) return;
-    
+
     setParentState({ value, errors });
   }, [value, name, errors, setParentState]);
 
@@ -66,6 +66,7 @@ export default ({ name, label, placeholder, initialValue = '', disabled, match, 
           name={name}
           placeholder={placeholder}
           value={value}
+          autoFocus={autoFocus}
           disabled={disabled}
           className={textInputClassNames}
           onChange={handleChange}

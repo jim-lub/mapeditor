@@ -1,22 +1,22 @@
 import React from 'react';
 
-import { useModal } from 'lib/modal';
-import { CreateSceneModalTemplate } from '../../modals';
+import { useModal } from 'lib/hooks';
+import {
+  CreateProjectModal,
+  CreateSceneModal
+} from 'views/components/editor/projectManagement/Modals';
 
 import styles from './toolbar.module.css';
 
 export default ({ onCreateScene, disabled }) => {
-  const [CreateSceneModal, openModal_createScene] = useModal(
-    CreateSceneModalTemplate,
-    { onCreateScene }
-  );
+  const [CreateSceneModalComponent, openCreateSceneModal] = useModal(CreateSceneModal, {});
 
   return (
     <>
       <div className={"clearfix " + styles.container}>
-        <button className={styles.button} onClick={openModal_createScene} disabled={disabled}>+ Create Scene</button>
+        <button onClick={openCreateSceneModal}>Create Scene</button>
       </div>
-      <CreateSceneModal />
+      <CreateSceneModalComponent />
     </>
   );
 };

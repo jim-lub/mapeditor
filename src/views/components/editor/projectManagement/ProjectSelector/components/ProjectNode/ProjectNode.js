@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useModal } from 'lib/modal';
+import { useModal } from 'lib/hooks';
 import { concatClassNames } from 'lib/utils';
 
 import { DeleteProjectModalTemplate } from '../../modals';
@@ -8,10 +8,6 @@ import { DeleteProjectModalTemplate } from '../../modals';
 import styles from './projectnode.module.css';
 
 export default ({ name, description, projectId, isActive, childScenes, onSelect, onDelete }) => {
-  const [DeleteProjectModal, openModal_deleteProject] = useModal(
-    DeleteProjectModalTemplate,
-    { projectId, projectName: name, childScenes, onDelete, width: 400 }
-  );
 
   const handleSelect = (e) => {
     e.stopPropagation();
@@ -20,7 +16,7 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
 
   const openDeleteModal = (e) => {
     e.stopPropagation();
-    openModal_deleteProject();
+    onDelete({ projectId })
   };
 
   const projectNodeClassName = concatClassNames([
@@ -36,7 +32,7 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
         </div>
 
         <div className={styles.descriptionContainer}>
-          { description || "..."}
+          { projectId || "..."}
         </div>
 
         <div className={"clearfix " + styles.tagsContainer}>
@@ -47,8 +43,6 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
         <div className={styles.toolbarContainer}>
         </div>
       </div>
-
-      <DeleteProjectModal />
     </>
   );
 };
