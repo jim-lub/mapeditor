@@ -10,7 +10,7 @@ export const setSceneCollectionRequest = (state, action) => {
 };
 
 export const setSceneCollectionSuccess = (state, action) => {
-  const { sceneCollection } = action.payload;
+  const { sceneCollection, sceneSortOrder } = action.payload;
 
   return {
     ...state,
@@ -18,14 +18,8 @@ export const setSceneCollectionSuccess = (state, action) => {
       ...state.status,
       setSceneCollection: { loading: false, error: null }
     },
-    sortOrder: sceneCollection.map(data => data.uid),
-    collection: Object.assign({}, ...sceneCollection.map(data => ({
-      [data.uid]: {
-        projectId: data.projectId,
-        name: data.name,
-        description: data.description
-      }
-    })))
+    collection: sceneCollection,
+    sortOrder: sceneSortOrder
   }
 };
 

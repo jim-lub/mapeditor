@@ -48,7 +48,7 @@ export const setActiveScene = ({ sceneId }) => operations.setActiveScene({ scene
 /*** Selectors ***/
 export const getSceneDataById = (state, sceneId) => selectors.getSceneDataById(state, sceneId);
 export const getSceneCollection = state => selectors.getSceneCollection(state);
-export const getSceneSortOrder = state => selectors.getSceneSortOrder(state);
+export const getSceneSortOrderByProjectId = (state, projectId) => selectors.getSceneSortOrderByProjectId(state, projectId);
 export const getActiveSceneId = state => selectors.getActiveSceneId(state);
 
 export const getSetSceneCollectionStatus = state => selectors.getSetSceneCollectionStatus(state);

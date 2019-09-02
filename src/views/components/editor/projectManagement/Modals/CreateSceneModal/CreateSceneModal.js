@@ -24,17 +24,20 @@ import styles from './createscenemodal.module.css';
 const Component = ({ projectId = null, activeProjectId, getProjectDataById, createSceneStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateDesc, setFieldStateDesc] = useState();
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableInput, setDisableInput] = useState(false);
   const [projectData, setProjectData] = useState();
-  const [disabledFormSubmit, setDisabledFormSubmit] = useState(true);
-  const [submitStatus, initializeSubmit] = useAsyncRequestHelper({ ...createSceneStatus, onSuccess: onClose });
+  const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...createSceneStatus, onSuccess: onClose });
 
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
   useEffect(() => {
-   setDisabledFormSubmit(
+   setDisableSubmit(
      ( getFieldStateErrors(fieldStateArray).length > 0 ) ? true : false
    );
   }, [fieldStateArray]);
+
+  useEffect(() => setDisableInput( (requestStatus === 'REQUEST') ? true : false ), [requestStatus]);
 
   useEffect(() => {
     const projectData = getProjectDataById(projectId || activeProjectId);
@@ -47,7 +50,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   }, [projectId, activeProjectId, getProjectDataById]);
 
   const handleSubmit = () => {
-    initializeSubmit(true);
+    initializeRequest(true);
 
     actions.createScene({
       projectId: projectId || activeProjectId,
@@ -57,7 +60,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   };
 
   if (!projectData) {
-    return <NoProjectFound onClose={onClose} submitStatus={submitStatus} />
+    return <NoProjectFound onClose={onClose} requestStatus={requestStatus} />
   }
 
   return (
@@ -66,7 +69,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
         <div className={styles.header}>
           <h1>Create scene</h1>
 
-          {(submitStatus === 'REQUEST') ? <div className={styles.loaderContainer}><Loader.Simple /></div> : null}
+          {disableInput ? <div className={styles.loaderContainer}><Loader.Simple /></div> : null}
         </div>
 
         <div className={styles.form}>
@@ -82,7 +85,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               name="sceneName"
               label="Name"
               onStateChange={setFieldStateName}
-              disabled={(submitStatus === 'REQUEST')}
+              disabled={disableInput}
               autoFocus={true}
               required
             />
@@ -91,7 +94,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               name="sceneDescription"
               label="Description"
               onStateChange={setFieldStateDesc}
-              disabled={(submitStatus === 'REQUEST')}
+              disabled={disableInput}
             />
           </Form.Group>
         </div>
@@ -99,8 +102,8 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
       </div>
 
       <ModalComponent.Footer
-        buttonLeft={{ text: "Cancel", action: onClose, disabled: (submitStatus === 'REQUEST') }}
-        buttonRight={{ text: "Create", color: "blue", form: "createSceneForm", disabled: disabledFormSubmit || (submitStatus === 'REQUEST') }}
+        buttonLeft={{ text: "Cancel", action: onClose, disabled: disableInput }}
+        buttonRight={{ text: "Create", color: "blue", form: "createSceneForm", disabled: disableSubmit || disableInput }}
       />
     </>
   )
@@ -122,7 +125,7 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
 
-const NoProjectFound = ({ onClose, submitStatus }) => {
+const NoProjectFound = ({ onClose }) => {
   return (
     <>
       <div className={styles.container}>
@@ -137,7 +140,7 @@ const NoProjectFound = ({ onClose, submitStatus }) => {
       </div>
 
       <ModalComponent.Footer
-        buttonLeft={{ text: "Cancel", action: onClose, disabled: (submitStatus === 'REQUEST') }}
+        buttonLeft={{ text: "Cancel", action: onClose }}
       />
     </>
   )

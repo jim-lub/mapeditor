@@ -15,7 +15,7 @@ import {
   createScene,
   deleteScene,
   setActiveScene,
-  getSceneSortOrder,
+  getSceneSortOrderByProjectId,
   getSceneCollection,
   getActiveSceneId,
   getSceneDataById,
@@ -26,20 +26,21 @@ import { SceneNode, Toolbar } from './components';
 
 import styles from './sceneselector.module.css';
 
-const SceneSelector = ({ authUser, sceneSortOrder, sceneCollection, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
-
+const SceneSelector = ({ authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
   useEffect(() => {
     // console.log(activeProjectId)
     const unsubscribe = actions.listenToSceneChanges({
-      userId: authUser.uid,
-      projectId: activeProjectId
+      userId: authUser.uid
     });
 
     return () => unsubscribe();
   }, [authUser, activeProjectId, actions]);
 
-  const RenderSceneNodes = () =>
-    sceneSortOrder
+  const RenderSceneNodes = () => {
+    if (!activeProjectId) return null;
+    const sceneSortOrder = getSceneSortOrderByProjectId(activeProjectId);
+
+    return sceneSortOrder
       .map(sceneId => {
         const { name, description } = getSceneDataById(sceneId);
         const isActive = (sceneId === activeSceneId);
@@ -55,7 +56,8 @@ const SceneSelector = ({ authUser, sceneSortOrder, sceneCollection, activeProjec
             onDelete={actions.deleteScene}
           />
         );
-  });
+
+  })};
 
   return (
     <div className={styles.container}>
@@ -81,8 +83,7 @@ const SceneSelector = ({ authUser, sceneSortOrder, sceneCollection, activeProjec
 const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
-    sceneSortOrder: getSceneSortOrder(state),
-    sceneCollection: getSceneCollection(state),
+    getSceneSortOrderByProjectId: (projectId) => getSceneSortOrderByProjectId(state, projectId),
     activeProjectId: getActiveProjectId(state),
     activeSceneId: getActiveSceneId(state),
     getSceneDataById: (uid) => getSceneDataById(state, uid),

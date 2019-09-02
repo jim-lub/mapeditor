@@ -12,6 +12,11 @@ import {
   getDeleteProjectStatus
 } from 'state/ducks/editor/projects';
 
+import {
+  getSceneSortOrderByProjectId,
+  getSceneDataById,
+} from 'state/ducks/editor/scenes';
+
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';
 
@@ -26,9 +31,10 @@ import {
 
 import styles from './deleteprojectmodal.module.css';
 
-const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, deleteProjectStatus, actions, onClose }) => {
+const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, deleteProjectStatus, getSceneDataById, getSceneSortOrderByProjectId, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
-  const [disabledFormSubmit, setDisabledFormSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableInput, setDisableInput] = useState(false);
   const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...deleteProjectStatus, onSuccess: onClose });
 
   const [projectData, setProjectData] = useState({});
@@ -37,7 +43,7 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
   const fieldStateArray = [fieldStateName];
 
   useEffect(() => {
-   setDisabledFormSubmit(
+   setDisableSubmit(
      ( getFieldStateErrors(fieldStateArray).length > 0 ) ? true : false
    );
   }, [fieldStateArray]);
@@ -45,6 +51,17 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
   useEffect(() => {
     setProjectData( getProjectDataById(projectId) );
   }, [projectId, getProjectDataById, setProjectData]);
+
+  useEffect(() => setDisableInput( (requestStatus === 'REQUEST') ? true : false ), [requestStatus]);
+
+  useEffect(() => {
+    const sceneSortOrder = getSceneSortOrderByProjectId(projectId);
+    const sceneNames = sceneSortOrder.map(sceneId => getSceneDataById(sceneId));
+    setChildScenes( {
+      initialized: true,
+      scenes: sceneNames
+    } );
+  }, [projectId, getSceneDataById, getSceneSortOrderByProjectId]);
 
   const handleSubmit = () => {
     initializeRequest(true);
@@ -65,7 +82,7 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
           <h1>Delete project</h1>
 
           {
-            (requestStatus === 'REQUEST')
+            disableInput
               ? <div className={styles.loader}><Loader.Simple /></div>
               : null
           }
@@ -84,7 +101,7 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
             <Field.Text
               name="deleteProjectConfirmation"
               onStateChange={setFieldStateName}
-              disabled={(requestStatus === 'REQUEST')}
+              disabled={disableInput}
               match={projectData.name}
               displayErrors={false}
             />
@@ -94,8 +111,8 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
       </div>
 
       <ModalComponent.Footer
-        buttonLeft={{ text: "Cancel", action: onClose, disabled: (requestStatus === 'REQUEST') }}
-        buttonRight={{ text: "Delete", color: "red", form: "deleteProjectForm", disabled: disabledFormSubmit || (requestStatus === 'REQUEST') }}
+        buttonLeft={{ text: "Cancel", action: onClose, disabled: disableInput }}
+        buttonRight={{ text: "Delete", color: "red", form: "deleteProjectForm", disabled: disableSubmit || disableInput }}
       />
     </>
   )
@@ -105,7 +122,9 @@ const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
     getProjectDataById: (uid) => getProjectDataById(state, uid),
-    createProjectStatus: getDeleteProjectStatus(state)
+    createProjectStatus: getDeleteProjectStatus(state),
+    getSceneSortOrderByProjectId: (projectId) => getSceneSortOrderByProjectId(state, projectId),
+    getSceneDataById: (uid) => getSceneDataById(state, uid),
   }
 }
 

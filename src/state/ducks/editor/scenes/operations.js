@@ -7,19 +7,17 @@ import {
   getActiveProjectId
 } from 'state/ducks/editor/projects';
 
-export const listenToSceneChanges = ({ userId, projectId }) => (dispatch, getState) => {
+export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return () => null;
-  if (!projectId) return () => null;
-  console.log(projectId)
 
   return firebase.scenes()
     .where("ownerId", "==", userId)
-    .where("projectId", "==", projectId)
     .orderBy("createdAt", "desc")
     .onSnapshot(snapshot => {
       dispatch( actions.setSceneCollectionRequest() );
 
-      const sceneCollection = [];
+      const sceneCollection = {};
+      const sceneSortOrder = {};
 
       snapshot.forEach(doc => {
         // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
@@ -27,17 +25,28 @@ export const listenToSceneChanges = ({ userId, projectId }) => (dispatch, getSta
 
         const { projectId, name, description, createdAt } = doc.data();
 
-        sceneCollection.push({
+        sceneCollection[doc.id] = {
           uid: doc.id,
           projectId,
           name,
           description,
-          createdAt
-        });
+          createdAt: (createdAt) ? createdAt.toDate() : null
+        }
+
+        if ( sceneSortOrder.hasOwnProperty(projectId) ) {
+          if ( sceneSortOrder.hasOwnProperty(doc.id) ) {
+            sceneSortOrder[projectId].push(doc.id);
+          } else {
+            sceneSortOrder[projectId].push(doc.id);
+          }
+        } else {
+          sceneSortOrder[projectId] = [doc.id];
+        }
+
       });
 
       try {
-        dispatch( actions.setSceneCollectionSuccess({ sceneCollection }) );
+        dispatch( actions.setSceneCollectionSuccess({ sceneCollection, sceneSortOrder }) );
       } catch (error) {
         dispatch( actions.setSceneCollectionFailure({ error }) );
       }

@@ -19,16 +19,19 @@ import styles from './createprojectmodal.module.css';
 const Component = ({ createProjectStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateDesc, setFieldStateDesc] = useState();
-  const [disabledFormSubmit, setDisabledFormSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableInput, setDisableInput] = useState(false);
   const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...createProjectStatus, onSuccess: onClose });
 
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
   useEffect(() => {
-   setDisabledFormSubmit(
+   setDisableSubmit(
      ( getFieldStateErrors(fieldStateArray).length > 0 ) ? true : false
    );
   }, [fieldStateArray]);
+
+  useEffect(() => setDisableInput( (requestStatus === 'REQUEST') ? true : false ), [requestStatus]);
 
   const handleSubmit = () => {
     initializeRequest(true);
@@ -46,7 +49,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
           <h1>Create project</h1>
 
           {
-            (requestStatus === 'REQUEST')
+            (disableInput)
               ? <div className={styles.loaderContainer}><Loader.Simple /></div>
               : null
           }
@@ -58,7 +61,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
               name="projectName"
               label="Name"
               onStateChange={setFieldStateName}
-              disabled={(requestStatus === 'REQUEST')}
+              disabled={disableInput}
               required
             />
 
@@ -66,7 +69,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
               name="projectDescription"
               label="Description"
               onStateChange={setFieldStateDesc}
-              disabled={(requestStatus === 'REQUEST')}
+              disabled={disableInput}
             />
           </Form.Group>
         </div>
@@ -74,8 +77,8 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
       </div>
 
       <ModalComponent.Footer
-        buttonLeft={{ text: "Cancel", action: onClose, disabled: (requestStatus === 'REQUEST') }}
-        buttonRight={{ text: "Create", color: "blue", form: "createProjectForm", disabled: disabledFormSubmit || (requestStatus === 'REQUEST') }}
+        buttonLeft={{ text: "Cancel", action: onClose, disabled: disableInput }}
+        buttonRight={{ text: "Create", color: "blue", form: "createProjectForm", disabled: disableSubmit || disableInput }}
       />
     </>
   )

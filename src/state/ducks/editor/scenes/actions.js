@@ -4,10 +4,11 @@ export const setSceneCollectionRequest = () => ({
   type: types.setSceneCollectionRequest
 });
 
-export const setSceneCollectionSuccess = ({ sceneCollection }) => ({
+export const setSceneCollectionSuccess = ({ sceneCollection, sceneSortOrder }) => ({
   type: types.setSceneCollectionSuccess,
   payload: {
-    sceneCollection
+    sceneCollection,
+    sceneSortOrder
   }
 });
 
