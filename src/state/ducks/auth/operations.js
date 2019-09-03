@@ -6,8 +6,6 @@ import {
   updateDbUser
 } from './utils';
 
-import { initializeStore } from 'state/lib/utils/initializeStore';
-
 export const listenToAuthChanges = () => (dispatch) => {
   firebase.auth.onAuthStateChanged(authUser => {
 
@@ -25,10 +23,6 @@ export const listenToAuthChanges = () => (dispatch) => {
               }
             })
           );
-
-          dispatch(
-            initializeStore()
-          )
         })
     } else {
       dispatch({ type: 'CLEAR_STORE'});

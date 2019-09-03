@@ -8,11 +8,9 @@ import routes from 'lib/routes';
 import styles from './app.module.css';
 import withAuthorization from 'views/lib/authorization/withAuthorization';
 import { listenToAuthChanges } from 'state/ducks/auth';
-import { listenToProjectChanges2 } from 'state/ducks/editor/projects';
 
 export const App = ({ store }) => {
   store.dispatch( listenToAuthChanges() );
-  // store.dispatch( listenToProjectChanges2("0zu16rMOtohQVclgxTYJOp7HIdz1") );
 
   return (
     <div className={styles.windowWrapper}>

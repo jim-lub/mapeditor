@@ -1,99 +1,58 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {
-  getAuthUser
-} from 'state/ducks/auth';
+import { useModal } from 'lib/hooks';
 
 import {
-  getActiveProjectId
-} from 'state/ducks/editor/projects';
+  CreateSceneModal,
+  DeleteSceneModal,
+  UpdateSceneModal,
+} from 'views/components/editor/projectManagement/Modals';
 
 import {
-  listenToSceneChanges,
-  setActiveScene,
-  getSceneSortOrderByProjectId,
-  getActiveSceneId,
-  getSceneDataById,
-  getSetSceneCollectionStatus
-} from 'state/ducks/editor/scenes';
+  NodeList,
+  Toolbar
+} from './components';
 
-import { SceneNode, Toolbar } from './components';
+import styles from './sceneSelector.module.css';
 
-import styles from './sceneselector.module.css';
+const Component = () => {
+  const [CreateSceneModalComponent, openCreateSceneModal] = useModal(CreateSceneModal);
+  const [DeleteSceneModalComponent, openDeleteSceneModal] = useModal(DeleteSceneModal, { width: 400 });
+  const [UpdateSceneModalComponent, openUpdateSceneModal] = useModal(UpdateSceneModal);
 
-const SceneSelector = ({ onDelete, onUpdate, authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
-  useEffect(() => {
-    const unsubscribe = actions.listenToSceneChanges({
-      userId: authUser.uid
-    });
-
-    return () => unsubscribe();
-  }, [authUser, activeProjectId, actions]);
-
-  const RenderSceneNodes = () => {
-    if (!activeProjectId) return null;
-    const sceneSortOrder = getSceneSortOrderByProjectId(activeProjectId);
-
-    return sceneSortOrder
-      .map(sceneId => {
-        const { name, description } = getSceneDataById(sceneId);
-        const isActive = (sceneId === activeSceneId);
-
-        return (
-          <SceneNode
-            key={sceneId}
-            name={name}
-            description={description}
-            sceneId={sceneId}
-            isActive={isActive}
-            onSelect={actions.setActiveScene}
-            onDelete={onDelete}
-            onUpdate={onUpdate}
-          />
-        );
-
-  })};
 
   return (
-    <div className={styles.container}>
-      <div className={styles.scrollContainer}>
-        {
-          (status.collection.loading)
-            ? <div className={styles.loading}>Loading..</div>
-            : null
-        }
-        <RenderSceneNodes />
+    <>
+      <div className={styles.wrapper}>
+        <div className={styles.nodeList}>
+          <NodeList openDeleteModal={openDeleteSceneModal} openUpdateModal={openUpdateSceneModal}/>
+        </div>
+        <div className={styles.toolbar}>
+          <Toolbar openCreateSceneModal={openCreateSceneModal} />
+        </div>
+
       </div>
 
-      <div className={styles.toolbarContainer}>
-        <Toolbar
-          onCreateScene={actions.createScene}
-          disabled={(!activeProjectId)}
-        />
-      </div>
-    </div>
-  );
-};
+      <CreateSceneModalComponent />
+      <DeleteSceneModalComponent />
+      <UpdateSceneModalComponent />
+    </>
+  )
+
+}
 
 const mapStateToProps = (state) => {
   return {
-    authUser: getAuthUser(state),
-    getSceneSortOrderByProjectId: (projectId) => getSceneSortOrderByProjectId(state, projectId),
-    activeProjectId: getActiveProjectId(state),
-    activeSceneId: getActiveSceneId(state),
-    getSceneDataById: (uid) => getSceneDataById(state, uid),
-    status: {
-      collection: getSetSceneCollectionStatus(state)
-    }
+
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ listenToSceneChanges, setActiveScene }, dispatch)
+    actions: bindActionCreators({ }, dispatch)
   }
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SceneSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(Component);
