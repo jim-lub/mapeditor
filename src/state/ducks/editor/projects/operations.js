@@ -15,13 +15,14 @@ export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {
       const projectCollection = [];
 
       snapshot.forEach(doc => {
-        const { name, description, createdAt } = doc.data();
+        const { name, description, createdAt, modifiedAt } = doc.data();
 
         projectCollection.push({
           uid: doc.id,
-          name: name,
-          description: description,
-          createdAt: createdAt
+          name,
+          description,
+          createdAt: (createdAt) ? createdAt.toDate() : null,
+          modifiedAt: (modifiedAt) ? modifiedAt.toDate() : null,
         });
       });
 
@@ -42,8 +43,9 @@ export const createProject = ({ name, description }) => (dispatch, getState) => 
     .add({
       ownerId: userId,
       createdAt: firebase.serverTimestamp,
-      name: name,
-      description: description
+      modifiedAt: firebase.serverTimestamp,
+      name,
+      description
     })
     .then(ref => {
       dispatch( actions.createProjectSuccess({ projectId: ref.id }) );
@@ -88,7 +90,20 @@ const _deleteChildScenes = ({ userId, projectId }) => dispatch => {
 };
 
 export const updateProject = ({ projectId, name, description }) => (dispatch) => {
-  console.log('Update project: ' + projectId);
+  dispatch ( actions.updateProjectRequest() );
+
+  firebase.project(projectId)
+    .update({
+      name,
+      description,
+      modifiedAt: firebase.serverTimestamp,
+    })
+    .then(() => {
+      dispatch( actions.updateProjectSuccess() );
+    })
+    .catch(error => {
+      dispatch( actions.updateProjectFailure({ error }) );
+    });
 };
 
 export const setActiveProject = actions.setActiveProject;

@@ -7,7 +7,7 @@ import { DeleteProjectModalTemplate } from '../../modals';
 
 import styles from './projectnode.module.css';
 
-export default ({ name, description, projectId, isActive, childScenes, onSelect, onDelete }) => {
+export default ({ name, description, projectId, isActive, childScenes, onSelect, onDelete, onUpdate }) => {
 
   const handleSelect = (e) => {
     e.stopPropagation();
@@ -17,6 +17,11 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
   const openDeleteModal = (e) => {
     e.stopPropagation();
     onDelete({ projectId })
+  };
+
+  const openUpdateModal = (e) => {
+    e.stopPropagation();
+    onUpdate({ projectId })
   };
 
   const projectNodeClassName = concatClassNames([
@@ -38,6 +43,7 @@ export default ({ name, description, projectId, isActive, childScenes, onSelect,
         <div className={"clearfix " + styles.tagsContainer}>
           <div className={styles.tag}><span style={{fontWeight: "bold"}}>{ childScenes.length }</span> Scene(s)</div>
           <span className={styles.deleteButton} onClick={openDeleteModal}>Delete</span>
+          <span className={styles.updateButton} onClick={openUpdateModal}>Edit</span>
         </div>
 
         <div className={styles.toolbarContainer}>

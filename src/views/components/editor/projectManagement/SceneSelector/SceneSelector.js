@@ -23,7 +23,7 @@ import { SceneNode, Toolbar } from './components';
 
 import styles from './sceneselector.module.css';
 
-const SceneSelector = ({ onDelete, authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
+const SceneSelector = ({ onDelete, onUpdate, authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
   useEffect(() => {
     const unsubscribe = actions.listenToSceneChanges({
       userId: authUser.uid
@@ -50,6 +50,7 @@ const SceneSelector = ({ onDelete, authUser, getSceneSortOrderByProjectId, activ
             isActive={isActive}
             onSelect={actions.setActiveScene}
             onDelete={onDelete}
+            onUpdate={onUpdate}
           />
         );
 

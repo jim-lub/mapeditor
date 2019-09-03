@@ -23,14 +23,15 @@ export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
         // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
         // console.log(source, " data: ", doc.data());
 
-        const { projectId, name, description, createdAt } = doc.data();
+        const { projectId, name, description, createdAt, modifiedAt } = doc.data();
 
         sceneCollection[doc.id] = {
           uid: doc.id,
           projectId,
           name,
           description,
-          createdAt: (createdAt) ? createdAt.toDate() : null
+          createdAt: (createdAt) ? createdAt.toDate() : null,
+          modifiedAt: (modifiedAt) ? modifiedAt.toDate() : null,
         }
 
         if ( sceneSortOrder.hasOwnProperty(projectId) ) {
@@ -66,6 +67,7 @@ export const createScene = ({ name, description }) => (dispatch, getState) => {
       ownerId: userId,
       projectId,
       createdAt: firebase.serverTimestamp,
+      modifiedAt: firebase.serverTimestamp,
       name,
       description
     })
@@ -97,7 +99,20 @@ export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
 };
 
 export const updateScene = ({ sceneId, name, description }) => (dispatch) => {
-  console.log('Update scene: ' + sceneId);
+  dispatch ( actions.updateSceneRequest() );
+
+  firebase.scene(sceneId)
+    .update({
+      name,
+      description,
+      modifiedAt: firebase.serverTimestamp,
+    })
+    .then(() => {
+      dispatch( actions.updateSceneSuccess() );
+    })
+    .catch(error => {
+      dispatch( actions.updateSceneFailure({ error }) );
+    });
 };
 
 export const setActiveScene = actions.setActiveScene;

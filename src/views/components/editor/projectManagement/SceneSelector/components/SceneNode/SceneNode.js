@@ -5,7 +5,7 @@ import { concatClassNames } from 'lib/utils';
 
 import styles from './scenenode.module.css';
 
-export default ({ name, description, sceneId, isActive, onSelect, onDelete }) => {
+export default ({ name, description, sceneId, isActive, onSelect, onDelete, onUpdate }) => {
   const handleSelect = (e) => {
     e.stopPropagation();
     onSelect({ sceneId });
@@ -15,6 +15,11 @@ export default ({ name, description, sceneId, isActive, onSelect, onDelete }) =>
     e.stopPropagation();
     onDelete({ sceneId });
   };
+
+  const openUpdateModal = (e) => {
+    e.stopPropagation();
+    onUpdate({ sceneId });
+  }
 
   const sceneNodeClassName = concatClassNames([
     styles.container,
@@ -34,6 +39,7 @@ export default ({ name, description, sceneId, isActive, onSelect, onDelete }) =>
 
         <div className={"clearfix " + styles.tagsContainer}>
           <span className={styles.deleteButton} onClick={openDeleteModal}>Delete</span>
+          <span className={styles.updateButton} onClick={openUpdateModal}>Edit</span>
         </div>
 
         <div className={styles.toolbarContainer}>

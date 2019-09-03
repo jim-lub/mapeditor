@@ -24,7 +24,7 @@ import { ProjectNode, Toolbar } from './components';
 
 import styles from './projectselector.module.css';
 
-const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, actions, onDelete }) => {
+const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activeProjectId, getProjectDataById, actions, onDelete, onUpdate }) => {
   useEffect(() => {
     const unsubscribe = actions.listenToProjectChanges({ userId: authUser.uid });
 
@@ -49,6 +49,7 @@ const ProjectSelector = ({ authUser, projectSortOrder, projectsCollection, activ
           childScenes={childScenes}
           onSelect={actions.setActiveProject}
           onDelete={onDelete}
+          onUpdate={onUpdate}
         />
       );
   });

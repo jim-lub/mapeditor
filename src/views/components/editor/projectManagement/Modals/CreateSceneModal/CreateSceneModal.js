@@ -50,7 +50,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   }, [projectId, activeProjectId, getProjectDataById]);
 
   const handleSubmit = () => {
-    initializeRequest(true);
+    initializeRequest();
 
     actions.createScene({
       projectId: projectId || activeProjectId,

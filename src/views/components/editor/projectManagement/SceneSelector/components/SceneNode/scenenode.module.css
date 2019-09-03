@@ -50,3 +50,17 @@
   text-decoration: underline;
   background-color: #ea8a90;
 }
+
+.updateButton {
+  float: left;
+  margin: 1px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  font-size: 11px;
+}
+
+.updateButton:hover {
+  text-decoration: underline;
+  background-color: #8acfea;
+}

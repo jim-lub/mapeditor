@@ -22,7 +22,6 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [disableInput, setDisableInput] = useState(false);
   const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...createProjectStatus, onSuccess: onClose });
-
   const fieldStateArray = [fieldStateName, fieldStateDesc];
 
   useEffect(() => {
