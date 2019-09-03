@@ -12,11 +12,8 @@ import {
 
 import {
   listenToSceneChanges,
-  createScene,
-  deleteScene,
   setActiveScene,
   getSceneSortOrderByProjectId,
-  getSceneCollection,
   getActiveSceneId,
   getSceneDataById,
   getSetSceneCollectionStatus
@@ -26,9 +23,8 @@ import { SceneNode, Toolbar } from './components';
 
 import styles from './sceneselector.module.css';
 
-const SceneSelector = ({ authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
+const SceneSelector = ({ onDelete, authUser, getSceneSortOrderByProjectId, activeProjectId, activeSceneId, getSceneDataById, status, actions }) => {
   useEffect(() => {
-    // console.log(activeProjectId)
     const unsubscribe = actions.listenToSceneChanges({
       userId: authUser.uid
     });
@@ -53,7 +49,7 @@ const SceneSelector = ({ authUser, getSceneSortOrderByProjectId, activeProjectId
             sceneId={sceneId}
             isActive={isActive}
             onSelect={actions.setActiveScene}
-            onDelete={actions.deleteScene}
+            onDelete={onDelete}
           />
         );
 
@@ -95,7 +91,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ listenToSceneChanges, createScene, deleteScene, setActiveScene }, dispatch)
+    actions: bindActionCreators({ listenToSceneChanges, setActiveScene }, dispatch)
   }
 };
 

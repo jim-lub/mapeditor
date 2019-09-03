@@ -10,7 +10,7 @@ export default ({ requestStatus, onClose }) => {
     <>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1>Delete project</h1>
+          <h1>Delete scene</h1>
         </div>
 
         {

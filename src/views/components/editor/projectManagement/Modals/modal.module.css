@@ -8,32 +8,31 @@
   border-bottom: solid 1px #d5d5d5;
 }
 
-.loader {
+.loaderContainerHeader {
   position: absolute;
   top: 0px;
   right: 0px;
 }
 
-.message {
+.loaderContainerBody {
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 48px;
+}
+
+.body {
   font-size: 12px;
   padding-top: 5px;
+  border-bottom: solid 1px #e5e5e5;
 }
 
 .form {
   margin-top: 5px;
-  border-top: solid 1px #e5e5e5;
 }
 
-.bold {
-  font-size: inherit;
-  font-weight: bold;
-}
-
-.sceneList {
+.list {
   list-style-position: inside;
-  margin: 5px 0;
-  padding: 5px;
-  background-color: #fffed9;
   max-height: 160px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -43,4 +42,21 @@
   margin: 5px 0;
   padding: 5px;
   background-color: #fffed9;
+}
+
+.error {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #ffd9d9;
+}
+
+.succes {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #ddffd9;
+}
+
+.bold {
+  font-size: inherit;
+  font-weight: bold;
 }

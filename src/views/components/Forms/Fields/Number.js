@@ -25,13 +25,17 @@ import formStyles from '../form.module.css';
 * @return {Component} Number
 *
 */
-export default ({ name, label, placeholder, initialValue = '', disabled, match, required, labelStyle = {}, fieldStyle = {}, onStateChange: setParentState }) => {
+export default ({
+  name, label, placeholder, initialValue = '', disabled,
+  autoFocus, match, required, labelStyle = {}, fieldStyle = {},
+  displaySuccess = false, displayErrors = true, onStateChange: setParentState
+}) => {
   const [initialized, setInitialized] = useState(false);
   const [value, setValue, errors] = useFormValidation({ initialValue, name, match, required });
 
   useEffect(() => {
     if (!setParentState) return;
-    
+
     setParentState({ value, errors });
   }, [value, errors, setParentState]);
 
@@ -50,7 +54,8 @@ export default ({ name, label, placeholder, initialValue = '', disabled, match, 
 
   const textInputClassNames = concatClassNames([
     fieldStyles.number,
-    (initialized && errors.length > 0) ? fieldStyles.validationError : ""
+    (initialized && errors.length > 0) ? fieldStyles.validationError : "",
+    (initialized && errors.length === 0 && displaySuccess) ? fieldStyles.validationSuccess : ""
   ]);
 
   return (

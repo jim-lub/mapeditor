@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  getAuthUser
-} from 'state/ducks/auth';
-
-import {
   deleteProject,
   getProjectDataById,
   getDeleteProjectStatus
@@ -22,14 +18,13 @@ import { useAsyncRequestHelper } from 'lib/hooks';
 
 import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
-import { Loader } from 'views/components/Loader';
 
 import {
   NoProjectFound,
   SceneList
 } from './components';
 
-import styles from './deleteprojectmodal.module.css';
+import styles from '../modal.module.css';
 
 const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, deleteProjectStatus, getSceneDataById, getSceneSortOrderByProjectId, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
@@ -42,15 +37,13 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
 
   const fieldStateArray = [fieldStateName];
 
-  useEffect(() => {
-   setDisableSubmit(
+  useEffect(() => setDisableSubmit(
      ( getFieldStateErrors(fieldStateArray).length > 0 ) ? true : false
-   );
-  }, [fieldStateArray]);
+   ), [fieldStateArray]);
 
-  useEffect(() => {
-    setProjectData( getProjectDataById(projectId) );
-  }, [projectId, getProjectDataById, setProjectData]);
+  useEffect(() => setProjectData(
+    getProjectDataById(projectId)
+  ), [projectId, getProjectDataById, setProjectData]);
 
   useEffect(() => setDisableInput( (requestStatus === 'REQUEST') ? true : false ), [requestStatus]);
 
@@ -65,14 +58,13 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
 
   const handleSubmit = () => {
     initializeRequest(true);
-
     actions.deleteProject({
       projectId
     });
   };
 
-  if (!projectData) {
-    return <NoProjectFound onClose={onClose} />
+  if (!projectData || requestStatus === 'REQUEST') {
+    return <NoProjectFound requestStatus={requestStatus} onClose={onClose} />
   }
 
   return (
@@ -80,17 +72,11 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
       <div className={styles.container}>
         <div className={styles.header}>
           <h1>Delete project</h1>
-
-          {
-            disableInput
-              ? <div className={styles.loader}><Loader.Simple /></div>
-              : null
-          }
         </div>
 
         <SceneList {...childScenes}/>
 
-        <div className={styles.message}>
+        <div className={styles.body}>
           This action <span className={styles.bold}>cannot</span> be undone. This will permanently
           delete the <span className={styles.bold}>{ projectData.name }</span> project and all it's child scenes.
           Please type in the name of the project to confirm.
@@ -103,6 +89,7 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
               onStateChange={setFieldStateName}
               disabled={disableInput}
               match={projectData.name}
+              displaySuccess={true}
               displayErrors={false}
             />
           </Form.Group>
@@ -120,9 +107,8 @@ const Component = ({ projectId, getProjectDataById, fetchScenesByProjectId, dele
 
 const mapStateToProps = (state) => {
   return {
-    authUser: getAuthUser(state),
     getProjectDataById: (uid) => getProjectDataById(state, uid),
-    createProjectStatus: getDeleteProjectStatus(state),
+    deleteProjectStatus: getDeleteProjectStatus(state),
     getSceneSortOrderByProjectId: (projectId) => getSceneSortOrderByProjectId(state, projectId),
     getSceneDataById: (uid) => getSceneDataById(state, uid),
   }

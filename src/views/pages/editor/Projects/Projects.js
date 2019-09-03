@@ -10,7 +10,8 @@ import {
   CreateProjectModal,
   DeleteProjectModal,
 
-  CreateSceneModal
+  CreateSceneModal,
+  DeleteSceneModal
 } from 'views/components/editor/projectManagement/Modals';
 
 import styles from './projects.module.css';
@@ -18,6 +19,7 @@ import styles from './projects.module.css';
 export default () => {
   const [CreateProjectModalComponent, openCreateProjectModal] = useModal(CreateProjectModal);
   const [DeleteProjectModalComponent, openDeleteProjectModal] = useModal(DeleteProjectModal, { width: 400 });
+  const [DeleteSceneModalComponent, openDeleteSceneModal] = useModal(DeleteSceneModal, { width: 400 });
 
 
   const [CreateSceneModalComponent, openCreateSceneModal] = useModal(CreateSceneModal);
@@ -31,7 +33,7 @@ export default () => {
         </div>
 
         <div className={styles.sceneSelector}>
-          <SceneSelector />
+          <SceneSelector onDelete={openDeleteSceneModal}/>
         </div>
 
         <div style={{padding: 50}}>
@@ -48,6 +50,7 @@ export default () => {
       <DeleteProjectModalComponent />
 
       <CreateSceneModalComponent />
+      <DeleteSceneModalComponent />
     </>
   );
 }

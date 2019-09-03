@@ -19,7 +19,7 @@ import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
 import { Loader } from 'views/components/Loader';
 
-import styles from './createscenemodal.module.css';
+import styles from '../modal.module.css';
 
 const Component = ({ projectId = null, activeProjectId, getProjectDataById, createSceneStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
@@ -69,7 +69,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
         <div className={styles.header}>
           <h1>Create scene</h1>
 
-          {disableInput ? <div className={styles.loaderContainer}><Loader.Simple /></div> : null}
+          {disableInput ? <div className={styles.loaderContainerHeader}><Loader.Simple /></div> : null}
         </div>
 
         <div className={styles.form}>
@@ -133,7 +133,7 @@ const NoProjectFound = ({ onClose }) => {
           <h1>Create scene</h1>
         </div>
 
-        <div className={styles.warningContainer}>
+        <div className={styles.error}>
           All scenes need to be assigned to a project. An error occured while trying to find a project for this scene. Please try again.
         </div>
 

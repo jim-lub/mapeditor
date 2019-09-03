@@ -14,7 +14,7 @@ import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
 import { Loader } from 'views/components/Loader';
 
-import styles from './createprojectmodal.module.css';
+import styles from '../modal.module.css';
 
 const Component = ({ createProjectStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
@@ -50,7 +50,7 @@ const Component = ({ createProjectStatus, actions, onClose }) => {
 
           {
             (disableInput)
-              ? <div className={styles.loaderContainer}><Loader.Simple /></div>
+              ? <div className={styles.loaderContainerHeader}><Loader.Simple /></div>
               : null
           }
         </div>

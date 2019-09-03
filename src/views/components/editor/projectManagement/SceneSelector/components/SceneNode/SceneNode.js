@@ -3,16 +3,9 @@ import React from 'react';
 import { useModal } from 'lib/hooks';
 import { concatClassNames } from 'lib/utils';
 
-import { DeleteSceneModalTemplate } from '../../modals';
-
 import styles from './scenenode.module.css';
 
 export default ({ name, description, sceneId, isActive, onSelect, onDelete }) => {
-  const [DeleteSceneModal, openModal_deleteScene] = useModal(
-    DeleteSceneModalTemplate,
-    { sceneId, sceneName: name, onDelete, width: 400 }
-  );
-
   const handleSelect = (e) => {
     e.stopPropagation();
     onSelect({ sceneId });
@@ -20,7 +13,7 @@ export default ({ name, description, sceneId, isActive, onSelect, onDelete }) =>
 
   const openDeleteModal = (e) => {
     e.stopPropagation();
-    openModal_deleteScene();
+    onDelete({ sceneId });
   };
 
   const sceneNodeClassName = concatClassNames([
@@ -46,8 +39,6 @@ export default ({ name, description, sceneId, isActive, onSelect, onDelete }) =>
         <div className={styles.toolbarContainer}>
         </div>
       </div>
-
-      <DeleteSceneModal />
     </>
   );
 };
