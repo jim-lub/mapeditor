@@ -1,0 +1,49 @@
+.view {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow: scroll;
+  margin-right: -15px !important;
+  margin-bottom: -17px !important;
+}
+
+.horizontalTrack {
+  position: absolute;
+  right: 20px;
+  bottom: 6px;
+  left: 20px;
+  height: 8px !important;
+  border-radius: 4px;
+}
+
+.horizontalThumb {
+  position: relative;
+  display: block;
+  height: 100%;
+  cursor: pointer;
+  border-radius: inherit;
+  background-color: #111111;
+  opacity: 0.3;
+  border: solid 1px #ffffff;
+}
+
+.verticalTrack {
+  top: 20px;
+  bottom: 20px;
+  right: 6px;
+  width: 8px !important;
+  border-radius: 4px;
+}
+
+.verticalThumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border-radius: inherit;
+  background-color: #111111;
+  opacity: 0.3;
+  border: solid 1px #ffffff;
+}

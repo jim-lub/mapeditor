@@ -1,1 +1,5 @@
-export * as layerTypes from './layerTypes';
+import * as layerTypes from './layerTypes';
+
+export {
+  layerTypes
+}

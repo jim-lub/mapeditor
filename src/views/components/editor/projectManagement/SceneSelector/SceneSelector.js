@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { getActiveProjectId } from 'state/ducks/editor/projects';
 
@@ -29,7 +30,9 @@ const Component = ({ activeProjectId }) => {
     <>
       <div className={styles.wrapper}>
         <div className={styles.nodeList}>
-          <NodeList openDeleteModal={openDeleteSceneModal} openUpdateModal={openUpdateSceneModal}/>
+          <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
+            <NodeList openDeleteModal={openDeleteSceneModal} openUpdateModal={openUpdateSceneModal}/>
+          </Scrollbars>
         </div>
         <div className={styles.toolbar}>
           <Toolbar disabled={(!activeProjectId)} openCreateSceneModal={openCreateSceneModal} />

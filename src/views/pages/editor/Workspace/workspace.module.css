@@ -29,6 +29,7 @@
 .map {
   grid-area: map;
   border: solid 1px #e5e5e5;
+  overflow: hidden;
 }
 
 .tileStampSelector {

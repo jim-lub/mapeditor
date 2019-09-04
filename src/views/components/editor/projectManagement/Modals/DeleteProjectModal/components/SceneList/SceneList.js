@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Loader } from 'views/components/Loader';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import styles from '../../../modal.module.css';
 
@@ -10,15 +9,17 @@ export default ({ initialized, scenes = [] }) => {
   return (
     <div className={styles.list + " " + styles.warning}>
       <span style={{fontWeight: "bold"}}>The following scene(s) will also be deleted:</span>
-      <ul>
-        {
-          scenes.map(scene => {
-            return (
-              <li key={scene.uid}>{ scene.name }</li>
-            )
-          })
-        }
-      </ul>
+      <Scrollbars autoHeight autoHeightMin={0} autoHeightMax={120}>
+        <ul>
+          {
+            scenes.map(scene => {
+              return (
+                <li key={scene.uid}>{ scene.name }</li>
+              )
+            })
+          }
+        </ul>
+      </Scrollbars>
     </div>
   )
 }

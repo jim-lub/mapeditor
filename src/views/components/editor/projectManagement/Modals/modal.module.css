@@ -34,8 +34,6 @@
 .list {
   list-style-position: inside;
   max-height: 160px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .warning {

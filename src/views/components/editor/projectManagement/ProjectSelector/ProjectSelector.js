@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { useModal } from 'lib/hooks';
 
@@ -27,10 +28,12 @@ const Component = () => {
     <>
       <div className={styles.wrapper}>
         <div className={styles.nodeList}>
-          <NodeList openDeleteModal={openDeleteProjectModal} openUpdateModal={openUpdateProjectModal}/>
+          <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
+            <NodeList openDeleteModal={openDeleteProjectModal} openUpdateModal={openUpdateProjectModal}/>
+          </Scrollbars>
         </div>
         <div className={styles.toolbar}>
-          <Toolbar openCreateProjectModal={openCreateProjectModal} />
+            <Toolbar openCreateProjectModal={openCreateProjectModal} />
         </div>
 
       </div>
