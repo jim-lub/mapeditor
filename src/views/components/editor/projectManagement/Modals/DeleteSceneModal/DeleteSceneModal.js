@@ -55,7 +55,7 @@ const Component = ({ sceneId, getSceneDataById, deleteSceneStatus, onClose, acti
 
       <div className={styles.body}>
         This action <span className={styles.bold}>cannot</span> be undone. This will permanently
-        delete the <span className={styles.bold}>{ sceneData.name }</span> scene. Please type in the name of the project to confirm.
+        delete the <span className={styles.bold}>{ sceneData.name }</span> scene. Please type in the name of the scene to confirm.
       </div>
 
       <div className={styles.form}>

@@ -49,7 +49,8 @@
 }
 
   .deleteButton:hover {
-    background-color: #ffd9d9;
+    background-color: #ea8a90;
+    border: solid 1px #b2676b;
   }
 
 .updateButton {
@@ -64,5 +65,5 @@
 }
 
   .updateButton:hover {
-    background-color: #d9f0ff;
+    background-color: #f9f9f9;
   }

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { getActiveProjectId } from 'state/ducks/editor/projects';
+
 import { useModal } from 'lib/hooks';
 
 import {
@@ -17,7 +19,7 @@ import {
 
 import styles from './sceneSelector.module.css';
 
-const Component = () => {
+const Component = ({ activeProjectId }) => {
   const [CreateSceneModalComponent, openCreateSceneModal] = useModal(CreateSceneModal);
   const [DeleteSceneModalComponent, openDeleteSceneModal] = useModal(DeleteSceneModal, { width: 400 });
   const [UpdateSceneModalComponent, openUpdateSceneModal] = useModal(UpdateSceneModal);
@@ -30,7 +32,7 @@ const Component = () => {
           <NodeList openDeleteModal={openDeleteSceneModal} openUpdateModal={openUpdateSceneModal}/>
         </div>
         <div className={styles.toolbar}>
-          <Toolbar openCreateSceneModal={openCreateSceneModal} />
+          <Toolbar disabled={(!activeProjectId)} openCreateSceneModal={openCreateSceneModal} />
         </div>
 
       </div>
@@ -45,7 +47,7 @@ const Component = () => {
 
 const mapStateToProps = (state) => {
   return {
-
+    activeProjectId: getActiveProjectId(state)
   }
 }
 

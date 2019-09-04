@@ -1,5 +1,1 @@
-import React from 'react';
-
-export const Workspace = () => {
-  return <div>Workspace</div>
-}
+export { default as Workspace } from './Workspace';
