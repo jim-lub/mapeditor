@@ -40,7 +40,7 @@ export default createReducer( initialState )({
 
 /*** Operations ***/
 export const listenToSceneChanges = ({ userId, projectId }) => operations.listenToSceneChanges({ userId, projectId });
-export const createScene = ({ name, description }) => operations.createScene({ name, description });
+export const createScene = ({ name, description, mapProperties }) => operations.createScene({ name, description, mapProperties });
 export const deleteScene = ({ sceneId }) => operations.deleteScene({ sceneId });
 export const updateScene = ({ sceneId, name, description }) => operations.updateScene({ sceneId, name, description });
 export const setActiveScene = ({ sceneId }) => operations.setActiveScene({ sceneId });

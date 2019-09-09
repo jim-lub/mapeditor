@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,26 +6,63 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeGrid } from 'react-window';
 
 import {
-  getMapSize,
-  getSegmentSize
+  getActiveSceneId
+} from 'state/ducks/editor/scenes';
+
+import {
+  loadScene,
+  saveScene,
+  getMapProperties,
+  getMapGrid,
 } from 'state/ducks/editor/workspace/map';
+
+import { Loader } from 'views/components/Loader';
 
 import {
   SegmentController,
   CustomScrollbarGridWrapper
 } from './components';
 
-const Component = ({ mapSize, segmentSize }) => {
+const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!activeSceneId) return setInitialized(true);
+
+    actions.loadScene({ sceneId: activeSceneId })
+      .then(() => setInitialized(true))
+      .catch(e => console.error(e));
+  }, [activeSceneId, actions]);
+
+  useEffect(() => {
+
+  }, [activeSceneId, mapProperties, actions]);
+
+  const handleSave = () => {
+    actions.saveScene({ sceneId: activeSceneId })
+  }
+
+  if (!initialized) {
+    return <Loader.Simple />
+  }
+
+  if (initialized && !activeSceneId) {
+    return <div>No scene selected..</div>;
+  }
+
+  // return <div>Success</div>;
+
   return (
+    <>
     <AutoSizer>
       {
         ({ width: viewportWidth, height: viewportHeight }) => {
           return (
             <FixedSizeGrid
-              columnCount={mapSize.columns}
-              rowCount={mapSize.rows}
-              columnWidth={segmentSize.width}
-              rowHeight={segmentSize.height}
+              columnCount={mapProperties.mapSize.columns}
+              rowCount={mapProperties.mapSize.rows}
+              columnWidth={mapProperties.segmentSize.width}
+              rowHeight={mapProperties.segmentSize.height}
               width={viewportWidth}
               height={viewportHeight}
               outerElementType={CustomScrollbarGridWrapper}
@@ -36,19 +73,23 @@ const Component = ({ mapSize, segmentSize }) => {
         }
       }
     </AutoSizer>
+    </>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    mapSize: getMapSize(state),
-    segmentSize: getSegmentSize(state)
+    // activeSceneId: getActiveSceneId(state),
+    activeSceneId: "MN3cHSWWs2BHdq8yxCuH", // OVERRIDE DEV ONLY
+
+    mapProperties: getMapProperties(state),
+    mapGrid: getMapGrid(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ }, dispatch)
+    actions: bindActionCreators({ loadScene, saveScene }, dispatch)
   }
 }
 

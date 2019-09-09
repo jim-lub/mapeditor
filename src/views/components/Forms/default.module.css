@@ -65,6 +65,7 @@ select {
   padding: 8px 10px;
   color: #6e768f;
   font-size: 12px;
+  flex-grow: 1;
 }
 
 select:focus {

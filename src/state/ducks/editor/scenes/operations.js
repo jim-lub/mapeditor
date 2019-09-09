@@ -54,11 +54,10 @@ export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
     });
 };
 
-export const createScene = ({ name, description }) => (dispatch, getState) => {
+export const createScene = ({ name, description, mapProperties }) => (dispatch, getState) => {
   const currentState = getState();
   const { uid: userId } = currentState.auth.authUser;
   const projectId = getActiveProjectId( currentState );
-  console.log(userId, projectId)
 
   dispatch( actions.createSceneRequest() );
 
@@ -69,7 +68,16 @@ export const createScene = ({ name, description }) => (dispatch, getState) => {
       createdAt: firebase.serverTimestamp,
       modifiedAt: firebase.serverTimestamp,
       name,
-      description
+      description,
+      mapProperties: {
+        mapSize: mapProperties.mapSize,
+        segmentSize: mapProperties.segmentSize,
+        allowedTileSizes: mapProperties.allowedTileSizes
+      },
+      layerProperties: {},
+      segmentProperties: {},
+      mapGrid: [],
+      layerSortOrder: [],
     })
     .then(sceneRef => {
       dispatch( actions.createSceneSuccess({ sceneId: sceneRef.id }) );

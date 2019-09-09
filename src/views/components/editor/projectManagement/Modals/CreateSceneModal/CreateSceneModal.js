@@ -19,17 +19,22 @@ import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
 import { Loader } from 'views/components/Loader';
 
+import scenePresets from 'lib/constants/scenePresets';
+
 import styles from '../modal.module.css';
 
 const Component = ({ projectId = null, activeProjectId, getProjectDataById, createSceneStatus, actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateDesc, setFieldStateDesc] = useState();
+  const [fieldStatePreset, setFieldStatePreset] = useState();
+  const [fieldStateMapColumns, setFieldStateMapColumns] = useState();
+  const [fieldStateMapRows, setFieldStateMapRows] = useState();
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [disableInput, setDisableInput] = useState(false);
   const [projectData, setProjectData] = useState();
   const [requestStatus, initializeRequest] = useAsyncRequestHelper({ ...createSceneStatus, onSuccess: onClose });
 
-  const fieldStateArray = [fieldStateName, fieldStateDesc];
+  const fieldStateArray = [fieldStateName, fieldStateDesc, fieldStateMapColumns, fieldStateMapRows];
 
   useEffect(() => {
    setDisableSubmit(
@@ -51,13 +56,35 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
 
   const handleSubmit = () => {
     initializeRequest();
+    const { allowedTileSizes, segmentSize } = scenePresets[fieldStatePreset.value];
 
     actions.createScene({
       projectId: projectId || activeProjectId,
       name: fieldStateName.value,
-      description: fieldStateDesc.value
+      description: fieldStateDesc.value,
+      mapProperties: {
+        mapSize: {
+          columns: Number(fieldStateMapColumns.value),
+          rows: Number(fieldStateMapRows.value)
+        },
+        segmentSize,
+        allowedTileSizes: allowedTileSizes,
+      }
     });
   };
+
+  const fillPresetList = () => {
+    const list = scenePresets.list.map(preset => {
+      const { name, allowedTileSizes } = scenePresets[preset];
+
+      return {
+        name: name.toUpperCase() + ": " + allowedTileSizes,
+        value: name
+      }
+    })
+
+    return list;
+  }
 
   if (!projectData) {
     return <NoProjectFound onClose={onClose} requestStatus={requestStatus} />
@@ -94,6 +121,30 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               name="sceneDescription"
               label="Description"
               onStateChange={setFieldStateDesc}
+              disabled={disableInput}
+            />
+
+            <Field.Select
+              name="scenePreset"
+              label="Preset"
+              options={fillPresetList()}
+              onStateChange={setFieldStatePreset}
+              disabled={disableInput}
+            />
+
+            <Field.Number
+              name="mapSize-columns"
+              label="Columns (segments)"
+              onStateChange={setFieldStateMapColumns}
+              initialValue={5}
+              disabled={disableInput}
+            />
+
+            <Field.Number
+              name="mapSize-rows"
+              label="Rows (segments)"
+              onStateChange={setFieldStateMapRows}
+              initialValue={5}
               disabled={disableInput}
             />
           </Form.Group>

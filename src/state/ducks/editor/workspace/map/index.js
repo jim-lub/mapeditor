@@ -1,99 +1,38 @@
 import { createReducer } from 'state/lib/utils';
 
+import * as types from './types';
+import * as operations from './operations';
 import * as selectors from './selectors';
-
-import { layerTypes } from 'lib/editor/map';
+import * as reducers from './reducers';
 
 const initialState = {
-  mapProperties: {
-    mapSize: {
-      columns: 50,
-      rows: 50
-    },
-    segmentSize: {
-      width: 512,
-      height: 512
-    },
-    allowedTileSizes: [16, 32, 64, 128]
+  status: {
+    initializeMap: { loading: false, error: null },
   },
-
-  layerSortOrder: ['layer_1', 'layer_2'],
-  layerProperties: {
-    'layer_1': {
-      type: layerTypes.paintLayer,
-      tileSetId: null,
-      tileSize: [32, 32],
-      visiblity: true,
-      meta: {}
-    },
-    'layer_2': {
-      type: layerTypes.paintLayer,
-      tileSetId: null,
-      tileSize: [32, 32],
-      visiblity: true,
-      meta: {}
-    },
-  },
-
-  // segmentSortOrder[segmentColumn][segmentRow]
-  mapGrid: [ ['segment_1', 'segment_2'], ['segment_3', 'segment_4'] ],
-
-  segmentProperties: {
-    'segment_1': {
-      modified: false,
-      modifiedAt: null
-    },
-    'segment_2': {
-      modified: false,
-      modifiedAt: null
-    },
-    'segment_3': {
-      modified: false,
-      modifiedAt: null
-    },
-    'segment_4': {
-      modified: false,
-      modifiedAt: null
-    }
-  },
-
-  tilemapData: {
-    'segment_1': {
-      'layer_1': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-      'layer_2': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-    },
-    'segment_2': {
-      'layer_1': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-      'layer_2': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-    },
-    'segment_3': {
-      'layer_1': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-      'layer_2': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-    },
-    'segment_4': {
-      'layer_1': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-      'layer_2': [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ],
-    }
-  }
+  mapProperties: {},
+  mapGrid: [],
 }
 
 export default createReducer( initialState )({
+  [ types.initializeMapRequest ]: (state, action) => reducers.initializeMapRequest(state, action),
+  [ types.initializeMapSuccess ]: (state, action) => reducers.initializeMapSuccess(state, action),
+  [ types.initializeMapFailure ]: (state, action) => reducers.initializeMapFailure(state, action),
 
+  [ types.saveMapRequest ]: (state, action) => reducers.saveMapRequest(state, action),
+  [ types.saveMapSuccess ]: (state, action) => reducers.saveMapSuccess(state, action),
+  [ types.saveMapFailure ]: (state, action) => reducers.saveMapFailure(state, action),
+
+  [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
+  [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 });
 
+/*** operations ***/
+export const loadScene = operations.loadScene;
+export const saveScene = operations.saveScene;
+
 /*** selectors ***/
+export const getInitializeMapStatus = selectors.getInitializeMapStatus;
+export const getSaveMapStatus = selectors.getSaveMapStatus;
+
 export const getMapProperties = selectors.getMapProperties;
-export const getMapSize = selectors.getMapSize;
-export const getSegmentSize = selectors.getSegmentSize;
-export const getAllowedTileSizes = selectors.getAllowedTileSizes;
-
-export const getLayerSortOrder = selectors.getLayerSortOrder;
-export const getLayerPropertiesObj = selectors.getLayerPropertiesObj;
-export const getLayerPropertiesById = selectors.getLayerPropertiesById;
-
-export const getSegmentIdFromGridByColumnAndRowIndex = selectors.getSegmentIdFromGridByColumnAndRowIndex;
 export const getMapGrid = selectors.getMapGrid;
-export const getSegmentPropertiesObj = selectors.getSegmentPropertiesObj;
-export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
-
-export const getTilemapDataBySegmentId = selectors.getTilemapDataBySegmentId;

@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-export default ({ onStateChange: setParentState, label, name, options, initialValue = null }) => {
+import { FieldErrorList } from '../Other';
+
+import '../default.module.css';
+import fieldStyles from '../fields.module.css';
+import formStyles from '../form.module.css';
+
+const defaultOption = {
+  name: 'No options found..',
+  value: 'No selection found..'
+}
+
+export default ({ onStateChange: setParentState, label, name, options = [defaultOption], initialValue = null }) => {
   const [value, setValue] = useState(initialValue || options[0].value);
 
   const handleChange = (e) => setValue(e.target.value);
@@ -16,8 +27,8 @@ export default ({ onStateChange: setParentState, label, name, options, initialVa
   }, [value, setParentState]);
 
   return (
-    <div className="form-wrapper">
-      <div className="form-field-wrapper">
+    <div className={formStyles.wrapper}>
+      <div className={formStyles.fieldWrapper}>
         <label htmlFor={name}>
           {label}
         </label>
@@ -27,6 +38,7 @@ export default ({ onStateChange: setParentState, label, name, options, initialVa
           onChange={handleChange}
           onBlur={handleBlur}
           value={(value) ? value : ''}
+          className={fieldStyles.select}
         >
           {
             options.map((option, index) => {
@@ -41,9 +53,6 @@ export default ({ onStateChange: setParentState, label, name, options, initialVa
             })
           }
         </select>
-      </div>
-
-      <div className="form-error-wrapper">
       </div>
     </div>
   )
