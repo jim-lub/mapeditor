@@ -18,21 +18,34 @@ const _initializeMap = ({ sceneId }) => dispatch => {
     .then(scene => scene.data())
     .then(sceneData => {
       const mapProperties = utils.validateMapProperties({ mapProperties: sceneData.mapProperties });
-      const mapGrid = utils.buildMapGrid({ mapProperties, mapGrid: JSON.parse( sceneData.mapGrid ) });
 
       dispatch( actions.setMapProperties({ mapProperties }) );
-      dispatch( actions.setMapGrid({ mapGrid }));
+
+      return mapProperties;
+    })
+    .then(mapProperties => {
+      return dispatch( utils.fetchMapGridCollectionFirestore({ sceneId }) )
+        .then(mapGrid => {
+          const validatedMapGrid = utils.buildMapGrid({ mapProperties, mapGrid: mapGrid });
+
+          dispatch( actions.setMapGrid({ mapGrid: validatedMapGrid }));
+        })
     })
     .then(() => {
       dispatch( actions.initializeMapSuccess() );
     })
-    .catch(error => dispatch( actions.initializeMapFailure({ error }) ));
+    .catch(e => console.log(e));
+    // .catch(error => dispatch( actions.initializeMapFailure({ error }) ));
 
   // build layerSortOrder array
   // build layerProperties object
   // build segmentProperties object
   // build tilemapData object
   // return all to loadScene
+}
+
+const _getMapGrid = (sceneId) => dispatch => {
+  return dispatch( utils.fetchMapGridCollectionFirestore({ sceneId }))
 }
 
 export const saveScene = ({ sceneId }) => dispatch => {
@@ -43,14 +56,15 @@ export const saveScene = ({ sceneId }) => dispatch => {
 const _saveSceneData = ({ sceneId }) => (dispatch, getState) => {
   const { mapProperties, mapGrid } = getState().editor.workspace.map;
 
-  return firebase.scene(sceneId)
-    .set({
-      mapProperties,
-      mapGrid: JSON.stringify(mapGrid)
-    }, { merge: true })
-    .then(() => {
-      console.log('saved..')
-    })
+  const promises = [
+    // if mapProperties modified:
+    dispatch ( utils.updateMapPropertiesFirestore({ sceneId, mapProperties })),
+
+    // if mapGrid modified:
+    dispatch ( utils.updateMapGridCollectionFirestore({ sceneId, mapProperties, mapGrid })),
+  ]
+
+  return Promise.all(promises);
 }
 
 // const _saveTilemapData = () => {

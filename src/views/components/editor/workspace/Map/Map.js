@@ -73,6 +73,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
         }
       }
     </AutoSizer>
+    <button style={{position: "absolute", width: 80, left: 40, top: 10 }} className="green" onClick={handleSave}>Save</button>
     </>
   )
 }
@@ -80,7 +81,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 const mapStateToProps = (state) => {
   return {
     // activeSceneId: getActiveSceneId(state),
-    activeSceneId: "MN3cHSWWs2BHdq8yxCuH", // OVERRIDE DEV ONLY
+    activeSceneId: "Q1555OpOtwZWpWlDaRao", // OVERRIDE DEV ONLY
 
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state)
