@@ -10,8 +10,14 @@ export const initializeMap = ({ sceneId }) => dispatch => {
 
   return dispatch( firestore.fetchSceneData({ sceneId }))
     .then(sceneData => {
-      const { mapProperties } = sceneData;
-      dispatch( actions.setMapProperties({ mapProperties }) );
+      const { mapProperties, chunks = "null" } = sceneData;
+
+      dispatch( actions.setMapProperties({
+        mapProperties: {
+          ...mapProperties,
+          chunks
+        }
+      }) );
 
       return dispatch( firestore.fetchMapGridCollection({ sceneId }) )
         .then(firestoreMapGrid => {
