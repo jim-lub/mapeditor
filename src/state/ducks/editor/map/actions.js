@@ -15,16 +15,16 @@ export const initializeMapFailure = ({ error }) => ({
   }
 });
 
-export const saveMapRequest = () => ({
-  type: types.saveMapRequest
+export const storeMapRequest = () => ({
+  type: types.storeMapRequest
 });
 
-export const saveMapSuccess = () => ({
-  type: types.saveMapSuccess
+export const storeMapSuccess = () => ({
+  type: types.storeMapSuccess
 });
 
-export const saveMapFailure = ({ error }) => ({
-  type: types.saveMapFailure,
+export const storeMapFailure = ({ error }) => ({
+  type: types.storeMapFailure,
   payload: {
     error
   }

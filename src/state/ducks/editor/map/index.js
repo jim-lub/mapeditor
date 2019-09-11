@@ -6,9 +6,7 @@ import * as selectors from './selectors';
 import * as reducers from './reducers';
 
 const initialState = {
-  status: {
-    initializeMap: { loading: false, error: null },
-  },
+  status: {},
   mapProperties: {},
   mapGrid: [],
 }
@@ -18,21 +16,21 @@ export default createReducer( initialState )({
   [ types.initializeMapSuccess ]: (state, action) => reducers.initializeMapSuccess(state, action),
   [ types.initializeMapFailure ]: (state, action) => reducers.initializeMapFailure(state, action),
 
-  [ types.saveMapRequest ]: (state, action) => reducers.saveMapRequest(state, action),
-  [ types.saveMapSuccess ]: (state, action) => reducers.saveMapSuccess(state, action),
-  [ types.saveMapFailure ]: (state, action) => reducers.saveMapFailure(state, action),
+  [ types.storeMapRequest ]: (state, action) => reducers.storeMapRequest(state, action),
+  [ types.storeMapSuccess ]: (state, action) => reducers.storeMapSuccess(state, action),
+  [ types.storeMapFailure ]: (state, action) => reducers.storeMapFailure(state, action),
 
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 });
 
 /*** operations ***/
-export const loadScene = operations.loadScene;
-export const saveScene = operations.saveScene;
+export const initializeMap = operations.initializeMap;
+export const storeMap = operations.storeMap;
 
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
-export const getSaveMapStatus = selectors.getSaveMapStatus;
+export const getStoreMapStatus = selectors.getStoreMapStatus;
 
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;

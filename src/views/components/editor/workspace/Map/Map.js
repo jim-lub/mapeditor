@@ -10,11 +10,11 @@ import {
 } from 'state/ducks/editor/scenes';
 
 import {
-  loadScene,
-  saveScene,
+  initializeMap,
+  storeMap,
   getMapProperties,
-  getMapGrid,
-} from 'state/ducks/editor/workspace/map';
+  getMapGrid
+} from 'state/ducks/editor/map'
 
 import { Loader } from 'views/components/Loader';
 
@@ -29,7 +29,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
   useEffect(() => {
     if (!activeSceneId) return setInitialized(true);
 
-    actions.loadScene({ sceneId: activeSceneId })
+    actions.initializeMap({ sceneId: activeSceneId })
       .then(() => setInitialized(true))
       .catch(e => console.error(e));
   }, [activeSceneId, actions]);
@@ -39,7 +39,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
   }, [activeSceneId, mapProperties, actions]);
 
   const handleSave = () => {
-    actions.saveScene({ sceneId: activeSceneId })
+    actions.storeMap({ sceneId: activeSceneId })
   }
 
   if (!initialized) {
@@ -80,8 +80,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    // activeSceneId: getActiveSceneId(state),
-    activeSceneId: "Q1555OpOtwZWpWlDaRao", // OVERRIDE DEV ONLY
+    activeSceneId: getActiveSceneId(state),
+    // activeSceneId: "Q1555OpOtwZWpWlDaRao", // OVERRIDE DEV ONLY
 
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state)
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ loadScene, saveScene }, dispatch)
+    actions: bindActionCreators({ initializeMap, storeMap }, dispatch)
   }
 }
 

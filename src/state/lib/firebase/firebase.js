@@ -53,10 +53,4 @@ export class Firebase {
   scenes = () =>
     this.db.collection('scenes');
 
-  tilemapData = uid =>
-    this.db.doc(`tilemapData/${uid}`);
-
-  tileDataCollection = () =>
-    this.db.collection('tilemapData');
-
 }
