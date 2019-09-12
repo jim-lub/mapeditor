@@ -80,8 +80,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    activeSceneId: getActiveSceneId(state),
-    // activeSceneId: "Q1555OpOtwZWpWlDaRao", // OVERRIDE DEV ONLY
+    // activeSceneId: getActiveSceneId(state),
+    activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
 
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state)

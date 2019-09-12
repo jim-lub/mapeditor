@@ -15,6 +15,21 @@ export const initializeMapFailure = ({ error }) => ({
   }
 });
 
+export const initializeTilemapDataRequest = () => ({
+  type: types.initializeTilemapDataRequest
+});
+
+export const initializeTilemapDataSuccess = () => ({
+  type: types.initializeTilemapDataSuccess
+});
+
+export const initializeTilemapDataFailure = ({ error }) => ({
+  type: types.initializeTilemapDataFailure,
+  payload: {
+    error
+  }
+});
+
 export const storeMapRequest = () => ({
   type: types.storeMapRequest
 });
@@ -30,6 +45,7 @@ export const storeMapFailure = ({ error }) => ({
   }
 });
 
+
 export const setMapProperties = ({ mapProperties }) => ({
   type: types.setMapProperties,
   payload: {
@@ -41,5 +57,20 @@ export const setMapGrid = ({ mapGrid }) => ({
   type: types.setMapGrid,
   payload: {
     mapGrid
+  }
+});
+
+export const setTilemapDataObject = ({ segmentId, tilemapData }) => ({
+  type: types.setTilemapDataObject,
+  payload: {
+    segmentId,
+    tilemapData
+  }
+});
+
+export const deleteTilemapDataObject = ({ segmentId }) => ({
+  type: types.deleteTilemapDataObject,
+  payload: {
+    segmentId
   }
 });

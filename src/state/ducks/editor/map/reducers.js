@@ -21,6 +21,27 @@ export const initializeMapFailure = (state, action) => {
   }
 }
 
+export const initializeTilemapDataRequest = (state, action) => {
+  return {
+    ...state,
+    ...statusReducer('initializeTilemapData', 'REQUEST', state)
+  }
+}
+
+export const initializeTilemapDataSuccess = (state, action) => {
+  return {
+    ...state,
+    ...statusReducer('initializeTilemapData', 'SUCCESS', state)
+  }
+}
+
+export const initializeTilemapDataFailure = (state, action) => {
+  return {
+    ...state,
+    ...statusReducer('initializeTilemapData', 'FAILURE', state, action.payload.error)
+  }
+}
+
 export const storeMapRequest = (state, action) => {
   return {
     ...state,
@@ -42,6 +63,7 @@ export const storeMapFailure = (state, action) => {
   }
 }
 
+
 export const setMapProperties = (state, action) => {
   return {
     ...state,
@@ -59,3 +81,23 @@ export const setMapGrid = (state, action) => {
     ]
   }
 };
+
+export const setTilemapDataObject = (state, action) => {
+  const { segmentId, tilemapData } = action.payload;
+
+  return {
+    ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
+
+    tilemapData: {
+      ...state.tilemapData,
+      [segmentId]: tilemapData
+    }
+  }
+}

@@ -2,61 +2,66 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import {
+  setTilemapDataObject,
 
+  getSegmentId,
+  getTilemapDataBySegmentId
+} from 'state/ducks/editor/map';
 
-export default ({ columnIndex, rowIndex, style }) => {
+const Component = ({ columnIndex, rowIndex, segmentId = null, getTilemapDataBySegmentId, actions, style }) => {
+  const [tilemapData, setTilemapData] = useState(null);
+
+  useEffect(() => {
+    const tilemapData = getTilemapDataBySegmentId( segmentId );
+
+    if (tilemapData) {
+      setTilemapData('ALL THE TILE MAP DATA IS HERE!')
+    } else {
+      setTilemapData('NO DATA FOUND')
+      actions.setTilemapDataObject({
+        segmentId,
+        tilemapData: {
+          'layer-1': [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+          ]
+        }
+      })
+    }
+    //eslint-disable-next-line
+  }, [])
+
+  // if tilemapData found in redux store ->
+      // if layerSortOrder array === found in tilemapData object -> render segment
+      // else add missing layer tilemapData .then render
+  // else generate tilemapData for each layer
+
   return (
-    <div style={{ ...style, borderRight: "dotted 1px black", borderBottom: "dotted 1px black"}}>{ columnIndex + ", " + rowIndex }</div>
+    <div style={{ ...style, borderRight: "dotted 1px black", borderBottom: "dotted 1px black"}}>
+      { columnIndex + ", " + rowIndex }<br />
+      { segmentId }<br />
+      { tilemapData }
+    </div>
   )
 }
 
-// const Component = ({ columnIndex, rowIndex, segmentId = null, getSegmentPropertiesById, style }) => {
-//   const [segmentProperties, setSegmentProperties] = useState({});
-//
-//   useEffect(() => {
-//     if (!segmentId) {
-//       // buildTilemapDataSegment
-//     }
-//   }, [segmentId]);
-//
-//   // fetch segment properties
-//   useEffect(() => {
-//     const properties = getSegmentPropertiesById(segmentId);
-//
-//     if (properties) {
-//       setSegmentProperties(properties);
-//     } else {
-//       // look for segment properties in firestore,
-//       // if not found create the properties
-//     }
-//   }, [segmentId, getSegmentPropertiesById]);
-//
-//   // fetch tilemapData
-//   useEffect(() => {
-//
-//   }, [segmentProperties]);
-//
-//   return (
-//     <div style={style} className={styles.wrapper}>
-//       { segmentId }, <br/>
-//       {
-//         Object.entries(segmentProperties).map(([key, value]) => key + ": " + value + ", ")
-//       }
-//     </div>
-//   )
-// }
-//
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     segmentId: getSegmentIdFromGridByColumnAndRowIndex(state, ownProps.columnIndex, ownProps.rowIndex),
-//     getSegmentPropertiesById: (segmentId) => getSegmentPropertiesById(state, segmentId)
-//   }
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     actions: bindActionCreators({ }, dispatch)
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  const { columnIndex, rowIndex } = ownProps;
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Component);
+  return {
+    segmentId: getSegmentId(state, { columnIndex, rowIndex}),
+    getTilemapDataBySegmentId: (segmentId) => getTilemapDataBySegmentId(state, { segmentId })
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      setTilemapDataObject
+    }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

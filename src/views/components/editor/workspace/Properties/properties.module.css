@@ -1,6 +1,6 @@
 .wrapper {
-  border: solid 1px #b5b5b5;
-  margin: 1px;
+  border: solid 1px #d5d5d5;
+  margin: 2px;
   /* flex-grow: 1; */
 }
 
@@ -32,13 +32,13 @@
 
 .nodeKey {
   padding: 1px 2px;
-  border-bottom: dotted 1px #111111;
+  border-bottom: solid 1px #e5e5e5;
   font-size: 10px;
 }
 
 .nodeValue {
   padding: 2px 4px;
-  border-bottom: dotted 1px #111111;
+  border-bottom: solid 1px #e5e5e5;
   border-left: solid 1px #e5e5e5;
   font-size: 11px;
   font-weight: bold;

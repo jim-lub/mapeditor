@@ -47,3 +47,5 @@ export const storeMap = ({ sceneId }) => (dispatch, getState) => {
   })
   .catch(e => console.log(e));
 }
+
+export const setTilemapDataObject = actions.setTilemapDataObject;
