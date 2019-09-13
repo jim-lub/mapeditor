@@ -3,7 +3,9 @@
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as firestore from './firestore';
+
 import * as mapGridUtils from 'lib/editor/map-grid-utils';
+import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
 
 export const initializeMap = ({ sceneId }) => dispatch => {
   dispatch( actions.initializeMapRequest() );
@@ -21,7 +23,6 @@ export const initializeMap = ({ sceneId }) => dispatch => {
 
       return dispatch( firestore.fetchMapGridCollection({ sceneId }) )
         .then(firestoreMapGrid => {
-          console.log(firestoreMapGrid)
           dispatch( actions.setMapGrid({
             mapGrid: mapGridUtils.buildMapGrid({ mapProperties, firestoreMapGrid })
           }))
@@ -48,4 +49,29 @@ export const storeMap = ({ sceneId }) => (dispatch, getState) => {
   .catch(e => console.log(e));
 }
 
-export const setTilemapDataObject = actions.setTilemapDataObject;
+export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getState) => {
+  let modified = false;
+  const state = getState();
+
+  const { segmentSize } = selectors.getMapProperties(state);
+  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+  const layerSortOrder = selectors.getLayerSortOrder(state);
+
+  layerSortOrder.forEach(layerId => {
+    if (tilemapData[layerId]) {
+      /*
+        validate tiles; if columns and row match return else error
+      */
+      return;
+    };
+
+    const { tileSize } = selectors.getLayerPropertiesById(state, { layerId });
+
+    tilemapData[layerId] = tilemapDataUtils.buildTilemapDataArray({ segmentSize, tileSize });
+    modified = true;
+  })
+
+  if (modified) {
+    dispatch( actions.setTilemapDataBySegmentId({ segmentId, tilemapData }) );
+  }
+}

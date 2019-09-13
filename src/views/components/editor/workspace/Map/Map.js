@@ -18,9 +18,10 @@ import {
 
 import { Loader } from 'views/components/Loader';
 
+import { Segment } from './Segment';
+
 import {
-  SegmentController,
-  CustomScrollbarGridWrapper
+  MapGridCustomScrollbar
 } from './components';
 
 const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
@@ -65,9 +66,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
               rowHeight={mapProperties.segmentSize.height}
               width={viewportWidth}
               height={viewportHeight}
-              outerElementType={CustomScrollbarGridWrapper}
-            >
-              {SegmentController}
+              outerElementType={MapGridCustomScrollbar}>
+              {Segment}
             </FixedSizeGrid>
           )
         }
@@ -80,8 +80,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    // activeSceneId: getActiveSceneId(state),
-    activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
+    activeSceneId: getActiveSceneId(state) || "jwTgtS3suxi6gUDwGqHn",
+    // activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
 
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state)

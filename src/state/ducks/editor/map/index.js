@@ -5,12 +5,25 @@ import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
 
+const initialStateProduction = {
+  status: {},
+  modified: false,
+
+  mapProperties: {},
+  mapGrid: [],
+  layerProperties: {},
+  layerSortOrder: [],
+  segmentProperties: {},
+  tilemapData: {}
+}
+
 const initialState = {
   status: {},
   mapProperties: {},
   mapGrid: [],
 
   layerSortOrder: ['layer-1'],
+  // layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4'],
   layerProperties: {
     'layer-1': {
       type: 'layer/type/PAINT',
@@ -18,7 +31,25 @@ const initialState = {
         width: 32,
         height: 32
       }
-    }
+    },
+    // 'layer-2': {
+    //   tileSize: {
+    //     width: 16,
+    //     height: 16
+    //   }
+    // },
+    // 'layer-3': {
+    //   tileSize: {
+    //     width: 8,
+    //     height: 8
+    //   }
+    // },
+    // 'layer-4': {
+    //   tileSize: {
+    //     width: 64,
+    //     height: 64
+    //   }
+    // }
   },
 
   segmentProperties: {
@@ -27,13 +58,7 @@ const initialState = {
     // }
   },
 
-  tilemapData: {
-    // 'segment-id': {
-    //   'layer-1': {
-    //
-    //   }
-    // }
-  }
+  tilemapData: {}
 }
 
 export default createReducer( initialState )({
@@ -52,13 +77,13 @@ export default createReducer( initialState )({
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 
-  [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action)
+  [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action)
 });
 
 /*** operations ***/
 export const initializeMap = operations.initializeMap;
 export const storeMap = operations.storeMap;
-export const setTilemapDataObject = operations.setTilemapDataObject;
+export const validateTilemapDataBySegmentId = operations.validateTilemapDataBySegmentId;
 
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
@@ -66,6 +91,11 @@ export const getStoreMapStatus = selectors.getStoreMapStatus;
 
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
+export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
+
+export const getLayerProperties = selectors.getLayerProperties;
+export const getLayerPropertiesById = selectors.getLayerPropertiesById;
+export const getLayerSortOrder = selectors.getLayerSortOrder;
 
 export const getSegmentId = selectors.getSegmentId;
 export const getTilemapDataBySegmentId = selectors.getTilemapDataBySegmentId;

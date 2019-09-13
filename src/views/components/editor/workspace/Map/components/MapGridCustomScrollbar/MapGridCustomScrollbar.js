@@ -24,7 +24,7 @@ const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
       renderTrackVertical={props => <div {...props} className={styles.verticalTrack}/>}
       renderThumbHorizontal={props => <div {...props} className={styles.horizontalThumb}/>}
       renderThumbVertical={props => <div {...props} className={styles.verticalThumb}/>}
-      renderView={props => <div {...props} className={styles.view}/>}>
+      renderView={props => <div {...props} className={styles.view}/>}
     >
       { children }
     </Scrollbars>

@@ -1,2 +1,1 @@
-export { SegmentController } from './SegmentController';
-export { CustomScrollbarGridWrapper } from './CustomScrollbarGridWrapper';
+export { MapGridCustomScrollbar } from './MapGridCustomScrollbar';

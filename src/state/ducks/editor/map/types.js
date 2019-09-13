@@ -13,5 +13,5 @@ export const storeMapFailure = "editor/map/STORE_FAILURE";
 export const setMapProperties = "editor/map/SET_MAP_PROPERTIES";
 export const setMapGrid = "editor/map/SET_MAP_GRID";
 
-export const setTilemapDataObject = "editor/map/SET_TILEMAP_DATA_OBJECT";
-export const deleteTilemapDataObject = "editor/map/DELETE_TILEMAP_DATA_OBJECT";
+export const setTilemapDataBySegmentId = "editor/map/SET_TILEMAP_DATA_SEGMENT";
+export const deleteTilemapDataBySegmentId = "editor/map/DELETE_TILEMAP_DATA_SEGMENT";

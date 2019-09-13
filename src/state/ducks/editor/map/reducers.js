@@ -82,18 +82,18 @@ export const setMapGrid = (state, action) => {
   }
 };
 
-export const setTilemapDataObject = (state, action) => {
+export const setTilemapDataBySegmentId = (state, action) => {
   const { segmentId, tilemapData } = action.payload;
 
   return {
     ...state,
-    segmentProperties: {
-      ...state.segmentProperties,
-      [segmentId]: {
-        ...state.segmentProperties[segmentId],
-        modified: true
-      }
-    },
+    // segmentProperties: {
+    //   ...state.segmentProperties,
+    //   [segmentId]: {
+    //     ...state.segmentProperties[segmentId],
+    //     modified: true
+    //   }
+    // },
 
     tilemapData: {
       ...state.tilemapData,

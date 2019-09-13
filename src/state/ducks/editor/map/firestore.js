@@ -2,8 +2,6 @@ import { firebase } from 'state/lib/firebase';
 
 import * as mapGridUtils from 'lib/editor/map-grid-utils';
 
-const enableSuccessLog = true;
-
 /*** GENERAL ***/
 export const fetchSceneData = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
@@ -47,7 +45,7 @@ export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => 
       const chunks = mapGridUtils
         .convertMapGridToChunkDataArray({ mapProperties, mapGrid })
         .filter(data => data);
-        
+
       firebase.scene(sceneId).set({
         chunks: chunks.length || 0
       }, { merge: true });

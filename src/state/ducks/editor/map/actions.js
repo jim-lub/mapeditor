@@ -60,16 +60,16 @@ export const setMapGrid = ({ mapGrid }) => ({
   }
 });
 
-export const setTilemapDataObject = ({ segmentId, tilemapData }) => ({
-  type: types.setTilemapDataObject,
+export const setTilemapDataBySegmentId = ({ segmentId, tilemapData }) => ({
+  type: types.setTilemapDataBySegmentId,
   payload: {
     segmentId,
     tilemapData
   }
 });
 
-export const deleteTilemapDataObject = ({ segmentId }) => ({
-  type: types.deleteTilemapDataObject,
+export const deleteTilemapDataBySegmentId = ({ segmentId }) => ({
+  type: types.deleteTilemapDataBySegmentId,
   payload: {
     segmentId
   }
