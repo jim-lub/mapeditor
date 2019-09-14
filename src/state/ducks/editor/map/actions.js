@@ -15,16 +15,22 @@ export const initializeMapFailure = ({ error }) => ({
   }
 });
 
-export const initializeTilemapDataRequest = () => ({
-  type: types.initializeTilemapDataRequest
+export const initializeTilemapDataBySegmentIdRequest = ({ segmentId }) => ({
+  type: types.initializeTilemapDataBySegmentIdRequest,
+  payload: {
+    segmentId
+  }
 });
 
-export const initializeTilemapDataSuccess = () => ({
-  type: types.initializeTilemapDataSuccess
+export const initializeTilemapDataBySegmentIdSuccess = ({ segmentId }) => ({
+  type: types.initializeTilemapDataBySegmentIdSuccess,
+  payload: {
+    segmentId
+  }
 });
 
-export const initializeTilemapDataFailure = ({ error }) => ({
-  type: types.initializeTilemapDataFailure,
+export const initializeTilemapDataBySegmentIdFailure = ({ error }) => ({
+  type: types.initializeTilemapDataBySegmentIdFailure,
   payload: {
     error
   }

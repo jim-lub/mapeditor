@@ -4,8 +4,11 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as firestore from './firestore';
 
+import * as utils from './utils';
 import * as mapGridUtils from 'lib/editor/map-grid-utils';
-import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
+// import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
+
+import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 export const initializeMap = ({ sceneId }) => dispatch => {
   dispatch( actions.initializeMapRequest() );
@@ -49,29 +52,25 @@ export const storeMap = ({ sceneId }) => (dispatch, getState) => {
   .catch(e => console.log(e));
 }
 
-export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getState) => {
-  let modified = false;
+export const initializeTilemapDataBySegmentId = ({ segmentId }) => dispatch => {
+  dispatch( actions.initializeTilemapDataBySegmentIdRequest({ segmentId }) );
+
+  dispatch( utils.validateTilemapDataBySegmentId({ segmentId }) )
+    .then(() => {
+      dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) )
+    })
+}
+
+export const canvasController = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
   const state = getState();
 
-  const { segmentSize } = selectors.getMapProperties(state);
-  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+  const layerProperties = selectors.getLayerProperties(state);
   const layerSortOrder = selectors.getLayerSortOrder(state);
+  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
 
-  layerSortOrder.forEach(layerId => {
-    if (tilemapData[layerId]) {
-      /*
-        validate tiles; if columns and row match return else error
-      */
-      return;
-    };
-
-    const { tileSize } = selectors.getLayerPropertiesById(state, { layerId });
-
-    tilemapData[layerId] = tilemapDataUtils.buildTilemapDataArray({ segmentSize, tileSize });
-    modified = true;
-  })
-
-  if (modified) {
-    dispatch( actions.setTilemapDataBySegmentId({ segmentId, tilemapData }) );
-  }
+  drawCanvasHandler(canvasRef, canvasWidth, canvasHeight, {
+    segmentId,
+    layerProperties, layerSortOrder,
+    tilemapData
+  });
 }

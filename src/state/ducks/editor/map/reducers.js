@@ -21,24 +21,51 @@ export const initializeMapFailure = (state, action) => {
   }
 }
 
-export const initializeTilemapDataRequest = (state, action) => {
+export const initializeTilemapDataBySegmentIdRequest = (state, action) => {
+  const { segmentId } = action.payload;
+
   return {
     ...state,
-    ...statusReducer('initializeTilemapData', 'REQUEST', state)
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        initialized: false,
+        loading: true
+      }
+    }
   }
 }
 
-export const initializeTilemapDataSuccess = (state, action) => {
+export const initializeTilemapDataBySegmentIdSuccess = (state, action) => {
+  const { segmentId } = action.payload;
+
   return {
     ...state,
-    ...statusReducer('initializeTilemapData', 'SUCCESS', state)
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        initialized: true,
+        loading: false
+      }
+    }
   }
 }
 
-export const initializeTilemapDataFailure = (state, action) => {
+export const initializeTilemapDataBySegmentIdFailure = (state, action) => {
+  const { segmentId } = action.payload;
+
   return {
     ...state,
-    ...statusReducer('initializeTilemapData', 'FAILURE', state, action.payload.error)
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        initialized: false,
+        loading: false
+      }
+    }
   }
 }
 
@@ -87,13 +114,13 @@ export const setTilemapDataBySegmentId = (state, action) => {
 
   return {
     ...state,
-    // segmentProperties: {
-    //   ...state.segmentProperties,
-    //   [segmentId]: {
-    //     ...state.segmentProperties[segmentId],
-    //     modified: true
-    //   }
-    // },
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
 
     tilemapData: {
       ...state.tilemapData,

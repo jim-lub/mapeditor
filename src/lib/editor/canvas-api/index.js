@@ -1,0 +1,1 @@
+export { drawCanvasHandler } from './drawCanvasHandler';

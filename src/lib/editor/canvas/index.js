@@ -1,1 +1,0 @@
-export { canvasController } from './canvasController';

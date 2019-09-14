@@ -8,12 +8,14 @@ import {
   getSegmentId
 } from 'state/ducks/editor/map';
 
+import styles from './segment.module.css';
+
 const Component = ({
   columnIndex, rowIndex, style,  // grid properties
   segmentId
 }) => {
   return (
-    <div style={style}>
+    <div style={style} className={styles.segmentWrapper}>
     <AutoSizer>
       {
         ({ width: segmentWidth, height: segmentHeight }) =>

@@ -4,7 +4,7 @@ export const getStoreMapStatus = state => state.editor.map.status.storeMap;
 export const getMapProperties = state => state.editor.map.mapProperties;
 export const getMapGrid = state => state.editor.map.mapGrid;
 
-export const getSegmentPropertiesById = (state, { segmentId }) => state.editor.map.segmentProperties[segmentId];
+export const getSegmentPropertiesById = (state, { segmentId }) => state.editor.map.segmentProperties[segmentId] || {};
 
 export const getLayerProperties = state => state.editor.map.layerProperties;
 export const getLayerPropertiesById = (state, { layerId }) => state.editor.map.layerProperties[layerId];
