@@ -15,3 +15,4 @@ export const setMapGrid = "editor/map/SET_MAP_GRID";
 
 export const setTilemapDataBySegmentId = "editor/map/SET_TILEMAP_DATA_SEGMENT";
 export const deleteTilemapDataBySegmentId = "editor/map/DELETE_TILEMAP_DATA_SEGMENT";
+export const setSingleTileValue = "editor/map/SET_SINGLE_TILE_VALUE"

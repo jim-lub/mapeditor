@@ -25,6 +25,9 @@ const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
       renderThumbHorizontal={props => <div {...props} className={styles.horizontalThumb}/>}
       renderThumbVertical={props => <div {...props} className={styles.verticalThumb}/>}
       renderView={props => <div {...props} className={styles.view}/>}
+      autoHide
+      autoHideTimeout={2000}
+      autoHideDuration={500}
     >
       { children }
     </Scrollbars>

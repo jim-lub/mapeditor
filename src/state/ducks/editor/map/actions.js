@@ -74,9 +74,20 @@ export const setTilemapDataBySegmentId = ({ segmentId, tilemapData }) => ({
   }
 });
 
-export const deleteTilemapDataBySegmentId = ({ segmentId }) => ({
-  type: types.deleteTilemapDataBySegmentId,
+// export const deleteTilemapDataBySegmentId = ({ segmentId }) => ({
+//   type: types.deleteTilemapDataBySegmentId,
+//   payload: {
+//     segmentId
+//   }
+// });
+
+export const setSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex, value }) => ({
+  type: types.setSingleTileValue,
   payload: {
-    segmentId
+    segmentId,
+    layerId,
+    columnIndex,
+    rowIndex,
+    value
   }
 });

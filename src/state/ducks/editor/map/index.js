@@ -13,6 +13,7 @@ import * as layerTypes from 'lib/constants/layerTypes';
 //
 //   mapProperties: {},
 //   mapGrid: [],
+//   activeLayerId: null,
 //   layerProperties: {},
 //   layerSortOrder: [],
 //   segmentProperties: {},
@@ -23,7 +24,7 @@ const initialState = {
   status: {},
   mapProperties: {},
   mapGrid: [],
-
+  activeLayerId: 'layer-1',
   layerSortOrder: ['layer-1'],
   // layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4'],
   layerProperties: {
@@ -32,28 +33,32 @@ const initialState = {
       tileSize: {
         width: 64,
         height: 64
-      }
+      },
+      visible: true
     },
     'layer-2': {
       type: layerTypes.color,
       tileSize: {
         width: 16,
         height: 16
-      }
+      },
+      visible: true
     },
     'layer-3': {
       type: layerTypes.color,
       tileSize: {
         width: 32,
         height: 32
-      }
+      },
+      visible: true
     },
     'layer-4': {
       type: layerTypes.color,
       tileSize: {
         width: 64,
         height: 64
-      }
+      },
+      visible: true
     }
   },
 
@@ -82,7 +87,8 @@ export default createReducer( initialState )({
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 
-  [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action)
+  [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action),
+  [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),
 });
 
 /*** operations ***/
@@ -91,6 +97,7 @@ export const initializeTilemapDataBySegmentId = operations.initializeTilemapData
 export const storeMap = operations.storeMap;
 
 export const canvasController = operations.canvasController;
+export const setSingleTileValue = operations.setSingleTileValue;
 
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
@@ -100,6 +107,7 @@ export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
 export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
 
+export const getActiveLayerId = selectors.getActiveLayerId;
 export const getLayerProperties = selectors.getLayerProperties;
 export const getLayerPropertiesById = selectors.getLayerPropertiesById;
 export const getLayerSortOrder = selectors.getLayerSortOrder;

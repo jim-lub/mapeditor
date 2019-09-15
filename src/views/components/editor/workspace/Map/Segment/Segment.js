@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AutoSizer from 'react-virtualized-auto-sizer';
 
 import { Controller } from './components';
 
@@ -16,12 +15,7 @@ const Component = ({
 }) => {
   return (
     <div style={style} className={styles.segmentWrapper}>
-    <AutoSizer>
-      {
-        ({ width: segmentWidth, height: segmentHeight }) =>
-          <Controller segmentId={segmentId} segmentWidth={segmentWidth} segmentHeight={segmentHeight} />
-      }
-    </AutoSizer>
+      <Controller segmentId={segmentId} />
     </div>
   )
 }

@@ -128,3 +128,22 @@ export const setTilemapDataBySegmentId = (state, action) => {
     }
   }
 }
+
+export const setSingleTileValue = (state, action) => {
+  const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
+
+  return {
+    ...state,
+    tilemapData: {
+      ...state.tilemapData,
+      [segmentId]: {
+        ...state.tilemapData[segmentId],
+        [layerId]: Object.assign([ ...state.tilemapData[segmentId][layerId] ], {
+          [columnIndex]: Object.assign( [...state.tilemapData[segmentId][layerId][columnIndex]], {
+            [rowIndex]: value
+          })
+        })
+      }
+    }
+  }
+}

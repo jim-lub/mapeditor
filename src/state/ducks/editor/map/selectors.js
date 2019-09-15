@@ -6,6 +6,7 @@ export const getMapGrid = state => state.editor.map.mapGrid;
 
 export const getSegmentPropertiesById = (state, { segmentId }) => state.editor.map.segmentProperties[segmentId] || {};
 
+export const getActiveLayerId = state => state.editor.map.activeLayerId;
 export const getLayerProperties = state => state.editor.map.layerProperties;
 export const getLayerPropertiesById = (state, { layerId }) => state.editor.map.layerProperties[layerId];
 export const getLayerSortOrder = state => state.editor.map.layerSortOrder;

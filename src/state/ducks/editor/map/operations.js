@@ -74,3 +74,5 @@ export const canvasController = ({ segmentId, canvasRef, canvasWidth, canvasHeig
     tilemapData
   });
 }
+
+export const setSingleTileValue = actions.setSingleTileValue;
