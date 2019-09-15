@@ -76,3 +76,4 @@ export const canvasController = ({ segmentId, canvasRef, canvasWidth, canvasHeig
 }
 
 export const setSingleTileValue = actions.setSingleTileValue;
+export const clearSingleTileValue = actions.clearSingleTileValue;

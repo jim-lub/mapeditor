@@ -91,3 +91,13 @@ export const setSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex, 
     value
   }
 });
+
+export const clearSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex }) => ({
+  type: types.clearSingleTileValue,
+  payload: {
+    segmentId,
+    layerId,
+    columnIndex,
+    rowIndex
+  }
+});

@@ -12,7 +12,8 @@ import {
 
   initializeTilemapDataBySegmentId,
   canvasController,
-  setSingleTileValue
+  setSingleTileValue,
+  clearSingleTileValue
 } from 'state/ducks/editor/map';
 
 import { Loader } from 'views/components/Loader';
@@ -29,6 +30,7 @@ const Component = ({
   activeLayerId, layerProperties, layerSortOrder,
   tilemapData, actions
 }) => {
+  const [value, setValue] = useState("#c5c5c5");
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
 
@@ -47,15 +49,18 @@ const Component = ({
   const handleMouseEnter = () => setIsActiveSegment(true);
   const handleMouseLeave = () => setIsActiveSegment(false);
 
-  const handleInteractionNodeClick = ({ columnIndex, rowIndex }) => {
-    console.log(columnIndex, rowIndex);
-    actions.setSingleTileValue({
-      segmentId,
-      layerId: activeLayerId,
-      columnIndex,
-      rowIndex,
-      value: "#c5c5c5"
-    })
+  const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftMouseButton, rightMouseButton, scrollButton, altModifier, shiftModifier }) => {
+    if (leftMouseButton && !(altModifier || shiftModifier)) {
+      if (tilemapData[activeLayerId][columnIndex][rowIndex] === value) return;
+      
+      return actions.setSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex, value })
+    }
+
+    if (leftMouseButton && altModifier && !(shiftModifier)) {
+      if (tilemapData[activeLayerId][columnIndex][rowIndex] === 0) return;
+
+      return actions.clearSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex })
+    }
   }
 
   if (!initialized) {
@@ -86,7 +91,9 @@ const Component = ({
           segmentWidth={segmentSize.width}
           segmentHeight={segmentSize.height}
           layerProperties={layerProperties[activeLayerId]}
-          onInteractionNodeClick={handleInteractionNodeClick}
+          tilemapData={tilemapData[activeLayerId]}
+          value={value}
+          onMouseEvent={handleInteractionNodeEvent}
         />
       }
     </div>
@@ -111,7 +118,8 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       initializeTilemapDataBySegmentId,
       canvasController,
-      setSingleTileValue
+      setSingleTileValue,
+      clearSingleTileValue
     }, dispatch)
   }
 }

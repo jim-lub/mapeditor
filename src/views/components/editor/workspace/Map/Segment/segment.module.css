@@ -1,5 +1,5 @@
 .segmentWrapper {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   border-right: solid 1px #b5b5b5;
   border-bottom: solid 1px #b5b5b5;
 }

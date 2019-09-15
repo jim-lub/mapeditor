@@ -2,18 +2,39 @@ import React from 'react';
 
 import styles from '../../segment.module.css';
 
-export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, onInteractionNodeClick }) => {
+export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, tilemapData, onMouseEvent }) => {
   const columns = segmentWidth / tileSize.width;
   const rows = segmentHeight / tileSize.height;
 
-  const handleClick = (e) => {
-    const getIndexesFromId = e.target.id.split('-');
+  const handleContextMenu = (e) => e.preventDefault();
+  const handleMouseDown = (e) => handleMouseEvent(e);
+  const handleMouseOver = (e) => (e.buttons !== 0) ? handleMouseEvent(e) : null;
 
-    onInteractionNodeClick({
-      columnIndex: getIndexesFromId[1],
-      rowIndex: getIndexesFromId[2]
-    });
+  const handleMouseEvent = (e) => {
+    const leftMouseButton = (e.buttons === 1);
+    const rightMouseButton = (e.buttons === 2);
+    const scrollButton = (e.buttons === 4);
+    const altModifier = e.altKey;
+    const shiftModifier = e.shiftKey;
+    const { columnIndex, rowIndex } = targetIdToIndexes(e.target.id);
+
+    if (leftMouseButton || rightMouseButton || scrollButton) {
+      onMouseEvent({
+        columnIndex,
+        rowIndex,
+        leftMouseButton,
+        rightMouseButton,
+        scrollButton,
+        altModifier,
+        shiftModifier
+      })
+    };
   }
+
+  const targetIdToIndexes = (id) => ({
+    columnIndex: id.split('-')[1],
+    rowIndex: id.split('-')[2],
+  });
 
   return (
     <div className={styles.interactionWrapper}>
@@ -26,8 +47,12 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, on
                   key={`${columnIndex}-${rowIndex}`}
                   id={`interactionNode-${columnIndex}-${rowIndex}`}
                   className={styles.interactionNode}
-                  onMouseDown={handleClick}
+                  onMouseDown={handleMouseDown}
+                  onMouseOver={handleMouseOver}
+                  onContextMenu={handleContextMenu}
                   style={{
+                    padding: 0,
+                    margin: 0,
                     width: tileSize.width,
                     height: tileSize.height,
                     left: tileSize.width * columnIndex,

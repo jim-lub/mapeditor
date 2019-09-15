@@ -147,3 +147,22 @@ export const setSingleTileValue = (state, action) => {
     }
   }
 }
+
+export const clearSingleTileValue = (state, action) => {
+  const { segmentId, layerId, columnIndex, rowIndex } = action.payload;
+
+  return {
+    ...state,
+    tilemapData: {
+      ...state.tilemapData,
+      [segmentId]: {
+        ...state.tilemapData[segmentId],
+        [layerId]: Object.assign([ ...state.tilemapData[segmentId][layerId] ], {
+          [columnIndex]: Object.assign( [...state.tilemapData[segmentId][layerId][columnIndex]], {
+            [rowIndex]: 0
+          })
+        })
+      }
+    }
+  }
+}
