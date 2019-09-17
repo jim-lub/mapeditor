@@ -7,8 +7,8 @@
     'widgets toolbar map'
     'widgets toolbar map';
 
-  grid-template-rows: 32px 1fr minmax(150px, 250px);
-  grid-template-columns: 200px 32px 1fr;
+  grid-template-rows: 40px 1fr minmax(150px, 250px);
+  grid-template-columns: 200px 40px 1fr;
 }
 
 .header {
@@ -19,7 +19,7 @@
 
 .toolbar {
   grid-area: toolbar;
-  border-right: solid 1px #e5e5e5;
+  border-right: solid 1px #d5d5d5;
   border-bottom: solid 1px #e5e5e5;
 }
 

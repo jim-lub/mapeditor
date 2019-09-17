@@ -118,7 +118,7 @@ export const setTilemapDataBySegmentId = (state, action) => {
       ...state.segmentProperties,
       [segmentId]: {
         ...state.segmentProperties[segmentId],
-        modified: true
+        initialized: true
       }
     },
 
@@ -134,6 +134,14 @@ export const setSingleTileValue = (state, action) => {
 
   return {
     ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
+
     tilemapData: {
       ...state.tilemapData,
       [segmentId]: {
@@ -153,6 +161,15 @@ export const clearSingleTileValue = (state, action) => {
 
   return {
     ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
+
+
     tilemapData: {
       ...state.tilemapData,
       [segmentId]: {

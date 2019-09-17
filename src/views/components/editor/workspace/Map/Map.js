@@ -66,7 +66,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
               rowHeight={mapProperties.segmentSize.height}
               width={viewportWidth}
               height={viewportHeight}
-              outerElementType={MapGridCustomScrollbar}>
+              outerElementType={MapGridCustomScrollbar}
+            >
               {Segment}
             </FixedSizeGrid>
           )
@@ -80,7 +81,8 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    activeSceneId: getActiveSceneId(state) || "jwTgtS3suxi6gUDwGqHn",
+    // activeSceneId: getActiveSceneId(state) || "jwTgtS3suxi6gUDwGqHn",
+    activeSceneId: getActiveSceneId(state) || "y3OXPa0nXk7HR853lm8n",
     // activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
 
     mapProperties: getMapProperties(state),

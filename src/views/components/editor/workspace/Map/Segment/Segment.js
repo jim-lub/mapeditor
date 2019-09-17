@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 
 import { Controller } from './components';
@@ -14,7 +14,7 @@ const Component = ({
   segmentId
 }) => {
   return (
-    <div style={style} className={styles.segmentWrapper}>
+    <div style={{ ...style }} className={styles.segmentWrapper}>
       <Controller segmentId={segmentId} />
     </div>
   )

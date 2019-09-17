@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
   Map,
-  Properties
+  Properties,
+  Toolbar
 } from 'views/components/editor/workspace';
 
 import styles from './workspace.module.css';
@@ -11,7 +12,9 @@ export default () => {
   return (
       <div className={styles.grid}>
         <div className={styles.header}></div>
-        <div className={styles.toolbar}></div>
+        <div className={styles.toolbar}>
+          <Toolbar />
+        </div>
         <div className={styles.widgets}>
           <Properties />
         </div>

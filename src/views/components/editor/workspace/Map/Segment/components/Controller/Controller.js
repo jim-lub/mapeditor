@@ -16,6 +16,8 @@ import {
   clearSingleTileValue
 } from 'state/ducks/editor/map';
 
+import { useKeyPress } from 'lib/hooks';
+
 import { Loader } from 'views/components/Loader';
 
 import {
@@ -33,6 +35,7 @@ const Component = ({
   const [value, setValue] = useState("#c5c5c5");
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
+  const enableTouchActions = useKeyPress("h");
 
   useEffect(() => {
     if (!initialized) {
@@ -49,14 +52,16 @@ const Component = ({
   const handleMouseEnter = () => setIsActiveSegment(true);
   const handleMouseLeave = () => setIsActiveSegment(false);
 
-  const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftMouseButton, rightMouseButton, scrollButton, altModifier, shiftModifier }) => {
-    if (leftMouseButton && !(altModifier || shiftModifier)) {
+  const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftClickAction, rightClickAction, paintAction, altKey, ctrlKey, shiftKey }) => {
+    if (enableTouchActions) return; // hand tool
+
+    if ((leftClickAction || paintAction) && !(altKey || shiftKey)) {
       if (tilemapData[activeLayerId][columnIndex][rowIndex] === value) return;
-      
+
       return actions.setSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex, value })
     }
 
-    if (leftMouseButton && altModifier && !(shiftModifier)) {
+    if ((leftClickAction || paintAction) && altKey && !(shiftKey)) {
       if (tilemapData[activeLayerId][columnIndex][rowIndex] === 0) return;
 
       return actions.clearSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex })
@@ -74,7 +79,7 @@ const Component = ({
   return (
     <div
       className={styles.controllerWrapper}
-      style={{ width: segmentSize.width, height: segmentSize.height }}
+      style={{ width: segmentSize.width, height: segmentSize.height, touchAction: (enableTouchActions) ? "auto" : "none" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
