@@ -31,8 +31,8 @@ const initialState = {
     'layer-1': {
       type: layerTypes.color,
       tileSize: {
-        width: 32,
-        height: 32
+        width: 64,
+        height: 64
       },
       visible: true
     },

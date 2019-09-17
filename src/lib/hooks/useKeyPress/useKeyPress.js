@@ -6,14 +6,14 @@ export const useKeyPress = (targetKey) => {
 
   // If pressed key is our target key then set to true
   function downHandler({ key }) {
-    if (key === targetKey) {
+    if (key.toUpperCase() === targetKey.toUpperCase()) {
       setKeyPressed(true);
     }
   }
 
   // If released key is our target key then set to false
   const upHandler = ({ key }) => {
-    if (key === targetKey) {
+    if (key.toUpperCase() === targetKey.toUpperCase()) {
       setKeyPressed(false);
     }
   };

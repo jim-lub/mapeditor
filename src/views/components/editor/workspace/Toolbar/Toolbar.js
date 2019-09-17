@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { useKeyPress } from 'lib/hooks';
 
 import * as toolTypes from 'lib/constants/toolTypes';
+import toolConstants from 'lib/constants/toolConstants';
 
 import {
   setActiveTool,
@@ -16,30 +17,22 @@ import ToolNode from './ToolNode';
 import styles from './toolbar.module.css';
 
 const Component = ({ activeTool, actions }) => {
-  const [eraserModifier, setEraserModifier] = useState(false);
-  const [handModifier, setHandModifier] = useState(false);
-  const altModifier = useKeyPress('Alt');
-  const hModifier = useKeyPress('h');
+  const keyEventListener = {
+    paintBrush: useKeyPress( toolConstants[toolTypes.paintBrush].keybinding ),
+    tileStamp: useKeyPress( toolConstants[toolTypes.tileStamp].keybinding ),
+    eraser: useKeyPress( toolConstants[toolTypes.eraser].keybinding ),
+    hand: useKeyPress( toolConstants[toolTypes.hand].keybinding ),
+  }
 
   useEffect(() => {
-    if (toolTypes.paintBrush === activeTool) {
-      return (altModifier)
-        ? setEraserModifier(true)
-        : setEraserModifier(false)
-    }
-
-    if (toolTypes.tileStamp === activeTool) {
-      return (altModifier)
-        ? setEraserModifier(true)
-        : setEraserModifier(false)
-    }
-  }, [activeTool, altModifier, setEraserModifier]);
-
-  useEffect(() => {
-    return (hModifier)
-      ? setHandModifier(true)
-      : setHandModifier(false)
-  }, [activeTool, hModifier, setHandModifier]);
+    Object.entries(keyEventListener)
+      .filter(([key, val]) => val)
+      .forEach(([key, val]) => {
+        if (toolTypes[key] !== activeTool) {
+          actions.setActiveTool({ toolType: toolTypes[key] })
+        }
+      });
+  }, [keyEventListener]);
 
   return (
     <div className={styles.wrapper}>
@@ -50,10 +43,6 @@ const Component = ({ activeTool, actions }) => {
               key={toolType}
               toolType={toolType}
               isActive={(activeTool === toolType)}
-              isModifier={
-                (toolTypes.eraser === toolType && eraserModifier) ||
-                (toolTypes.hand === toolType && handModifier)
-              }
               onSelect={actions.setActiveTool}
             />
           )

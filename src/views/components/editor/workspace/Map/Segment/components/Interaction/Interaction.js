@@ -6,48 +6,11 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, ti
   const columns = segmentWidth / tileSize.width;
   const rows = segmentHeight / tileSize.height;
 
-  const handlePointerDown = (e) => {
-    log(e, { name: "onPointerDown"});
-  }
+  const handleContextMenu = (e) => e.preventDefault();
+  const handlePointerDown = (e) => handlePointerEvent(e);
+  const handlePointerOver = (e) => handlePointerEvent(e);
 
-  const handlePointerMove = (e) => {
-    // log(e, { name: "onPointerMove"});
-  }
-
-  const handlePointerUp = (e) => {
-    // log(e, { name: "onPointerUp"});
-  }
-
-  const handlePointerCancel = (e) => {
-    // log(e, { name: "onPointerCancel"});
-  }
-
-  const handlePointerEnter = (e) => {
-    // log(e, { name: "onPointerEnter"});
-  }
-
-  const handlePointerLeave = (e) => {
-    // log(e, { name: "onPointerLeave"});
-  }
-
-  const handlePointerOver = (e) => {
-    log(e, { name: "onPointerOver"});
-  }
-
-  const handlePointerOut = (e) => {
-    // log(e, { name: "onPointerOut"});
-  }
-
-  const handleGotPointerCapture = (e) => {
-    e.preventDefault()
-    // log(e, { name: "onGotPointerCapture"});
-  }
-
-  const handleLostPointerCapture = (e) => {
-    // log(e, { name: "onLostPointerCapture"});
-  }
-
-  const log = (pointerEvent) => {
+  const handlePointerEvent = (pointerEvent) => {
     pointerEvent.preventDefault();
     const { pointerType, button, buttons, altKey, ctrlKey, shiftKey, target } = pointerEvent;
     const { columnIndex, rowIndex } = targetIdToIndexes(target.id);
@@ -84,7 +47,7 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, ti
     }
 
     if (pointerType === "pen" || pointerType === "touch") {
-      const { leftClickAction, rightClickAction, paintAction } = pointerActions.mouse;
+      const { leftClickAction, rightClickAction, paintAction } = pointerActions.pen;
       if (leftClickAction || rightClickAction || paintAction) {
         onMouseEvent({
           columnIndex,
@@ -98,35 +61,6 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, ti
         })
       }
     }
-  }
-
-  const handleContextMenu = (e) => e.preventDefault();
-  const handleMouseDown = (e) => handleMouseEvent(e);
-  const handleMouseOver = (e) => (e.buttons !== 0) ? handleMouseEvent(e) : null;
-
-  const handleMouseEvent = (e) => {
-    // console.log(e.type)
-    // console.log(e.buttons)
-    const leftMouseButton = (e.buttons === 1);
-    const rightMouseButton = (e.buttons === 2);
-    const scrollButton = (e.buttons === 4);
-    const altModifier = e.altKey;
-    const ctrlModifier = e.ctrlKey;
-    const shiftModifier = e.shiftKey;
-    const { columnIndex, rowIndex } = targetIdToIndexes(e.target.id);
-
-    if (leftMouseButton || rightMouseButton || scrollButton) {
-      onMouseEvent({
-        columnIndex,
-        rowIndex,
-        leftMouseButton,
-        rightMouseButton,
-        scrollButton,
-        altModifier,
-        ctrlModifier,
-        shiftModifier
-      })
-    };
   }
 
   const targetIdToIndexes = (id) => ({
@@ -147,13 +81,7 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, ti
                   className={styles.interactionNode}
                   onContextMenu={handleContextMenu}
                   onPointerDown={handlePointerDown}
-                  onPointerMove={handlePointerMove}
-                  onPointerUp={handlePointerUp}
-                  onPointerCancel={handlePointerCancel}
-                  onPointerEnter={handlePointerEnter}
-                  onPointerLeave={handlePointerLeave}
                   onPointerOver={handlePointerOver}
-                  onPointerOut={handlePointerOut}
                   style={{
                     padding: 0,
                     margin: 0,

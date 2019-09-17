@@ -16,9 +16,12 @@ import {
   clearSingleTileValue
 } from 'state/ducks/editor/map';
 
-import { useKeyPress } from 'lib/hooks';
+import { getActiveTool } from 'state/ducks/editor/tools';
 
 import { Loader } from 'views/components/Loader';
+
+import { useKeyPress } from 'lib/hooks';
+import * as toolTypes from 'lib/constants/toolTypes';
 
 import {
   Canvas,
@@ -30,12 +33,11 @@ import styles from '../../segment.module.css';
 const Component = ({
   segmentId, segmentProperties: { initialized }, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData, actions
+  tilemapData, activeTool, actions
 }) => {
   const [value, setValue] = useState("#c5c5c5");
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
-  const enableTouchActions = useKeyPress("h");
 
   useEffect(() => {
     if (!initialized) {
@@ -53,7 +55,7 @@ const Component = ({
   const handleMouseLeave = () => setIsActiveSegment(false);
 
   const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftClickAction, rightClickAction, paintAction, altKey, ctrlKey, shiftKey }) => {
-    if (enableTouchActions) return; // hand tool
+    if (activeTool === toolTypes.hand) return; // hand tool
 
     if ((leftClickAction || paintAction) && !(altKey || shiftKey)) {
       if (tilemapData[activeLayerId][columnIndex][rowIndex] === value) return;
@@ -79,7 +81,7 @@ const Component = ({
   return (
     <div
       className={styles.controllerWrapper}
-      style={{ width: segmentSize.width, height: segmentSize.height, touchAction: (enableTouchActions) ? "auto" : "none" }}
+      style={{ width: segmentSize.width, height: segmentSize.height, touchAction: (activeTool === toolTypes.hand) ? "auto" : "none" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -114,7 +116,9 @@ const mapStateToProps = (state, ownProps) => {
     activeLayerId: getActiveLayerId(state),
     layerProperties: getLayerProperties(state),
     layerSortOrder: getLayerSortOrder(state),
-    tilemapData: getTilemapDataBySegmentId(state, { segmentId })
+    tilemapData: getTilemapDataBySegmentId(state, { segmentId }),
+
+    activeTool: getActiveTool(state)
   }
 }
 

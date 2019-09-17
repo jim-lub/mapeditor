@@ -9,24 +9,28 @@ export default {
   [ toolTypes.paintBrush ]: {
     name: "Paint Brush",
     description: "...",
-    Icon: paintBrushIcon
+    Icon: paintBrushIcon,
+    keybinding: "P"
   },
 
   [ toolTypes.tileStamp ]: {
     name: "Tile stamp",
     description: "...",
-    Icon: tileStampIcon
+    Icon: tileStampIcon,
+    keybinding: "T"
   },
 
   [ toolTypes.eraser ]: {
     name: "Eraser",
     description: "...",
-    Icon: eraserIcon
+    Icon: eraserIcon,
+    keybinding: "E"
   },
 
   [ toolTypes.hand ]: {
     name: "Hand",
     description: "...",
-    Icon: handIcon
+    Icon: handIcon,
+    keybinding: "H"
   },
 }
