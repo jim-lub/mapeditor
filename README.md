@@ -23,6 +23,8 @@
 - Update custom tilesets
 
 ## Future
+- Full touch / stylus support
+- Custom keybindings
 - New layer type: Collision
 - Improved user system
   - Sign up with email, facebook and github
@@ -30,11 +32,17 @@
   - Account settings
 - Share projects and scenes
 - Collaboration
-- Perma delete
+- Mobile support
 
 ## Completed
 - ~~Properties panel~~
+- ~~Split mapGrid in chunks before storage~~
 - ~~Segments: canvas layer, interaction layer~~
 - ~~Map: "virtualized" scrolling grid~~
 - ~~Create, delete, update scenes~~
 - ~~Create, delete, update projects~~
+- ~~Custom modal components~~
+- ~~Custom form components~~
+- ~~Basic authorization / protected routes~~
+- ~~Setup redux store structure~~
+- ~~Setup firebase authentication, firestore, hosting~~
