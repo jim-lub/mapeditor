@@ -1,8 +1,9 @@
 # Roadmap
 
-## Dev.Now
+## Now
 - Initialize / store tilemapData
 - Tools ( Paint brush, eraser, hand )
+- Toolbar
 
 ## Soon
 - Color Selector / Color Wheel
@@ -17,26 +18,30 @@
 ## Soon-ish
 - History
 - New layer type: Tile
-- Tools ( Tile stamp )
+- Tools ( Tile stamp, bucket )
 - Tile selector window
 - Upload custom tilesets
 - Update custom tilesets
+- UI/UX upgrades to project- and scene management
+- Smooth transition animations
 
 ## Future
+- Export / Import ( json, ??? )
 - Full touch / stylus support
 - Custom keybindings
+- Custom workspace layouts
+- Mobile support
 - New layer type: Collision
+- Tile stamp prefabs
 - Improved user system
   - Sign up with email, facebook and github
   - Link accounts
   - Account settings
 - Share projects and scenes
 - Collaboration
-- Mobile support
 
 ## Completed
 - ~~Properties panel~~
-- ~~Split mapGrid in chunks before storage~~
 - ~~Segments: canvas layer, interaction layer~~
 - ~~Map: "virtualized" scrolling grid~~
 - ~~Create, delete, update scenes~~
