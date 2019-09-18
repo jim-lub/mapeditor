@@ -2,11 +2,11 @@
 
 ## Now
 - Initialize / store tilemapData
-- Tools ( Paint brush, eraser, hand )
+- Tools ( paint brush, eraser, hand )
 - Toolbar
 
 ## Soon
-- Color Selector / Color Wheel
+- Color Picker
 - Color Swatches
 - Menu bar ( save, load, settings, help )
 - Layers
@@ -18,7 +18,7 @@
 ## Soon-ish
 - History
 - New layer type: Tile
-- Tools ( Tile stamp, bucket )
+- Tools ( tile stamp, bucket, eye drop )
 - Tile selector window
 - Upload custom tilesets
 - Update custom tilesets
