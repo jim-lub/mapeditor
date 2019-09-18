@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -32,7 +32,7 @@ const Component = ({ activeTool, actions }) => {
           actions.setActiveTool({ toolType: toolTypes[key] })
         }
       });
-  }, [keyEventListener]);
+  }, [keyEventListener, activeTool, actions]);
 
   return (
     <div className={styles.wrapper}>

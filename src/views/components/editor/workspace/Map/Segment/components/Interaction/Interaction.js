@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from '../../segment.module.css';
 
-export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, tilemapData, onMouseEvent }) => {
+export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, tilemapData, disable, onMouseEvent }) => {
   const columns = segmentWidth / tileSize.width;
   const rows = segmentHeight / tileSize.height;
 
@@ -82,6 +82,7 @@ export default ({ segmentWidth, segmentHeight, layerProperties: { tileSize }, ti
                   onContextMenu={handleContextMenu}
                   onPointerDown={handlePointerDown}
                   onPointerOver={handlePointerOver}
+                  disabled={disable}
                   style={{
                     padding: 0,
                     margin: 0,

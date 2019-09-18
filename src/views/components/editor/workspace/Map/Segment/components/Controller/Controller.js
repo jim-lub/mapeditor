@@ -20,7 +20,6 @@ import { getActiveTool } from 'state/ducks/editor/tools';
 
 import { Loader } from 'views/components/Loader';
 
-import { useKeyPress } from 'lib/hooks';
 import * as toolTypes from 'lib/constants/toolTypes';
 
 import {
@@ -36,6 +35,7 @@ const Component = ({
   tilemapData, activeTool, actions
 }) => {
   const [value, setValue] = useState("#c5c5c5");
+  const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
 
@@ -50,6 +50,14 @@ const Component = ({
       actions.canvasController({ segmentId, canvasRef, canvasWidth: segmentSize.width, canvasHeight: segmentSize.height });
     }
   });
+
+  useEffect(() => {
+    if (activeTool === toolTypes.hand) {
+      setDisablePointerInput(true);
+    } else {
+      setDisablePointerInput(false);
+    }
+  }, [activeTool, setDisablePointerInput])
 
   const handleMouseEnter = () => setIsActiveSegment(true);
   const handleMouseLeave = () => setIsActiveSegment(false);
@@ -93,13 +101,14 @@ const Component = ({
       />
 
       {
-        isActiveSegment &&
+        isActiveSegment && (activeTool !== toolTypes.hand) &&
         <Interaction
           segmentWidth={segmentSize.width}
           segmentHeight={segmentSize.height}
           layerProperties={layerProperties[activeLayerId]}
           tilemapData={tilemapData[activeLayerId]}
           value={value}
+          disable={disablePointerInput}
           onMouseEvent={handleInteractionNodeEvent}
         />
       }

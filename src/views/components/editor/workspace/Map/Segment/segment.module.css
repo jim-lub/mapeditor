@@ -32,6 +32,17 @@
     cursor: default;
   }
 
+  .interactionNode:disabled {
+    background-color: transparent;
+    border: 0px;
+    cursor: not-allowed;
+  }
+
+  .interactionNode:hover:disabled {
+    background-color: rgb(215, 122, 128, 0.5);
+    border: solid 2px #b2676b;
+  }
+
   .interactionNode:focus {
     background-color: transparent;
     border: 0px;
