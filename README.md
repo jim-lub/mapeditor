@@ -1,7 +1,7 @@
 # Roadmap
 
-## Now
-- Initialize / store tilemapData
+## In development
+- Initialize / store tilemap data
 - Tools ( paint brush, eraser, hand )
 - Toolbar
 
@@ -37,6 +37,7 @@
   - Sign up with email, facebook and github
   - Link accounts
   - Account settings
+  - Enhanced role-based authorization system
 - Share projects and scenes
 - Collaboration
 

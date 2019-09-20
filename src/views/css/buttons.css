@@ -1,3 +1,5 @@
+@import './colors.css';
+
 button {
     display: inline-block;
     width: 100%;
@@ -52,18 +54,18 @@ button.green {
   }
 
 button.blue {
-  background-color: #5ab0ee;
-  border: solid 1px #4f9cd3;
+  background-color: var(--blue-600);
+  border: solid 1px var(--blue-900);
   color: #ffffff;
 }
 
   button.blue:hover,
   button.blue:focus {
-  	background-color: #5cb6f7;
+  	background-color: var(--blue-500);
   }
 
   button.blue:active {
-    background-color: #56a2d8;
+    background-color: var(--blue-800);
   }
 
   button.blue:disabled {

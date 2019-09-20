@@ -1,45 +1,52 @@
-.container {
-  position: relative;
+.sidebar {
   height: 100%;
-  width: 100%;
-  border-right: solid 1px #d5d5d5;
-  background-color: #f7f7f7;
-
-  /* border: solid 1px #111111;
-  background-color: #333333; */
+  background-color: var(--grey-200);
+  border-right: solid 1px var(--grey-400);
 }
 
-.navLinksWrapper {
-  padding: 5px;
+.navList {
+
 }
 
-.userPanelWrapper {
+.signOutButton {
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+}
+
+.navLinkWrapper {
+  padding: 6px 10px;
+  border-bottom: solid 1px var(--grey-300);
+  border-top: solid 1px var(--white)
+}
+
+.navLink {
+  fill: var(--blue-grey-200);
+  text-decoration: none;
+}
+
+.navLink:hover {
+  fill: var(--blue-grey-600);
+}
+
+.navLinkActive {
+  fill: var(--blue-grey-600);
+}
+
+.navLinkIcon {
+  margin: 3px 14px;
+  width: 32px;
+  height: 32px;
+  fill: inherit;
+  stroke: inherit;
+}
+
+.tooltip {
   width: 100%;
-}
-
-.link {
-  font-size: 12px;
-  margin: 3px;
+  font-size: 10px;
+  text-align: center;
+  background-color: var(--grey-300);
+  border-radius: 10px;
+  padding: 1px 4px;
+  font-weight: inherit;
   text-decoration: none;
-}
-
-.linkLocked {
-  font-size: 12px;
-  margin: 3px;
-  text-decoration: none;
-  opacity: 0.5;
-}
-
-.link:hover {
-  color: grey;
-  text-decoration: underline;
-  background-color: #e5e5e5;
-}
-
-.linkActive {
-  font-weight: bold;
-  text-decoration: underline;
 }

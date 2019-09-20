@@ -1,37 +1,49 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { nav } from 'lib/routes';
+import { bindActionCreators } from 'redux';
 
-import { UserPanel } from './components/UserPanel';
-import { getAuthUser, getAuthStatus } from 'state/ducks/auth';
+import { getAuthUser, getAuthStatus, signOut } from 'state/ducks/auth';
+import { default as routes } from 'lib/routes';
+import * as ruleTypes from 'views/lib/authorization/ruleTypes';
+
+import { CustomNavLink, CustomLink } from './components';
+import { ReactComponent as SignOutIcon } from 'assets/static/icons/sidebar/signout.svg';
 
 import styles from './sidebar.module.css';
 
-const Sidebar = ({ authUser, initialized }) => {
-  if (!initialized) return <Loading />;
+const Component = ({ authUser, authStatus, actions }) => {
+  if (!authStatus) return null;
+
+  const handleRouteFilter = (route) => {
+    if (authUser) {
+      return (ruleTypes.IS_SIGNED_IN === route.ruleset[0])
+    } else {
+      return (ruleTypes.IS_NOT_SIGNED_IN === route.ruleset[0])
+    }
+  }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.navLinksWrapper}>
+    <div className={styles.sidebar}>
+      <div className={styles.navList}>
         {
-          nav.map((link, index) => {
-            return (
-              <Fragment key={index}>
-                {
-                  (link.auth === !!authUser)
-                    ?   <Link name={link.name} icon={link.icon} route={link.route} />
-                      : <LockedLink name={link.name} />
-                }
-                <br />
-              </Fragment>
+          routes.filter(route => handleRouteFilter(route))
+            .map((route, index) =>
+              <CustomNavLink
+                key={index}
+                exact={route.exact}
+                path={route.path}
+                name={route.name}
+                icon={route.icon}
+              />
             )
-          })
         }
       </div>
-      <div className={styles.userPanelWrapper}>
-        <UserPanel />
-      </div>
+
+      {
+        (authUser)
+          ? <div className={styles.signOutButton}><CustomLink name="Sign out" onClick={actions.signOut}/></div>
+          : null
+      }
     </div>
   )
 }
@@ -39,37 +51,16 @@ const Sidebar = ({ authUser, initialized }) => {
 const mapStateToProps = (state) => {
   return {
     authUser: getAuthUser(state),
-    initialized: getAuthStatus(state)
+    authStatus: getAuthStatus(state)
   }
 }
 
-export default connect(mapStateToProps)(Sidebar);
-
-const Link = ({ name, icon, route }) => {
-  return (
-    <NavLink
-      exact={route.exact}
-      to={route.path}
-      className={styles.link}
-      activeClassName={styles.linkActive}
-    >
-      <img src={require(`../../../assets/static/icons/sidebar/${icon}.png`)} alt="" width={16} height={16}/>
-      <span> </span>
-      { name }
-    </NavLink>
-  )
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      signOut
+    }, dispatch)
+  }
 }
 
-const LockedLink = ({ name }) => {
-  return (
-    <span className={styles.linkLocked}>
-      <img src={require('../../../assets/static/icons/other/lock-16.png')} alt="" />
-      <span> </span>
-      { name }
-    </span>
-  )
-}
-
-const Loading = () => {
-  return <div>Loading..</div>
-}
+export default connect(mapStateToProps, mapDispatchToProps)(Component);
