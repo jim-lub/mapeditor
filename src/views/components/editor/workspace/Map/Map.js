@@ -13,18 +13,17 @@ import {
   initializeMap,
   storeMap,
   getMapProperties,
-  getMapGrid
+  getMapGrid,
+  getDisableAllInput
 } from 'state/ducks/editor/map'
 
 import { Loader } from 'views/components/Loader';
-
 import { Segment } from './Segment';
+import { MapGridCustomScrollbar } from './components';
 
-import {
-  MapGridCustomScrollbar
-} from './components';
+import styles from './map.module.css';
 
-const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
+const Component = ({ activeSceneId, mapProperties, mapGrid, disableAllInput, actions }) => {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -39,10 +38,6 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 
   }, [activeSceneId, mapProperties, actions]);
 
-  const handleSave = () => {
-    actions.storeMap({ sceneId: activeSceneId })
-  }
-
   if (!initialized) {
     return <Loader.Simple />
   }
@@ -51,25 +46,39 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
     return <div>No scene selected..</div>;
   }
 
-  // return <div>Success</div>;
-
   return (
     <>
     <AutoSizer>
       {
         ({ width: viewportWidth, height: viewportHeight }) => {
           return (
-            <FixedSizeGrid
-              columnCount={mapProperties.mapSize.columns}
-              rowCount={mapProperties.mapSize.rows}
-              columnWidth={mapProperties.segmentSize.width}
-              rowHeight={mapProperties.segmentSize.height}
-              width={viewportWidth}
-              height={viewportHeight}
-              outerElementType={MapGridCustomScrollbar}
-            >
-              {Segment}
-            </FixedSizeGrid>
+            <>
+              <FixedSizeGrid
+                columnCount={mapProperties.mapSize.columns}
+                rowCount={mapProperties.mapSize.rows}
+                columnWidth={mapProperties.segmentSize.width}
+                rowHeight={mapProperties.segmentSize.height}
+                width={viewportWidth}
+                height={viewportHeight}
+                outerElementType={MapGridCustomScrollbar}
+              >
+                {Segment}
+              </FixedSizeGrid>
+
+              {
+                disableAllInput &&
+                <div className={styles.disabledInputOverlay} style={{width: viewportWidth, height: viewportHeight}}>
+                <div
+                style={{
+                  marginLeft: (viewportWidth / 2 - 24),
+                  marginTop: (viewportHeight / 2 - 24)
+                }}
+                >
+                <Loader.Simple width={48} height={48}/>
+                </div>
+                </div>
+              }
+            </>
           )
         }
       }
@@ -81,11 +90,12 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
 const mapStateToProps = (state) => {
   return {
     // activeSceneId: getActiveSceneId(state) || "jwTgtS3suxi6gUDwGqHn",
-    activeSceneId: getActiveSceneId(state) || "y3OXPa0nXk7HR853lm8n",
+    // activeSceneId: getActiveSceneId(state) || "y3OXPa0nXk7HR853lm8n",
     // activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
-
+    activeSceneId: getActiveSceneId(state),
     mapProperties: getMapProperties(state),
-    mapGrid: getMapGrid(state)
+    mapGrid: getMapGrid(state),
+    disableAllInput: getDisableAllInput(state)
   }
 }
 

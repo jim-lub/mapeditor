@@ -6,3 +6,10 @@ export const setActiveTool = ({ toolType }) => ({
     toolType
   }
 });
+
+export const setColor = ({ hex }) => ({
+  type: types.setColor,
+  payload: {
+    hex
+  }
+});

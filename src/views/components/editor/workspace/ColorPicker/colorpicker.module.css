@@ -1,0 +1,16 @@
+.wrapper {
+  border: solid 1px var(--grey-400);
+  margin: 2px;
+  /* flex-grow: 1; */
+}
+
+.container {
+  border: solid 1px var(--white);
+}
+
+.header {
+  font-weight: bold;
+  padding: 4px 8px;
+  background-color: var(--grey-200);
+  border-bottom: solid 1px var(--grey-400);
+}

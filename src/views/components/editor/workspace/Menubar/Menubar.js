@@ -6,11 +6,11 @@ import styles from './menubar.module.css';
 
 import {
   storeMap,
-
-  getStoreMapStatus
+  getStoreMapStatus,
+  getDisableAllInput
 } from 'state/ducks/editor/map'
 
-const Component = ({ storeMapStatus, actions }) => {
+const Component = ({ storeMapStatus, disableAllInput, actions }) => {
   const handleSave = () => {
     actions.storeMap()
   }
@@ -22,7 +22,7 @@ const Component = ({ storeMapStatus, actions }) => {
           className="blue"
           style={{padding: 9}}
           onClick={handleSave}
-          disabled={(storeMapStatus.loading)}
+          disabled={(disableAllInput)}
         >
           Save
         </button>
@@ -33,7 +33,8 @@ const Component = ({ storeMapStatus, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    storeMapStatus: getStoreMapStatus(state)
+    storeMapStatus: getStoreMapStatus(state),
+    disableAllInput: getDisableAllInput(state)
   }
 }
 

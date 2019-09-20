@@ -5,27 +5,28 @@ import toolConstants from 'lib/constants/toolConstants';
 
 import styles from './toolbar.module.css';
 
-export default ({ isActive, isModifier, toolType, onSelect }) => {
+export default ({ isActive, disabled, toolType, onSelect }) => {
   const { name, description, Icon } = toolConstants[ toolType ];
 
   const nodeClassNames = concatClassNames([
-    styles.toolNode,
-    (isActive) ? styles.toolNodeActive : null,
-    (isModifier) ? styles.toolNodeModifier : null
+    styles.node,
+    (isActive) ? styles.nodeActive : null,
+    // (isModifier) ? styles.toolNodeModifier : null
   ]);
 
   const iconClassNames = concatClassNames([
-    styles.toolNodeIcon,
-    (isActive) ? styles.toolNodeIconActive : null,
-    (isModifier) ? styles.toolNodeIconModifier : null
+    styles.nodeIcon,
+    (isActive) ? styles.nodeIconActive : null,
+    // (isModifier) ? styles.toolNodeIconModifier : null
   ]);
 
   return (
-    <div
+    <button
       className={nodeClassNames}
       onClick={() => onSelect({ toolType })}
+      disabled={disabled}
     >
       <Icon className={iconClassNames}/>
-    </div>
+    </button>
   );
 }

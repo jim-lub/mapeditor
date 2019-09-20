@@ -31,8 +31,8 @@ const initialState = {
     'layer-1': {
       type: layerTypes.color,
       tileSize: {
-        width: 64,
-        height: 64
+        width: 32,
+        height: 32
       },
       visible: true
     },
@@ -104,6 +104,7 @@ export const clearSingleTileValue = operations.clearSingleTileValue;
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
 export const getStoreMapStatus = selectors.getStoreMapStatus;
+export const getDisableAllInput = selectors.getDisableAllInput;
 
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;

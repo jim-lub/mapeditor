@@ -6,3 +6,14 @@ export const setActiveTool = (state, action) => {
     active: toolType
   }
 };
+
+export const setColor = (state, action) => {
+  const { hex } = action.payload;
+
+  return {
+    ...state,
+    colorValue: {
+      hex
+    }
+  }
+};

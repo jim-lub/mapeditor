@@ -4,11 +4,11 @@
 - Initialize / store tilemap data
 - Tools ( paint brush, eraser, hand )
 - Toolbar
+- Color Picker
+- Menu bar ( save, load, settings, help )
 
 ## Soon
-- Color Picker
 - Color Swatches
-- Menu bar ( save, load, settings, help )
 - Layers
 - Zoom
 - Improved tools ( size, patterns )

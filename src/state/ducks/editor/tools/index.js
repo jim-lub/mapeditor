@@ -10,6 +10,10 @@ import * as reducers from './reducers';
 const initialState = {
   active: null,
 
+  colorValue: {
+    hex: "#22194D"
+  },
+
   properties: {
     size: {
       width: 1,
@@ -21,10 +25,13 @@ const initialState = {
 
 export default createReducer( initialState )({
   [ types.setActiveTool ]: (state, action) => reducers.setActiveTool(state, action),
+  [ types.setColor ]: (state, action) => reducers.setColor(state, action),
 });
 
 /*** operations ***/
 export const setActiveTool = operations.setActiveTool;
+export const setColor = operations.setColor;
 
 /*** selectors ***/
 export const getActiveTool = selectors.getActiveTool;
+export const getColor = selectors.getColor;

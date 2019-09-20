@@ -16,7 +16,10 @@ import {
   clearSingleTileValue
 } from 'state/ducks/editor/map';
 
-import { getActiveTool } from 'state/ducks/editor/tools';
+import {
+  getActiveTool,
+  getColor
+} from 'state/ducks/editor/tools';
 
 import { Loader } from 'views/components/Loader';
 
@@ -32,9 +35,10 @@ import styles from '../../segment.module.css';
 const Component = ({
   segmentId, segmentProperties: { initialized }, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData, activeTool, actions
+  tilemapData,
+  activeTool, color,
+  actions
 }) => {
-  const [value, setValue] = useState("#c5c5c5");
   const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
@@ -66,9 +70,9 @@ const Component = ({
     if (activeTool === toolTypes.hand) return; // hand tool
 
     if ((leftClickAction || paintAction) && !(altKey || shiftKey)) {
-      if (tilemapData[activeLayerId][columnIndex][rowIndex] === value) return;
+      if (tilemapData[activeLayerId][columnIndex][rowIndex] === color.hex) return;
 
-      return actions.setSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex, value })
+      return actions.setSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex, value: color.hex })
     }
 
     if ((leftClickAction || paintAction) && altKey && !(shiftKey)) {
@@ -107,7 +111,7 @@ const Component = ({
           segmentHeight={segmentSize.height}
           layerProperties={layerProperties[activeLayerId]}
           tilemapData={tilemapData[activeLayerId]}
-          value={value}
+          value={color.hex}
           disable={disablePointerInput}
           onMouseEvent={handleInteractionNodeEvent}
         />
@@ -127,7 +131,8 @@ const mapStateToProps = (state, ownProps) => {
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataBySegmentId(state, { segmentId }),
 
-    activeTool: getActiveTool(state)
+    activeTool: getActiveTool(state),
+    color: getColor(state)
   }
 }
 

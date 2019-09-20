@@ -27,7 +27,7 @@ export default function configureStore( initialState = {} ) {
       initialState,
       applyMiddleware(
           thunk,
-          logger
+          // logger
       ),
   );
 }

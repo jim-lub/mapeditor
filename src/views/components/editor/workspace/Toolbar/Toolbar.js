@@ -12,11 +12,15 @@ import {
   getActiveTool
 } from 'state/ducks/editor/tools';
 
+import {
+  getDisableAllInput
+} from 'state/ducks/editor/map';
+
 import ToolNode from './ToolNode';
 
 import styles from './toolbar.module.css';
 
-const Component = ({ activeTool, actions }) => {
+const Component = ({ activeTool, disableAllInput, actions }) => {
   const keyEventListener = {
     paintBrush: useKeyPress( toolConstants[toolTypes.paintBrush].keybinding ),
     tileStamp: useKeyPress( toolConstants[toolTypes.tileStamp].keybinding ),
@@ -44,6 +48,7 @@ const Component = ({ activeTool, actions }) => {
               toolType={toolType}
               isActive={(activeTool === toolType)}
               onSelect={actions.setActiveTool}
+              disabled={disableAllInput}
             />
           )
         })
@@ -54,7 +59,8 @@ const Component = ({ activeTool, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    activeTool: getActiveTool(state)
+    activeTool: getActiveTool(state),
+    disableAllInput: getDisableAllInput(state)
   }
 }
 
