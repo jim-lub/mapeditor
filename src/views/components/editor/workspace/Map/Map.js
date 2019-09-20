@@ -74,7 +74,6 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, actions }) => {
         }
       }
     </AutoSizer>
-    <button style={{position: "absolute", width: 80, left: 40, top: 10 }} className="green" onClick={handleSave}>Save</button>
     </>
   )
 }
@@ -92,7 +91,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ initializeMap, storeMap }, dispatch)
+    actions: bindActionCreators({ initializeMap, storeMap}, dispatch)
   }
 }
 

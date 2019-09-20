@@ -1,5 +1,5 @@
 .wrapper {
-  border: solid 1px #d5d5d5;
+  border: solid 1px var(--grey-400);
   margin: 2px;
   /* flex-grow: 1; */
 }
@@ -11,7 +11,7 @@
 .header {
   font-weight: bold;
   padding: 4px 8px;
-  background-color: #f1f1f1;
+  background-color: var(--grey-200);
   border-bottom: solid 1px #c5c5c5;
 }
 

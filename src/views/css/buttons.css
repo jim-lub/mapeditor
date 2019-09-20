@@ -54,43 +54,43 @@ button.green {
   }
 
 button.blue {
-  background-color: var(--blue-600);
-  border: solid 1px var(--blue-900);
-  color: #ffffff;
+  color: var(--text-color-light-100);
+  background-color: var(--blue-300);
+  border: solid 1px var(--blue-700);
 }
 
   button.blue:hover,
   button.blue:focus {
-  	background-color: var(--blue-500);
+  	background-color: var(--blue-100);
   }
 
   button.blue:active {
-    background-color: var(--blue-800);
+    background-color: var(--blue-500);
   }
 
   button.blue:disabled {
-    color: #a5abc5;
-    background-color: #e1e1e1;
-    border: solid 1px #d7d8e0;
+    color: var(--text-color-blue-grey);
+    background-color: var(--grey-300);
+    border: solid 1px var(--grey-400);
   }
 
 button.red {
-  background-color: #d77a80;
-  border: solid 1px #b2676b;
-  color: #ffffff;
+  color: var(--text-color-light-100);
+  background-color: var(--red-300);
+  border: solid 1px var(--red-700);
 }
 
   button.red:hover,
   button.red:focus {
-    background-color: #ea8a90;
+    background-color: var(--red-100);
   }
 
   button.red:active {
-    background-color: #c06f74;
+    background-color: var(--red-500);
   }
 
   button.red:disabled {
-    color: #a5abc5;
-    background-color: #e1e1e1;
-    border: solid 1px #d7d8e0;
+    color: var(--text-color-blue-grey);
+    background-color: var(--grey-300);
+    border: solid 1px var(--grey-400);
   }

@@ -2,6 +2,7 @@
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import * as sceneSelectors from 'state/ducks/editor/scenes';
 import * as firestore from './firestore';
 
 import * as utils from './utils';
@@ -35,10 +36,11 @@ export const initializeMap = ({ sceneId }) => dispatch => {
     .catch(e => console.log(e));
 }
 
-export const storeMap = ({ sceneId }) => (dispatch, getState) => {
+export const storeMap = () => (dispatch, getState) => {
   dispatch( actions.storeMapRequest() );
 
   const state = getState();
+  const sceneId = sceneSelectors.getActiveSceneId(state);
   const mapProperties = selectors.getMapProperties(state);
   const mapGrid = selectors.getMapGrid(state);
 

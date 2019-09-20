@@ -1,48 +1,42 @@
 .wrapper {
   width: 100%;
   height: 100%;
-  border: solid 1px #ffffff;
-  background-color: #f5f5f5;
+  border: solid 1px var(--white);
 }
 
 .toolNode {
   position: relative;
   box-sizing: border-box;
-  padding: 6px 0 4px 7px;
-  width: 37px;
+  padding: 6px 0 4px 6px;
+  margin: 2px;
+  width: 35px;
   margin-bottom: 1px;
-  border-radius: 4px;
-  border: solid 1px #d5d5d5;
+  border-bottom: solid 1px var(--grey-400);
+  fill: var(--blue-grey-300);
 }
 
 .toolNode:hover {
   box-sizing: border-box;
-  background-color: #ddedec;
+  fill: var(--blue-grey-900);
 }
 
 .toolNodeActive {
   box-sizing: border-box;
-  background-color: #e5e5e5;
-  border: solid 1px #4f9cd3;
-}
-
-.toolNodeModifier {
-  box-sizing: border-box;
-  background-color: #d5d5d5;
-  padding: 5px 0 3px 6px;
-  border: solid 1px #4f9cd3;
+  background-color: var(--blue-grey-100);
+  border-radius: 4px;
+  fill: var(--blue-grey-900);
 }
 
 .toolNodeIcon {
   width: 20px;
   height: 20px;
-  fill: #888888;
+  fill: inherit;
 }
 
 .toolNodeIconActive {
-  fill: #444444;
+  fill: inherit;
 }
 
 .toolNodeIconModifier {
-  fill: #4f9cd3;
+  fill: inherit;
 }
