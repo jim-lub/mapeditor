@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setColor } from 'state/ducks/editor/tools';
+import { setColor, getColor } from 'state/ducks/editor/tools';
 
 import { CustomPicker } from './CustomPicker';
 
@@ -21,7 +21,8 @@ const Component = ({ color, actions }) => {
         <div className={styles.header}>Color Picker</div>
         <div className={styles.colorPicker}>
           <CustomPicker
-            onValueChange={handleColorValueChange}
+            color={color}
+            onChangeComplete={handleColorValueChange}
           />
         </div>
       </div>
@@ -31,6 +32,7 @@ const Component = ({ color, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
+    color: getColor(state)
   }
 }
 

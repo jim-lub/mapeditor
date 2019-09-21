@@ -3,15 +3,7 @@ import { CustomPicker } from 'react-color';
 import { Hue, Saturation, EditableInput } from 'react-color/lib/components/common';
 
 const ColorPicker = (props) => {
-  const { onValueChange, onChange, hex, rgb, hsl } = props;
-
-  useEffect(() => {
-    onValueChange({
-      hex,
-      rgb,
-      hsl
-    })
-  }, [hex, rgb, hsl, onValueChange]);
+  const { color, onChange } = props;
 
   return (
     <div style={{margin: 0, border: "solid 1px white"}}>
@@ -41,7 +33,7 @@ const ColorPicker = (props) => {
               width: "100%"
             }
           }}
-          value={hex}
+          value={color.hex}
           onChange={onChange}
         />
       </div>
