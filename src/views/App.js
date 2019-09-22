@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 import { Sidebar } from 'views/components/Sidebar'
 import { PageNotFound } from 'views/pages/404';
@@ -28,6 +29,8 @@ export const App = ({ store }) => {
           <Route component={PageNotFound} />
         </Switch>
       </div>
+
+      <ReactTooltip id="global-tooltip-handler"/>
     </div>
   )
 }

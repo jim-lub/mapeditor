@@ -5,7 +5,7 @@
 }
 
 .navList {
-
+  padding-top: 5px;
 }
 
 .signOutButton {
@@ -15,8 +15,6 @@
 
 .navLinkWrapper {
   padding: 6px 10px;
-  border-bottom: solid 1px var(--grey-300);
-  border-top: solid 1px var(--white)
 }
 
 .navLink {
@@ -33,20 +31,15 @@
 }
 
 .navLinkIcon {
-  margin: 3px 14px;
+  margin: 2px 4px;
   width: 32px;
   height: 32px;
   fill: inherit;
   stroke: inherit;
 }
 
-.tooltip {
-  width: 100%;
-  font-size: 10px;
-  text-align: center;
-  background-color: var(--grey-300);
-  border-radius: 10px;
-  padding: 1px 4px;
-  font-weight: inherit;
-  text-decoration: none;
+.sidebarTooltip {
+  font-size: 12px;
+  font-weight: bold;
+  color: #6e768f;
 }

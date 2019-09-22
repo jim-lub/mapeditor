@@ -26,3 +26,8 @@
 .nodeIconActive {
 
 }
+
+.toolbarTooltip {
+  font-size: 11px;
+  color: #6e768f;
+}

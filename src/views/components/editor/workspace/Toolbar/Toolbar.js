@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ReactTooltip from 'react-tooltip';
 
 import { useKeyPress } from 'lib/hooks';
 
@@ -53,6 +54,7 @@ const Component = ({ activeTool, disableAllInput, actions }) => {
           )
         })
       }
+      <ReactTooltip id="toolbar-tooltip-handler" place="right" delayShow={100} className={styles.toolbarTooltip} type="light" border={true}/>
     </div>
   )
 }

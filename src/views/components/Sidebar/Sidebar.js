@@ -7,7 +7,7 @@ import { default as routes } from 'lib/routes';
 import * as ruleTypes from 'views/lib/authorization/ruleTypes';
 
 import { CustomNavLink, CustomLink } from './components';
-import { ReactComponent as SignOutIcon } from 'assets/static/icons/sidebar/signout.svg';
+import ReactTooltip from 'react-tooltip';
 
 import styles from './sidebar.module.css';
 
@@ -44,6 +44,17 @@ const Component = ({ authUser, authStatus, actions }) => {
           ? <div className={styles.signOutButton}><CustomLink name="Sign out" onClick={actions.signOut}/></div>
           : null
       }
+
+      <ReactTooltip
+        id="sidebar-tooltip-handler"
+        place="right"
+        offset={{top: 4, left: 13}}
+        type="light"
+        border={true}
+        delayShow={200}
+        effect="solid"
+        className={styles.sidebarTooltip}
+      />
     </div>
   )
 }
