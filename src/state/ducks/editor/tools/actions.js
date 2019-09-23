@@ -7,9 +7,11 @@ export const setActiveTool = ({ toolType }) => ({
   }
 });
 
-export const setColor = ({ hex }) => ({
+export const setColor = ({ hex = "", rgb = {}, hsl = {} }) => ({
   type: types.setColor,
   payload: {
-    hex
+    hex,
+    rgb,
+    hsl
   }
 });

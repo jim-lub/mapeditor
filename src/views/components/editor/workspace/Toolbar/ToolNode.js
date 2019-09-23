@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { concatClassNames } from 'lib/utils';
 import toolConstants from 'lib/constants/toolConstants';
 
 import styles from './toolbar.module.css';
 
-export default ({ isActive, disabled, toolType, onSelect }) => {
-  const { name, description, keybinding, Icon } = toolConstants[ toolType ];
+export default ({ isActive, disableAllInput, toolType, layerType, onSelect }) => {
+  const { name, keybinding, icon: Icon } = toolConstants[ toolType ];
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const disableToolByLayerType = toolConstants[toolType].onLayers.includes( layerType );
+
+    setDisabled(disableAllInput || !disableToolByLayerType)
+  }, [layerType, disableAllInput])
 
   const nodeClassNames = concatClassNames([
     styles.node,

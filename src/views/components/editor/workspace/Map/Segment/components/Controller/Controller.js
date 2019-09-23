@@ -10,6 +10,8 @@ import {
   getLayerSortOrder,
   getTilemapDataBySegmentId,
 
+  handleUserInput,
+
   initializeTilemapDataBySegmentId,
   canvasController,
   setSingleTileValue,
@@ -67,6 +69,12 @@ const Component = ({
   const handleMouseLeave = () => setIsActiveSegment(false);
 
   const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftClickAction, rightClickAction, paintAction, altKey, ctrlKey, shiftKey }) => {
+    actions.handleUserInput({
+      segmentId, columnIndex, rowIndex,
+      inputActions: { leftClickAction, rightClickAction, paintAction },
+      inputModifiers: { altKey, ctrlKey, shiftKey }
+    });
+
     if (activeTool === toolTypes.hand) return; // hand tool
 
     if ((leftClickAction || paintAction) && !(altKey || shiftKey)) {
@@ -139,6 +147,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
+      handleUserInput,
       initializeTilemapDataBySegmentId,
       canvasController,
       setSingleTileValue,

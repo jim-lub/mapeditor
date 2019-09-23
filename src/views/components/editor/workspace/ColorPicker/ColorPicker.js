@@ -10,8 +10,11 @@ import styles from './colorpicker.module.css';
 
 const Component = ({ color, actions }) => {
   const handleColorValueChange = (colorValue) => {
+    console.log(colorValue)
     actions.setColor({
-      hex: colorValue.hex
+      hex: colorValue.hex,
+      rgb: colorValue.rgb,
+      hsl: colorValue.hsl
     })
   }
 

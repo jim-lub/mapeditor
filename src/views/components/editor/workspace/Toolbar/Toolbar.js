@@ -14,6 +14,8 @@ import {
 } from 'state/ducks/editor/tools';
 
 import {
+  getActiveLayerId,
+  getLayerPropertiesById,
   getDisableAllInput
 } from 'state/ducks/editor/map';
 
@@ -21,7 +23,7 @@ import ToolNode from './ToolNode';
 
 import styles from './toolbar.module.css';
 
-const Component = ({ activeTool, disableAllInput, actions }) => {
+const Component = ({ layerProperties, activeTool, disableAllInput, actions }) => {
   const keyEventListener = {
     paintBrush: useKeyPress( toolConstants[toolTypes.paintBrush].keybinding ),
     tileStamp: useKeyPress( toolConstants[toolTypes.tileStamp].keybinding ),
@@ -49,7 +51,8 @@ const Component = ({ activeTool, disableAllInput, actions }) => {
               toolType={toolType}
               isActive={(activeTool === toolType)}
               onSelect={actions.setActiveTool}
-              disabled={disableAllInput}
+              disableAllInput={disableAllInput}
+              layerType={layerProperties.type}
             />
           )
         })
@@ -61,6 +64,10 @@ const Component = ({ activeTool, disableAllInput, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
+    layerProperties: getLayerPropertiesById(
+      state,
+      { layerId: getActiveLayerId(state) }
+    ),
     activeTool: getActiveTool(state),
     disableAllInput: getDisableAllInput(state)
   }

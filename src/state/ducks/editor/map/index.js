@@ -31,8 +31,8 @@ const initialState = {
     'layer-1': {
       type: layerTypes.color,
       tileSize: {
-        width: 32,
-        height: 32
+        width: 64,
+        height: 64
       },
       visible: true
     },
@@ -96,6 +96,8 @@ export default createReducer( initialState )({
 export const initializeMap = operations.initializeMap;
 export const initializeTilemapDataBySegmentId = operations.initializeTilemapDataBySegmentId;
 export const storeMap = operations.storeMap;
+
+export const handleUserInput = operations.handleUserInput;
 
 export const canvasController = operations.canvasController;
 export const setSingleTileValue = operations.setSingleTileValue;

@@ -3,11 +3,14 @@
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as sceneSelectors from 'state/ducks/editor/scenes';
+import * as toolSelectors from 'state/ducks/editor/tools';
 import * as firestore from './firestore';
 
 import * as utils from './utils';
 import * as mapGridUtils from 'lib/editor/map-grid-utils';
 // import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
+
+import * as toolTypes from 'lib/constants/toolTypes';
 
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
@@ -75,6 +78,52 @@ export const canvasController = ({ segmentId, canvasRef, canvasWidth, canvasHeig
     layerProperties, layerSortOrder,
     tilemapData
   });
+}
+
+export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions, inputModifiers }) => (dispatch, getState) => {
+  const state = getState();
+  const sceneId = sceneSelectors.getActiveSceneId(state);
+  const layerId = selectors.getActiveLayerId(state);
+  const activeTool = toolSelectors.getActiveTool(state);
+
+  switch (activeTool) {
+    case toolTypes.paintBrush:
+      return dispatch( _handlePaintBrushInput(state, {
+        sceneId, segmentId, layerId,
+        columnIndex, rowIndex,
+        inputActions, inputModifiers
+      }) );
+
+    case toolTypes.tileStamp:
+      return dispatch( _handleTilestampInput(state, {
+        sceneId, segmentId, layerId,
+        columnIndex, rowIndex,
+        inputActions, inputModifiers
+      }) );
+
+    case toolTypes.eraser:
+      return dispatch( _handleEraserInput(state, {
+        sceneId, segmentId, layerId,
+        columnIndex, rowIndex,
+        inputActions, inputModifiers
+      }) );
+
+    default:
+      break;
+  }
+}
+
+const _handlePaintBrushInput = (state, { segmentId }) => dispatch => {
+  const color = toolSelectors.getColor(state);
+  console.log("Input: Paint brush ", color);
+}
+
+const _handleTilestampInput = (state, { segmentId }) => dispatch => {
+  console.log("Input: Tilestamp");
+}
+
+const _handleEraserInput = (state, { segmentId }) => dispatch => {
+  console.log("Input: Eraser");
 }
 
 export const setSingleTileValue = actions.setSingleTileValue;

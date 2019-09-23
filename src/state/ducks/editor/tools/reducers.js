@@ -8,12 +8,14 @@ export const setActiveTool = (state, action) => {
 };
 
 export const setColor = (state, action) => {
-  const { hex } = action.payload;
+  const { hex, rgb, hsl } = action.payload;
 
   return {
     ...state,
     colorValue: {
-      hex
+      hex,
+      rgb,
+      hsl
     }
   }
 };

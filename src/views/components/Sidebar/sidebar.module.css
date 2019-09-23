@@ -28,6 +28,7 @@
 
 .navLinkActive {
   fill: var(--blue-grey-600);
+  outline: none;
 }
 
 .navLinkIcon {
