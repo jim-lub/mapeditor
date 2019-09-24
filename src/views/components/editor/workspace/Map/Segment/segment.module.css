@@ -10,6 +10,10 @@
   height: 100%;
 }
 
+.eyeDropperInput:hover {
+  border-radius: 100px;
+}
+
 .interactionWrapper {
   position: absolute;
   left: 0;

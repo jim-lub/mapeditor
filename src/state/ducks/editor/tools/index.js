@@ -5,10 +5,10 @@ import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
 
-// import * as toolTypes from 'lib/constants/toolTypes';
+import * as toolTypes from 'lib/constants/toolTypes';
 
 const initialState = {
-  active: null,
+  active: toolTypes.paintBrush,
 
   colorValue: {
     hex: "#22194D"

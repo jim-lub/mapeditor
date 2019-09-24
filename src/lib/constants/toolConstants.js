@@ -13,8 +13,8 @@ export default {
     description: "...",
     icon: paintBrushIcon,
     keybinding: "P",
-    onLayers: [ layerTypes.color ],
-    isActiveOnLayers: [ layerTypes.color ],
+    cursor: "pointer",
+    isAllowedOnLayers: [ layerTypes.color ],
   },
 
   [ toolTypes.tileStamp ]: {
@@ -22,8 +22,8 @@ export default {
     description: "...",
     icon: tileStampIcon,
     keybinding: "T",
-    onLayers: [ layerTypes.tileset ],
-    isActiveOnLayers: [ layerTypes.tileset ],
+    cursor: "pointer",
+    isAllowedOnLayers: [ layerTypes.tileset ],
   },
 
   [ toolTypes.eraser ]: {
@@ -31,8 +31,8 @@ export default {
     description: "...",
     icon: eraserIcon,
     keybinding: "E",
-    onLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
-    isActiveOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
+    cursor: "pointer",
+    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
   },
 
   [ toolTypes.hand ]: {
@@ -40,16 +40,16 @@ export default {
     description: "...",
     icon: handIcon,
     keybinding: "H",
-    onLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
-    isActiveOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
+    cursor: "grab",
+    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
   },
 
-  [ toolTypes.eyedropper ]: {
+  [ toolTypes.eyeDropper ]: {
     name: "Eye dropper",
     description: "...",
     icon: eyedropperIcon,
     keybinding: "E",
-    onLayers: [ layerTypes.color ],
-    isActiveOnLayers: [ layerTypes.color ],
+    cursor: "alias",
+    isAllowedOnLayers: [ layerTypes.color ],
   },
 }

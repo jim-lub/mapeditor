@@ -10,10 +10,10 @@ export default ({ isActive, disableAllInput, toolType, layerType, onSelect }) =>
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const disableToolByLayerType = toolConstants[toolType].onLayers.includes( layerType );
+    const disableToolByLayerType = toolConstants[toolType].isAllowedOnLayers.includes( layerType );
 
     setDisabled(disableAllInput || !disableToolByLayerType)
-  }, [layerType, disableAllInput])
+  }, [toolType, layerType, disableAllInput])
 
   const nodeClassNames = concatClassNames([
     styles.node,

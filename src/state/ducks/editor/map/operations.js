@@ -1,9 +1,12 @@
 // import { firebase } from 'state/lib/firebase';
 
+import * as tools from 'state/ducks/editor/tools';
+
 import * as actions from './actions';
+
 import * as selectors from './selectors';
 import * as sceneSelectors from 'state/ducks/editor/scenes';
-import * as toolSelectors from 'state/ducks/editor/tools';
+
 import * as firestore from './firestore';
 
 import * as utils from './utils';
@@ -66,7 +69,7 @@ export const initializeTilemapDataBySegmentId = ({ segmentId }) => dispatch => {
     })
 }
 
-export const canvasController = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
+export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
   const state = getState();
 
   const layerProperties = selectors.getLayerProperties(state);
@@ -84,7 +87,7 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
   const state = getState();
   const sceneId = sceneSelectors.getActiveSceneId(state);
   const layerId = selectors.getActiveLayerId(state);
-  const activeTool = toolSelectors.getActiveTool(state);
+  const activeTool = tools.getActiveTool(state);
 
   switch (activeTool) {
     case toolTypes.paintBrush:
@@ -108,22 +111,78 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
         inputActions, inputModifiers
       }) );
 
+    case toolTypes.eyeDropper:
+      return dispatch( _handleEyeDropperInput(state, {
+        sceneId, segmentId, layerId,
+        columnIndex, rowIndex,
+        inputActions, inputModifiers
+      }) );
+
     default:
       break;
   }
 }
 
-const _handlePaintBrushInput = (state, { segmentId }) => dispatch => {
-  const color = toolSelectors.getColor(state);
-  console.log("Input: Paint brush ", color);
+const _handlePaintBrushInput = (state, {
+  sceneId, segmentId, layerId,
+  columnIndex, rowIndex,
+  inputActions, inputModifiers
+}) => dispatch => {
+  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId })
+  const color = tools.getColor(state);
+
+  // Allow paintBrush action
+  if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
+    if (tilemapData[layerId][columnIndex][rowIndex] === color.hex) return;
+
+    dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value: color.hex }) );
+  }
+
+  // Allow modified paintBrush action :: eraser
+  if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
+    if (tilemapData[layerId][columnIndex][rowIndex] === 0) return;
+
+    dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
+  }
 }
 
 const _handleTilestampInput = (state, { segmentId }) => dispatch => {
   console.log("Input: Tilestamp");
 }
 
-const _handleEraserInput = (state, { segmentId }) => dispatch => {
-  console.log("Input: Eraser");
+const _handleEraserInput = (state, {
+  sceneId, segmentId, layerId,
+  columnIndex, rowIndex,
+  inputActions, inputModifiers
+}) => dispatch => {
+  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId })
+
+  // Allow modified paintBrush action :: eraser
+  if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
+    if (tilemapData[layerId][columnIndex][rowIndex] === 0) return;
+
+    dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
+  }
+}
+
+const _handleEyeDropperInput = (state, {
+  sceneId, segmentId, layerId,
+  columnIndex, rowIndex,
+  inputActions, inputModifiers
+}) => dispatch => {
+  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId })
+
+  // Allow modified paintBrush action :: eraser
+  if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
+    const color = tools.getColor(state);
+    const tileValue = tilemapData[layerId][columnIndex][rowIndex];
+
+    if (tileValue === 0 || ( color.hex === tileValue )) return;
+
+    dispatch( tools.setColor({
+      hex: tileValue
+    }) );
+  }
 }
 
 export const setSingleTileValue = actions.setSingleTileValue;

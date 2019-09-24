@@ -11,35 +11,29 @@ import {
   getTilemapDataBySegmentId,
 
   handleUserInput,
+  handleCanvasUpdate,
 
   initializeTilemapDataBySegmentId,
-  canvasController,
-  setSingleTileValue,
-  clearSingleTileValue
 } from 'state/ducks/editor/map';
 
 import {
+  setActiveTool,
   getActiveTool,
   getColor
 } from 'state/ducks/editor/tools';
 
-import { Loader } from 'views/components/Loader';
-
 import * as toolTypes from 'lib/constants/toolTypes';
 
-import {
-  Canvas,
-  Interaction
-} from '../../components';
+import { Loader } from 'views/components/Loader';
+
+import { Canvas, Interaction } from '../../components';
 
 import styles from '../../segment.module.css';
 
 const Component = ({
   segmentId, segmentProperties: { initialized }, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData,
-  activeTool, color,
-  actions
+  tilemapData, activeTool, actions
 }) => {
   const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
@@ -53,7 +47,7 @@ const Component = ({
 
   useEffect(() => {
     if (initialized && canvasRef && canvasRef.current) {
-      actions.canvasController({ segmentId, canvasRef, canvasWidth: segmentSize.width, canvasHeight: segmentSize.height });
+      actions.handleCanvasUpdate({ segmentId, canvasRef, canvasWidth: segmentSize.width, canvasHeight: segmentSize.height });
     }
   });
 
@@ -63,31 +57,17 @@ const Component = ({
     } else {
       setDisablePointerInput(false);
     }
-  }, [activeTool, setDisablePointerInput])
+  }, [activeTool, setDisablePointerInput]);
 
   const handleMouseEnter = () => setIsActiveSegment(true);
   const handleMouseLeave = () => setIsActiveSegment(false);
 
-  const handleInteractionNodeEvent = ({ columnIndex, rowIndex, leftClickAction, rightClickAction, paintAction, altKey, ctrlKey, shiftKey }) => {
+  const handleInteractionNodeEvent = ({ columnIndex, rowIndex, inputActions, inputModifiers }) => {
     actions.handleUserInput({
       segmentId, columnIndex, rowIndex,
-      inputActions: { leftClickAction, rightClickAction, paintAction },
-      inputModifiers: { altKey, ctrlKey, shiftKey }
+      inputActions,
+      inputModifiers
     });
-
-    if (activeTool === toolTypes.hand) return; // hand tool
-
-    if ((leftClickAction || paintAction) && !(altKey || shiftKey)) {
-      if (tilemapData[activeLayerId][columnIndex][rowIndex] === color.hex) return;
-
-      return actions.setSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex, value: color.hex })
-    }
-
-    if ((leftClickAction || paintAction) && altKey && !(shiftKey)) {
-      if (tilemapData[activeLayerId][columnIndex][rowIndex] === 0) return;
-
-      return actions.clearSingleTileValue({ segmentId, layerId: activeLayerId, columnIndex, rowIndex })
-    }
   }
 
   if (!initialized) {
@@ -113,15 +93,14 @@ const Component = ({
       />
 
       {
-        isActiveSegment && (activeTool !== toolTypes.hand) &&
+        isActiveSegment && !disablePointerInput &&
         <Interaction
           segmentWidth={segmentSize.width}
           segmentHeight={segmentSize.height}
           layerProperties={layerProperties[activeLayerId]}
           tilemapData={tilemapData[activeLayerId]}
-          value={color.hex}
-          disable={disablePointerInput}
-          onMouseEvent={handleInteractionNodeEvent}
+          activeTool={activeTool}
+          onPointerEvent={handleInteractionNodeEvent}
         />
       }
     </div>
@@ -148,10 +127,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
       handleUserInput,
+      handleCanvasUpdate,
       initializeTilemapDataBySegmentId,
-      canvasController,
-      setSingleTileValue,
-      clearSingleTileValue
+      setActiveTool
     }, dispatch)
   }
 }

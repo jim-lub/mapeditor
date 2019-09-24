@@ -98,10 +98,7 @@ export const initializeTilemapDataBySegmentId = operations.initializeTilemapData
 export const storeMap = operations.storeMap;
 
 export const handleUserInput = operations.handleUserInput;
-
-export const canvasController = operations.canvasController;
-export const setSingleTileValue = operations.setSingleTileValue;
-export const clearSingleTileValue = operations.clearSingleTileValue;
+export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
