@@ -10,7 +10,11 @@ export const initializeMapRequest = (state, action) => {
 export const initializeMapSuccess = (state, action) => {
   return {
     ...state,
-    ...statusReducer('initializeMap', 'SUCCESS', state)
+    ...statusReducer('initializeMap', 'SUCCESS', state),
+    currentScene: {
+      ...state.currentScene,
+      initialized: true
+    }
   }
 }
 
@@ -90,6 +94,20 @@ export const storeMapFailure = (state, action) => {
   }
 }
 
+
+export const setCurrentScene = (state, action) => {
+  const { sceneId } = action.payload;
+
+  return {
+    ...state,
+    currentScene: {
+      ...state.currentScene,
+      uid: sceneId,
+      initialized: false,
+      modified: false
+    }
+  }
+};
 
 export const setMapProperties = (state, action) => {
   return {

@@ -3,6 +3,7 @@ export const getStoreMapStatus = state => state.editor.map.status.storeMap || {}
 
 export const getDisableAllInput = state => getInitializeMapStatus(state).loading || getStoreMapStatus(state).loading;
 
+export const getCurrentScene = state => state.editor.map.currentScene;
 export const getMapProperties = state => state.editor.map.mapProperties;
 export const getMapGrid = state => state.editor.map.mapGrid;
 

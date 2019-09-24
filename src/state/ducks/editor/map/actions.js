@@ -52,6 +52,13 @@ export const storeMapFailure = ({ error }) => ({
 });
 
 
+export const setCurrentScene = ({ sceneId }) => ({
+  type: types.setCurrentScene,
+  payload: {
+    sceneId
+  }
+});
+
 export const setMapProperties = ({ mapProperties }) => ({
   type: types.setMapProperties,
   payload: {

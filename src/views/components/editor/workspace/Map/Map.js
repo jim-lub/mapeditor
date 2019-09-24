@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -6,12 +6,9 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeGrid } from 'react-window';
 
 import {
-  getActiveSceneId
-} from 'state/ducks/editor/scenes';
-
-import {
   initializeMap,
   storeMap,
+  getCurrentScene,
   getMapProperties,
   getMapGrid,
   getDisableAllInput
@@ -23,26 +20,19 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ activeSceneId, mapProperties, mapGrid, disableAllInput, actions }) => {
-  const [initialized, setInitialized] = useState(false);
+const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, actions }) => {
 
   useEffect(() => {
-    if (!activeSceneId) return setInitialized(true);
+    if (!currentScene.initialized) {
+      actions.initializeMap({ sceneId: currentScene.uid })
+    }
+  }, [currentScene, actions]);
 
-    actions.initializeMap({ sceneId: activeSceneId })
-      .then(() => setInitialized(true))
-      .catch(e => console.error(e));
-  }, [activeSceneId, actions]);
-
-  useEffect(() => {
-
-  }, [activeSceneId, mapProperties, actions]);
-
-  if (!initialized) {
+  if (!currentScene.initialized) {
     return <Loader.Simple />
   }
 
-  if (initialized && !activeSceneId) {
+  if (currentScene.initialized && !currentScene.uid) {
     return <div>No scene selected..</div>;
   }
 
@@ -89,7 +79,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, disableAllInput, act
 
 const mapStateToProps = (state) => {
   return {
-    activeSceneId: getActiveSceneId(state),
+    currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
     disableAllInput: getDisableAllInput(state)

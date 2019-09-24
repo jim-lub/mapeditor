@@ -13,6 +13,10 @@ import { drawCanvasHandler } from 'lib/editor/canvas-api';
 export const initializeMap = ({ sceneId }) => dispatch => {
   dispatch( actions.initializeMapRequest() );
 
+  if (!sceneId) {
+    return dispatch( actions.initializeMapSuccess() );
+  }
+
   return dispatch( firestore.fetchSceneData({ sceneId }))
     .then(sceneData => {
       const { mapProperties, chunks = "null" } = sceneData;
@@ -39,7 +43,7 @@ export const storeMap = () => (dispatch, getState) => {
   dispatch( actions.storeMapRequest() );
 
   const state = getState();
-  const sceneId = sceneSelectors.getActiveSceneId(state);
+  const sceneId = selectors.getCurrentScene(state).uid;
   const mapProperties = selectors.getMapProperties(state);
   const mapGrid = selectors.getMapGrid(state);
 
@@ -78,7 +82,7 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
 
 export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions, inputModifiers }) => (dispatch, getState) => {
   const state = getState();
-  const sceneId = sceneSelectors.getActiveSceneId(state);
+  const sceneId = selectors.getCurrentScene(state).uid;
   const layerId = selectors.getActiveLayerId(state);
   const activeTool = tools.getActiveTool(state);
 
@@ -178,5 +182,4 @@ const _handleEyeDropperInput = (state, {
   }
 }
 
-export const setSingleTileValue = actions.setSingleTileValue;
-export const clearSingleTileValue = actions.clearSingleTileValue;
+export const setCurrentScene = actions.setCurrentScene;

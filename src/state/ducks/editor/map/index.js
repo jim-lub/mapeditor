@@ -9,7 +9,12 @@ import * as layerTypes from 'lib/constants/layerTypes';
 
 // const initialStateProduction = {
 //   status: {},
-//   modified: false,
+//   currentScene: {
+//     uid: "Lp4Mr6iS9YZhpkxX7ov5",
+//     // uid: null,
+//     initialized: false,
+//     modified: false
+//   },
 //
 //   mapProperties: {},
 //   mapGrid: [],
@@ -22,6 +27,12 @@ import * as layerTypes from 'lib/constants/layerTypes';
 
 const initialState = {
   status: {},
+  currentScene: {
+    uid: null,
+    // uid: "Lp4Mr6iS9YZhpkxX7ov5",
+    initialized: false,
+    modified: false
+  },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
@@ -84,6 +95,7 @@ export default createReducer( initialState )({
   [ types.storeMapSuccess ]: (state, action) => reducers.storeMapSuccess(state, action),
   [ types.storeMapFailure ]: (state, action) => reducers.storeMapFailure(state, action),
 
+  [ types.setCurrentScene ]: (state, action) => reducers.setCurrentScene(state, action),
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 
@@ -100,11 +112,14 @@ export const storeMap = operations.storeMap;
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
+export const setCurrentScene = operations.setCurrentScene;
+
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;
 export const getStoreMapStatus = selectors.getStoreMapStatus;
 export const getDisableAllInput = selectors.getDisableAllInput;
 
+export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
 export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;

@@ -1,8 +1,6 @@
 import { firebase } from 'state/lib/firebase';
-
 import * as utils from './utils';
 
-/*** GENERAL ***/
 export const fetchSceneData = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
     .get()

@@ -9,10 +9,7 @@ import {
 
 import styles from './segment.module.css';
 
-const Component = ({
-  columnIndex, rowIndex, style,  // grid properties
-  segmentId
-}) => {
+const Component = ({ columnIndex, rowIndex, style, segmentId }) => {
   return (
     <div style={{ ...style }} className={styles.segmentWrapper}>
       { /* segmentId */ }
