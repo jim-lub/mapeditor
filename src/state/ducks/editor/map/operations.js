@@ -7,7 +7,6 @@ import * as sceneSelectors from 'state/ducks/editor/scenes';
 import * as firestore from './firestore';
 import * as utils from './utils';
 
-import * as mapGridUtils from 'lib/editor/map-grid-utils';
 import * as toolTypes from 'lib/constants/toolTypes';
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
@@ -28,7 +27,7 @@ export const initializeMap = ({ sceneId }) => dispatch => {
       return dispatch( firestore.fetchMapGridCollection({ sceneId }) )
         .then(firestoreMapGrid => {
           dispatch( actions.setMapGrid({
-            mapGrid: mapGridUtils.buildMapGrid({ mapProperties, firestoreMapGrid })
+            mapGrid: utils.buildMapGrid({ mapProperties, firestoreMapGrid })
           }))
         })
     })

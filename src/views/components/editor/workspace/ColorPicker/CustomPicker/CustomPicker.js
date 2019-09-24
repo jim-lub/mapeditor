@@ -1,32 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CustomPicker } from 'react-color';
 import { Hue, Saturation, EditableInput } from 'react-color/lib/components/common';
 
-const ColorPicker = (props) => {
-  const { color, onChange, rgb } = props;
-
-  // const handleChange = (inputValue) => {
-  //   const [key, value] = Object.entries(inputValue)[0];
-  //
-  //   onChange({
-  //     r: (key === 'r') ? Number(value) : rgb.r,
-  //     g: (key === 'g') ? Number(value) : rgb.g,
-  //     b: (key === 'b') ? Number(value) : rgb.b,
-  //   })
-  // }
+const ColorPicker = ({ color, onChange, ...rest }) => {
 
   return (
     <div style={{margin: 0, border: "solid 1px white"}}>
       <div style={{position: "relative", height: 150}}>
         <Saturation
-          {...props}
+          color={color}
+          {...rest}
           onChange={onChange}
         />
       </div>
 
       <div style={{position: "relative", height: 15, borderTop: "solid 2px white"}}>
         <Hue
-          {...props}
+          color={color}
+          {...rest}
           onChange={onChange}
         />
       </div>

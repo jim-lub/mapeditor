@@ -89,10 +89,7 @@ const Component = ({ activeSceneId, mapProperties, mapGrid, disableAllInput, act
 
 const mapStateToProps = (state) => {
   return {
-    activeSceneId: getActiveSceneId(state) || "jwTgtS3suxi6gUDwGqHn",
-    // activeSceneId: getActiveSceneId(state) || "y3OXPa0nXk7HR853lm8n",
-    // activeSceneId: "jwTgtS3suxi6gUDwGqHn", // OVERRIDE DEV ONLY
-    // activeSceneId: getActiveSceneId(state),
+    activeSceneId: getActiveSceneId(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
     disableAllInput: getDisableAllInput(state)

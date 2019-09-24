@@ -4,7 +4,6 @@ import * as layerTypes from './layerTypes';
 import { ReactComponent as paintBrushIcon } from 'assets/static/icons/editor/tools/paint-brush.svg';
 import { ReactComponent as tileStampIcon } from 'assets/static/icons/editor/tools/tile-stamp.svg';
 import { ReactComponent as eraserIcon } from 'assets/static/icons/editor/tools/eraser.svg';
-import { ReactComponent as handIcon } from 'assets/static/icons/editor/tools/hand.svg';
 import { ReactComponent as eyedropperIcon } from 'assets/static/icons/editor/tools/eye-dropper.svg';
 
 export default {
@@ -35,20 +34,11 @@ export default {
     isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
   },
 
-  [ toolTypes.hand ]: {
-    name: "Hand",
-    description: "...",
-    icon: handIcon,
-    keybinding: "H",
-    cursor: "grab",
-    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
-  },
-
   [ toolTypes.eyeDropper ]: {
     name: "Eye dropper",
     description: "...",
     icon: eyedropperIcon,
-    keybinding: "E",
+    keybinding: "I",
     cursor: "alias",
     isAllowedOnLayers: [ layerTypes.color ],
   },

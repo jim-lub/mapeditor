@@ -2,6 +2,47 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
+import {
+  uuid,
+  buildTwoDimensionalArray
+} from 'lib/utils';
+
+export const buildMapGrid = ({ mapProperties: { mapSize }, firestoreMapGrid }) => (
+  buildTwoDimensionalArray({
+    columns: mapSize.columns,
+    rows: mapSize.rows,
+    mapFn: ({ columnIndex, rowIndex }) => {
+      const uuid_prefix = `S3G-${columnIndex}${rowIndex}-`;
+
+      if (firestoreMapGrid[columnIndex]) {
+        if (firestoreMapGrid[columnIndex][rowIndex]) {
+          return firestoreMapGrid[columnIndex][rowIndex];
+        }
+      }
+
+      return uuid.create( uuid_prefix );
+    }
+  })
+)
+
+export const convertMapGridToDataChunks = ({ mapProperties: { mapSize }, mapGrid }) => {
+  const MAX_COLUMNS_PER_CHUNK = 20;
+  const chunks = Math.ceil( mapSize.columns / MAX_COLUMNS_PER_CHUNK );
+
+  return [...new Array(chunks)].map((val, index) => {
+    const indexStart = index * MAX_COLUMNS_PER_CHUNK;
+    const indexEnd = (index + 1) * MAX_COLUMNS_PER_CHUNK;
+
+    return JSON.stringify( mapGrid.slice(indexStart, indexEnd) )
+  })
+}
+
+export const convertDataChunksToMapGrid = ({ dataChunks = [] }) => (
+  dataChunks
+    .map(dataChunk => JSON.parse(dataChunk))
+    .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), [])
+)
+
 
 export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
@@ -31,6 +72,14 @@ export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getS
 
     resolve()
   });
+}
+
+export const convertTilemapDataToDataChunks = () => {
+
+}
+
+export const convertDataChunksToTilemapData = () => {
+
 }
 
 export const inputModifiersObjectMatches = (inputModifiersObject, modifierKeys = []) => {

@@ -1,6 +1,6 @@
 import { firebase } from 'state/lib/firebase';
 
-import * as mapGridUtils from 'lib/editor/map-grid-utils';
+import * as utils from './utils';
 
 /*** GENERAL ***/
 export const fetchSceneData = ({ sceneId }) => dispatch => {
@@ -25,26 +25,24 @@ export const fetchMapGridCollection = ({ sceneId }) => dispatch => {
     .orderBy('mergeOrder')
     .get()
     .then(querySnapshot => {
-      const chunkDataArray = [];
+      const dataChunks = [];
 
       querySnapshot.forEach(doc => {
-        chunkDataArray.push(
+        dataChunks.push(
           doc.data().chunkData
         )
       });
 
-      return chunkDataArray;
+      return dataChunks;
     })
-    .then(chunkDataArray => mapGridUtils.convertChunkDataArrayToMapGrid({ chunkDataArray }))
+    .then(dataChunks => utils.convertDataChunksToMapGrid({ dataChunks }))
     .catch(e => console.log(e));
 }
 
 export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => dispatch => {
   return dispatch( deleteMapGridCollection({ sceneId }))
     .then(() => {
-      const chunks = mapGridUtils
-        .convertMapGridToChunkDataArray({ mapProperties, mapGrid })
-        .filter(data => data);
+      const chunks = utils.convertMapGridToDataChunks({ mapProperties, mapGrid });
 
       firebase.scene(sceneId).set({
         chunks: chunks.length || 0

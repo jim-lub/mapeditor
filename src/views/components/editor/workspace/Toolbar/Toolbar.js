@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTooltip from 'react-tooltip';
 
-import { useKeyPress } from 'lib/hooks';
+// import { useKeyPress } from 'lib/hooks';
 
 import * as toolTypes from 'lib/constants/toolTypes';
-import toolConstants from 'lib/constants/toolConstants';
+// import toolConstants from 'lib/constants/toolConstants';
 
 import {
   setActiveTool,
@@ -24,22 +24,6 @@ import ToolNode from './ToolNode';
 import styles from './toolbar.module.css';
 
 const Component = ({ layerProperties, activeTool, disableAllInput, actions }) => {
-  const keyEventListener = {
-    paintBrush: useKeyPress( toolConstants[toolTypes.paintBrush].keybinding ),
-    tileStamp: useKeyPress( toolConstants[toolTypes.tileStamp].keybinding ),
-    eraser: useKeyPress( toolConstants[toolTypes.eraser].keybinding ),
-    hand: useKeyPress( toolConstants[toolTypes.hand].keybinding ),
-  }
-
-  useEffect(() => {
-    Object.entries(keyEventListener)
-      .filter(([key, val]) => val)
-      .forEach(([key, val]) => {
-        if (toolTypes[key] !== activeTool) {
-          actions.setActiveTool({ toolType: toolTypes[key] })
-        }
-      });
-  }, [keyEventListener, activeTool, actions]);
 
   return (
     <div className={styles.wrapper}>

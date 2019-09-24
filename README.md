@@ -2,9 +2,6 @@
 
 ## In development
 - Initialize / store tilemap data
-- Tools ( paint brush, eraser, hand )
-- Toolbar
-- Color Picker
 - Menu bar ( save, load, settings, help )
 
 ## Soon
@@ -42,6 +39,9 @@
 - Collaboration
 
 ## Completed
+- ~~Color Picker~~
+- ~~Tools ( paint brush, eraser, eye dropper )~~
+- ~~Toolbar~~
 - ~~Properties panel~~
 - ~~Segments: canvas layer, interaction layer~~
 - ~~Map: "virtualized" scrolling grid~~

@@ -5,7 +5,7 @@ export const useKeyPress = (targetKey) => {
   const [keyPressed, setKeyPressed] = useState(false);
 
   // If pressed key is our target key then set to true
-  function downHandler({ key }) {
+  const downHandler = ({ key }) => {
     if (key.toUpperCase() === targetKey.toUpperCase()) {
       setKeyPressed(true);
     }
@@ -27,6 +27,7 @@ export const useKeyPress = (targetKey) => {
       window.removeEventListener('keydown', downHandler);
       window.removeEventListener('keyup', upHandler);
     };
+    //eslint-disable-next-line
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return keyPressed;

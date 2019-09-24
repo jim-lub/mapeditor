@@ -16,13 +16,9 @@ import {
   initializeTilemapDataBySegmentId,
 } from 'state/ducks/editor/map';
 
-import {
-  setActiveTool,
-  getActiveTool,
-  getColor
-} from 'state/ducks/editor/tools';
+import { getActiveTool } from 'state/ducks/editor/tools';
 
-import * as toolTypes from 'lib/constants/toolTypes';
+// import * as toolTypes from 'lib/constants/toolTypes';
 
 import { Loader } from 'views/components/Loader';
 
@@ -52,15 +48,15 @@ const Component = ({
   });
 
   useEffect(() => {
-    if (activeTool === toolTypes.hand) {
+    if (0 === 1) {
       setDisablePointerInput(true);
     } else {
       setDisablePointerInput(false);
     }
   }, [activeTool, setDisablePointerInput]);
 
-  const handleMouseEnter = () => setIsActiveSegment(true);
-  const handleMouseLeave = () => setIsActiveSegment(false);
+  const handlePointerEnter = () => setIsActiveSegment(true);
+  const handlePointerLeave = () => setIsActiveSegment(false);
 
   const handleInteractionNodeEvent = ({ columnIndex, rowIndex, inputActions, inputModifiers }) => {
     actions.handleUserInput({
@@ -81,9 +77,9 @@ const Component = ({
   return (
     <div
       className={styles.controllerWrapper}
-      style={{ width: segmentSize.width, height: segmentSize.height, touchAction: (activeTool === toolTypes.hand) ? "auto" : "none" }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      style={{ width: segmentSize.width, height: segmentSize.height }}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
     >
 
       <Canvas
@@ -97,7 +93,6 @@ const Component = ({
         <UserInput
           segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}
-          tilemapData={tilemapData[activeLayerId]}
           activeTool={activeTool}
           onPointerEvent={handleInteractionNodeEvent}
         />
@@ -117,8 +112,7 @@ const mapStateToProps = (state, ownProps) => {
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataBySegmentId(state, { segmentId }),
 
-    activeTool: getActiveTool(state),
-    color: getColor(state)
+    activeTool: getActiveTool(state)
   }
 }
 
@@ -127,8 +121,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       handleUserInput,
       handleCanvasUpdate,
-      initializeTilemapDataBySegmentId,
-      setActiveTool
+      initializeTilemapDataBySegmentId
     }, dispatch)
   }
 }

@@ -5,7 +5,7 @@ import { ReactComponent as DashboardIcon } from 'assets/static/icons/sidebar/das
 import { ReactComponent as EditorIcon } from 'assets/static/icons/sidebar/editor.svg';
 import { ReactComponent as ProjectsIcon } from 'assets/static/icons/sidebar/projects.svg';
 import { ReactComponent as TilesetsIcon } from 'assets/static/icons/sidebar/tilesets.svg';
-import { ReactComponent as AccountSettingsIcon } from 'assets/static/icons/sidebar/account-settings.svg';
+// import { ReactComponent as AccountSettingsIcon } from 'assets/static/icons/sidebar/account-settings.svg';
 import { ReactComponent as SignInIcon } from 'assets/static/icons/sidebar/signin.svg';
 
 const routes = [
