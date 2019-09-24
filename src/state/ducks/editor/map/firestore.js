@@ -8,10 +8,10 @@ export const fetchSceneData = ({ sceneId }) => dispatch => {
     .catch(e => console.log(e));
 }
 
-/*** MAP PROPERTIES ***/
 export const updateMapProperties = ({ sceneId, mapProperties }) => dispatch => {
   return firebase.scene(sceneId)
     .set({
+      modifiedAt: firebase.serverTimestamp,
       mapProperties
     }, { merge: true });
 }
@@ -43,6 +43,7 @@ export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => 
       const chunks = utils.convertMapGridToDataChunks({ mapProperties, mapGrid });
 
       firebase.scene(sceneId).set({
+        modifiedAt: firebase.serverTimestamp,
         chunks: chunks.length || 0
       }, { merge: true });
 

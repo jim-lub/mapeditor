@@ -12,35 +12,60 @@ import {
 } from 'state/ducks/editor/scenes';
 
 import {
+  getMapProperties,
   setCurrentScene
 } from 'state/ducks/editor/map';
 
 import { LinkButton } from 'views/components/LinkButton';
 
-const Component = ({ projectId, sceneId, actions }) => {
+const Component = ({ projectId, sceneId, sceneData, mapProperties, actions }) => {
   if (!projectId || !sceneId) {
     return null;
   }
 
   return (
-    <LinkButton
-      onClick={() => {
-        actions.setCurrentScene({
-          sceneId
-        })
-      }}
-      to="/editor/workspace"
-      className="blue"
-      >
-        Open Scene
-      </LinkButton>
+    <>
+      <div>
+        <LinkButton
+          onClick={() => actions.setCurrentScene({ sceneId })}
+          to="/editor/workspace"
+          className="blue"
+        >
+          Open Scene
+        </LinkButton>
+      </div>
+
+      <div>
+        <Node name="Scene name: " value={sceneData.name} />
+        <Node name="Scene description: " value={sceneData.description} />
+        <Node name="Created at: " value={(sceneData.createdAt) ? sceneData.createdAt.toString() : "..."} />
+        <Node name="Modified at: " value={(sceneData.modifiedAt) ? sceneData.modifiedAt.toString() : "..."} />
+      </div>
+    </>
+  )
+}
+
+const Node = ({ name, value }) => {
+  return (
+    <>
+      <span style={{fontWeight: "bold"}}>{ name }</span>
+      <span>{ value }</span>
+
+      <br />
+    </>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
     projectId: getActiveProjectId(state),
-    sceneId: getActiveSceneId(state)
+    sceneId: getActiveSceneId(state),
+    sceneData: getSceneDataById(state,
+      getActiveSceneId(state)
+    ),
+    mapProperties: getMapProperties(state,
+      getActiveSceneId(state)
+    ),
   }
 }
 

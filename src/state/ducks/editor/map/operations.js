@@ -3,7 +3,6 @@
 import * as tools from 'state/ducks/editor/tools';
 import * as actions from './actions';
 import * as selectors from './selectors';
-import * as sceneSelectors from 'state/ducks/editor/scenes';
 import * as firestore from './firestore';
 import * as utils from './utils';
 
