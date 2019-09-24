@@ -1,20 +1,14 @@
 // import { firebase } from 'state/lib/firebase';
 
 import * as tools from 'state/ducks/editor/tools';
-
 import * as actions from './actions';
-
 import * as selectors from './selectors';
 import * as sceneSelectors from 'state/ducks/editor/scenes';
-
 import * as firestore from './firestore';
-
 import * as utils from './utils';
+
 import * as mapGridUtils from 'lib/editor/map-grid-utils';
-// import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
-
 import * as toolTypes from 'lib/constants/toolTypes';
-
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 export const initializeMap = ({ sceneId }) => dispatch => {

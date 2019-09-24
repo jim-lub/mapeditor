@@ -13,7 +13,7 @@ export default {
     description: "...",
     icon: paintBrushIcon,
     keybinding: "P",
-    cursor: "pointer",
+    cursor: "copy",
     isAllowedOnLayers: [ layerTypes.color ],
   },
 
@@ -22,7 +22,7 @@ export default {
     description: "...",
     icon: tileStampIcon,
     keybinding: "T",
-    cursor: "pointer",
+    cursor: "copy",
     isAllowedOnLayers: [ layerTypes.tileset ],
   },
 

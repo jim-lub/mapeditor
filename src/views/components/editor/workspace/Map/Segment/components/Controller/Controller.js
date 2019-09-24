@@ -26,7 +26,7 @@ import * as toolTypes from 'lib/constants/toolTypes';
 
 import { Loader } from 'views/components/Loader';
 
-import { Canvas, Interaction } from '../../components';
+import { Canvas, UserInput } from '../../components';
 
 import styles from '../../segment.module.css';
 
@@ -94,9 +94,8 @@ const Component = ({
 
       {
         isActiveSegment && !disablePointerInput &&
-        <Interaction
-          segmentWidth={segmentSize.width}
-          segmentHeight={segmentSize.height}
+        <UserInput
+          segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}
           tilemapData={tilemapData[activeLayerId]}
           activeTool={activeTool}

@@ -39,9 +39,17 @@ const ColorPicker = (props) => {
             label: {
               position: "absolute",
               top: 0,
-              left: 0
+              left: 0,
+              fontSize: 13,
+              fontWeight: "bold",
+              padding: 6,
+              paddingRight: 12,
+              margin: 2,
+              backgroundColor: "#f9f9f9",
             },
             input: {
+              width: "100%",
+              textAlign: "right"
             }
           }}
           value={color.hex}
@@ -53,33 +61,3 @@ const ColorPicker = (props) => {
 }
 
 export default CustomPicker(ColorPicker);
-
-// {/* R INPUT */}
-// <EditableInput
-//   label="r"
-//   style={{
-//
-//   }}
-//   value={rgb.r}
-//   onChange={handleChange}
-// />
-//
-// {/* G INPUT */}
-// <EditableInput
-//   label="g"
-//   style={{
-//
-//   }}
-//   value={rgb.g}
-//   onChange={handleChange}
-// />
-//
-// {/* B INPUT */}
-// <EditableInput
-//   label="b"
-//   style={{
-//
-//   }}
-//   value={rgb.b}
-//   onChange={handleChange}
-// />
