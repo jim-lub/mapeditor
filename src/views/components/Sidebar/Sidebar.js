@@ -49,8 +49,6 @@ const Component = ({ authUser, authStatus, actions }) => {
         id="sidebar-tooltip-handler"
         place="right"
         offset={{top: 4, left: 13}}
-        type="light"
-        border={true}
         delayShow={200}
         effect="solid"
         className={styles.sidebarTooltip}

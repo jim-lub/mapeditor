@@ -73,6 +73,13 @@ export const setMapGrid = ({ mapGrid }) => ({
   }
 });
 
+export const setTilemapDataObject = ({ tilemapDataObject }) => ({
+  type: types.setTilemapDataObject,
+  payload: {
+    tilemapDataObject
+  }
+});
+
 export const setTilemapDataBySegmentId = ({ segmentId, tilemapData }) => ({
   type: types.setTilemapDataBySegmentId,
   payload: {

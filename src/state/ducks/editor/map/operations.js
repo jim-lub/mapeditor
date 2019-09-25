@@ -16,6 +16,8 @@ export const initializeMap = ({ sceneId }) => dispatch => {
     return dispatch( actions.initializeMapSuccess() );
   }
 
+  // clear old tilemapData -> fetch mapgrid -> fetch tilemapdata
+
   return dispatch( firestore.fetchSceneData({ sceneId }))
     .then(sceneData => {
       const { mapProperties, chunks = "null" } = sceneData;
@@ -29,9 +31,27 @@ export const initializeMap = ({ sceneId }) => dispatch => {
 
       return dispatch( firestore.fetchMapGridCollection({ sceneId }) )
         .then(firestoreMapGrid => {
+          const mapGrid = utils.buildMapGrid({ mapProperties, firestoreMapGrid });
+
           dispatch( actions.setMapGrid({
-            mapGrid: utils.buildMapGrid({ mapProperties, firestoreMapGrid })
-          }))
+            mapGrid
+          }));
+
+          return mapGrid;
+        })
+        .then(mapGrid => {
+          // make this block ASYNC!!!
+          // fetch tilemapData -> check if excist ifnot build tilemapData
+          const tilemapDataObject = {};
+
+          mapGrid.forEach(column =>
+            column.forEach(segmentId => {
+              tilemapDataObject[segmentId] = dispatch( utils.buildTilemapDataSegment() ); // create 1 empty object and copy?
+            })
+          )
+
+          dispatch( actions.setTilemapDataObject({ tilemapDataObject}) )
+          // fetch tilemapData OR build
         })
     })
     .then(() => dispatch( actions.initializeMapSuccess() ))
@@ -46,6 +66,15 @@ export const storeMap = () => (dispatch, getState) => {
   const mapProperties = selectors.getMapProperties(state);
   const mapGrid = selectors.getMapGrid(state);
 
+  const tilemapData = mapGrid.map(columns => {
+    return columns.map(segmentId => ({
+      [segmentId]: selectors.getTilemapDataBySegmentId(state, { segmentId })
+    }))
+  })
+
+  console.log( JSON.stringify(tilemapData[0]) )
+  // console.log( tilemapData );
+
   Promise.all([
     dispatch( firestore.updateMapProperties({ sceneId, mapProperties })),
     dispatch( firestore.updateMapGridCollection({ sceneId, mapProperties, mapGrid })),
@@ -58,11 +87,11 @@ export const storeMap = () => (dispatch, getState) => {
 
 export const initializeTilemapDataBySegmentId = ({ segmentId }) => dispatch => {
   dispatch( actions.initializeTilemapDataBySegmentIdRequest({ segmentId }) );
-
-  dispatch( utils.validateTilemapDataBySegmentId({ segmentId }) )
-    .then(() => {
-      dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) )
-    })
+  dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) );
+  // dispatch( utils.validateTilemapDataBySegmentId({ segmentId }) )
+  //   .then(() => {
+  //     dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) )
+  //   })
 }
 
 export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {

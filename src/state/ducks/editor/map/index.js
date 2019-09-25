@@ -28,8 +28,9 @@ import * as layerTypes from 'lib/constants/layerTypes';
 const initialState = {
   status: {},
   currentScene: {
-    uid: null,
-    // uid: "Lp4Mr6iS9YZhpkxX7ov5",
+    // uid: null,
+    // uid: "Lp4Mr6iS9YZhpkxX7ov5", // 100x100
+    uid: "cERHnEV7GXZn3Qex9Np7", // 10x10
     initialized: false,
     modified: false
   },
@@ -42,8 +43,8 @@ const initialState = {
     'layer-1': {
       type: layerTypes.color,
       tileSize: {
-        width: 64,
-        height: 64
+        width: 16,
+        height: 16
       },
       visible: true
     },
@@ -58,16 +59,16 @@ const initialState = {
     'layer-3': {
       type: layerTypes.color,
       tileSize: {
-        width: 32,
-        height: 32
+        width: 16,
+        height: 16
       },
       visible: true
     },
     'layer-4': {
       type: layerTypes.color,
       tileSize: {
-        width: 64,
-        height: 64
+        width: 16,
+        height: 16
       },
       visible: true
     }
@@ -98,6 +99,7 @@ export default createReducer( initialState )({
   [ types.setCurrentScene ]: (state, action) => reducers.setCurrentScene(state, action),
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
+  [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
 
   [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action),
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),

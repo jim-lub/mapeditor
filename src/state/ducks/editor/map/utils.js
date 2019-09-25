@@ -74,6 +74,24 @@ export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getS
   });
 }
 
+export const buildTilemapDataSegment = () => (dispatch, getState) => {
+  const state = getState();
+  const { segmentSize } = selectors.getMapProperties(state);
+  const layerSortOrder = selectors.getLayerSortOrder(state);
+
+  return layerSortOrder.reduce((obj, layerId) => ({
+    ...obj,
+    [layerId]: buildTwoDimensionalArray({
+      columns: segmentSize.width / selectors.getLayerPropertiesById(state, { layerId }).tileSize.width,
+      rows: segmentSize.height / selectors.getLayerPropertiesById(state, { layerId }).tileSize.height,
+      mapFn: () => {
+        return 0
+        // return "#"+((1<<24)*Math.random()|0).toString(16); // fill with random color for DEVELOPMENT ONLY -> replace with 0 (zero) fill
+      }
+    })
+  }), {});
+}
+
 export const convertTilemapDataToDataChunks = () => {
 
 }
