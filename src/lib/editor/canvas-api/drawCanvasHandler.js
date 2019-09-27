@@ -43,7 +43,7 @@ const _drawColorLayer = (ctx, { tileSize, tilemap }) => {
     tilemapColumn.forEach((tileValue, rowIndex) => {
 
       if (tileValue && tileValue !== 0) {
-        ctx.fillStyle = tileValue;
+        ctx.fillStyle = "#" + tileValue;
 
         ctx.fillRect(
           Math.round(tileSize.width * columnIndex),

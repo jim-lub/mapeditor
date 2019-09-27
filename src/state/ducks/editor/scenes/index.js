@@ -15,7 +15,7 @@ const initialState = {
 
   sortOrder: [],
   collection: {},
-  active: "Lp4Mr6iS9YZhpkxX7ov5" || null
+  active: null
 }
 
 export default createReducer( initialState )({

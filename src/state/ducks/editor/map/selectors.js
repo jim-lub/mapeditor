@@ -19,4 +19,5 @@ export const getLayerPropertiesById = (state, { layerId }) => state.editor.map.l
 export const getLayerSortOrder = state => state.editor.map.layerSortOrder;
 
 export const getSegmentId = (state, { columnIndex, rowIndex }) => state.editor.map.mapGrid[columnIndex][rowIndex];
+export const getTilemapData = (state) => state.editor.map.tilemapData;
 export const getTilemapDataBySegmentId = (state, { segmentId }) => state.editor.map.tilemapData[segmentId] || {};

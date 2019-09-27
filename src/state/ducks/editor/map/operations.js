@@ -65,20 +65,15 @@ export const storeMap = () => (dispatch, getState) => {
   const sceneId = selectors.getCurrentScene(state).uid;
   const mapProperties = selectors.getMapProperties(state);
   const mapGrid = selectors.getMapGrid(state);
-
-  const tilemapData = mapGrid.map(columns => {
-    return columns.map(segmentId => ({
-      [segmentId]: selectors.getTilemapDataBySegmentId(state, { segmentId })
-    }))
-  })
-
-  console.log( JSON.stringify(tilemapData[0]) )
-  // console.log( tilemapData );
+  const tilemapData = selectors.getTilemapData(state);
 
   Promise.all([
     dispatch( firestore.updateMapProperties({ sceneId, mapProperties })),
     dispatch( firestore.updateMapGridCollection({ sceneId, mapProperties, mapGrid })),
   ])
+  .then(() => Promise.all([
+    dispatch( firestore.updateTilemapDataCollection({ sceneId, mapGrid, tilemapData }))
+  ]))
   .then(() => {
     dispatch( actions.storeMapSuccess() );
   })
@@ -160,7 +155,7 @@ const _handlePaintBrushInput = (state, {
   if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
     if (tilemapData[layerId][columnIndex][rowIndex] === color.hex) return;
 
-    dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value: color.hex }) );
+    dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value: color.hex.substring(1) }) );
   }
 
   // Allow modified paintBrush action :: eraser
@@ -210,4 +205,5 @@ const _handleEyeDropperInput = (state, {
   }
 }
 
+export const deleteMapGridCollection = firestore.deleteMapGridCollection;
 export const setCurrentScene = actions.setCurrentScene;

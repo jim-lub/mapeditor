@@ -4,6 +4,7 @@ import validator from 'validator';
 // } from 'lib/validation';
 
 import * as validationTypes from './validationTypes';
+import * as mapConstants from 'lib/constants/mapConstants';
 
 const { isLength, isIn } = validator;
 
@@ -31,6 +32,15 @@ export default {
     },
     'scenePresets': {
       isValidOption: (value, { options }) => isIn(value, options)
+    },
+
+    'mapSize-columns': {
+      [ validationTypes.MIN_VALUE ]: (value) => (value >= mapConstants.MIN_MAPGRID_COLUMNS),
+      [ validationTypes.MAX_VALUE ]: (value) => (value <= mapConstants.MAX_MAPGRID_COLUMNS),
+    },
+    'mapSize-rows': {
+      [ validationTypes.MIN_VALUE ]: (value) => (value >= mapConstants.MIN_MAPGRID_ROWS),
+      [ validationTypes.MAX_VALUE ]: (value) => (value <= mapConstants.MAX_MAPGRID_ROWS),
     }
   }
 }

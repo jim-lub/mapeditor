@@ -1,4 +1,5 @@
 import * as validationTypes from './validationTypes';
+import * as mapConstants from 'lib/constants/mapConstants';
 
 export default {
   generic: {
@@ -24,6 +25,15 @@ export default {
     },
     'sceneDescription': {
 
+    },
+
+    'mapSize-columns': {
+      [ validationTypes.MIN_VALUE ]: `Value must be between ${mapConstants.MIN_MAPGRID_COLUMNS} and ${mapConstants.MAX_MAPGRID_COLUMNS}`,
+      [ validationTypes.MAX_VALUE ]: `Value must be between ${mapConstants.MIN_MAPGRID_COLUMNS} and ${mapConstants.MAX_MAPGRID_COLUMNS}`,
+    },
+    'mapSize-rows': {
+      [ validationTypes.MAX_VALUE ]: `Value must be between ${mapConstants.MIN_MAPGRID_ROWS} and ${mapConstants.MAX_MAPGRID_ROWS}`,
+      [ validationTypes.MIN_VALUE ]: `Value must be between ${mapConstants.MIN_MAPGRID_ROWS} and ${mapConstants.MAX_MAPGRID_ROWS}`,
     }
   }
 }

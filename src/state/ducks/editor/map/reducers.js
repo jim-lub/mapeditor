@@ -155,6 +155,18 @@ export const setTilemapDataBySegmentId = (state, action) => {
   }
 }
 
+export const setStatusMessage = (state, action) => {
+  const { header, content } = action.payload;
+
+  return {
+    ...state,
+    statusMessage: {
+      header,
+      content
+    }
+  }
+};
+
 export const setSingleTileValue = (state, action) => {
   const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
 

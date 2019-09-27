@@ -3,9 +3,8 @@ import { firebase } from 'state/lib/firebase';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import {
-  getActiveProjectId
-} from 'state/ducks/editor/projects';
+import { getActiveProjectId } from 'state/ducks/editor/projects';
+import { deleteMapGridCollection } from 'state/ducks/editor/map';
 
 export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return () => null;
@@ -92,18 +91,21 @@ export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
 
   dispatch( actions.deleteSceneRequest() );
 
-  firebase.scene(sceneId)
-    .delete()
+  dispatch( deleteMapGridCollection({ sceneId }) )
     .then(() => {
-      if (sceneId === activeSceneId) {
-        dispatch( setActiveScene({ sceneId: null }));
-      }
+      firebase.scene(sceneId)
+        .delete()
+        .then(() => {
+          if (sceneId === activeSceneId) {
+            dispatch( setActiveScene({ sceneId: null }));
+          }
 
-      dispatch( actions.deleteSceneSuccess() );
+          dispatch( actions.deleteSceneSuccess() );
+        })
+        .catch(() => {
+          dispatch( actions.deleteSceneFailure() );
+        });
     })
-    .catch(() => {
-      dispatch( actions.deleteSceneFailure() );
-    });
 };
 
 export const updateScene = ({ sceneId, name, description }) => (dispatch) => {

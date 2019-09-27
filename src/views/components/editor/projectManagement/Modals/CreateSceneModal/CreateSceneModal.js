@@ -19,7 +19,7 @@ import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
 import { Loader } from 'views/components/Loader';
 
-import scenePresets from 'lib/constants/scenePresets';
+import mapPresets from 'lib/constants/mapPresets';
 
 import styles from '../modal.module.css';
 
@@ -55,8 +55,9 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   }, [projectId, activeProjectId, getProjectDataById]);
 
   const handleSubmit = () => {
+    console.log(fieldStatePreset.value)
     initializeRequest();
-    const { allowedTileSizes, segmentSize } = scenePresets[fieldStatePreset.value];
+    const { allowedTileSizes, segmentSize } = mapPresets[fieldStatePreset.value];
 
     actions.createScene({
       projectId: projectId || activeProjectId,
@@ -74,12 +75,12 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   };
 
   const fillPresetList = () => {
-    const list = scenePresets.list.map(preset => {
-      const { name, allowedTileSizes } = scenePresets[preset];
+    const list = mapPresets.list.map(preset => {
+      const { name, allowedTileSizes } = mapPresets[preset];
 
       return {
         name: name.toUpperCase() + ": " + allowedTileSizes,
-        value: name
+        value: preset
       }
     })
 
@@ -136,7 +137,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               name="mapSize-columns"
               label="Columns (segments)"
               onStateChange={setFieldStateMapColumns}
-              initialValue={5}
+              initialValue={1}
               disabled={disableInput}
             />
 
@@ -144,7 +145,7 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
               name="mapSize-rows"
               label="Rows (segments)"
               onStateChange={setFieldStateMapRows}
-              initialValue={5}
+              initialValue={1}
               disabled={disableInput}
             />
           </Form.Group>

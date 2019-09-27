@@ -88,6 +88,14 @@ export const setTilemapDataBySegmentId = ({ segmentId, tilemapData }) => ({
   }
 });
 
+export const setStatusMessage = ({ header = "", content = "" }) => ({
+  type: types.setStatusMessage,
+  payload: {
+    header,
+    content
+  }
+});
+
 // export const deleteTilemapDataBySegmentId = ({ segmentId }) => ({
 //   type: types.deleteTilemapDataBySegmentId,
 //   payload: {

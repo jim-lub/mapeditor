@@ -19,7 +19,7 @@ import {
 import { LinkButton } from 'views/components/LinkButton';
 
 const Component = ({ projectId, sceneId, sceneData, mapProperties, actions }) => {
-  if (!projectId || !sceneId) {
+  if (!projectId || !sceneId || !sceneData || !mapProperties) {
     return null;
   }
 

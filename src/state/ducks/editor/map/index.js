@@ -27,48 +27,59 @@ import * as layerTypes from 'lib/constants/layerTypes';
 
 const initialState = {
   status: {},
+  statusMessage: {
+    header: "",
+    content: ""
+  },
   currentScene: {
     // uid: null,
-    // uid: "Lp4Mr6iS9YZhpkxX7ov5", // 100x100
-    uid: "cERHnEV7GXZn3Qex9Np7", // 10x10
+    uid: "9zHkLW16AxHjVuwcioXO", // 50x50
     initialized: false,
     modified: false
   },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
-  layerSortOrder: ['layer-1'],
-  // layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4'],
+  // layerSortOrder: ['layer-1', 'layer-2'],
+  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-5'],
   layerProperties: {
     'layer-1': {
       type: layerTypes.color,
       tileSize: {
-        width: 16,
-        height: 16
+        width: 32,
+        height: 32
       },
       visible: true
     },
     'layer-2': {
       type: layerTypes.color,
       tileSize: {
-        width: 16,
-        height: 16
+        width: 32,
+        height: 32
       },
       visible: true
     },
     'layer-3': {
       type: layerTypes.color,
       tileSize: {
-        width: 16,
-        height: 16
+        width: 32,
+        height: 32
       },
       visible: true
     },
     'layer-4': {
       type: layerTypes.color,
       tileSize: {
-        width: 16,
-        height: 16
+        width: 32,
+        height: 32
+      },
+      visible: true
+    },
+    'layer-5': {
+      type: layerTypes.color,
+      tileSize: {
+        width: 32,
+        height: 32
       },
       visible: true
     }
@@ -100,6 +111,8 @@ export default createReducer( initialState )({
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
   [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
+  [ types.setStatusMessage ]: (state, action) => reducers.setStatusMessage(state, action),
+
 
   [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action),
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),
@@ -114,6 +127,7 @@ export const storeMap = operations.storeMap;
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
+export const deleteMapGridCollection = operations.deleteMapGridCollection;
 export const setCurrentScene = operations.setCurrentScene;
 
 /*** selectors ***/
@@ -132,4 +146,5 @@ export const getLayerPropertiesById = selectors.getLayerPropertiesById;
 export const getLayerSortOrder = selectors.getLayerSortOrder;
 
 export const getSegmentId = selectors.getSegmentId;
+export const getTilemapData = selectors.getTilemapData;
 export const getTilemapDataBySegmentId = selectors.getTilemapDataBySegmentId;
