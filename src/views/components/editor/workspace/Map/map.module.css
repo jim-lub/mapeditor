@@ -7,3 +7,14 @@
   background-color: var(--grey-800);
   opacity: 0.5;
 }
+
+
+.disabledInputOverlayStatusMessage {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  background-color: white;
+  color: black;
+  opacity: 0.6;
+}

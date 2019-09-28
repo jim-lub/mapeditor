@@ -29,30 +29,16 @@ export const initializeMap = ({ sceneId }) => dispatch => {
         }
       }) );
 
-      return dispatch( firestore.fetchMapGridCollection({ sceneId }) )
-        .then(firestoreMapGrid => {
-          const mapGrid = utils.buildMapGrid({ mapProperties, firestoreMapGrid });
-
+      return dispatch( firestore.getMapGridCollection({ sceneId }) )
+        .then(firestoreMapGrid =>
           dispatch( actions.setMapGrid({
-            mapGrid
-          }));
-
-          return mapGrid;
-        })
-        .then(mapGrid => {
-          // make this block ASYNC!!!
-          // fetch tilemapData -> check if excist ifnot build tilemapData
-          const tilemapDataObject = {};
-
-          mapGrid.forEach(column =>
-            column.forEach(segmentId => {
-              tilemapDataObject[segmentId] = dispatch( utils.buildTilemapDataSegment() ); // create 1 empty object and copy?
-            })
-          )
-
-          dispatch( actions.setTilemapDataObject({ tilemapDataObject}) )
-          // fetch tilemapData OR build
-        })
+            mapGrid: utils.buildMapGrid({ mapProperties, firestoreMapGrid })
+          })))
+        .then(() => dispatch( firestore.getTilemapDataCollection({ sceneId }))
+          .then(tilemapDataArray =>
+            dispatch( actions.setTilemapDataObject({
+              tilemapDataObject: tilemapDataArray.reduce((obj, data) => obj = { ...obj, ...data }, {})
+            }))))
     })
     .then(() => dispatch( actions.initializeMapSuccess() ))
     .catch(e => console.log(e));
@@ -200,7 +186,7 @@ const _handleEyeDropperInput = (state, {
     if (tileValue === 0 || ( color.hex === tileValue )) return;
 
     dispatch( tools.setColor({
-      hex: tileValue
+      hex: "#" + tileValue
     }) );
   }
 }

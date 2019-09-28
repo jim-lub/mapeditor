@@ -139,6 +139,7 @@ export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
 export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
+export const getStatusMessage = selectors.getStatusMessage;
 
 export const getActiveLayerId = selectors.getActiveLayerId;
 export const getLayerProperties = selectors.getLayerProperties;

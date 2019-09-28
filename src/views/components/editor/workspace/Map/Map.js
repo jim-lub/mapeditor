@@ -11,7 +11,8 @@ import {
   getCurrentScene,
   getMapProperties,
   getMapGrid,
-  getDisableAllInput
+  getDisableAllInput,
+  getStatusMessage
 } from 'state/ducks/editor/map'
 
 import { Loader } from 'views/components/Loader';
@@ -20,7 +21,7 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, actions }) => {
+const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, statusMessage, actions }) => {
 
   useEffect(() => {
     if (!currentScene.initialized) {
@@ -29,7 +30,12 @@ const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, acti
   }, [currentScene, actions]);
 
   if (!currentScene.initialized) {
-    return <Loader.Simple />
+    return (
+      <div>
+        <Loader.Simple />
+        { statusMessage.content }
+      </div>
+    )
   }
 
   if (currentScene.initialized && !currentScene.uid) {
@@ -58,14 +64,15 @@ const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, acti
               {
                 disableAllInput &&
                 <div className={styles.disabledInputOverlay} style={{width: viewportWidth, height: viewportHeight}}>
-                <div
-                style={{
-                  marginLeft: (viewportWidth / 2 - 24),
-                  marginTop: (viewportHeight / 2 - 24)
-                }}
-                >
-                <Loader.Simple width={48} height={48}/>
-                </div>
+                  <div
+                    style={{
+                      marginLeft: (viewportWidth / 2 - 24),
+                      marginTop: (viewportHeight / 2 - 24)
+                    }}
+                  >
+                    <Loader.Simple width={48} height={48}/>
+                  </div>
+                  <div className={styles.disabledInputOverlayStatusMessage}>{ statusMessage.content }</div>
                 </div>
               }
             </>
@@ -82,7 +89,8 @@ const mapStateToProps = (state) => {
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
-    disableAllInput: getDisableAllInput(state)
+    disableAllInput: getDisableAllInput(state),
+    statusMessage: getStatusMessage(state)
   }
 }
 

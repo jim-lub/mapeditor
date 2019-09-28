@@ -86,9 +86,7 @@ export const buildTilemapDataSegment = () => (dispatch, getState) => {
       columns: segmentSize.width / selectors.getLayerPropertiesById(state, { layerId }).tileSize.width,
       rows: segmentSize.height / selectors.getLayerPropertiesById(state, { layerId }).tileSize.height,
       mapFn: () => {
-        // return [99,99]
         return 0
-        // return ((1<<24)*Math.random()|0).toString(16); // fill with random color for DEVELOPMENT ONLY -> replace with 0 (zero) fill
       }
     })
   }), {});
@@ -135,9 +133,11 @@ export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispat
   return await reduceTilemapDataToChunks(tilemapDataWithMemorySizes);;
 }
 
-export const convertDataChunksToTilemapData = () => {
-
-}
+export const convertDataChunksToTilemapData = ({ dataChunks = [] }) => (
+  dataChunks
+    .map(dataChunk => JSON.parse(dataChunk))
+    .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), [])
+)
 
 export const memorySizeOf = (obj, unit) => {
   let bytes = 0;

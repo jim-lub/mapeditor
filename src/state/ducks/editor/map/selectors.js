@@ -10,6 +10,7 @@ export const getDisableAllInput = state => (
 export const getCurrentScene = state => state.editor.map.currentScene;
 export const getMapProperties = state => state.editor.map.mapProperties;
 export const getMapGrid = state => state.editor.map.mapGrid;
+export const getStatusMessage = state => state.editor.map.statusMessage;
 
 export const getSegmentPropertiesById = (state, { segmentId }) => state.editor.map.segmentProperties[segmentId] || {};
 

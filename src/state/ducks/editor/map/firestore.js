@@ -20,7 +20,7 @@ export const updateMapProperties = ({ sceneId, mapProperties }) => dispatch => {
 }
 
 /*** MAP GRID ***/
-export const fetchMapGridCollection = ({ sceneId }) => dispatch => {
+export const getMapGridCollection = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
     .collection('mapGrid')
     .orderBy('mergeOrder')
@@ -70,6 +70,41 @@ export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => 
     .catch(e => console.log(e));
 }
 
+export const deleteMapGridCollection = ({ sceneId }) => dispatch => {
+  return firebase.scene(sceneId)
+    .collection('mapGrid')
+    .get()
+    .then(querySnapshot =>
+      querySnapshot.forEach(doc =>
+        firebase.scene(sceneId)
+          .collection('mapGrid')
+          .doc(doc.id)
+          .delete())
+    )
+    .catch(e => console.log(e));
+}
+
+/*** TILEMAP DATA ***/
+export const getTilemapDataCollection = ({ sceneId }) => dispatch => {
+  return firebase.scene(sceneId)
+    .collection('tilemapData')
+    .orderBy('mergeOrder')
+    .get()
+    .then(querySnapshot => {
+      const dataChunks = [];
+
+      querySnapshot.forEach(doc => {
+        dataChunks.push(
+          doc.data().dataChunk
+        )
+      });
+
+      return dataChunks;
+    })
+    .then(dataChunks => utils.convertDataChunksToTilemapData({ dataChunks }))
+    .catch(e => console.log(e));
+}
+
 export const updateTilemapDataCollection = ({ sceneId, tilemapData }) => dispatch => {
   dispatch( actions.setStatusMessage({ ...statusMessages['firestore-tilemapData']['delete'] }) );
 
@@ -97,20 +132,6 @@ export const updateTilemapDataCollection = ({ sceneId, tilemapData }) => dispatc
 
       return Promise.all(chunks);
     })
-    .catch(e => console.log(e));
-}
-
-export const deleteMapGridCollection = ({ sceneId }) => dispatch => {
-  return firebase.scene(sceneId)
-    .collection('mapGrid')
-    .get()
-    .then(querySnapshot =>
-      querySnapshot.forEach(doc =>
-        firebase.scene(sceneId)
-          .collection('mapGrid')
-          .doc(doc.id)
-          .delete())
-    )
     .catch(e => console.log(e));
 }
 
