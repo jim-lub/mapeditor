@@ -42,6 +42,10 @@ const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, stat
     return <div>No scene selected..</div>;
   }
 
+  if (!mapProperties && !mapGrid) {
+    return <div>Something went wrong..</div>;
+  }
+
   return (
     <>
     <AutoSizer>

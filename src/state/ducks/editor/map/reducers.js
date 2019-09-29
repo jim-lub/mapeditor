@@ -105,7 +105,12 @@ export const setCurrentScene = (state, action) => {
       uid: sceneId,
       initialized: false,
       modified: false
-    }
+    },
+    mapGrid: [],
+    segmentProperties: {},
+    // layerSortOrder: [],
+    // layerProperties: {},
+    tilemapData: {}
   }
 };
 

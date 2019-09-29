@@ -32,16 +32,14 @@ const initialState = {
     content: ""
   },
   currentScene: {
-    // uid: null,
-    uid: "boj2teXI7HKVwKWKhrWh", // 10x10
+    uid: null,
     initialized: false,
     modified: false
   },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
-  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-5'],
-  // layerSortOrder: ['layer-3', 'layer-4', 'layer-5', 'layer-7'],
+  layerSortOrder: ['layer-1', 'layer-2', 'layer-3'],
   layerProperties: {
     'layer-1': {
       type: layerTypes.color,
@@ -66,47 +64,10 @@ const initialState = {
         height: 32
       },
       visible: true
-    },
-    'layer-4': {
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-5': {
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-6': {
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-7': {
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
     }
   },
 
-  segmentProperties: {
-    // 'segment-id': {
-    //   modified: false
-    // }
-  },
-
+  segmentProperties: {},
   tilemapData: {}
 }
 
@@ -130,9 +91,7 @@ export default createReducer( initialState )({
   [ types.addLayerToTilemapDataSegment ]: (state, action) => reducers.addLayerToTilemapDataSegment(state, action),
   [ types.removeLayerFromTilemapDataSegment ]: (state, action) => reducers.removeLayerFromTilemapDataSegment(state, action),
 
-
   [ types.setStatusMessage ]: (state, action) => reducers.setStatusMessage(state, action),
-
 
   [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action),
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),

@@ -1,24 +1,24 @@
 # Roadmap
 
 ## In development
-- Initialize / store tilemap data
-- Menu bar ( save, load, settings, help )
-
-## Soon
 - Layers
 - Zoom
-- Color Swatches
-- Improved tools ( size, patterns )
 - Dashboard
 
-## Soon-ish
-- Custom cursors
-- History
+## Soon
+- Menu bar ( save, load, settings, help )
 - New layer type: Tile
-- Tools ( tile stamp, bucket )
+- Tools ( tile stamp )
 - Tile selector window
+- Improved tools ( size, patterns )
+
+## Soon-ish
+- History
+- Color Swatches
+- Custom cursors
+- Tools ( bucket )
 - Upload custom tile sets
-- Update custom tile sets
+- Modify custom tile sets
 - Upgrades to project- and scene management interface
 - Smooth transition animations
 
@@ -42,6 +42,7 @@
 
 
 ## Completed
+- ~~Initialize / store tilemap data~~
 - ~~Color Picker~~
 - ~~Tools ( paint brush, eraser, eye dropper )~~
 - ~~Toolbar~~

@@ -3,6 +3,8 @@ import { firebase } from 'state/lib/firebase';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import { deleteScene } from 'state/ducks/editor/scenes';
+
 export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return null;
 
@@ -84,9 +86,9 @@ const _deleteChildScenes = ({ userId, projectId }) => dispatch => {
     .where("ownerId", "==", userId)
     .where("projectId", "==", projectId)
     .get()
-    .then(querySnapshot =>
-      querySnapshot.docs.map(doc => firebase.scene(doc.id).delete())
-    )
+    .then(querySnapshot => Promise.all(
+      querySnapshot.docs.map(doc => dispatch( deleteScene({ sceneId: doc.id }) ))
+    ))
 };
 
 export const updateProject = ({ projectId, name, description }) => (dispatch) => {
