@@ -15,22 +15,22 @@ export const initializeMapFailure = ({ error }) => ({
   }
 });
 
-export const initializeTilemapDataBySegmentIdRequest = ({ segmentId }) => ({
-  type: types.initializeTilemapDataBySegmentIdRequest,
+export const initializeTilemapDataSegmentRequest = ({ segmentId }) => ({
+  type: types.initializeTilemapDataSegmentRequest,
   payload: {
     segmentId
   }
 });
 
-export const initializeTilemapDataBySegmentIdSuccess = ({ segmentId }) => ({
-  type: types.initializeTilemapDataBySegmentIdSuccess,
+export const initializeTilemapDataSegmentSuccess = ({ segmentId }) => ({
+  type: types.initializeTilemapDataSegmentSuccess,
   payload: {
     segmentId
   }
 });
 
-export const initializeTilemapDataBySegmentIdFailure = ({ error }) => ({
-  type: types.initializeTilemapDataBySegmentIdFailure,
+export const initializeTilemapDataSegmentFailure = ({ error }) => ({
+  type: types.initializeTilemapDataSegmentFailure,
   payload: {
     error
   }
@@ -80,11 +80,20 @@ export const setTilemapDataObject = ({ tilemapDataObject }) => ({
   }
 });
 
-export const setTilemapDataBySegmentId = ({ segmentId, tilemapData }) => ({
-  type: types.setTilemapDataBySegmentId,
+export const addLayerToTilemapDataSegment = ({ segmentId, layerId, tilemapData }) => ({
+  type: types.addLayerToTilemapDataSegment,
   payload: {
     segmentId,
+    layerId,
     tilemapData
+  }
+});
+
+export const removeLayerFromTilemapDataSegment = ({ segmentId, layerId }) => ({
+  type: types.removeLayerFromTilemapDataSegment,
+  payload: {
+    segmentId,
+    layerId
   }
 });
 
@@ -95,13 +104,6 @@ export const setStatusMessage = ({ header = "", content = "" }) => ({
     content
   }
 });
-
-// export const deleteTilemapDataBySegmentId = ({ segmentId }) => ({
-//   type: types.deleteTilemapDataBySegmentId,
-//   payload: {
-//     segmentId
-//   }
-// });
 
 export const setSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex, value }) => ({
   type: types.setSingleTileValue,

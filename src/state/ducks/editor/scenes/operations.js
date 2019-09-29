@@ -4,7 +4,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 import { getActiveProjectId } from 'state/ducks/editor/projects';
-import { deleteMapGridCollection } from 'state/ducks/editor/map';
+import { deleteMapGridCollection, deleteTilemapDataCollection } from 'state/ducks/editor/map';
 
 export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return () => null;
@@ -91,7 +91,12 @@ export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
 
   dispatch( actions.deleteSceneRequest() );
 
-  dispatch( deleteMapGridCollection({ sceneId }) )
+
+  Promise.all([
+    dispatch( deleteMapGridCollection({ sceneId }) ),
+    dispatch( deleteTilemapDataCollection({ sceneId }) ),
+
+  ])
     .then(() => {
       firebase.scene(sceneId)
         .delete()

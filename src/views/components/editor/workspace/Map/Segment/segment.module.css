@@ -46,6 +46,22 @@
   touch-action: none;
 }
 
+.propertiesWrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: dotted 1px black;
+}
+
+.propertiesNode {
+  margin: 5px;
+  color: #ffffff;
+  /* font-weight: bold; */
+}
+
 .controllerLoaderWrapper {
   height: 48px;
   width: 48px;

@@ -3,13 +3,12 @@ import * as selectors from './selectors';
 
 import * as mapConstants from 'lib/constants/mapConstants';
 
-import * as tilemapDataUtils from 'lib/editor/tilemap-data-utils';
 import {
   uuid,
   buildTwoDimensionalArray
 } from 'lib/utils';
 
-export const buildMapGrid = ({ mapProperties: { mapSize }, firestoreMapGrid }) => (
+export const validateMapGrid = ({ mapProperties: { mapSize }, firestoreMapGrid }) => (
   buildTwoDimensionalArray({
     columns: mapSize.columns,
     rows: mapSize.rows,
@@ -44,60 +43,59 @@ export const convertDataChunksToMapGrid = ({ dataChunks = [] }) => (
     .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), [])
 )
 
-
-export const validateTilemapDataBySegmentId = ({ segmentId }) => (dispatch, getState) => {
+export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    let isModified = false;
     const state = getState();
-
     const { segmentSize } = selectors.getMapProperties(state);
     const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+
     const layerSortOrder = selectors.getLayerSortOrder(state);
+    const layersToAdd = layerSortOrder.filter(layerId => !tilemapData.hasOwnProperty(layerId));
+    const layersToRemove = Object.keys(tilemapData).filter(layerId => !layerSortOrder.includes(layerId));
 
-    layerSortOrder.forEach(layerId => {
-      if (tilemapData[layerId]) {
-        /*
-          validate tiles; if columns and row match return else error
-        */
-        return;
-      }
-
+    const addLayers = layersToAdd.map(layerId => {
       const { tileSize } = selectors.getLayerPropertiesById(state, { layerId });
-      tilemapData[layerId] = tilemapDataUtils.buildTilemapDataArray({ segmentSize, tileSize });
-      isModified = true;
+
+      return dispatch( actions.addLayerToTilemapDataSegment({
+        segmentId,
+        layerId,
+        tilemapData: buildTwoDimensionalArray({
+          columns: segmentSize.width / tileSize.width,
+          rows: segmentSize.height / tileSize.height,
+          mapFn: () => 0
+        })
+      }) )
     });
 
-    if (isModified) {
-      dispatch( actions.setTilemapDataBySegmentId({ segmentId, tilemapData }))
-    }
+    const removeLayers = layersToRemove.map(layerId => {
+      return dispatch( actions.removeLayerFromTilemapDataSegment({
+        segmentId, layerId
+      }) )
+    });
 
-    resolve()
-  });
+    Promise.all([
+      ...addLayers,
+      ...removeLayers
+    ]).then(() => resolve());
+  })
 }
 
-export const buildTilemapDataSegment = () => (dispatch, getState) => {
-  const state = getState();
-  const { segmentSize } = selectors.getMapProperties(state);
-  const layerSortOrder = selectors.getLayerSortOrder(state);
-
-  return layerSortOrder.reduce((obj, layerId) => ({
-    ...obj,
-    [layerId]: buildTwoDimensionalArray({
-      columns: segmentSize.width / selectors.getLayerPropertiesById(state, { layerId }).tileSize.width,
-      rows: segmentSize.height / selectors.getLayerPropertiesById(state, { layerId }).tileSize.height,
-      mapFn: () => {
-        return 0
-      }
-    })
-  }), {});
-}
-
-export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispatch) => {
+export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispatch, getState) => {
   const toJSON = (obj) => JSON.stringify(obj);
 
-  const calculateTilemapDataMemorySize = async (data) => Promise.all(
+  // lower writes by excluding empty segments
+  const removeEmptyTilemapDataSegments = async (data) => Promise.all(
     Object.entries(data)
-      .map(([key, value]) => ({
+      .filter(([segmentId, data]) => {
+        const segmentProperties = selectors.getSegmentPropertiesById(getState(), { segmentId });
+
+        return (segmentProperties.modified || segmentProperties.firestore);
+      })
+    )
+
+  // estimate memory size to determine how many "data chunks" are needed
+  const calculateTilemapDataMemorySize = async (data) => Promise.all(
+    data.map(([key, value]) => ({
         obj: {
           [key]: value
         },
@@ -128,7 +126,8 @@ export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispat
     }, [])
   }
 
-  const tilemapDataWithMemorySizes = await calculateTilemapDataMemorySize(tilemapData);
+  const tilemapDataWithEmptySegmentsRemoved = await removeEmptyTilemapDataSegments(tilemapData);
+  const tilemapDataWithMemorySizes = await calculateTilemapDataMemorySize(tilemapDataWithEmptySegmentsRemoved);
 
   return await reduceTilemapDataToChunks(tilemapDataWithMemorySizes);;
 }

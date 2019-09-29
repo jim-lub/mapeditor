@@ -25,7 +25,7 @@ export const initializeMapFailure = (state, action) => {
   }
 }
 
-export const initializeTilemapDataBySegmentIdRequest = (state, action) => {
+export const initializeTilemapDataSegmentRequest = (state, action) => {
   const { segmentId } = action.payload;
 
   return {
@@ -41,7 +41,7 @@ export const initializeTilemapDataBySegmentIdRequest = (state, action) => {
   }
 }
 
-export const initializeTilemapDataBySegmentIdSuccess = (state, action) => {
+export const initializeTilemapDataSegmentSuccess = (state, action) => {
   const { segmentId } = action.payload;
 
   return {
@@ -57,7 +57,7 @@ export const initializeTilemapDataBySegmentIdSuccess = (state, action) => {
   }
 }
 
-export const initializeTilemapDataBySegmentIdFailure = (state, action) => {
+export const initializeTilemapDataSegmentFailure = (state, action) => {
   const { segmentId } = action.payload;
 
   return {
@@ -128,25 +128,78 @@ export const setMapGrid = (state, action) => {
 };
 
 export const setTilemapDataObject = (state, action) => {
+  const { tilemapDataObject } = action.payload;
+
   return {
     ...state,
-    tilemapData: action.payload.tilemapDataObject
-
+    tilemapData: tilemapDataObject,
+    segmentProperties: {
+      ...state.segmentProperties,
+      ...Object.keys(tilemapDataObject).reduce((obj, segmentId) => {
+        return obj = {
+          ...obj,
+          [segmentId]: {
+            ...state.segmentProperties[segmentId],
+            firestore: true
+          }
+        }
+      }, {})
+    }
+    // foreach segment set properties @ save flag
   }
 };
+
+export const addLayerToTilemapDataSegment = (state, action) => {
+  const { segmentId, layerId, tilemapData } = action.payload;
+
+  return {
+    ...state,
+    tilemapData: {
+      ...state.tilemapData,
+      [segmentId]: {
+        ...state.tilemapData[segmentId],
+        [layerId]: tilemapData
+      }
+    }
+  }
+};
+
+export const removeLayerFromTilemapDataSegment = (state, action) => {
+  const { segmentId, layerId } = action.payload;
+
+  return {
+    ...state,
+    tilemapData: {
+      ...state.tilemapData,
+      [segmentId]: {
+        ...Object.entries(state.tilemapData[segmentId])
+          .reduce((obj, [key, value]) => {
+            if (key !== layerId) {
+              obj = { ...obj, [key]: value }
+            }
+
+            return obj;
+          }, {})
+      }
+    }
+  }
+};
+
+
 
 export const setTilemapDataBySegmentId = (state, action) => {
   const { segmentId, tilemapData } = action.payload;
 
   return {
     ...state,
-    segmentProperties: {
-      ...state.segmentProperties,
-      [segmentId]: {
-        ...state.segmentProperties[segmentId],
-        initialized: true
-      }
-    },
+    // segmentProperties: {
+    //   ...state.segmentProperties,
+    //   [segmentId]: {
+    //     ...state.segmentProperties[segmentId],
+    //     initialized: true,
+    //     storeSegment: false
+    //   }
+    // },
 
     tilemapData: {
       ...state.tilemapData,
@@ -172,13 +225,19 @@ export const setSingleTileValue = (state, action) => {
 
   return {
     ...state,
-    // segmentProperties: {
-    //   ...state.segmentProperties,
-    //   [segmentId]: {
-    //     ...state.segmentProperties[segmentId],
-    //     modified: true
-    //   }
-    // },
+
+    currentScene: {
+      ...state.currentScene,
+      modified: true
+    },
+
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
 
     tilemapData: {
       ...state.tilemapData,
@@ -199,6 +258,12 @@ export const clearSingleTileValue = (state, action) => {
 
   return {
     ...state,
+
+    currentScene: {
+      ...state.currentScene,
+      modified: true
+    },
+
     segmentProperties: {
       ...state.segmentProperties,
       [segmentId]: {
@@ -206,7 +271,6 @@ export const clearSingleTileValue = (state, action) => {
         modified: true
       }
     },
-
 
     tilemapData: {
       ...state.tilemapData,

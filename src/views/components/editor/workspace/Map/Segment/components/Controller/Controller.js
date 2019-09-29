@@ -13,33 +13,37 @@ import {
   handleUserInput,
   handleCanvasUpdate,
 
-  initializeTilemapDataBySegmentId,
+  initializeTilemapDataSegment,
 } from 'state/ducks/editor/map';
 
 import { getActiveTool } from 'state/ducks/editor/tools';
-
+import { useKeyPress } from 'lib/hooks';
 // import * as toolTypes from 'lib/constants/toolTypes';
 
 import { Loader } from 'views/components/Loader';
-
-import { Canvas, UserInput } from '../../components';
+import { Canvas, UserInput, Properties } from '../../components';
 
 import styles from '../../segment.module.css';
 
 const Component = ({
-  segmentId, segmentProperties: { initialized }, mapProperties: { segmentSize },
+  segmentId, segmentProperties: { initialized, modified }, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
   tilemapData, activeTool, actions
 }) => {
   const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
+  const showProperties = useKeyPress('D');
 
   useEffect(() => {
     if (!initialized) {
-      actions.initializeTilemapDataBySegmentId({ segmentId })
+      actions.initializeTilemapDataSegment({ segmentId })
     }
   }, [initialized, segmentId, actions]);
+
+  useEffect(() => {
+
+  }, [layerSortOrder])
 
   useEffect(() => {
     if (initialized && canvasRef && canvasRef.current) {
@@ -97,6 +101,14 @@ const Component = ({
           onPointerEvent={handleInteractionNodeEvent}
         />
       }
+
+      {
+        showProperties &&
+        <Properties
+          initialized={initialized}
+          modified={modified}
+        />
+      }
     </div>
   )
 }
@@ -121,7 +133,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       handleUserInput,
       handleCanvasUpdate,
-      initializeTilemapDataBySegmentId
+      initializeTilemapDataSegment
     }, dispatch)
   }
 }

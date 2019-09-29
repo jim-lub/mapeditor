@@ -6,8 +6,8 @@ import * as reducers from './ducks';
 
 const appReducer = combineReducers(reducers);
 const logger = createLogger({
-  // diff: true
-  // collapsed: true
+  // diff: true,
+  collapsed: true
 });
 
 const rootReducer = (state, action) => {

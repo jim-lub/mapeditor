@@ -33,15 +33,15 @@ const initialState = {
   },
   currentScene: {
     // uid: null,
-    uid: "9zHkLW16AxHjVuwcioXO", // 50x50
+    uid: "boj2teXI7HKVwKWKhrWh", // 10x10
     initialized: false,
     modified: false
   },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
-  // layerSortOrder: ['layer-1', 'layer-2'],
-  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-5'],
+  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-5'],
+  // layerSortOrder: ['layer-3', 'layer-4', 'layer-5', 'layer-7'],
   layerProperties: {
     'layer-1': {
       type: layerTypes.color,
@@ -82,6 +82,22 @@ const initialState = {
         height: 32
       },
       visible: true
+    },
+    'layer-6': {
+      type: layerTypes.color,
+      tileSize: {
+        width: 32,
+        height: 32
+      },
+      visible: true
+    },
+    'layer-7': {
+      type: layerTypes.color,
+      tileSize: {
+        width: 32,
+        height: 32
+      },
+      visible: true
     }
   },
 
@@ -99,9 +115,9 @@ export default createReducer( initialState )({
   [ types.initializeMapSuccess ]: (state, action) => reducers.initializeMapSuccess(state, action),
   [ types.initializeMapFailure ]: (state, action) => reducers.initializeMapFailure(state, action),
 
-  [ types.initializeTilemapDataBySegmentIdRequest ]: (state, action) => reducers.initializeTilemapDataBySegmentIdRequest(state, action),
-  [ types.initializeTilemapDataBySegmentIdSuccess ]: (state, action) => reducers.initializeTilemapDataBySegmentIdSuccess(state, action),
-  [ types.initializeTilemapDataBySegmentIdFailure ]: (state, action) => reducers.initializeTilemapDataBySegmentIdFailure(state, action),
+  [ types.initializeTilemapDataSegmentRequest ]: (state, action) => reducers.initializeTilemapDataSegmentRequest(state, action),
+  [ types.initializeTilemapDataSegmentSuccess ]: (state, action) => reducers.initializeTilemapDataSegmentSuccess(state, action),
+  [ types.initializeTilemapDataSegmentFailure ]: (state, action) => reducers.initializeTilemapDataSegmentFailure(state, action),
 
   [ types.storeMapRequest ]: (state, action) => reducers.storeMapRequest(state, action),
   [ types.storeMapSuccess ]: (state, action) => reducers.storeMapSuccess(state, action),
@@ -111,6 +127,10 @@ export default createReducer( initialState )({
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
   [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
+  [ types.addLayerToTilemapDataSegment ]: (state, action) => reducers.addLayerToTilemapDataSegment(state, action),
+  [ types.removeLayerFromTilemapDataSegment ]: (state, action) => reducers.removeLayerFromTilemapDataSegment(state, action),
+
+
   [ types.setStatusMessage ]: (state, action) => reducers.setStatusMessage(state, action),
 
 
@@ -121,14 +141,16 @@ export default createReducer( initialState )({
 
 /*** operations ***/
 export const initializeMap = operations.initializeMap;
-export const initializeTilemapDataBySegmentId = operations.initializeTilemapDataBySegmentId;
+export const initializeTilemapDataSegment = operations.initializeTilemapDataSegment;
 export const storeMap = operations.storeMap;
 
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
-export const deleteMapGridCollection = operations.deleteMapGridCollection;
 export const setCurrentScene = operations.setCurrentScene;
+
+export const deleteMapGridCollection = operations.deleteMapGridCollection;
+export const deleteTilemapDataCollection = operations.deleteTilemapDataCollection;
 
 /*** selectors ***/
 export const getInitializeMapStatus = selectors.getInitializeMapStatus;

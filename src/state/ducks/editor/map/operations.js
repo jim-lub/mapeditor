@@ -9,36 +9,42 @@ import * as utils from './utils';
 import * as toolTypes from 'lib/constants/toolTypes';
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
-export const initializeMap = ({ sceneId }) => dispatch => {
+export const initializeMap = ({ sceneId }) => async dispatch => {
   dispatch( actions.initializeMapRequest() );
 
-  if (!sceneId) {
-    return dispatch( actions.initializeMapSuccess() );
-  }
-
-  // clear old tilemapData -> fetch mapgrid -> fetch tilemapdata
+  if (!sceneId) return dispatch( actions.initializeMapSuccess() );
 
   return dispatch( firestore.fetchSceneData({ sceneId }))
     .then(sceneData => {
-      const { mapProperties, chunks = "null" } = sceneData;
+      const { mapProperties } = sceneData;
 
-      dispatch( actions.setMapProperties({
-        mapProperties: {
-          ...mapProperties,
-          chunks
-        }
-      }) );
+      return Promise.resolve(
+        dispatch( actions.setMapProperties({
+          mapProperties
+        }))
+      )
+      .then(() => mapProperties);
+    })
+    .then(mapProperties => {
 
-      return dispatch( firestore.getMapGridCollection({ sceneId }) )
+      const mapGrid = dispatch( firestore.getMapGridCollection({ sceneId }) )
         .then(firestoreMapGrid =>
           dispatch( actions.setMapGrid({
-            mapGrid: utils.buildMapGrid({ mapProperties, firestoreMapGrid })
-          })))
-        .then(() => dispatch( firestore.getTilemapDataCollection({ sceneId }))
-          .then(tilemapDataArray =>
-            dispatch( actions.setTilemapDataObject({
-              tilemapDataObject: tilemapDataArray.reduce((obj, data) => obj = { ...obj, ...data }, {})
-            }))))
+            mapGrid: utils.validateMapGrid({ mapProperties, firestoreMapGrid })
+          }))
+        );
+
+      const tilemapData = dispatch( firestore.getTilemapDataCollection({ sceneId }) )
+        .then(tilemapDataArray =>
+          dispatch( actions.setTilemapDataObject({
+            tilemapDataObject: tilemapDataArray.reduce((obj, data) => obj = { ...obj, ...data }, {})
+          }))
+        )
+
+      return Promise.all([
+        mapGrid,
+        tilemapData
+      ])
     })
     .then(() => dispatch( actions.initializeMapSuccess() ))
     .catch(e => console.log(e));
@@ -66,13 +72,14 @@ export const storeMap = () => (dispatch, getState) => {
   .catch(e => console.log(e));
 }
 
-export const initializeTilemapDataBySegmentId = ({ segmentId }) => dispatch => {
-  dispatch( actions.initializeTilemapDataBySegmentIdRequest({ segmentId }) );
-  dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) );
-  // dispatch( utils.validateTilemapDataBySegmentId({ segmentId }) )
-  //   .then(() => {
-  //     dispatch ( actions.initializeTilemapDataBySegmentIdSuccess({ segmentId }) )
-  //   })
+export const initializeTilemapDataSegment = ({ segmentId }) => dispatch => {
+  dispatch( actions.initializeTilemapDataSegmentRequest({ segmentId }) );
+
+  dispatch( utils.validateTilemapDataSegment({ segmentId }) )
+    .then(() => {
+      dispatch ( actions.initializeTilemapDataSegmentSuccess({ segmentId }) )
+    })
+    .catch(e => console.log(e));
 }
 
 export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
@@ -191,5 +198,6 @@ const _handleEyeDropperInput = (state, {
   }
 }
 
-export const deleteMapGridCollection = firestore.deleteMapGridCollection;
 export const setCurrentScene = actions.setCurrentScene;
+export const deleteMapGridCollection = firestore.deleteMapGridCollection;
+export const deleteTilemapDataCollection = firestore.deleteTilemapDataCollection;
