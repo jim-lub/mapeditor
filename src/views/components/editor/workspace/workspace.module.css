@@ -1,0 +1,23 @@
+.moduleWrapperOuterFlex {
+  border: solid 1px var(--grey-400);
+  margin: 2px;
+  flex: 1;
+}
+
+.moduleWrapperOuterNonFlex {
+  border: solid 1px var(--grey-400);
+  margin: 2px;
+  flex: 0;
+}
+
+.moduleWrapperInner {
+  border: solid 1px var(--white);
+  height: 100%;
+}
+
+.moduleHeader {
+  font-weight: bold;
+  padding: 4px 8px;
+  background-color: var(--grey-200);
+  border-bottom: solid 1px var(--grey-400);
+}

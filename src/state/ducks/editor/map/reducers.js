@@ -132,6 +132,54 @@ export const setMapGrid = (state, action) => {
   }
 };
 
+export const createLayer = (state, action) => {
+  const { layerId, layerType, name } = action.payload;
+
+  return {
+    ...state
+  }
+};
+
+export const deleteLayer = (state, action) => {
+  const { layerId } = action.payload;
+
+  return {
+    ...state
+  }
+};
+
+export const updateLayer = (state, action) => {
+  const { layerId, name } = action.payload;
+
+  return {
+    ...state
+  }
+};
+
+export const updateLayerSortOrder = (state, action) => {
+  const { sourceIndex, destinationIndex } = action.payload;
+
+  const sortOrder = [...state.layerSortOrder];
+  const [layerToMove] = sortOrder.splice(sourceIndex, 1);
+  sortOrder.splice(destinationIndex, 0, layerToMove)
+
+  console.log(sourceIndex, destinationIndex)
+
+  return {
+    ...state,
+    layerSortOrder: sortOrder
+  }
+};
+
+export const setActiveLayer = (state, action) => {
+  const { layerId } = action.payload;
+
+  return {
+    ...state,
+    activeLayerId: layerId
+  }
+};
+
 export const setTilemapDataObject = (state, action) => {
   const { tilemapDataObject } = action.payload;
 
@@ -190,29 +238,6 @@ export const removeLayerFromTilemapDataSegment = (state, action) => {
   }
 };
 
-
-
-export const setTilemapDataBySegmentId = (state, action) => {
-  const { segmentId, tilemapData } = action.payload;
-
-  return {
-    ...state,
-    // segmentProperties: {
-    //   ...state.segmentProperties,
-    //   [segmentId]: {
-    //     ...state.segmentProperties[segmentId],
-    //     initialized: true,
-    //     storeSegment: false
-    //   }
-    // },
-
-    tilemapData: {
-      ...state.tilemapData,
-      [segmentId]: tilemapData
-    }
-  }
-}
-
 export const setStatusMessage = (state, action) => {
   const { header, content } = action.payload;
 
@@ -227,7 +252,7 @@ export const setStatusMessage = (state, action) => {
 
 export const setSingleTileValue = (state, action) => {
   const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
-
+  
   return {
     ...state,
 

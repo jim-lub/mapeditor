@@ -1,0 +1,25 @@
+.layerListWrapper {
+
+}
+
+.layerWrapperOuter {
+  margin: 1px;
+  border-top: solid 1px var(--grey-200);
+}
+
+.layerWrapperInner {
+  box-sizing: border-box;
+  padding: 3px;
+  background-color: var(--grey-100);
+  border: solid 1px var(--white);
+}
+
+.isDragging {
+  border: solid 2px var(--blue-700);
+  background-color: var(--light-blue-100);
+}
+
+.isActive {
+  border: solid 1px var(--blue-300);
+  background-color: var(--white);
+}

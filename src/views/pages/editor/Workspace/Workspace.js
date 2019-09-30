@@ -5,7 +5,8 @@ import {
   Properties,
   Toolbar,
   Menubar,
-  ColorPicker
+  ColorPicker,
+  Layers
 } from 'views/components/editor/workspace';
 
 import styles from './workspace.module.css';
@@ -19,8 +20,9 @@ export default () => {
         <div className={styles.toolbar}>
           <Toolbar />
         </div>
-        <div className={styles.widgets}>
+        <div className={styles.modules}>
           <ColorPicker />
+          <Layers />
           <Properties />
         </div>
         <div className={styles.map}>

@@ -52,12 +52,21 @@ export const storeMapFailure = ({ error }) => ({
 });
 
 
+export const setStatusMessage = ({ header = "", content = "" }) => ({
+  type: types.setStatusMessage,
+  payload: {
+    header,
+    content
+  }
+});
+
 export const setCurrentScene = ({ sceneId }) => ({
   type: types.setCurrentScene,
   payload: {
     sceneId
   }
 });
+
 
 export const setMapProperties = ({ mapProperties }) => ({
   type: types.setMapProperties,
@@ -72,6 +81,46 @@ export const setMapGrid = ({ mapGrid }) => ({
     mapGrid
   }
 });
+
+export const createLayer = ({ layerId, layerType, name }) => ({
+  type: types.createLayer,
+  payload: {
+    layerId,
+    layerType,
+    name,
+  }
+});
+
+export const deleteLayer = ({ layerId }) => ({
+  type: types.deleteLayer,
+  payload: {
+    layerId
+  }
+});
+
+export const updateLayer = ({ layerId, name }) => ({
+  type: types.updateLayer,
+  payload: {
+    layerId,
+    name
+  }
+});
+
+export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => ({
+  type: types.updateLayerSortOrder,
+  payload: {
+    sourceIndex,
+    destinationIndex
+  }
+});
+
+export const setActiveLayer = ({ layerId }) => ({
+  type: types.setActiveLayer,
+  payload: {
+    layerId
+  }
+});
+
 
 export const setTilemapDataObject = ({ tilemapDataObject }) => ({
   type: types.setTilemapDataObject,
@@ -97,13 +146,6 @@ export const removeLayerFromTilemapDataSegment = ({ segmentId, layerId }) => ({
   }
 });
 
-export const setStatusMessage = ({ header = "", content = "" }) => ({
-  type: types.setStatusMessage,
-  payload: {
-    header,
-    content
-  }
-});
 
 export const setSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex, value }) => ({
   type: types.setSingleTileValue,

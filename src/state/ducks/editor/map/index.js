@@ -32,16 +32,18 @@ const initialState = {
     content: ""
   },
   currentScene: {
-    uid: null,
+    // uid: null,
+    uid: "F8GclElBQQqntavD5pO1", // 1x1
     initialized: false,
     modified: false
   },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
-  layerSortOrder: ['layer-1', 'layer-2', 'layer-3'],
+  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-5', 'layer-6'],
   layerProperties: {
     'layer-1': {
+      name: 'Layer 1',
       type: layerTypes.color,
       tileSize: {
         width: 32,
@@ -50,6 +52,7 @@ const initialState = {
       visible: true
     },
     'layer-2': {
+      name: 'Layer 2',
       type: layerTypes.color,
       tileSize: {
         width: 32,
@@ -58,6 +61,34 @@ const initialState = {
       visible: true
     },
     'layer-3': {
+      name: 'Layer 3',
+      type: layerTypes.color,
+      tileSize: {
+        width: 32,
+        height: 32
+      },
+      visible: true
+    },
+    'layer-4': {
+      name: 'Layer 4',
+      type: layerTypes.tileset,
+      tileSize: {
+        width: 32,
+        height: 32
+      },
+      visible: true
+    },
+    'layer-5': {
+      name: 'Layer 5',
+      type: layerTypes.collision,
+      tileSize: {
+        width: 32,
+        height: 32
+      },
+      visible: true
+    },
+    'layer-6': {
+      name: 'Layer 6',
       type: layerTypes.color,
       tileSize: {
         width: 32,
@@ -87,13 +118,17 @@ export default createReducer( initialState )({
   [ types.setCurrentScene ]: (state, action) => reducers.setCurrentScene(state, action),
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
+
+  [ types.updateLayerSortOrder ]: (state, action) => reducers.updateLayerSortOrder(state, action),
+  [ types.setActiveLayer ]: (state, action) => reducers.setActiveLayer(state, action),
+
+
   [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
   [ types.addLayerToTilemapDataSegment ]: (state, action) => reducers.addLayerToTilemapDataSegment(state, action),
   [ types.removeLayerFromTilemapDataSegment ]: (state, action) => reducers.removeLayerFromTilemapDataSegment(state, action),
 
   [ types.setStatusMessage ]: (state, action) => reducers.setStatusMessage(state, action),
 
-  [ types.setTilemapDataBySegmentId ]: (state, action) => reducers.setTilemapDataBySegmentId(state, action),
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),
   [ types.clearSingleTileValue ]: (state, action) => reducers.clearSingleTileValue(state, action),
 });
@@ -107,6 +142,9 @@ export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
 export const setCurrentScene = operations.setCurrentScene;
+
+export const updateLayerSortOrder = operations.updateLayerSortOrder;
+export const setActiveLayer = operations.setActiveLayer;
 
 export const deleteMapGridCollection = operations.deleteMapGridCollection;
 export const deleteTilemapDataCollection = operations.deleteTilemapDataCollection;

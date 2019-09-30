@@ -24,7 +24,7 @@
   border-right: solid 1px var(--grey-400);
 }
 
-.widgets {
+.modules {
   grid-area: widgets;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ import { setColor, getColor } from 'state/ducks/editor/tools';
 import { CustomPicker } from './CustomPicker';
 
 import styles from './colorpicker.module.css';
+import workspaceStyles from '../workspace.module.css';
 
 const Component = ({ color, actions }) => {
   const handleColorValueChange = (colorValue) => {
@@ -18,9 +19,9 @@ const Component = ({ color, actions }) => {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.header}>Color Picker</div>
+    <div className={workspaceStyles.moduleWrapperOuterNonFlex}>
+      <div className={workspaceStyles.moduleWrapperInner}>
+        <div className={workspaceStyles.moduleHeader}>Color Picker</div>
         <div className={styles.colorPicker}>
           <CustomPicker
             color={color}

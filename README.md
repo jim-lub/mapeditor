@@ -17,6 +17,7 @@
 - Color Swatches
 - Custom cursors
 - Tools ( bucket )
+- Crop / expand map
 - Upload custom tile sets
 - Modify custom tile sets
 - Upgrades to project- and scene management interface
@@ -29,7 +30,7 @@
 - Customizable workspace layouts
 - Mobile support
 - New layer type: Collision
-- Tile stamp prefabs
+- Prefabs
 - Performance optimization
 - Improved user system
   - Sign up with email, Facebook and Github
