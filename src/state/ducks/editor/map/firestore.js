@@ -19,6 +19,20 @@ export const updateMapProperties = ({ sceneId, mapProperties }) => dispatch => {
     }, { merge: true });
 }
 
+export const updateLayerProperties = ({ sceneId, layerProperties }) => dispatch => {
+  return firebase.scene(sceneId)
+    .set({
+      layerProperties
+    }, { merge: true });
+}
+
+export const updateLayerSortOrder = ({ sceneId, layerSortOrder }) => dispatch => {
+  return firebase.scene(sceneId)
+    .set({
+      layerSortOrder
+    }, { merge: true });
+}
+
 /*** MAP GRID ***/
 export const getMapGridCollection = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
@@ -50,7 +64,7 @@ export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => 
 
       firebase.scene(sceneId).set({
         modifiedAt: firebase.serverTimestamp,
-        chunks: mapGridDataChunksArray.length || 0
+        mapgridChunks: mapGridDataChunksArray.length || 0
       }, { merge: true });
 
       dispatch( actions.setStatusMessage({ ...statusMessages['firestore-mapGrid']['write'] }) );

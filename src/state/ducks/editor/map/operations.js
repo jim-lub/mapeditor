@@ -20,13 +20,19 @@ export const initializeMap = ({ sceneId }) => async dispatch => {
 
   return dispatch( firestore.fetchSceneData({ sceneId }))
     .then(sceneData => {
-      const { mapProperties } = sceneData;
+      const { mapProperties, layerProperties = {}, layerSortOrder = [] } = sceneData;
 
-      return Promise.resolve(
-        dispatch( actions.setMapProperties({
-          mapProperties
-        }))
-      )
+      return Promise.all([
+        dispatch( actions.setMapProperties({ mapProperties })),
+
+        ...Object.entries(layerProperties).map(([layerId, { type: layerType, name, tileSize, visible }]) => {
+          return dispatch( actions.setLayerPropertiesById({
+            layerId, layerType, name, tileSize, visible
+          }) )
+        }),
+
+        dispatch( actions.setLayerSortOrder({ layerSortOrder })),
+      ])
       .then(() => mapProperties);
     })
     .then(mapProperties => {
@@ -60,11 +66,15 @@ export const storeMap = () => (dispatch, getState) => {
   const state = getState();
   const sceneId = selectors.getCurrentScene(state).uid;
   const mapProperties = selectors.getMapProperties(state);
+  const layerProperties = selectors.getLayerProperties(state);
+  const layerSortOrder = selectors.getLayerSortOrder(state);
   const mapGrid = selectors.getMapGrid(state);
   const tilemapData = selectors.getTilemapData(state);
 
   Promise.all([
     dispatch( firestore.updateMapProperties({ sceneId, mapProperties })),
+    dispatch( firestore.updateLayerProperties({ sceneId, layerProperties })),
+    dispatch( firestore.updateLayerSortOrder({ sceneId, layerSortOrder })),
     dispatch( firestore.updateMapGridCollection({ sceneId, mapProperties, mapGrid })),
   ])
   .then(() => Promise.all([
@@ -216,7 +226,10 @@ export const createLayer = ({ layerType, name, tileSize }) => (dispatch, getStat
     layerId,
     layerType,
     name,
-    tileSize
+    tileSize: {
+      width: Number(tileSize.width),
+      height: Number(tileSize.height),
+    }
   }));
 
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
@@ -233,6 +246,7 @@ export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
     layerId,
   }));
 };
+
 export const updateLayerProperties = actions.setLayerPropertiesById;
 
 export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => (dispatch, getState) => {

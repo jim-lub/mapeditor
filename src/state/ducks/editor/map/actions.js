@@ -82,13 +82,14 @@ export const setMapGrid = ({ mapGrid }) => ({
   }
 });
 
-export const setLayerPropertiesById = ({ layerId, layerType, name, tileSize }) => ({
+export const setLayerPropertiesById = ({ layerId, layerType, name, tileSize, visible = true }) => ({
   type: types.setLayerPropertiesById,
   payload: {
     layerId,
     layerType,
     name,
-    tileSize
+    tileSize,
+    visible
   }
 });
 

@@ -108,8 +108,8 @@ export const setCurrentScene = (state, action) => {
     },
     mapGrid: [],
     segmentProperties: {},
-    // layerSortOrder: [],
-    // layerProperties: {},
+    layerSortOrder: [],
+    layerProperties: {},
     tilemapData: {}
   }
 };

@@ -7,100 +7,28 @@ import * as reducers from './reducers';
 
 import * as layerTypes from 'lib/constants/layerTypes';
 
-// const initialStateProduction = {
-//   status: {},
-//   currentScene: {
-//     uid: "Lp4Mr6iS9YZhpkxX7ov5",
-//     // uid: null,
-//     initialized: false,
-//     modified: false
-//   },
-//
-//   mapProperties: {},
-//   mapGrid: [],
-//   activeLayerId: null,
-//   layerProperties: {},
-//   layerSortOrder: [],
-//   segmentProperties: {},
-//   tilemapData: {}
-// }
-
 const initialState = {
   status: {},
   statusMessage: {
     header: "",
     content: ""
   },
+
   currentScene: {
     uid: null,
-    // uid: "F8GclElBQQqntavD5pO1", // 1x1
     initialized: false,
     modified: false
   },
+
   meta: {
     createdLayers: 0
   },
+
   mapProperties: {},
   mapGrid: [],
-  activeLayerId: 'layer-1',
-  layerSortOrder: ['layer-1', 'layer-2', 'layer-3', 'layer-4', 'layer-5', 'layer-6'],
-  layerProperties: {
-    'layer-1': {
-      name: 'Layer 1',
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-2': {
-      name: 'Layer 2',
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-3': {
-      name: 'Layer 3',
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-4': {
-      name: 'Layer 4',
-      type: layerTypes.tileset,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-5': {
-      name: 'Layer 5',
-      type: layerTypes.collision,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    },
-    'layer-6': {
-      name: 'Layer 6',
-      type: layerTypes.color,
-      tileSize: {
-        width: 32,
-        height: 32
-      },
-      visible: true
-    }
-  },
-
+  activeLayerId: null,
+  layerProperties: {},
+  layerSortOrder: [],
   segmentProperties: {},
   tilemapData: {}
 }

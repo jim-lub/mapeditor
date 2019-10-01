@@ -72,11 +72,7 @@ export const createScene = ({ name, description, mapProperties }) => (dispatch, 
         mapSize: mapProperties.mapSize,
         segmentSize: mapProperties.segmentSize,
         allowedTileSizes: mapProperties.allowedTileSizes
-      },
-      layerProperties: {},
-      segmentProperties: {},
-      mapGrid: [],
-      layerSortOrder: [],
+      }
     })
     .then(sceneRef => {
       dispatch( actions.createSceneSuccess({ sceneId: sceneRef.id }) );

@@ -6,6 +6,7 @@ import {
   createLayer
 } from 'state/ducks/editor/map';
 
+import mapPresets from 'lib/constants/mapPresets';
 import * as layerTypes from 'lib/constants/layerTypes';
 import layerConstants from 'lib/constants/layerConstants';
 
@@ -16,12 +17,18 @@ import styles from '../modal.module.css';
 
 const Component = ({ actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
+  const [fieldStateTileWidth, setFieldStateTileWidth] = useState();
+  const [fieldStateTileHeight, setFieldStateTileHeight] = useState();
   const [fieldStateLayerType, setFieldStateLayerType] = useState();
 
   const handleSubmit = () => {
     actions.createLayer({
       name: fieldStateName.value,
-      layerType: fieldStateLayerType.value
+      layerType: fieldStateLayerType.value,
+      tileSize: {
+        width: fieldStateTileWidth.value,
+        height: fieldStateTileHeight.value
+      }
     });
     onClose();
   }
@@ -35,7 +42,15 @@ const Component = ({ actions, onClose }) => {
         value: layerType,
         disabled: layerProperties.disabled
       }
-    })
+    });
+
+  const tileSizeOptions = () => Object.values(mapPresets['default'].allowedTileSizes)
+    .map(tileSize => {
+      return {
+        name: tileSize,
+        value: tileSize,
+      }
+    });
 
   return (
     <>
@@ -55,6 +70,20 @@ const Component = ({ actions, onClose }) => {
               label="Type"
               options={layerTypeOptions()}
               onStateChange={setFieldStateLayerType}
+            />
+
+            <Field.Select
+              name="layerTileSizeWidth"
+              label="Tile width"
+              options={tileSizeOptions()}
+              onStateChange={setFieldStateTileWidth}
+            />
+
+            <Field.Select
+              name="layerTileSizeHeight"
+              label="Tile height"
+              options={tileSizeOptions()}
+              onStateChange={setFieldStateTileHeight}
             />
           </Form.Group>
         </div>
