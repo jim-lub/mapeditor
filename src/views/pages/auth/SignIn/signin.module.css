@@ -1,0 +1,15 @@
+.wrapper {
+  width: 617px;
+  margin: 150px auto;
+}
+
+.signInModule {
+  float: left;
+  padding-right: 30px;
+  border-right: solid 1px var(--grey-300);
+}
+
+.signUpModule {
+  float: left;
+  padding-left: 30px;
+}

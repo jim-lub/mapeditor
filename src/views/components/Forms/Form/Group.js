@@ -6,7 +6,7 @@ export default ({ id = null, onSubmit, children }) => {
     onSubmit();
   }
   return (
-    <form id={id} onSubmit={e => handleSubmit(e)}>
+    <form id={id} onSubmit={handleSubmit}>
       { children }
     </form>
   );

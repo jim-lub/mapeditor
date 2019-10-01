@@ -9,8 +9,8 @@ import fieldStyles from '../fields.module.css';
 import formStyles from '../form.module.css';
 
 /**
-* Field.Password component with form validation
-* @module Password
+* Field.Text component with form validation
+* @module Text
 *
 * @param {string} name Field name
 * @param {string} label Field label
@@ -22,7 +22,7 @@ import formStyles from '../form.module.css';
 * @param {object} labelStyle Override the default label styling by passing a style object as a prop
 * @param {object} fieldStyle Override the default field styling by passing a style object as a prop
 *
-* @return {Component} Password
+* @return {Component} Text
 *
 */
 export default ({
@@ -37,19 +37,18 @@ export default ({
     if (!setParentState) return;
 
     setParentState({ value, errors });
-  }, [value, errors, setParentState]);
+  }, [value, name, errors, setParentState]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
     setInitialized(true);
   };
-
   const handleBlur = () => setInitialized(true);
 
   const errorMessages = errors.map(error => error.message);
 
   const textInputClassNames = concatClassNames([
-    fieldStyles.password,
+    fieldStyles.text,
     (initialized && errors.length > 0) ? fieldStyles.validationError : "",
     (initialized && errors.length === 0 && displaySuccess) ? fieldStyles.validationSuccess : ""
   ]);
@@ -57,15 +56,22 @@ export default ({
   return (
     <div className={formStyles.wrapper}>
       <div className={formStyles.fieldWrapper}>
-        <label htmlFor={name} style={labelStyle}>
-          {label}
-        </label>
+        {
+          (label)
+            ? (
+                <label htmlFor={name} style={labelStyle}>
+                  { `${label}${(required) ? "*" : ""}` }
+                </label>
+              )
+            : null
+        }
 
         <input
           type="password"
           name={name}
           placeholder={placeholder}
           value={value}
+          autoFocus={autoFocus}
           disabled={disabled}
           className={textInputClassNames}
           onChange={handleChange}
@@ -74,7 +80,7 @@ export default ({
         />
       </div>
 
-      <FieldErrorList initialized={initialized} errors={errorMessages} />
+      <FieldErrorList initialized={initialized} errors={errorMessages} displayErrors={displayErrors}/>
     </div>
   );
 };

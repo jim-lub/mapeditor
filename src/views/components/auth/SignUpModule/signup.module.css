@@ -1,0 +1,30 @@
+.wrapperOuter {
+  width: 278px;
+}
+
+.wrapperInner {
+  background-color: var(--white);
+  padding: 8px;
+  padding-top: 2px;
+  border-radius: 2px 2px 7px 7px;
+  border: solid 1px var(--grey-300);
+}
+
+.emailSignUpWrapper {
+  width: 100%;
+}
+
+.providerWrapper {
+  width: 100%;
+  padding-top: 5px;
+}
+
+.providerButton {
+  float: left;
+}
+
+.error {
+  padding: 5px;
+  font-style: italic;
+  color: var(--red-700);
+}

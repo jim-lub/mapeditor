@@ -1,33 +1,17 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { SignInWithProviderButton } from 'views/components/auth';
-import { signInWithGoogle } from 'state/ducks/auth';
+import {
+  SignInModule,
+  SignUpModule
+} from 'views/components/auth';
 
-const SignIn = ({ actions }) => {
-  const handleClick = () => {
-    actions.signInWithGoogle();
-  }
+import styles from './signin.module.css';
 
+export default () => {
   return (
-    <div style={{margin: 10}}>
-      <h2>SignIn</h2>
-      <SignInWithProviderButton providerName="google" onClick={handleClick} />
+    <div className={"clearfix " + styles.wrapper}>
+      <div className={styles.signInModule}><SignInModule /></div>
+      <div className={styles.signUpModule}><SignUpModule /></div>
     </div>
   )
 }
-
-const mapStateToProps = (state) => {
-  return {
-
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({ signInWithGoogle }, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

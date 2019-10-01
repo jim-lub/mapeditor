@@ -4,7 +4,7 @@
 
 .layerWrapperOuter {
   margin: 1px;
-  border-top: solid 1px var(--grey-200);
+  border: solid 1px var(--grey-400);
 }
 
 .layerWrapperInner {
@@ -20,6 +20,5 @@
 }
 
 .isActive {
-  border: solid 1px var(--blue-300);
   background-color: var(--white);
 }

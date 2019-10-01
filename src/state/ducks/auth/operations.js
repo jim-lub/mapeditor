@@ -32,10 +32,32 @@ export const listenToAuthChanges = () => (dispatch) => {
   })
 }
 
+export const signUpWithEmail = ({ email, password }) => dispatch => {
+  firebase.doCreateUserWithEmailAndPassword(email, password)
+    .then(authUser => {
+      dispatch(
+        updateDbUser({
+          uid: authUser.user.uid,
+          username: "",
+          email,
+          avatar: null,
+          provider_ref: null
+        })
+      );
+    })
+    .catch(e => dispatch(actions.setAuthError({ error: { ...e, form: 'signup' } })));
+}
+
+export const signInWithEmail = ({ email, password }) => dispatch => {
+  firebase.doSignInWithEmailAndPassword(email, password)
+    .then(authUser => {})
+    .catch(e => dispatch(actions.setAuthError({ error: { ...e, form: 'signin' } })));
+}
+
 export const signInWithGoogle = () => (dispatch) => {
   firebase.doSignInWithGoogle()
     .then(authUser => {
-        dispatch(
+      dispatch(
         updateDbUser({
           uid: authUser.user.uid,
           username: authUser.additionalUserInfo.profile.name,

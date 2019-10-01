@@ -160,10 +160,8 @@ export const updateLayerSortOrder = (state, action) => {
   const { sourceIndex, destinationIndex } = action.payload;
 
   const sortOrder = [...state.layerSortOrder];
-  const [layerToMove] = sortOrder.splice(sourceIndex, 1);
-  sortOrder.splice(destinationIndex, 0, layerToMove)
-
-  console.log(sourceIndex, destinationIndex)
+  const [removedLayer] = sortOrder.splice(sourceIndex, 1);
+  sortOrder.splice(destinationIndex, 0, removedLayer)
 
   return {
     ...state,
@@ -252,7 +250,7 @@ export const setStatusMessage = (state, action) => {
 
 export const setSingleTileValue = (state, action) => {
   const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
-  
+
   return {
     ...state,
 

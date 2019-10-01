@@ -26,21 +26,13 @@ export default createReducer( defaultState )({
 });
 
 /*** OPERATIONS ***/
-export const listenToAuthChanges = () =>
-  operations.listenToAuthChanges();
-
-export const signInWithGoogle = () =>
-  operations.signInWithGoogle();
-
-export const signOut = () =>
-  operations.signOut();
+export const listenToAuthChanges = operations.listenToAuthChanges;
+export const signUpWithEmail = operations.signUpWithEmail;
+export const signInWithEmail = operations.signInWithEmail;
+export const signInWithGoogle = operations.signInWithGoogle;
+export const signOut = operations.signOut;
 
 /*** SELECTORS ***/
-export const getAuthUser = ( state ) =>
-  selectors.getAuthUser(state);
-
-export const getAuthStatus = ( state ) =>
-  selectors.getAuthStatus(state);
-
-export const getAuthError = ( state ) =>
-  selectors.getAuthError(state);
+export const getAuthUser = selectors.getAuthUser;
+export const getAuthStatus = selectors.getAuthStatus;
+export const getAuthError = selectors.getAuthError;

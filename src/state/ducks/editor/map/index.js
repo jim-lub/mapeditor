@@ -32,8 +32,8 @@ const initialState = {
     content: ""
   },
   currentScene: {
-    // uid: null,
-    uid: "F8GclElBQQqntavD5pO1", // 1x1
+    uid: null,
+    // uid: "F8GclElBQQqntavD5pO1", // 1x1
     initialized: false,
     modified: false
   },

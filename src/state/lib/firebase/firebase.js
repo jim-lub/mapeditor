@@ -27,6 +27,12 @@ export class Firebase {
   serverTimestamp = app.firestore.FieldValue.serverTimestamp();
 
   /*** Auth API ***/
+  doCreateUserWithEmailAndPassword = (email, password) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
+
+  doSignInWithEmailAndPassword = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
+
   doSignInWithGoogle = () =>
     this.auth.signInWithPopup(this.googleProvider);
 

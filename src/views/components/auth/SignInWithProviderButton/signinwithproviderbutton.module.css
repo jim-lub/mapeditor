@@ -3,7 +3,19 @@
   height: auto;
 }
 
+.buttonDisabled {
+  width: auto;
+  height: auto;
+  cursor: not-allowed;
+}
+
 .providerLogo {
   width: 32px;
   height: 32px;
+}
+
+.providerLogoDisabled {
+  width: 32px;
+  height: 32px;
+  cursor: not-allowed;
 }
