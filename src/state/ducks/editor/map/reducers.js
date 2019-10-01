@@ -132,42 +132,53 @@ export const setMapGrid = (state, action) => {
   }
 };
 
-export const createLayer = (state, action) => {
-  const { layerId, layerType, name } = action.payload;
-
-  return {
-    ...state
-  }
-};
-
-export const deleteLayer = (state, action) => {
-  const { layerId } = action.payload;
-
-  return {
-    ...state
-  }
-};
-
-export const updateLayer = (state, action) => {
-  const { layerId, name } = action.payload;
-
-  return {
-    ...state
-  }
-};
-
-export const updateLayerSortOrder = (state, action) => {
-  const { sourceIndex, destinationIndex } = action.payload;
-
-  const sortOrder = [...state.layerSortOrder];
-  const [removedLayer] = sortOrder.splice(sourceIndex, 1);
-  sortOrder.splice(destinationIndex, 0, removedLayer)
+export const setLayerPropertiesById = (state, action) => {
+  const { layerId, layerType, name, tileSize } = action.payload;
 
   return {
     ...state,
-    layerSortOrder: sortOrder
+    meta: {
+      createdLayers: state.meta.createdLayers + 1
+    },
+    layerProperties: {
+      ...state.layerProperties,
+      [layerId]: {
+        ...state.layerProperties[layerId],
+        type: layerType,
+        name: name || `Layer ${state.meta.createdLayers}`,
+        tileSize,
+        visible: true
+      }
+    }
   }
-};
+}
+
+export const deleteLayerPropertiesById = (state, action) => {
+  const { layerId } = action.payload;
+
+  return {
+    ...state,
+    layerProperties: {
+      ...Object.entries(state.layerProperties)
+        .reduce((obj, [key, value]) => {
+          if (key !== layerId) {
+            obj = { ...obj, [key]: value }
+          }
+
+          return obj;
+        }, {})
+    }
+  }
+}
+
+export const setLayerSortOrder = (state, action) => {
+  const { layerSortOrder } = action.payload;
+
+  return {
+    ...state,
+    layerSortOrder
+  }
+}
 
 export const setActiveLayer = (state, action) => {
   const { layerId } = action.payload;

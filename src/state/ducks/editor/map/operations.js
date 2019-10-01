@@ -8,6 +8,9 @@ import * as utils from './utils';
 
 import * as layerTypes from 'lib/constants/layerTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
+
+import { uuid } from 'lib/utils';
+
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 export const initializeMap = ({ sceneId }) => async dispatch => {
@@ -82,6 +85,8 @@ export const initializeTilemapDataSegment = ({ segmentId }) => dispatch => {
     })
     .catch(e => console.log(e));
 }
+
+export const validateTilemapDataSegment = utils.validateTilemapDataSegment;
 
 export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
   const state = getState();
@@ -203,9 +208,45 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
       }
     }
 
+export const createLayer = ({ layerType, name, tileSize }) => (dispatch, getState) => {
+  const layerId = uuid.create();
+  const layerSortOrder = [...selectors.getLayerSortOrder( getState() ), layerId];
+
+  dispatch( actions.setLayerPropertiesById({
+    layerId,
+    layerType,
+    name,
+    tileSize
+  }));
+
+  dispatch( actions.setLayerSortOrder({ layerSortOrder }));
+}
+
+export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
+  const layerSortOrder = [...selectors.getLayerSortOrder( getState() )];
+  const layerIndex = layerSortOrder.indexOf( layerId );
+  layerSortOrder.splice(layerIndex, 1);
+
+  dispatch( actions.setLayerSortOrder({ layerSortOrder }));
+
+  dispatch( actions.deleteLayerPropertiesById({
+    layerId,
+  }));
+};
+export const updateLayerProperties = actions.setLayerPropertiesById;
+
+export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => (dispatch, getState) => {
+  const layerSortOrder = selectors.getLayerSortOrder( getState() );
+
+  const sortOrder = [...layerSortOrder];
+  const [removedLayer] = sortOrder.splice(sourceIndex, 1);
+  sortOrder.splice(destinationIndex, 0, removedLayer);
+
+  dispatch( actions.setLayerSortOrder({ layerSortOrder: sortOrder }) )
+}
+
 export const setCurrentScene = actions.setCurrentScene;
 
-export const updateLayerSortOrder = actions.updateLayerSortOrder;
 export const setActiveLayer = actions.setActiveLayer;
 
 export const deleteMapGridCollection = firestore.deleteMapGridCollection;

@@ -6,7 +6,7 @@ import { getAuthUser, getAuthStatus, signOut } from 'state/ducks/auth';
 import { default as routes } from 'lib/routes';
 import * as ruleTypes from 'views/lib/authorization/ruleTypes';
 
-import { CustomNavLink, CustomLink } from './components';
+import { CustomNavLink } from './components';
 import ReactTooltip from 'react-tooltip';
 
 import styles from './sidebar.module.css';
@@ -41,7 +41,7 @@ const Component = ({ authUser, authStatus, actions }) => {
 
       {
         (authUser)
-          ? <div className={styles.signOutButton}><CustomLink name="Sign out" onClick={actions.signOut}/></div>
+          ? <div className={styles.signOutButton}><button className="red" style={{padding: "15px 1px", margin: 1}} onClick={actions.signOut}>Sign Out</button></div>
           : null
       }
 

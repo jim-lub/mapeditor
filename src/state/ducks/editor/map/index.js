@@ -37,6 +37,9 @@ const initialState = {
     initialized: false,
     modified: false
   },
+  meta: {
+    createdLayers: 0
+  },
   mapProperties: {},
   mapGrid: [],
   activeLayerId: 'layer-1',
@@ -119,9 +122,10 @@ export default createReducer( initialState )({
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
   [ types.setMapGrid ]: (state, action) => reducers.setMapGrid(state, action),
 
-  [ types.updateLayerSortOrder ]: (state, action) => reducers.updateLayerSortOrder(state, action),
+  [ types.setLayerPropertiesById ]: (state, action) => reducers.setLayerPropertiesById(state, action),
+  [ types.deleteLayerPropertiesById ]: (state, action) => reducers.deleteLayerPropertiesById(state, action),
+  [ types.setLayerSortOrder ]: (state, action) => reducers.setLayerSortOrder(state, action),
   [ types.setActiveLayer ]: (state, action) => reducers.setActiveLayer(state, action),
-
 
   [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
   [ types.addLayerToTilemapDataSegment ]: (state, action) => reducers.addLayerToTilemapDataSegment(state, action),
@@ -136,6 +140,7 @@ export default createReducer( initialState )({
 /*** operations ***/
 export const initializeMap = operations.initializeMap;
 export const initializeTilemapDataSegment = operations.initializeTilemapDataSegment;
+export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 export const storeMap = operations.storeMap;
 
 export const handleUserInput = operations.handleUserInput;
@@ -143,6 +148,9 @@ export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
 export const setCurrentScene = operations.setCurrentScene;
 
+export const createLayer = operations.createLayer;
+export const deleteLayer = operations.deleteLayer;
+export const updateLayerProperties = operations.updateLayerProperties;
 export const updateLayerSortOrder = operations.updateLayerSortOrder;
 export const setActiveLayer = operations.setActiveLayer;
 

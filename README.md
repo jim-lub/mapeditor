@@ -33,9 +33,10 @@
 - Prefabs
 - Performance optimization
 - Improved user system
-  - Sign up with email, Facebook and Github
+  - Sign up with Facebook and Github
   - Link accounts
   - Account settings
+  - Forgot password
   - Enhanced role-based authorization system
 - Share projects and scenes
 - Collaboration

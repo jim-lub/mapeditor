@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTooltip from 'react-tooltip';
@@ -23,7 +23,14 @@ import ToolNode from './ToolNode';
 
 import styles from './toolbar.module.css';
 
-const Component = ({ layerProperties, activeTool, disableAllInput, actions }) => {
+const Component = ({ activeLayerId, activeTool, disableAllInput, actions, getLayerPropertiesById }) => {
+  const [layerProperties, setLayerProperties] = useState();
+
+  useEffect(() => {
+    setLayerProperties(
+      getLayerPropertiesById(activeLayerId)
+    );
+  }, [activeLayerId, getLayerPropertiesById])
 
   return (
     <div className={styles.wrapper}>
@@ -36,7 +43,7 @@ const Component = ({ layerProperties, activeTool, disableAllInput, actions }) =>
               isActive={(activeTool === toolType)}
               onSelect={actions.setActiveTool}
               disableAllInput={disableAllInput}
-              layerType={layerProperties.type}
+              layerType={(layerProperties) ? layerProperties.type : null}
             />
           )
         })
@@ -48,12 +55,10 @@ const Component = ({ layerProperties, activeTool, disableAllInput, actions }) =>
 
 const mapStateToProps = (state) => {
   return {
-    layerProperties: getLayerPropertiesById(
-      state,
-      { layerId: getActiveLayerId(state) }
-    ),
+    activeLayerId: getActiveLayerId(state),
     activeTool: getActiveTool(state),
-    disableAllInput: getDisableAllInput(state)
+    disableAllInput: getDisableAllInput(state),
+    getLayerPropertiesById: (layerId) => getLayerPropertiesById(state, { layerId })
   }
 }
 

@@ -46,6 +46,7 @@ export default ({ onStateChange: setParentState, label, name, options = [default
                 <option
                   key={option.value}
                   value={option.value}
+                  disabled={option.disabled}
                 >
                   { option.name }
                 </option>

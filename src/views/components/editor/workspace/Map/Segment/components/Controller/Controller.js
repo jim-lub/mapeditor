@@ -14,6 +14,7 @@ import {
   handleCanvasUpdate,
 
   initializeTilemapDataSegment,
+  validateTilemapDataSegment,
 } from 'state/ducks/editor/map';
 
 import { getActiveTool } from 'state/ducks/editor/tools';
@@ -42,8 +43,8 @@ const Component = ({
   }, [initialized, segmentId, actions]);
 
   useEffect(() => {
-
-  }, [layerSortOrder])
+    actions.validateTilemapDataSegment({ segmentId })
+  }, [segmentId, layerSortOrder, actions])
 
   useEffect(() => {
     if (initialized && canvasRef && canvasRef.current) {
@@ -93,7 +94,7 @@ const Component = ({
       />
 
       {
-        isActiveSegment && !disablePointerInput &&
+        isActiveSegment && !disablePointerInput && layerProperties[activeLayerId] && (layerSortOrder.length > 0) &&
         <UserInput
           segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}
@@ -103,7 +104,7 @@ const Component = ({
       }
 
       {
-        showProperties &&
+        showProperties && (layerSortOrder.length > 0) &&
         <Properties
           initialized={initialized}
           modified={modified}
@@ -133,7 +134,8 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       handleUserInput,
       handleCanvasUpdate,
-      initializeTilemapDataSegment
+      initializeTilemapDataSegment,
+      validateTilemapDataSegment
     }, dispatch)
   }
 }

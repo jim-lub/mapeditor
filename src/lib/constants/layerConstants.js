@@ -3,16 +3,19 @@ import * as layerTypes from './layerTypes';
 export default {
   [ layerTypes.color ]: {
     name: "Color",
-    description: "..."
+    description: "...",
+    disabled: false
   },
 
   [ layerTypes.tileset ]: {
     name: "Tileset",
-    description: "..."
+    description: "...",
+    disabled: false
   },
 
   [ layerTypes.collision ]: {
     name: "Collision",
-    description: "..."
+    description: "...",
+    disabled: true
   },
 }

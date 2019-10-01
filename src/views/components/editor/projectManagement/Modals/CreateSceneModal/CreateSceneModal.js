@@ -55,7 +55,6 @@ const Component = ({ projectId = null, activeProjectId, getProjectDataById, crea
   }, [projectId, activeProjectId, getProjectDataById]);
 
   const handleSubmit = () => {
-    console.log(fieldStatePreset.value)
     initializeRequest();
     const { allowedTileSizes, segmentSize } = mapPresets[fieldStatePreset.value];
 

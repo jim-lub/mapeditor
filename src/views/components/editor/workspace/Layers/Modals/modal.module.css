@@ -1,0 +1,47 @@
+.container {
+  padding: 10px;
+  padding-top: 5px;
+}
+
+.header {
+  position: relative;
+  border-bottom: solid 1px #d5d5d5;
+}
+
+.body {
+  font-size: 12px;
+  padding-top: 5px;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+.form {
+  margin-top: 5px;
+}
+
+.list {
+  list-style-position: inside;
+  max-height: 160px;
+}
+
+.warning {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #fffed9;
+}
+
+.error {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #ffd9d9;
+}
+
+.succes {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #ddffd9;
+}
+
+.bold {
+  font-size: inherit;
+  font-weight: bold;
+}

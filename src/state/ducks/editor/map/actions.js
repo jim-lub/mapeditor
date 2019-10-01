@@ -82,35 +82,27 @@ export const setMapGrid = ({ mapGrid }) => ({
   }
 });
 
-export const createLayer = ({ layerId, layerType, name }) => ({
-  type: types.createLayer,
+export const setLayerPropertiesById = ({ layerId, layerType, name, tileSize }) => ({
+  type: types.setLayerPropertiesById,
   payload: {
     layerId,
     layerType,
     name,
+    tileSize
   }
 });
 
-export const deleteLayer = ({ layerId }) => ({
-  type: types.deleteLayer,
+export const deleteLayerPropertiesById = ({ layerId }) => ({
+  type: types.deleteLayerPropertiesById,
   payload: {
     layerId
   }
 });
 
-export const updateLayer = ({ layerId, name }) => ({
-  type: types.updateLayer,
+export const setLayerSortOrder = ({ layerSortOrder }) => ({
+  type: types.setLayerSortOrder,
   payload: {
-    layerId,
-    name
-  }
-});
-
-export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => ({
-  type: types.updateLayerSortOrder,
-  payload: {
-    sourceIndex,
-    destinationIndex
+    layerSortOrder
   }
 });
 
