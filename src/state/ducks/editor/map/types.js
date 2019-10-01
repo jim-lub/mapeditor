@@ -21,6 +21,7 @@ export const setLayerPropertiesById = "editor/map/layer/SET_PROPERTIES";
 export const deleteLayerPropertiesById = "editor/map/layer/DELETE_PROPERTIES";
 export const setLayerSortOrder = "editor/map/layer/SET_SORT_ORDER";
 export const setActiveLayer = "editor/map/layer/SET_ACTIVE";
+export const toggleLayerVisibility = "editor/map/layer/TOGGLE_VISIBILITY";
 
 export const setTilemapDataObject = "editor/map/SET_TILEMAP_DATA_OBJECT";
 export const addLayerToTilemapDataSegment = "editor/map/ADD_LAYER_TO_TILEMAP_DATA_SEGMENT";

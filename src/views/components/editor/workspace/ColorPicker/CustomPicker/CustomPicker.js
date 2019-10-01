@@ -5,7 +5,7 @@ import { Hue, Saturation, EditableInput } from 'react-color/lib/components/commo
 const ColorPicker = ({ color, onChange, ...rest }) => {
 
   return (
-    <div style={{margin: 0, border: "solid 1px white"}}>
+    <div style={{height: "100%", margin: 0, border: "solid 1px white"}}>
       <div style={{position: "relative", height: 150}}>
         <Saturation
           color={color}

@@ -1,13 +1,20 @@
-.layerListWrapper {
+.topbar {
+  height: 24px;
+}
 
+.layerListWrapper {
+  height: calc(100% - 24px);
 }
 
 .layerWrapperOuter {
+  height: 100%;
   margin: 1px;
   border: solid 1px var(--grey-400);
 }
 
 .layerWrapperInner {
+  position: relative;
+  height: 100%;
   box-sizing: border-box;
   padding: 3px;
   background-color: var(--grey-100);

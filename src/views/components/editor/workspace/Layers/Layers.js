@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import {
   updateLayerProperties,
   updateLayerSortOrder,
   setActiveLayer,
+  toggleLayerVisibility,
 
   getActiveLayerId,
   getLayerSortOrder,
@@ -20,10 +23,10 @@ import {
   DeleteLayerModal
 } from './Modals';
 
+import { WorkspaceModuleWrapper } from '../WorkspaceModuleWrapper';
 import { LayerList } from './LayerList';
 
 import styles from './layers.module.css';
-import workspaceStyles from '../workspace.module.css';
 
 const Component = ({
   activeLayerId, layerSortOrder, allLayerProperties,
@@ -38,27 +41,36 @@ const Component = ({
 
   return (
     <>
-    <div className={workspaceStyles.moduleWrapperOuterFlex}>
-      <div className={workspaceStyles.moduleWrapperInner}>
-        <div className={workspaceStyles.moduleHeader}>Layers</div>
-        <div>
-          <button onClick={handleCreateLayerModal}>New</button>
+      <WorkspaceModuleWrapper moduleName="Layers">
+        <div className={styles.topBar}>
+          <button onClick={handleCreateLayerModal} style={{padding: 3}}>New</button>
         </div>
         <div className={styles.layerListWrapper}>
-          <LayerList
-            activeLayerId={activeLayerId}
-            layerSortOrder={layerSortOrder}
-            allLayerProperties={allLayerProperties}
-            onSortOrderChange={actions.updateLayerSortOrder}
-            setActiveLayer={actions.setActiveLayer}
-            openDeleteLayerModal={openDeleteLayerModal}
-          />
-        </div>
+        <AutoSizer>
+          {
+            ({ width, height }) => {
+              return (
+                <Scrollbars autoHide style={{width, height}}>
+                  <LayerList
+                    activeLayerId={activeLayerId}
+                    layerSortOrder={layerSortOrder}
+                    allLayerProperties={allLayerProperties}
+                    onSortOrderChange={actions.updateLayerSortOrder}
+                    setActiveLayer={actions.setActiveLayer}
+                    openDeleteLayerModal={openDeleteLayerModal}
+                    toggleLayerVisibility={actions.toggleLayerVisibility}
+                  />
+                </Scrollbars>
+              )
+            }
+          }
+        </AutoSizer>
       </div>
-    </div>
-      <CreateLayerModalComponent />
-      <DeleteLayerModalComponent />
-    </>
+    </WorkspaceModuleWrapper>
+
+    <CreateLayerModalComponent />
+    <DeleteLayerModalComponent />
+  </>
   )
 }
 
@@ -72,7 +84,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateLayerProperties, updateLayerSortOrder, setActiveLayer }, dispatch)
+    actions: bindActionCreators({ updateLayerProperties, updateLayerSortOrder, setActiveLayer, toggleLayerVisibility }, dispatch)
   }
 }
 

@@ -189,6 +189,21 @@ export const setActiveLayer = (state, action) => {
   }
 };
 
+export const toggleLayerVisibility = (state, action) => {
+  const { layerId } = action.payload;
+
+  return {
+    ...state,
+    layerProperties: {
+      ...state.layerProperties,
+      [layerId]: {
+        ...state.layerProperties[layerId],
+        visible: !state.layerProperties[layerId].visible
+      }
+    }
+  }
+};
+
 export const setTilemapDataObject = (state, action) => {
   const { tilemapDataObject } = action.payload;
 

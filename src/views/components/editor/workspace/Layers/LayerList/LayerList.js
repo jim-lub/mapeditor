@@ -5,7 +5,7 @@ import { Layer } from './Layer';
 
 // import styles from '../layers.module.css';
 
-export default ({ activeLayerId, layerSortOrder, allLayerProperties, onSortOrderChange, setActiveLayer, openDeleteLayerModal }) => {
+export default ({ activeLayerId, layerSortOrder, allLayerProperties, onSortOrderChange, setActiveLayer, openDeleteLayerModal, toggleLayerVisibility }) => {
   const onDragEnd = ({ source, destination }) => {
     if (!destination || !destination.hasOwnProperty('index')) return;
 
@@ -52,6 +52,7 @@ export default ({ activeLayerId, layerSortOrder, allLayerProperties, onSortOrder
                         isDragging={snapshot.isDragging}
                         onClick={setActiveLayer}
                         openDeleteLayerModal={openDeleteLayerModal}
+                        toggleLayerVisibility={toggleLayerVisibility}
                       />
                     </div>
                   )}

@@ -248,6 +248,8 @@ export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
 };
 
 export const updateLayerProperties = actions.setLayerPropertiesById;
+export const setActiveLayer = actions.setActiveLayer;
+export const toggleLayerVisibility = actions.toggleLayerVisibility;
 
 export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => (dispatch, getState) => {
   const layerSortOrder = selectors.getLayerSortOrder( getState() );
@@ -261,7 +263,6 @@ export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => (disp
 
 export const setCurrentScene = actions.setCurrentScene;
 
-export const setActiveLayer = actions.setActiveLayer;
 
 export const deleteMapGridCollection = firestore.deleteMapGridCollection;
 export const deleteTilemapDataCollection = firestore.deleteTilemapDataCollection;

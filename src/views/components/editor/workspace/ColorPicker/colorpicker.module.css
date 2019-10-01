@@ -1,10 +1,13 @@
 .wrapper {
   border: solid 1px var(--grey-400);
   margin: 2px;
+  height: 100%;
   /* flex-grow: 1; */
 }
 
 .container {
+  position: relative;
+  height: 100%;
   border: solid 1px var(--white);
 }
 

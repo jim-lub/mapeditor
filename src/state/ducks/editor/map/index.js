@@ -15,7 +15,8 @@ const initialState = {
   },
 
   currentScene: {
-    uid: null,
+    // uid: null,
+    uid: "73sJh7Jls3RCeSf5KZtc",
     initialized: false,
     modified: false
   },
@@ -54,6 +55,7 @@ export default createReducer( initialState )({
   [ types.deleteLayerPropertiesById ]: (state, action) => reducers.deleteLayerPropertiesById(state, action),
   [ types.setLayerSortOrder ]: (state, action) => reducers.setLayerSortOrder(state, action),
   [ types.setActiveLayer ]: (state, action) => reducers.setActiveLayer(state, action),
+  [ types.toggleLayerVisibility ]: (state, action) => reducers.toggleLayerVisibility(state, action),
 
   [ types.setTilemapDataObject ]: (state, action) => reducers.setTilemapDataObject(state, action),
   [ types.addLayerToTilemapDataSegment ]: (state, action) => reducers.addLayerToTilemapDataSegment(state, action),
@@ -81,6 +83,7 @@ export const deleteLayer = operations.deleteLayer;
 export const updateLayerProperties = operations.updateLayerProperties;
 export const updateLayerSortOrder = operations.updateLayerSortOrder;
 export const setActiveLayer = operations.setActiveLayer;
+export const toggleLayerVisibility = operations.toggleLayerVisibility;
 
 export const deleteMapGridCollection = operations.deleteMapGridCollection;
 export const deleteTilemapDataCollection = operations.deleteTilemapDataCollection;

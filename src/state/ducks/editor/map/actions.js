@@ -114,6 +114,13 @@ export const setActiveLayer = ({ layerId }) => ({
   }
 });
 
+export const toggleLayerVisibility = ({ layerId }) => ({
+  type: types.toggleLayerVisibility,
+  payload: {
+    layerId
+  }
+});
+
 
 export const setTilemapDataObject = ({ tilemapDataObject }) => ({
   type: types.setTilemapDataObject,

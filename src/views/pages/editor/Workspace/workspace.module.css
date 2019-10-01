@@ -26,8 +26,9 @@
 
 .modules {
   grid-area: widgets;
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   background-color: var(--grey-300);
   border-right: solid 1px var(--grey-400);
 }

@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 
 import { setColor, getColor } from 'state/ducks/editor/tools';
 
+import { WorkspaceModuleWrapper } from '../WorkspaceModuleWrapper';
 import { CustomPicker } from './CustomPicker';
 
 import styles from './colorpicker.module.css';
-import workspaceStyles from '../workspace.module.css';
 
 const Component = ({ color, actions }) => {
   const handleColorValueChange = (colorValue) => {
@@ -19,17 +19,12 @@ const Component = ({ color, actions }) => {
   }
 
   return (
-    <div className={workspaceStyles.moduleWrapperOuterNonFlex}>
-      <div className={workspaceStyles.moduleWrapperInner}>
-        <div className={workspaceStyles.moduleHeader}>Color Picker</div>
-        <div className={styles.colorPicker}>
-          <CustomPicker
-            color={color}
-            onChangeComplete={handleColorValueChange}
-          />
-        </div>
-      </div>
-    </div>
+    <WorkspaceModuleWrapper moduleName="Color Picker" minHeight={237} maxHeight={237}>
+      <CustomPicker
+        color={color}
+        onChangeComplete={handleColorValueChange}
+      />
+    </WorkspaceModuleWrapper>
   )
 }
 
