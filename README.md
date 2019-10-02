@@ -1,15 +1,14 @@
 # Roadmap
 
 ## In development
-- Layers
-- Zoom
-- Dashboard
+Refactoring state code and writing tests..
 
 ## Soon
-- Menu bar ( save, load, settings, help )
-- New layer type: Tile
 - Tools ( tile stamp )
 - Tile selector window
+- Zoom
+- Menu bar ( save, load, settings, help )
+- Dashboard
 - Improved tools ( size, patterns )
 
 ## Soon-ish
@@ -29,7 +28,7 @@
 - Customizable key bindings
 - Customizable workspace layouts
 - Mobile support
-- New layer type: Collision
+- Actual collision layer implementation
 - Prefabs
 - Performance optimization
 - Improved user system
@@ -44,6 +43,8 @@
 
 
 ## Completed
+- ~~New layer types: Tileset / Collision~~
+- ~~Layers~~
 - ~~Initialize / store tilemap data~~
 - ~~Color Picker~~
 - ~~Tools ( paint brush, eraser, eye dropper )~~
