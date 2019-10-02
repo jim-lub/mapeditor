@@ -133,7 +133,7 @@ export const setMapGrid = (state, action) => {
 };
 
 export const setLayerPropertiesById = (state, action) => {
-  const { layerId, layerType, name, tileSize } = action.payload;
+  const { layerId, layerType, name, tileSize, visible } = action.payload;
 
   return {
     ...state,
@@ -147,7 +147,7 @@ export const setLayerPropertiesById = (state, action) => {
         type: layerType,
         name: name || `Layer ${state.meta.createdLayers}`,
         tileSize,
-        visible: true
+        visible
       }
     }
   }
