@@ -1,4 +1,6 @@
 import { statusReducer } from 'state/lib/utils';
+import * as layerTypes from 'lib/constants/layerTypes';
+import layerConstants from 'lib/constants/layerConstants';
 
 export const initializeMapRequest = (state, action) => {
   return {
@@ -135,17 +137,23 @@ export const setMapGrid = (state, action) => {
 export const setLayerPropertiesById = (state, action) => {
   const { layerId, layerType, name, tileSize, visible } = action.payload;
 
+
+
   return {
     ...state,
     meta: {
-      createdLayers: state.meta.createdLayers + 1
+      ...state.meta,
+      createdLayers: {
+        ...state.meta.createdLayers,
+        [layerType]: state.meta.createdLayers[layerType] + 1
+      }
     },
     layerProperties: {
       ...state.layerProperties,
       [layerId]: {
         ...state.layerProperties[layerId],
         type: layerType,
-        name: name || `Layer ${state.meta.createdLayers}`,
+        name: name || `${layerConstants[layerType].defaultNewLayerName}${state.meta.createdLayers[layerType]}`,
         tileSize,
         visible
       }

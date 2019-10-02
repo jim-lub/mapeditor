@@ -15,14 +15,17 @@ const initialState = {
   },
 
   currentScene: {
-    // uid: null,
-    uid: "73sJh7Jls3RCeSf5KZtc",
+    uid: null,
     initialized: false,
     modified: false
   },
 
   meta: {
-    createdLayers: 0
+    createdLayers: {
+      [layerTypes.color]: 1,
+      [layerTypes.tileset]: 1,
+      [layerTypes.collision]: 1,
+    }
   },
 
   mapProperties: {},

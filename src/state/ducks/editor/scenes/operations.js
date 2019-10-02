@@ -4,7 +4,11 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 import { getActiveProjectId } from 'state/ducks/editor/projects';
-import { deleteMapGridCollection, deleteTilemapDataCollection } from 'state/ducks/editor/map';
+import {
+  setCurrentScene,
+  deleteMapGridCollection,
+  deleteTilemapDataCollection
+} from 'state/ducks/editor/map';
 
 export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return () => null;
@@ -94,7 +98,8 @@ export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
 
   ])
     .then(() => {
-      firebase.scene(sceneId)
+      dispatch( setCurrentScene({ uid: null }) )
+      return firebase.scene(sceneId)
         .delete()
         .then(() => {
           if (sceneId === activeSceneId) {

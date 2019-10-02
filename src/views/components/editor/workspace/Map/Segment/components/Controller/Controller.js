@@ -20,6 +20,7 @@ import {
 import { getActiveTool } from 'state/ducks/editor/tools';
 import { useKeyPress } from 'lib/hooks';
 // import * as toolTypes from 'lib/constants/toolTypes';
+import toolConstants from 'lib/constants/toolConstants';
 
 import { Loader } from 'views/components/Loader';
 import { Canvas, UserInput, Properties } from '../../components';
@@ -71,6 +72,15 @@ const Component = ({
     });
   }
 
+  const enableUserInput = (
+    isActiveSegment &&
+    !disablePointerInput &&
+    (layerSortOrder.length > 0) &&
+    layerProperties[activeLayerId] &&
+    layerProperties[activeLayerId].visible &&
+    toolConstants[activeTool].isAllowedOnLayers.includes( layerProperties[activeLayerId].type )
+  )
+
   if (!initialized) {
     return (
       <div className={styles.controllerWrapper} style={{ width: segmentSize.width, height: segmentSize.height }}>
@@ -82,7 +92,11 @@ const Component = ({
   return (
     <div
       className={styles.controllerWrapper}
-      style={{ width: segmentSize.width, height: segmentSize.height }}
+      style={{
+        width: segmentSize.width,
+        height: segmentSize.height,
+        cursor: (!enableUserInput) ? "not-allowed" : null
+      }}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
     >
@@ -94,7 +108,7 @@ const Component = ({
       />
 
       {
-        isActiveSegment && !disablePointerInput && layerProperties[activeLayerId] && (layerSortOrder.length > 0) &&
+        enableUserInput &&
         <UserInput
           segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}

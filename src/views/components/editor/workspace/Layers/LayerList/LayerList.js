@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import {
   updateLayerSortOrder,
+  getCurrentScene,
   getLayerSortOrder,
   getActiveLayerId
 } from 'state/ducks/editor/map';

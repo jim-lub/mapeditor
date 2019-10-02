@@ -13,7 +13,7 @@ import {
   getMapGrid,
   getDisableAllInput,
   getStatusMessage
-} from 'state/ducks/editor/map'
+} from 'state/ducks/editor/map';
 
 import { Loader } from 'views/components/Loader';
 import { Segment } from './Segment';
@@ -21,7 +21,7 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ currentScene, mapProperties, mapGrid, disableAllInput, statusMessage, actions }) => {
+const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disableAllInput, statusMessage, actions }) => {
 
   useEffect(() => {
     if (!currentScene.initialized) {

@@ -161,6 +161,7 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
       const layerProperties = selectors.getLayerPropertiesById(state, { layerId });
       const color = tools.getColor(state);
 
+      if (!layerProperties.visible) return;
       if (layerProperties.type !== layerTypes.color) return;
 
       // Allow paintBrush action
@@ -188,7 +189,10 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
       columnIndex, rowIndex,
       inputActions, inputModifiers
     }) => dispatch => {
-      const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId })
+      const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+      const layerProperties = selectors.getLayerPropertiesById(state, { layerId });
+
+      if (!layerProperties.visible) return;
 
       // Allow modified paintBrush action :: eraser
       if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
@@ -203,9 +207,11 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
       columnIndex, rowIndex,
       inputActions, inputModifiers
     }) => dispatch => {
-      const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId })
+      const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+      const layerProperties = selectors.getLayerPropertiesById(state, { layerId });
 
-      // Allow modified paintBrush action :: eraser
+      if (!layerProperties.visible) return;
+
       if (( inputActions.leftClick || inputActions.leftClickAndHold ) && utils.inputModifiersObjectMatches(inputModifiers, [])) {
         const color = tools.getColor(state);
         const tileValue = tilemapData[layerId][columnIndex][rowIndex];

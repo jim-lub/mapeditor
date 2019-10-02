@@ -4,6 +4,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 import { deleteScene } from 'state/ducks/editor/scenes';
+import { setCurrentScene, getCurrentScene } from 'state/ducks/editor/map';
 
 export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {
   if (!userId) return null;
@@ -81,14 +82,23 @@ export const deleteProject = ({ projectId }) => (dispatch, getState) => {
     });
 };
 
-const _deleteChildScenes = ({ userId, projectId }) => dispatch => {
+const _deleteChildScenes = ({ userId, projectId }) => (dispatch, getState) => {
+  const currentScene = getCurrentScene( getState() );
+
   return firebase.scenes()
     .where("ownerId", "==", userId)
     .where("projectId", "==", projectId)
     .get()
-    .then(querySnapshot => Promise.all(
-      querySnapshot.docs.map(doc => dispatch( deleteScene({ sceneId: doc.id }) ))
-    ))
+    .then(querySnapshot => {
+      return Promise.all(
+        querySnapshot.docs.map(doc => {
+          if (doc.id === currentScene.uid) {
+            dispatch( setCurrentScene({ uid: null }) );
+          }
+          return dispatch( deleteScene({ sceneId: doc.id }) )
+        })
+      )
+    });
 };
 
 export const updateProject = ({ projectId, name, description }) => (dispatch) => {
