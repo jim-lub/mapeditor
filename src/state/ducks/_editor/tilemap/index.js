@@ -7,7 +7,7 @@ import * as reducers from './reducers';
 
 const initialState = {
   segmentProperties: {},
-  segmentData: {}
+  tilemapDataSegment: {}
 }
 
 export default createReducer( initialState )({
