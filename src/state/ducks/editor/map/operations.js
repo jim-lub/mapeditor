@@ -1,5 +1,7 @@
 // import { firebase } from 'state/lib/firebase';
 
+// import { initializeStore as initializeLayerStore } from 'state/ducks/_editor/layers';
+
 import * as tools from 'state/ducks/editor/tools';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -32,6 +34,7 @@ export const initializeMap = ({ sceneId }) => async dispatch => {
         }),
 
         dispatch( actions.setLayerSortOrder({ layerSortOrder })),
+        // dispatch( initializeLayerStore({ layerSortOrder, layerPropertiesObject: layerProperties }) )
       ])
       .then(() => mapProperties);
     })

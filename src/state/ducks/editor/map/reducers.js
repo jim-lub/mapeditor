@@ -179,6 +179,17 @@ export const deleteLayerPropertiesById = (state, action) => {
   }
 }
 
+export const removeEntryFromObject = (objectToRemoveFrom, objectKeyToRemove) => ({
+  ...Object.entries(objectToRemoveFrom)
+    .reduce((obj, [key, value]) => {
+      if (key !== objectKeyToRemove) {
+        obj = { ...obj, [key]: value }
+      }
+
+      return obj;
+    }, {})
+});
+
 export const setLayerSortOrder = (state, action) => {
   const { layerSortOrder } = action.payload;
 
