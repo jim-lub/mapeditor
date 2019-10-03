@@ -14,3 +14,5 @@ const initialState = {
 export default createReducer( initialState )({
 
 })
+
+export const initializeMap = operations.initializeMap;

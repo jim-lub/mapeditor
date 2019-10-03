@@ -1,4 +1,4 @@
-export const updateLayerSortOrderArray = ({
+export const modifyLayerSortOrderArray = ({
   sortOrder, layerId, action = null,
   sourceIndex = null, destinationIndex = null
 }) => {

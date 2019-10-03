@@ -1,6 +1,7 @@
 // import { firebase } from 'state/lib/firebase';
 
 // import { initializeStore as initializeLayerStore } from 'state/ducks/_editor/layers';
+import { initializeMap as initializeMapEditor } from 'state/ducks/_editor/map';
 
 import * as tools from 'state/ducks/editor/tools';
 import * as actions from './actions';
@@ -16,6 +17,7 @@ import { uuid } from 'lib/utils';
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 export const initializeMap = ({ sceneId }) => async dispatch => {
+  dispatch( initializeMapEditor({ sceneId }) )
   dispatch( actions.initializeMapRequest() );
 
   if (!sceneId) return dispatch( actions.initializeMapSuccess() );
@@ -33,8 +35,7 @@ export const initializeMap = ({ sceneId }) => async dispatch => {
           }) )
         }),
 
-        dispatch( actions.setLayerSortOrder({ layerSortOrder })),
-        // dispatch( initializeLayerStore({ layerSortOrder, layerPropertiesObject: layerProperties }) )
+        dispatch( actions.setLayerSortOrder({ layerSortOrder }))
       ])
       .then(() => mapProperties);
     })
@@ -230,6 +231,7 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
 export const createLayer = ({ layerType, name, tileSize }) => (dispatch, getState) => {
   const layerId = uuid.create();
   const layerSortOrder = [...selectors.getLayerSortOrder( getState() ), layerId];
+  if (layerSortOrder.length > 50) return;
 
   dispatch( actions.setLayerPropertiesById({
     layerId,

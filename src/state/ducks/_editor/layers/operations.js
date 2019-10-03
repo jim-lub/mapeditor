@@ -30,7 +30,7 @@ export const clearStore = () => dispatch => {
 export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, getState) => {
   const layerId = uuid.create();
   const sortOrder = selectors.getLayerSortOrder( getState() );
-  const layerSortOrder = utils.updateLayerSortOrderArray({ sortOrder, layerId, action: 'add' });
+  const layerSortOrder = utils.modifyLayerSortOrderArray({ sortOrder, layerId, action: 'add' });
 
   dispatch( actions.setLayerPropertiesById({
       layerId,
@@ -46,7 +46,7 @@ export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, ge
 
 export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
   const sortOrder = selectors.getLayerSortOrder( getState() );
-  const layerSortOrder = utils.updateLayerSortOrderArray({ sortOrder, layerId, action: 'remove' });
+  const layerSortOrder = utils.modifyLayerSortOrderArray({ sortOrder, layerId, action: 'remove' });
 
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
   dispatch( actions.clearLayerPropertiesById({ layerId }));
@@ -61,7 +61,7 @@ export const updateLayer = ({ layerId, layerName }) => dispatch => {
 
 export const moveLayer = ({ sourceIndex, destinationIndex }) => (dispatch, getState)=> {
   const sortOrder = selectors.getLayerSortOrder( getState() );
-  const layerSortOrder = utils.updateLayerSortOrderArray({ sortOrder, sourceIndex, destinationIndex, action: 'move' });
+  const layerSortOrder = utils.modifyLayerSortOrderArray({ sortOrder, sourceIndex, destinationIndex, action: 'move' });
 
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
 }

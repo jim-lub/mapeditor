@@ -30,7 +30,7 @@ export const Dashboard = () => {
           <li>Enter a scene name (required) and a description (optional)</li>
           <li><span style={{textDecoration: "line-through"}}>Choose a scene preset</span></li>
           <li>Enter the amount of columns (1-50) and rows (1-50) for the map</li>
-            <span style={{fontSize: 9}}>These values will specify the amount of segments (512 x 512px) the map will have. Each segment can contain into multiple layers which hold tiles ranging from 32px to 512px</span>
+            <span style={{fontSize: 9}}>These values will specify the amount of segments (512 x 512px) the map will have. Each segment can contain multiple layers which hold tiles ranging from 32px to 512px</span>
           <li>Click create and the scene you just created will be selected</li>
           <li>Click the blue 'Open Scene' button which just appeared</li>
           <li>PLAY AROUND!</li>

@@ -7,14 +7,14 @@ export const setActiveLayerId = (state, action) => {
     ...state,
     activeLayerId
   }
-};
+}
 
 export const clearActiveLayerId = (state, action) => {
   return {
     ...state,
     activeLayerId: null
   }
-};
+}
 
 
 export const setLayerSortOrder = (state, action) => {
@@ -24,14 +24,14 @@ export const setLayerSortOrder = (state, action) => {
     ...state,
     layerSortOrder
   }
-};
+}
 
 export const clearLayerSortOrder = (state, action) => {
   return {
     ...state,
     layerSortOrder: []
   }
-};
+}
 
 
 export const setLayerPropertiesById = (state, action) => {
@@ -51,7 +51,7 @@ export const setLayerPropertiesById = (state, action) => {
       }
     }
   }
-};
+}
 
 export const clearLayerPropertiesById = (state, action) => {
   const { layerId } = action.payload;
@@ -65,11 +65,11 @@ export const clearLayerPropertiesById = (state, action) => {
       )
     }
   }
-};
+}
 
 export const clearAllLayerProperties = (state, action) => {
   return {
     ...state,
     layerProperties: {}
   }
-};
+}

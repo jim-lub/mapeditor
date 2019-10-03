@@ -44,7 +44,7 @@ export const getMapGridCollection = ({ sceneId }) => dispatch => {
 
       querySnapshot.forEach(doc => {
         dataChunks.push(
-          doc.data().chunkData
+          doc.data().data
         )
       });
 
@@ -59,27 +59,11 @@ export const updateMapGridCollection = ({ sceneId, mapProperties, mapGrid }) => 
 
   return dispatch( deleteMapGridCollection({ sceneId }))
     .then(() => {
-      dispatch( actions.setStatusMessage({ ...statusMessages['firestore-mapGrid']['chunk'] }) );
-      const mapGridDataChunksArray = utils.convertMapGridToDataChunks({ mapProperties, mapGrid });
-
-      firebase.scene(sceneId).set({
-        modifiedAt: firebase.serverTimestamp,
-        mapgridChunks: mapGridDataChunksArray.length || 0
-      }, { merge: true });
-
-      dispatch( actions.setStatusMessage({ ...statusMessages['firestore-mapGrid']['write'] }) );
-
-      const chunks = mapGridDataChunksArray.map((chunkData, index) =>
-        firebase.scene(sceneId)
-          .collection('mapGrid')
-          .add({
-            mergeOrder: index,
-            chunkData
-          })
-      )
-
-
-      return Promise.all(chunks);
+      return firebase.scene(sceneId)
+        .collection('mapGrid')
+        .add({
+          data: JSON.stringify(mapGrid)
+        })
     })
     .catch(e => console.log(e));
 }

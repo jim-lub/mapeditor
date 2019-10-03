@@ -34,6 +34,7 @@ export const updateLayer = operations.updateLayer;
 export const moveLayer = operations.moveLayer;
 export const toggleLayerVisibility = operations.toggleLayerVisibility;
 export const toggleLayerLock = operations.toggleLayerLock;
+export const setActiveLayerId = operations.setActiveLayerId;
 
 // SELECTORS
 export const getActiveLayerId = selectors.getActiveLayerId;
