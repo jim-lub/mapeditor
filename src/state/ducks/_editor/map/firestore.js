@@ -43,11 +43,7 @@ export const getTilemapData = ({ sceneId }) => dispatch => {
 }
 
 
-export const setMapData = ({
-  sceneId,
-  mapProperties,
-  layerProperties, layerSortOrder
-}) => dispatch => {
+export const setMapData = ({ sceneId, mapProperties, layerProperties, layerSortOrder }) => dispatch => {
   return firebase.scene(sceneId)
     .set({
       modifiedAt: firebase.serverTimestamp,
@@ -59,33 +55,31 @@ export const setMapData = ({
 
 export const setMapGrid = ({ sceneId, mapGrid }) => dispatch => {
   return dispatch( clearMapGrid({ sceneId }) )
-    .then(() => {
-      return firebase.scene(sceneId)
+    .then(() =>
+      firebase.scene(sceneId)
         .collection('mapGrid')
         .add({
           data: JSON.stringify(mapGrid)
         })
-    })
+    )
     .catch(e => console.log(e));
 }
 
 export const setTilemapData = ({ sceneId, tilemapData }) => dispatch => {
   return dispatch( clearTilemapData({ sceneId }) )
     .then(() => dispatch( utils.convertTilemapDataToDataChunks({ tilemapData }) ))
-    .then(dataChunks => {
-      const storeDataChunks = dataChunks.map((dataChunk, index) => (
+    .then(dataChunks => Promise.all([
+      ...dataChunks.map((dataChunk, index) =>
         firebase.scene(sceneId)
           .collection('tilemapData')
           .add({
             mergeOrder: index,
             dataChunk
-          })));
-
-      return Promise.all(storeDataChunks);
-    })
+          }))
+      ])
+    )
     .catch(e => console.log(e));
 }
-
 
 export const clearMapGrid = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
