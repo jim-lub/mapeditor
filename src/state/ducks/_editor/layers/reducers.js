@@ -1,4 +1,5 @@
-import * as utils from './utils';
+import { deleteKeyValuePairFromObject } from 'state/lib/utils/deleteKeyValuePairFromObject';
+// import * as utils from './utils';
 
 export const setActiveLayerId = (state, action) => {
   const { activeLayerId } = action.payload;
@@ -59,7 +60,7 @@ export const clearLayerPropertiesById = (state, action) => {
   return {
     ...state,
     layerProperties: {
-      ...utils.deleteKeyValuePairFromObject(
+      ...deleteKeyValuePairFromObject(
         state.layerProperties,
         layerId
       )

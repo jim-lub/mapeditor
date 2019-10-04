@@ -5,6 +5,10 @@ import {
   clearStore as clearLayerStore
 } from '../layers';
 
+import {
+  setRequestStatus
+} from '../requestStatus';
+
 export const clearStore = () => dispatch => {
   return Promise.all([
     dispatch( clearLayerStore() )
@@ -13,6 +17,7 @@ export const clearStore = () => dispatch => {
 
 export const initializeMap = ({ sceneId }) => dispatch => {
   if (!sceneId) return;
+  dispatch( setRequestStatus({ key: 'initializeMap', type: 'REQUEST' }) );
 
   return dispatch( firestore.getMapData({ sceneId }))
 
@@ -42,8 +47,11 @@ export const initializeMap = ({ sceneId }) => dispatch => {
     })
 
     // complete
-    .then(() => console.log('_editor/map/initialize/COMPLETE'))
-    .catch(e => console.log(e));
+    .then(() => dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) ))
+    .catch(e => {
+      dispatch( setRequestStatus({ key: 'initializeMap', type: 'FAILURE', error: e }) );
+      console.log(e);
+    });
 }
 
   const _handleLayersReducer = ({ layerSortOrder, layerPropertiesObject }) => dispatch => {

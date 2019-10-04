@@ -6,11 +6,14 @@ import * as selectors from './selectors';
 import * as reducers from './reducers';
 
 const initialState = {
-  status: {},
-  statusMessage: {},
-  errorLog: []
+  status: {}
 }
 
 export default createReducer( initialState )({
+  [ types.setRequestStatus ]: (state, action) => reducers.setRequestStatus(state, action),
+  [ types.clearRequestStatus ]: (state, action) => reducers.clearRequestStatus(state, action),
+});
 
-})
+export const setRequestStatus = operations.setRequestStatus;
+export const clearRequestStatus = operations.clearRequestStatus;
+export const getRequestStatus = selectors.getRequestStatus;
