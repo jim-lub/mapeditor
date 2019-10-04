@@ -40,3 +40,4 @@ export const setActiveLayerId = operations.setActiveLayerId;
 export const getActiveLayerId = selectors.getActiveLayerId;
 export const getLayerSortOrder = selectors.getLayerSortOrder;
 export const getLayerPropertiesById = selectors.getLayerPropertiesById;
+export const getLayerPropertiesObject = selectors.getLayerPropertiesObject;

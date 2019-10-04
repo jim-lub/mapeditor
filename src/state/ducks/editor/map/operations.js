@@ -1,7 +1,10 @@
 // import { firebase } from 'state/lib/firebase';
 
 // import { initializeStore as initializeLayerStore } from 'state/ducks/_editor/layers';
-import { initializeMap as initializeMapEditor } from 'state/ducks/_editor/map';
+import {
+  setCurrentScene as setCurrentSceneMapEditor,
+  initializeMap as initializeMapEditor
+} from 'state/ducks/_editor/map';
 
 import * as tools from 'state/ducks/editor/tools';
 import * as actions from './actions';
@@ -17,7 +20,8 @@ import { uuid } from 'lib/utils';
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 export const initializeMap = ({ sceneId }) => async dispatch => {
-  dispatch( initializeMapEditor({ sceneId }) )
+  dispatch( initializeMapEditor({ sceneId }) );
+  return;
   dispatch( actions.initializeMapRequest() );
 
   if (!sceneId) return dispatch( actions.initializeMapSuccess() );
@@ -272,7 +276,10 @@ export const updateLayerSortOrder = ({ sourceIndex, destinationIndex }) => (disp
   dispatch( actions.setLayerSortOrder({ layerSortOrder: sortOrder }) )
 }
 
-export const setCurrentScene = actions.setCurrentScene;
+export const setCurrentScene = ({ sceneId }) => dispatch => {
+  dispatch( actions.setCurrentScene({ sceneId }));
+  dispatch( setCurrentSceneMapEditor({ uid: sceneId }));
+};
 
 
 export const deleteMapGridCollection = firestore.deleteMapGridCollection;

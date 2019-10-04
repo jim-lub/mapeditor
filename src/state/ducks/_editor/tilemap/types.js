@@ -1,5 +1,5 @@
-export const setTilemapData = "editor/tilemap/SET_ALL_DATA";
-export const clearTilemapData = "editor/tilemap/CLEAR_ALL_DATA";
+export const setTilemapDataObject = "editor/tilemap/SET_ALL_DATA";
+export const clearTilemapDataObject = "editor/tilemap/CLEAR_ALL_DATA";
 
 export const setTilemapDataSegment = "editor/tilemap/SET_DATA_SEGMENT";
 export const clearTilemapDataSegment = "editor/tilemap/CLEAR_DATA_SEGMENT";
