@@ -15,8 +15,8 @@ const initialState = {
   },
 
   currentScene: {
-    // uid: null,
-    uid: "5wQtFkKj9OktYR56bV7G",
+    uid: null,
+    // uid: "5wQtFkKj9OktYR56bV7G",
     initialized: false,
     modified: false
   },

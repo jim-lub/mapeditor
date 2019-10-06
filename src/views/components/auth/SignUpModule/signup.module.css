@@ -28,3 +28,12 @@
   font-style: italic;
   color: var(--red-700);
 }
+
+.information {
+  background-color: var(--light-blue-100);
+  padding: 8px;
+  border-radius: 7px;
+  border: solid 2px var(--blue-700);
+  font-style: italic;
+  text-align: justify;
+}

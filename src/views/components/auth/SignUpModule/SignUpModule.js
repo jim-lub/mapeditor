@@ -26,6 +26,12 @@ const Component = ({ authError, style, actions }) => {
             : null
         }
       </div>
+
+      <div className={styles.information}>
+        An account is mandatory for the app to function properly. I've shut off email verification for now,
+        so you're able to create an account with a "fake" email address just to get passed the auth screen and check out the
+        rest of the app!
+      </div>
     </div>
   )
 }

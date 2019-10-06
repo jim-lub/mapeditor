@@ -17,7 +17,10 @@ export const getMapGrid = ({ uid }) => dispatch => {
 
       mapGrid.forEach(doc => mapGridJSON = doc.data().data);
 
-      return JSON.parse( mapGridJSON );
+      return (!!mapGridJSON)
+        ? JSON.parse( mapGridJSON )
+        : null
+
     })
     .catch(e => console.log(e));
 }

@@ -23,3 +23,6 @@ export default createReducer( initialState )({
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),
   [ types.clearSingleTileValue ]: (state, action) => reducers.clearSingleTileValue(state, action),
 });
+
+export const initializeStore = operations.initializeStore;
+export const clearStore = operations.clearStore;

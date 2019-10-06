@@ -1,3 +1,10 @@
+import * as actions from './actions';
+import * as selectors from './selectors';
+
+export const initializeStore = ({ tilemapDataObject }) => dispatch => {
+  return dispatch( actions.setTilemapDataObject({ tilemapDataObject }) );
+}
+
 export const clearStore = () => dispatch => {
 
 }

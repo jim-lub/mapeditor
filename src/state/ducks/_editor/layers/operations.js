@@ -4,7 +4,8 @@ import * as utils from './utils';
 
 import { uuid } from 'lib/utils';
 
-export const initializeStore = ({ layerSortOrder, layerPropertiesObject }) => dispatch => {
+export const initializeStore = ({ layerSortOrder = [], layerPropertiesObject }) => dispatch => {
+  if (layerSortOrder.length === 0) return;
   layerSortOrder.forEach(layerId => {
     const { type: layerType, name: layerName, tileSize, visible, locked } = layerPropertiesObject[layerId];
 

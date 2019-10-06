@@ -7,9 +7,8 @@ export const Dashboard = () => {
       <div style={{float: "left", width: 400, margin: 10, padding: 10, border: "solid 1px #d5d5d5", backgroundColor: "#fff"}}>
         <h3>Readme</h3>
         <div style={{margin: 5}}>
-          The mapeditor app is still in a very early alpha stage and thus under heavy development.
-          At this stage nothing is set in stone yet, so frequent database wipes are going to happen.
-          Due to this fact it's adviced to not spend too much time on building out a detailed map, but rather fiddle
+          The mapeditor app is still in a very early alpha stage, major functionallity will change and databae wipes are bound to happen.
+          Due to this, it's adviced to not spend too much time on building out a detailed map, but rather fiddle
           around with the features currently implemented and leave any bugs you find on the <a href="https://github.com/jim-lub/mapeditor" target="_blank" rel="noopener noreferrer">github repo</a>.
           If there is a feature you'd like to see within the app (which isn't on the roadmap yet) feel free to let me know.
           <br /><br />

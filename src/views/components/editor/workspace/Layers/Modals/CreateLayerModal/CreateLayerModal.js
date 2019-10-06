@@ -55,6 +55,10 @@ const Component = ({ actions, onClose }) => {
   return (
     <>
       <div className={styles.container}>
+        <div className={styles.warning}>
+          Tileset and collision layers can be added to the map, but can't be painted on as of yet.
+        </div>
+
         <div className={styles.form}>
           <Form.Group id="createLayerForm" onSubmit={handleSubmit}>
 

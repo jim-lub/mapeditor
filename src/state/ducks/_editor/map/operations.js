@@ -11,6 +11,11 @@ import {
 } from '../layers';
 
 import {
+  initializeStore as initializeTilemapStore,
+  clearStore as clearTilemapStore,
+} from '../tilemap';
+
+import {
   setRequestStatus
 } from '../requestStatus';
 
@@ -21,6 +26,7 @@ export const setCurrentScene = ({ uid }) => dispatch => {
 
 export const clearStore = () => dispatch => {
   return Promise.all([
+    dispatch( clearTilemapStore() ),
     dispatch( clearLayerStore() ),
     dispatch( actions.clearMapGrid() ),
     dispatch( actions.clearMapProperties() )
@@ -52,15 +58,20 @@ export const initializeMap = () => (dispatch, getState) => {
     // mapGrid
     .then(() => dispatch( firestore.getMapGrid({ uid: currentScene.uid }) ))
     .then(mapGrid => {
-
-      return dispatch( actions.setMapGrid({ mapGrid }) );
+      if (mapGrid) {
+        return dispatch( actions.setMapGrid({ mapGrid }) );
+      } else {
+        // build map grid and dispatch
+      }
     })
 
     // tilemapData
     .then(() => dispatch( firestore.getTilemapData({ uid: currentScene.uid }) ))
-    .then(tilemapData => {
+    .then(tilemapDataObject => {
 
-      return dispatch( _handleTilemapReducer({ tilemapData }) )
+      return Promise.all([
+        dispatch( _handleTilemapReducer({ tilemapDataObject }) )
+      ]);
     })
 
     // complete
@@ -73,15 +84,16 @@ export const initializeMap = () => (dispatch, getState) => {
 
   const _handleLayersReducer = ({ layerSortOrder, layerPropertiesObject }) => dispatch => {
     console.log(1, '_editor/map/initialize/LAYERS');
-    dispatch( initializeLayerStore({ layerSortOrder, layerPropertiesObject }) );
+    return dispatch( initializeLayerStore({ layerSortOrder, layerPropertiesObject }) );
   }
 
   const _handleToolsReducer = () => dispatch => {
     console.log(2, '_editor/map/initialize/TOOLS');
   }
 
-  const _handleTilemapReducer = ({ tilemapData }) => dispatch => {
+  const _handleTilemapReducer = ({ tilemapDataObject }) => dispatch => {
     console.log(3, '_editor/map/initialize/TILEMAP');
+    return dispatch( initializeTilemapStore({ tilemapDataObject }) );
   }
 
 export const storeMap = () => (dispatch, getState) => {

@@ -37,11 +37,9 @@ export const updateLayerSortOrder = ({ sceneId, layerSortOrder }) => dispatch =>
 export const getMapGridCollection = ({ sceneId }) => dispatch => {
   return firebase.scene(sceneId)
     .collection('mapGrid')
-    .orderBy('mergeOrder')
     .get()
     .then(querySnapshot => {
       const dataChunks = [];
-
       querySnapshot.forEach(doc => {
         dataChunks.push(
           doc.data().data

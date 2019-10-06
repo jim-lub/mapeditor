@@ -6,7 +6,13 @@ export const setTilemapDataObject = (state, action) => {
   return {
     ...state,
     tilemapDataObject: {
-      ...tilemapDataObject
+      ...tilemapDataObject.reduce((obj, tilemapData) => {
+        console.log(tilemapData)
+        return obj = {
+          ...obj,
+          ...tilemapData
+        }
+      }, {})
     }
   }
 }
