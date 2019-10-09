@@ -18,10 +18,8 @@ export const modifyLayerSortOrderArray = ({
   }
 
   if (action === 'move') {
-    if (!sourceIndex || !destinationIndex) return;
-
     const [removedLayerId] = sortOrderClone.splice(sourceIndex, 1);
-    sortOrderClone.splice(destinationIndex, 1, removedLayerId);
+    sortOrderClone.splice(destinationIndex, 0, removedLayerId);
   }
 
   return sortOrderClone;

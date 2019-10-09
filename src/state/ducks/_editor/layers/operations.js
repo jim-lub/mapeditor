@@ -48,7 +48,6 @@ export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, ge
 export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
   const sortOrder = selectors.getLayerSortOrder( getState() );
   const layerSortOrder = utils.modifyLayerSortOrderArray({ sortOrder, layerId, action: 'remove' });
-
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
   dispatch( actions.clearLayerPropertiesById({ layerId }));
 }

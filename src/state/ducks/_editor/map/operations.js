@@ -67,12 +67,7 @@ export const initializeMap = () => (dispatch, getState) => {
 
     // tilemapData
     .then(() => dispatch( firestore.getTilemapData({ uid: currentScene.uid }) ))
-    .then(tilemapDataObject => {
-
-      return Promise.all([
-        dispatch( _handleTilemapReducer({ tilemapDataObject }) )
-      ]);
-    })
+    .then(tilemapDataObject => dispatch( _handleTilemapReducer({ tilemapDataObject }) ))
 
     // complete
     .then(() => dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) ))
@@ -93,7 +88,7 @@ export const initializeMap = () => (dispatch, getState) => {
 
   const _handleTilemapReducer = ({ tilemapDataObject }) => dispatch => {
     console.log(3, '_editor/map/initialize/TILEMAP');
-    return dispatch( initializeTilemapStore({ tilemapDataObject }) );
+    dispatch( initializeTilemapStore({ tilemapDataObject }) );
   }
 
 export const storeMap = () => (dispatch, getState) => {

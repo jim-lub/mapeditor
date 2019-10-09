@@ -6,7 +6,9 @@ import * as selectors from './selectors';
 import * as reducers from './reducers';
 
 const initialState = {
-  currentScene: {},
+  currentScene: {
+    uid: "5wQtFkKj9OktYR56bV7G"
+  },
   mapProperties: {},
   mapGrid: []
 }
@@ -27,4 +29,4 @@ export const initializeMap = operations.initializeMap;
 
 export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
-export const getMapGrid = selectors.getMapGrid; 
+export const getMapGrid = selectors.getMapGrid;

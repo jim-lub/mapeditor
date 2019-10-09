@@ -2,11 +2,11 @@ import { deleteKeyValuePairFromObject } from 'state/lib/utils/deleteKeyValuePair
 // import * as utils from './utils';
 
 export const setActiveLayerId = (state, action) => {
-  const { activeLayerId } = action.payload;
+  const { layerId } = action.payload;
 
   return {
     ...state,
-    activeLayerId
+    activeLayerId: layerId
   }
 }
 
@@ -36,7 +36,14 @@ export const clearLayerSortOrder = (state, action) => {
 
 
 export const setLayerPropertiesById = (state, action) => {
-  const { layerId, layerType, layerName, tileSize, visible, locked } = action.payload;
+  const {
+    layerId,
+    layerType = state.layerProperties[layerId].layerType,
+    layerName = state.layerProperties[layerId].layerName,
+    tileSize = state.layerProperties[layerId].tileSize,
+    visible = state.layerProperties[layerId].visible,
+    locked = state.layerProperties[layerId].locked,
+  } = action.payload;
 
   return {
     ...state,
@@ -44,11 +51,11 @@ export const setLayerPropertiesById = (state, action) => {
       ...state.layerProperties,
       [layerId]: {
         ...state.layerProperties[layerId],
-        layerType: (typeof layerType !== undefined) ? layerType : state.layerProperties[layerId].layerType,
-        layerName: (typeof layerName !== undefined) ? layerName : state.layerProperties[layerId].layerName,
-        tileSize: (typeof tileSize !== undefined) ? tileSize : state.layerProperties[layerId].tileSize,
-        visible: (typeof visible !== undefined) ? visible : state.layerProperties[layerId].visible,
-        locked: (typeof locked !== undefined) ? locked : state.layerProperties[layerId].locked,
+        layerType,
+        layerName,
+        tileSize,
+        visible,
+        locked
       }
     }
   }
