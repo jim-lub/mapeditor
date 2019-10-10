@@ -1,7 +1,44 @@
 import configureStore from 'state/store';
 
 import * as operations from '../operations';
+import * as selectors from '../selectors';
 import * as layerTypes from 'lib/constants/layerTypes';
+
+describe('layer/operations', () => {
+  it('should clear the store', () => {
+    const initialState = {
+      _editor: {
+        layers: {
+          activeLayerId: 'uid-for-layer-one',
+          layerProperties: {
+            'uid-for-layer-one': {
+              layerType: layerTypes.color,
+              layerName: "layer-one",
+              tileSize: { width: 32, height: 32 },
+              visible: true,
+              locked: false
+            }
+          },
+          layerSortOrder: ['uid-for-layer-one']
+        }
+      }
+    }
+
+    const { dispatch, getState } = configureStore(initialState);
+
+    dispatch( operations.clearStore() );
+
+    const newState = getState();
+    const layerSortOrderLength = selectors.getLayerSortOrder(newState).length;
+    const layerPropertiesObject = selectors.getLayerPropertiesObject(newState);
+    const layerPropertiesEntries = Object.keys(layerPropertiesObject).length;
+    const activeLayerId = selectors.getActiveLayerId(newState);
+
+    expect(layerSortOrderLength).toBe(0);
+    expect(layerPropertiesEntries).toBe(0);
+    expect(activeLayerId).toBe(null);
+  });
+});
 
 describe('layer/operations', () => {
   it('should create a new layer', () => {
@@ -23,10 +60,11 @@ describe('layer/operations', () => {
           tileSize: { width: 32, height: 32 }
         }) );
 
-    const newState = getState()._editor.layers;
-    const layerSortOrderLength = newState.layerSortOrder.length;
-    const layerPropertiesEntries = Object.keys(newState.layerProperties).length;
-    const layerPropertiesById = Object.values(newState.layerProperties)[0];
+    const newState = getState();
+    const layerSortOrderLength = selectors.getLayerSortOrder(newState).length;
+    const layerPropertiesObject = selectors.getLayerPropertiesObject(newState);
+    const layerPropertiesEntries = Object.keys(layerPropertiesObject).length;
+    const layerPropertiesById = Object.values(layerPropertiesObject)[0];
 
     expect(layerSortOrderLength).toBe(1);
     expect(layerPropertiesEntries).toBe(1);
@@ -66,9 +104,10 @@ describe('layer/operations', () => {
       layerId: 'uid-for-layer-one'
     }) );
 
-    const newState = getState()._editor.layers;
-    const layerSortOrderLength = newState.layerSortOrder.length;
-    const layerPropertiesEntries = Object.keys(newState.layerProperties).length;
+    const newState = getState();
+    const layerSortOrderLength = selectors.getLayerSortOrder(newState).length;
+    const layerPropertiesObject = selectors.getLayerPropertiesObject(newState);
+    const layerPropertiesEntries = Object.keys(layerPropertiesObject).length;
 
     expect(layerSortOrderLength).toBe(0);
     expect(layerPropertiesEntries).toBe(0);
@@ -102,8 +141,8 @@ describe('layer/operations', () => {
       layerName: 'layer-one-2'
     }) );
 
-    const newState = getState()._editor.layers;
-    const layerPropertiesById = newState.layerProperties['uid-for-layer-one'];
+    const newState = getState();
+    const layerPropertiesById = selectors.getLayerPropertiesById(newState, { layerId: 'uid-for-layer-one' });
 
     expect(layerPropertiesById).toEqual({
       layerType: layerTypes.color,
@@ -134,7 +173,8 @@ describe('layer/operations', () => {
       destinationIndex: 2
     }) );
 
-    const layerSortOrder = getState()._editor.layers.layerSortOrder;
+    const newState = getState();
+    const layerSortOrder = selectors.getLayerSortOrder(newState);
 
     expect(layerSortOrder).toEqual(['uid-for-layer-2', 'uid-for-layer-3', 'uid-for-layer-1', 'uid-for-layer-4']);
   });
@@ -147,8 +187,154 @@ describe('layer/operations', () => {
       destinationIndex: 0
     }) );
 
-    const layerSortOrder = getState()._editor.layers.layerSortOrder;
+    const newState = getState();
+    const layerSortOrder = selectors.getLayerSortOrder(newState);
 
     expect(layerSortOrder).toEqual(['uid-for-layer-4', 'uid-for-layer-1', 'uid-for-layer-2', 'uid-for-layer-3']);
+  });
+});
+
+describe('layer/operations', () => {
+  const initialState = {
+    _editor: {
+      layers: {
+        activeLayerId: null,
+        layerProperties: {
+          'uid-for-layer-one': {
+            layerType: layerTypes.color,
+            layerName: "layer-one",
+            tileSize: { width: 32, height: 32 },
+            visible: true,
+            locked: false
+          }
+        },
+        layerSortOrder: ['uid-for-layer-one']
+      }
+    }
+  }
+
+  const { dispatch, getState } = configureStore(initialState);
+
+  it('should toggle the layer visibility #1', () => {
+    dispatch( operations.toggleLayerVisibility({
+      layerId: 'uid-for-layer-one'
+    }) );
+
+    const newState = getState();
+    const layerPropertiesById = selectors.getLayerPropertiesById(newState, { layerId: 'uid-for-layer-one' });
+
+    expect(layerPropertiesById).toEqual({
+      layerType: layerTypes.color,
+      layerName: 'layer-one',
+      tileSize: { width: 32, height: 32 },
+      visible: false,
+      locked: false
+    });
+  });
+
+  it('should toggle the layer visibility #2', () => {
+    dispatch( operations.toggleLayerVisibility({
+      layerId: 'uid-for-layer-one'
+    }) );
+
+    const newState = getState();
+    const layerPropertiesById = selectors.getLayerPropertiesById(newState, { layerId: 'uid-for-layer-one' });
+
+    expect(layerPropertiesById).toEqual({
+      layerType: layerTypes.color,
+      layerName: 'layer-one',
+      tileSize: { width: 32, height: 32 },
+      visible: true,
+      locked: false
+    });
+  });
+});
+
+describe('layer/operations', () => {
+  const initialState = {
+    _editor: {
+      layers: {
+        activeLayerId: null,
+        layerProperties: {
+          'uid-for-layer-one': {
+            layerType: layerTypes.color,
+            layerName: "layer-one",
+            tileSize: { width: 32, height: 32 },
+            visible: true,
+            locked: false
+          }
+        },
+        layerSortOrder: ['uid-for-layer-one']
+      }
+    }
+  }
+
+  const { dispatch, getState } = configureStore(initialState);
+
+  it('should toggle the layer lock #1', () => {
+    dispatch( operations.toggleLayerLock({
+      layerId: 'uid-for-layer-one'
+    }) );
+
+    const newState = getState();
+    const layerPropertiesById = selectors.getLayerPropertiesById(newState, { layerId: 'uid-for-layer-one' });
+
+    expect(layerPropertiesById).toEqual({
+      layerType: layerTypes.color,
+      layerName: 'layer-one',
+      tileSize: { width: 32, height: 32 },
+      visible: true,
+      locked: true
+    });
+  });
+
+  it('should toggle the layer lock #2', () => {
+    dispatch( operations.toggleLayerLock({
+      layerId: 'uid-for-layer-one'
+    }) );
+
+    const newState = getState();
+    const layerPropertiesById = selectors.getLayerPropertiesById(newState, { layerId: 'uid-for-layer-one' });
+
+    expect(layerPropertiesById).toEqual({
+      layerType: layerTypes.color,
+      layerName: 'layer-one',
+      tileSize: { width: 32, height: 32 },
+      visible: true,
+      locked: false
+    });
+  });
+});
+
+describe('layer/operations', () => {
+  it('should set the activeLayerId', () => {
+    const initialState = {
+      _editor: {
+        layers: {
+          activeLayerId: null,
+          layerProperties: {
+            'uid-for-layer-one': {
+              layerType: layerTypes.color,
+              layerName: "layer-one",
+              tileSize: { width: 32, height: 32 },
+              visible: true,
+              locked: false
+            }
+          },
+          layerSortOrder: ['uid-for-layer-one']
+        }
+      }
+    }
+
+    const { dispatch, getState } = configureStore(initialState);
+
+    dispatch( operations.setActiveLayerId({
+      layerId: 'uid-for-layer-one'
+    }) );
+
+    const newState = getState();
+    const activeLayerId = selectors.getActiveLayerId(newState);
+
+    expect(activeLayerId).toBe('uid-for-layer-one');
   });
 });
