@@ -61,7 +61,8 @@ export const initializeMap = () => (dispatch, getState) => {
       if (mapGrid) {
         return dispatch( actions.setMapGrid({ mapGrid }) );
       } else {
-        // build map grid and dispatch
+        // build new map grid and fill with uuid's
+        // dispatch `actions.setMapGrid()`
       }
     })
 
@@ -104,5 +105,6 @@ export const storeMap = () => (dispatch, getState) => {
   return Promise.all([
     dispatch( firestore.setMapData({ uid: currentScene.uid, mapProperties, layerSortOrder, layerProperties })),
     dispatch( firestore.setMapGrid({ uid: currentScene.uid, mapGrid })),
+    // dispatch `firestore.setTilemapData()`
   ])
 }
