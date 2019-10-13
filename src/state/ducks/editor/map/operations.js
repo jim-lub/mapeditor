@@ -109,3 +109,8 @@ export const storeMap = () => (dispatch, getState) => {
     // dispatch `firestore.setTilemapData()`
   ])
 }
+
+export const deleteMap = ({ uid }) => dispatch => Promise.all([
+  dispatch( firestore.clearMapGrid({ uid }) ),
+  dispatch( firestore.clearTilemapData({ uid }) ),
+]);

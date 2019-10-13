@@ -10,10 +10,10 @@ import {
   storeMap,
   getCurrentScene,
   getMapProperties,
-  getMapGrid,
-  getDisableAllInput,
-  getStatusMessage
+  getMapGrid
 } from 'state/ducks/editor/map';
+
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import { Loader } from 'views/components/Loader';
 import { Segment } from './Segment';
@@ -33,7 +33,6 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disabl
     return (
       <div>
         <Loader.Simple />
-        { statusMessage.content }
       </div>
     )
   }
@@ -93,8 +92,7 @@ const mapStateToProps = (state) => {
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
-    disableAllInput: getDisableAllInput(state),
-    statusMessage: getStatusMessage(state)
+    disableAllInput: isAllEditorInputDisabled(state)
   }
 }
 

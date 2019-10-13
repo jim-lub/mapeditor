@@ -26,8 +26,13 @@ export default createReducer( initialState )({
 });
 
 export const setCurrentScene = operations.setCurrentScene;
+
 export const initializeMap = operations.initializeMap;
+export const storeMap = operations.storeMap;
+export const deleteMap = operations.deleteMap;
 
 export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
+
+export const getSegmentId = selectors.getSegmentId;

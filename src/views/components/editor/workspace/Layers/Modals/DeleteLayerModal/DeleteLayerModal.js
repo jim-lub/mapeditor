@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import {
   deleteLayer
-} from 'state/ducks/editor/map';
+} from 'state/ducks/editor/layers';
 
 import { ModalComponent } from 'views/components/Modal';
 import Form from 'views/components/Forms';

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import {
   createLayer
-} from 'state/ducks/editor/map';
+} from 'state/ducks/editor/layers';
 
 import mapPresets from 'lib/constants/mapPresets';
 import * as layerTypes from 'lib/constants/layerTypes';
@@ -22,8 +22,9 @@ const Component = ({ actions, onClose }) => {
   const [fieldStateLayerType, setFieldStateLayerType] = useState();
 
   const handleSubmit = () => {
+    console.log(fieldStateLayerType)
     actions.createLayer({
-      name: fieldStateName.value,
+      layerName: fieldStateName.value,
       layerType: fieldStateLayerType.value,
       tileSize: {
         width: fieldStateTileWidth.value,

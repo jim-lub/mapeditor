@@ -1,1 +1,1 @@
-export const getRequestStatus = (state, { key }) => state.editor.requestStatus.status[key];
+export const getRequestStatus = (state, { key }) => state.editor.requestStatus.status[key] || {};

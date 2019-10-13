@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  setActiveLayer,
+  setActiveLayerId,
   toggleLayerVisibility,
-
   getLayerPropertiesById,
-} from 'state/ducks/editor/map';
+} from 'state/ducks/editor/layers';
 
 import { concatClassNames } from 'lib/utils';
 import layerConstants from 'lib/constants/layerConstants';
@@ -21,13 +20,13 @@ import { ReactComponent as HeightIcon } from 'assets/static/icons/other/height.s
 import styles from '../../layers.module.css';
 
 const Component = ({ layerId, layerProperties, isActive, isDragging, openDeleteLayerModal, actions }) => {
-  const { name, type, tileSize, visible } = layerProperties;
-  const { icon: LayerIcon } = layerConstants[ type ];
+  const { layerName, layerType, tileSize, visible } = layerProperties;
+  const { icon: LayerIcon } = layerConstants[ layerType ];
 
   const handleOnLayerClick = (e) => {
     e.stopPropagation();
     if (visible) {
-      actions.setActiveLayer({ layerId });
+      actions.setActiveLayerId({ layerId });
     }
   }
 
@@ -54,7 +53,7 @@ const Component = ({ layerId, layerProperties, isActive, isDragging, openDeleteL
   return (
     <div className={layerWrapperClassNames} onClick={handleOnLayerClick}>
       <div className={styles.layerIconWrapper}><LayerIcon width={16} height={16} /></div>
-      <div className={styles.layerNameWrapper}><span style={{fontWeight: "bold"}}>{ name }</span></div>
+      <div className={styles.layerNameWrapper}><span style={{fontWeight: "bold"}}>{ layerName }</span></div>
 
       <div className={styles.layerToggleVisibilityButton}>
         {
@@ -101,7 +100,7 @@ const mapStateToProps = (state, { layerId }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setActiveLayer, toggleLayerVisibility }, dispatch)
+    actions: bindActionCreators({ setActiveLayerId, toggleLayerVisibility }, dispatch)
   }
 }
 

@@ -7,7 +7,9 @@ import * as reducers from './reducers';
 
 const initialState = {
   currentTool: null,
-  color: {}
+  colorValue: {
+    hex: "#D65858"
+  }
 }
 
 export default createReducer( initialState )({
