@@ -1,4 +1,4 @@
-import { deleteKeyValuePairFromObject } from 'state/lib/utils/deleteKeyValuePairFromObject';
+import { deleteKeyValuePairFromObject } from 'state/lib/utils';
 
 export const setTilemapDataObject = (state, action) => {
   const { tilemapDataObject } = action.payload;
@@ -50,7 +50,7 @@ export const clearTilemapDataSegment = (state, action) => {
 }
 
 export const addLayerToTilemapDataSegment = (state, action) => {
-  const { segmentId, layerId, tilemapData } = action.payload;
+  const { segmentId, layerId, tilemapDataSegmentLayer } = action.payload;
 
   return {
     ...state,
@@ -58,7 +58,7 @@ export const addLayerToTilemapDataSegment = (state, action) => {
       ...state.tilemapDataObject,
       [segmentId]: {
         ...state.tilemapDataObject[segmentId],
-        [layerId]: tilemapData
+        [layerId]: tilemapDataSegmentLayer
       }
     }
   }

@@ -26,3 +26,5 @@ export default createReducer( initialState )({
 
 export const initializeStore = operations.initializeStore;
 export const clearStore = operations.clearStore;
+
+export const validateTilemapDataSegment = operations.validateTilemapDataSegment;

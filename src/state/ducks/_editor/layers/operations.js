@@ -7,7 +7,13 @@ import { uuid } from 'lib/utils';
 export const initializeStore = ({ layerSortOrder = [], layerPropertiesObject }) => dispatch => {
   if (layerSortOrder.length === 0) return;
   layerSortOrder.forEach(layerId => {
-    const { type: layerType, name: layerName, tileSize, visible, locked } = layerPropertiesObject[layerId];
+    const {
+      type: layerType,
+      name: layerName,
+      tileSize,
+      visible = true,
+      locked = false
+    } = layerPropertiesObject[layerId];
 
     dispatch( actions.setLayerPropertiesById({
         layerId,
@@ -77,7 +83,6 @@ export const toggleLayerVisibility = ({ layerId }) => (dispatch, getState) => {
 
 export const toggleLayerLock = ({ layerId }) => (dispatch, getState) => {
   const layerProperties = selectors.getLayerPropertiesById( getState(), { layerId } );
-
   dispatch( actions.setLayerPropertiesById({
       layerId,
       locked: !layerProperties.locked

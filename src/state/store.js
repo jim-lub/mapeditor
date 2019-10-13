@@ -12,7 +12,6 @@ const logger = createLogger({
 
 const rootReducer = (state, action) => {
   // clear store if authUser === null;
-  // action only dispatched from state/ducks/auth/operations/listenToAuthChanges()
   if (action.type === 'CLEAR_STORE') {
     state = undefined;
   }
@@ -20,14 +19,23 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 }
 
-export default function configureStore( initialState = {} ) {
-
+export default (initialState = {}) => {
   return createStore(
       rootReducer,
       initialState,
       applyMiddleware(
           thunk,
-          // logger
+          logger
+      ),
+  );
+}
+
+export const configureTestStore = (initialState = {}) => {
+  return createStore(
+      rootReducer,
+      initialState,
+      applyMiddleware(
+          thunk
       ),
   );
 }

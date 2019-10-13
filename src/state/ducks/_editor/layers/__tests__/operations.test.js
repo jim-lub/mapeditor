@@ -1,4 +1,4 @@
-import configureStore from 'state/store';
+import { configureTestStore } from 'state/store';
 
 import * as operations from '../operations';
 import * as selectors from '../selectors';
@@ -24,7 +24,7 @@ describe('layer/operations', () => {
       }
     }
 
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.clearStore() );
 
@@ -52,7 +52,7 @@ describe('layer/operations', () => {
       }
     }
 
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.createLayer({
           layerType: layerTypes.color,
@@ -98,7 +98,7 @@ describe('layer/operations', () => {
       }
     }
 
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.deleteLayer({
       layerId: 'uid-for-layer-one'
@@ -134,7 +134,7 @@ describe('layer/operations', () => {
       }
     }
 
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.updateLayer({
       layerId: 'uid-for-layer-one',
@@ -166,7 +166,7 @@ describe('layer/operations', () => {
   }
 
   it('should move a layer #1', () => {
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.moveLayer({
       sourceIndex: 0,
@@ -180,7 +180,7 @@ describe('layer/operations', () => {
   });
 
   it('should move a layer #2', () => {
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.moveLayer({
       sourceIndex: 3,
@@ -213,7 +213,7 @@ describe('layer/operations', () => {
     }
   }
 
-  const { dispatch, getState } = configureStore(initialState);
+  const { dispatch, getState } = configureTestStore(initialState);
 
   it('should toggle the layer visibility #1', () => {
     dispatch( operations.toggleLayerVisibility({
@@ -269,7 +269,7 @@ describe('layer/operations', () => {
     }
   }
 
-  const { dispatch, getState } = configureStore(initialState);
+  const { dispatch, getState } = configureTestStore(initialState);
 
   it('should toggle the layer lock #1', () => {
     dispatch( operations.toggleLayerLock({
@@ -326,7 +326,7 @@ describe('layer/operations', () => {
       }
     }
 
-    const { dispatch, getState } = configureStore(initialState);
+    const { dispatch, getState } = configureTestStore(initialState);
 
     dispatch( operations.setActiveLayerId({
       layerId: 'uid-for-layer-one'

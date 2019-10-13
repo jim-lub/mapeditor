@@ -1,11 +1,4 @@
-export const clearStore = () => dispatch => {
+import * as actions from './actions';
 
-}
-
-export const setCurrentTool = () => dispatch => {
-
-}
-
-export const setValue = () => dispatch => {
-
-}
+export const setCurrentTool = actions.setCurrentTool;
+export const setColorValue = actions.setColorValue;

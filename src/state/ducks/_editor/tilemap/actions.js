@@ -24,12 +24,12 @@ export const clearTilemapDataSegment = ({ segmentId }) => ({
 });
 
 
-export const addLayerToTilemapDataSegment = ({ segmentId, layerId, tilemapData }) => ({
+export const addLayerToTilemapDataSegment = ({ segmentId, layerId, tilemapDataSegmentLayer }) => ({
   type: types.addLayerToTilemapDataSegment,
   payload: {
     segmentId,
     layerId,
-    tilemapData
+    tilemapDataSegmentLayer
   }
 });
 

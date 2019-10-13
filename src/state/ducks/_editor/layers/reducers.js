@@ -1,5 +1,4 @@
-import { deleteKeyValuePairFromObject } from 'state/lib/utils/deleteKeyValuePairFromObject';
-// import * as utils from './utils';
+import { deleteKeyValuePairFromObject } from 'state/lib/utils';
 
 export const setActiveLayerId = (state, action) => {
   const { layerId } = action.payload;
@@ -41,8 +40,8 @@ export const setLayerPropertiesById = (state, action) => {
     layerType = state.layerProperties[layerId].layerType,
     layerName = state.layerProperties[layerId].layerName,
     tileSize = state.layerProperties[layerId].tileSize,
-    visible = state.layerProperties[layerId].visible,
-    locked = state.layerProperties[layerId].locked,
+    visible = state.layerProperties[layerId].visible || true,
+    locked = state.layerProperties[layerId].locked || false,
   } = action.payload;
 
   return {

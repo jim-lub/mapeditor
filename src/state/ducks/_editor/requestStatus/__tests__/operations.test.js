@@ -1,11 +1,11 @@
-import configureStore from 'state/store';
+import { configureTestStore } from 'state/store';
 
 import * as operations from '../operations';
 import * as selectors from '../selectors';
 
 describe('requestStatus/operations', () => {
   it('should set requestStatus to `REQUEST`', () => {
-    const { dispatch, getState } = configureStore();
+    const { dispatch, getState } = configureTestStore();
 
     dispatch( operations.setRequestStatus({
       key: 'requestStatusTest',
@@ -25,7 +25,7 @@ describe('requestStatus/operations', () => {
 
 describe('requestStatus/operations', () => {
   it('should set requestStatus to `SUCCESS`', () => {
-    const { dispatch, getState } = configureStore();
+    const { dispatch, getState } = configureTestStore();
 
     dispatch( operations.setRequestStatus({
       key: 'requestStatusTest',
@@ -45,7 +45,7 @@ describe('requestStatus/operations', () => {
 
 describe('requestStatus/operations', () => {
   it('should set requestStatus to `FAILURE`', () => {
-    const { dispatch, getState } = configureStore();
+    const { dispatch, getState } = configureTestStore();
 
     dispatch( operations.setRequestStatus({
       key: 'requestStatusTest',
