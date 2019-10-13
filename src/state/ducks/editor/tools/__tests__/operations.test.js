@@ -6,7 +6,7 @@ import * as toolTypes from 'lib/constants/toolTypes';
 
 describe('tools/operations', () => {
   const initialState = {
-    _editor: {
+    editor: {
       tools: {
         currentTool: null,
         color: {}
@@ -55,7 +55,7 @@ describe('tools/operations', () => {
 
 describe('tools/operations', () => {
   const initialState = {
-    _editor: {
+    editor: {
       tools: {
         currentTool: null,
         color: {}

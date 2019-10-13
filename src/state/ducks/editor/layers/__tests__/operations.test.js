@@ -7,7 +7,7 @@ import * as layerTypes from 'lib/constants/layerTypes';
 describe('layer/operations', () => {
   it('should clear the store', () => {
     const initialState = {
-      _editor: {
+      editor: {
         layers: {
           activeLayerId: 'uid-for-layer-one',
           layerProperties: {
@@ -43,7 +43,7 @@ describe('layer/operations', () => {
 describe('layer/operations', () => {
   it('should create a new layer', () => {
     const initialState = {
-      _editor: {
+      editor: {
         layers: {
           activeLayerId: null,
           layerProperties: {},
@@ -81,7 +81,7 @@ describe('layer/operations', () => {
 describe('layer/operations', () => {
   it('should delete the layer with uid `uid-for-layer-one`', () => {
     const initialState = {
-      _editor: {
+      editor: {
         layers: {
           activeLayerId: null,
           layerProperties: {
@@ -117,7 +117,7 @@ describe('layer/operations', () => {
 describe('layer/operations', () => {
   it('should update the name of a layer', () => {
     const initialState = {
-      _editor: {
+      editor: {
         layers: {
           activeLayerId: null,
           layerProperties: {
@@ -156,7 +156,7 @@ describe('layer/operations', () => {
 
 describe('layer/operations', () => {
   const initialState = {
-    _editor: {
+    editor: {
       layers: {
         activeLayerId: null,
         layerProperties: {},
@@ -196,7 +196,7 @@ describe('layer/operations', () => {
 
 describe('layer/operations', () => {
   const initialState = {
-    _editor: {
+    editor: {
       layers: {
         activeLayerId: null,
         layerProperties: {
@@ -252,7 +252,7 @@ describe('layer/operations', () => {
 
 describe('layer/operations', () => {
   const initialState = {
-    _editor: {
+    editor: {
       layers: {
         activeLayerId: null,
         layerProperties: {
@@ -309,7 +309,7 @@ describe('layer/operations', () => {
 describe('layer/operations', () => {
   it('should set the activeLayerId', () => {
     const initialState = {
-      _editor: {
+      editor: {
         layers: {
           activeLayerId: null,
           layerProperties: {

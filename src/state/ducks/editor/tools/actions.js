@@ -1,14 +1,14 @@
 import * as types from './types';
 
-export const setActiveTool = ({ toolType }) => ({
-  type: types.setActiveTool,
+export const setCurrentTool = ({ toolType }) => ({
+  type: types.setCurrentTool,
   payload: {
     toolType
   }
 });
 
-export const setColor = ({ hex = "", rgb = {}, hsl = {} }) => ({
-  type: types.setColor,
+export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
+  type: types.setColorValue,
   payload: {
     hex,
     rgb,

@@ -1,6 +1,3 @@
-import * as actions from './actions';
-import * as selectors from './selectors';
-
 import * as mapConstants from 'lib/constants/mapConstants';
 
 import {
@@ -8,75 +5,11 @@ import {
   buildTwoDimensionalArray
 } from 'lib/utils';
 
-export const validateMapGrid = ({ mapProperties: { mapSize }, firestoreMapGrid }) => (
-  buildTwoDimensionalArray({
+export const buildMapGrid = ({ mapSize }) => {
+  return buildTwoDimensionalArray({
     columns: mapSize.columns,
     rows: mapSize.rows,
-    mapFn: ({ columnIndex, rowIndex }) => {
-
-      if (firestoreMapGrid[columnIndex]) {
-        if (firestoreMapGrid[columnIndex][rowIndex]) {
-          return firestoreMapGrid[columnIndex][rowIndex];
-        }
-      }
-
-      return uuid.create();
-    }
-  })
-)
-
-export const convertMapGridToDataChunks = ({ mapProperties: { mapSize }, mapGrid }) => {
-  const MAX_COLUMNS_PER_CHUNK = 20;
-  const chunks = Math.ceil( mapSize.columns / MAX_COLUMNS_PER_CHUNK );
-
-  return [...new Array(chunks)].map((val, index) => {
-    const indexStart = index * MAX_COLUMNS_PER_CHUNK;
-    const indexEnd = (index + 1) * MAX_COLUMNS_PER_CHUNK;
-
-    return JSON.stringify( mapGrid.slice(indexStart, indexEnd) )
-  })
-}
-
-export const convertDataChunksToMapGrid = ({ dataChunks = [] }) => (
-  dataChunks
-    .map(dataChunk => JSON.parse(dataChunk))
-    .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), [])
-)
-
-export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
-    const state = getState();
-    const { segmentSize } = selectors.getMapProperties(state);
-    const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
-
-    const layerSortOrder = selectors.getLayerSortOrder(state);
-    const layersToAdd = layerSortOrder.filter(layerId => !tilemapData.hasOwnProperty(layerId));
-    const layersToRemove = Object.keys(tilemapData).filter(layerId => !layerSortOrder.includes(layerId));
-
-    const addLayers = layersToAdd.map(layerId => {
-      const { tileSize } = selectors.getLayerPropertiesById(state, { layerId });
-
-      return dispatch( actions.addLayerToTilemapDataSegment({
-        segmentId,
-        layerId,
-        tilemapData: buildTwoDimensionalArray({
-          columns: segmentSize.width / tileSize.width,
-          rows: segmentSize.height / tileSize.height,
-          mapFn: () => 0
-        })
-      }) )
-    });
-
-    const removeLayers = layersToRemove.map(layerId => {
-      return dispatch( actions.removeLayerFromTilemapDataSegment({
-        segmentId, layerId
-      }) )
-    });
-
-    Promise.all([
-      ...addLayers,
-      ...removeLayers
-    ]).then(() => resolve());
+    mapFn: () => uuid.create()
   })
 }
 
@@ -87,9 +20,14 @@ export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispat
   const removeEmptyTilemapDataSegments = async (data) => Promise.all(
     Object.entries(data)
       .filter(([segmentId, data]) => {
-        const segmentProperties = selectors.getSegmentPropertiesById(getState(), { segmentId });
-
-        return (segmentProperties.modified || segmentProperties.firestore);
+        return true;
+        /*
+        * ONLY INCLUDE SEGMENTS THAT ARE MODIFIED!!!!
+        *
+        */
+        // const segmentProperties = selectors.getSegmentPropertiesById(getState(), { segmentId });
+        //
+        // return (segmentProperties.modified || segmentProperties.firestore);
       })
     )
 
@@ -196,15 +134,4 @@ export const memorySizeOf = (obj, unit) => {
   }
 
   return formatByteSize( sizeOf(obj) );
-}
-
-export const inputModifiersObjectMatches = (inputModifiersObject, modifierKeys = []) => {
-  const activeKeys = Object.entries(inputModifiersObject)
-    .filter(([modifierKey, value]) => value)
-    .map(([modifierKey, value]) => modifierKey);
-
-  if (activeKeys.length !== modifierKeys.length) return false;
-  if (activeKeys.length === 0 && modifierKeys.length === 0) return true;
-
-  return modifierKeys.every(modifierKey => activeKeys.includes(modifierKey));
 }
