@@ -1,5 +1,18 @@
 import * as mapConstants from 'lib/constants/mapConstants';
 
+import {
+  uuid,
+  buildTwoDimensionalArray
+} from 'lib/utils';
+
+export const buildMapGrid = ({ mapSize }) => {
+  return buildTwoDimensionalArray({
+    columns: mapSize.columns,
+    rows: mapSize.rows,
+    mapFn: () => uuid.create()
+  })
+}
+
 export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispatch, getState) => {
   const toJSON = (obj) => JSON.stringify(obj);
 

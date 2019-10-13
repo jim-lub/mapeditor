@@ -1,6 +1,7 @@
 import * as firestore from './firestore';
 import * as actions from './actions';
 import * as selectors from './selectors';
+import * as utils from './utils';
 
 import {
   initializeStore as initializeLayerStore,
@@ -45,25 +46,25 @@ export const initializeMap = () => (dispatch, getState) => {
     .then(mapData => {
       const {
         mapProperties,
-        layerSortOrder = [], layerProperties: layerPropertiesObject = {}
+        layerSortOrder = [],
+        layerProperties: layerPropertiesObject = {}
       } = mapData;
 
       return Promise.all([
         dispatch( actions.setMapProperties({ mapProperties }) ),
         dispatch( _handleLayersReducer({ layerSortOrder, layerPropertiesObject }) ),
         dispatch( _handleToolsReducer() ),
-      ]);
+      ])
+      .then(() => mapProperties);
     })
 
     // mapGrid
-    .then(() => dispatch( firestore.getMapGrid({ uid: currentScene.uid }) ))
-    .then(mapGrid => {
-      if (mapGrid) {
-        return dispatch( actions.setMapGrid({ mapGrid }) );
-      } else {
-        // build new map grid and fill with uuid's
-        // dispatch `actions.setMapGrid()`
-      }
+    .then(mapProperties => {
+      return dispatch( firestore.getMapGrid({ uid: currentScene.uid }) )
+        .then(mapGrid => (mapGrid)
+          ? dispatch( actions.setMapGrid({ mapGrid }) )
+          : dispatch( actions.setMapGrid({ mapGrid: utils.buildMapGrid({ mapSize: mapProperties.mapSize }) })
+        ))
     })
 
     // tilemapData

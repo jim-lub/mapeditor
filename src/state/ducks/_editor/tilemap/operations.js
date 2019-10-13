@@ -11,7 +11,8 @@ import {
 import {
   getActiveLayerId,
   getLayerSortOrder,
-  getLayerPropertiesById
+  getLayerPropertiesById,
+  getLayerPropertiesObject
 } from '../layers';
 
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
@@ -100,9 +101,9 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
 export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
   const state = getState();
 
-  const layerProperties = selectors.getLayerProperties(state);
-  const layerSortOrder = selectors.getLayerSortOrder(state);
-  const tilemapData = selectors.getTilemapDataBySegmentId(state, { segmentId });
+  const layerProperties = getLayerPropertiesObject(state);
+  const layerSortOrder = getLayerSortOrder(state);
+  const tilemapData = selectors.getTilemapDataSegmentById(state, { segmentId });
 
   drawCanvasHandler(canvasRef, canvasWidth, canvasHeight, {
     segmentId,

@@ -7,7 +7,8 @@ import * as reducers from './reducers';
 
 const initialState = {
   currentScene: {
-    uid: "5wQtFkKj9OktYR56bV7G"
+    // uid: "5wQtFkKj9OktYR56bV7G", // stored
+    uid: "3QSsgUwoNQFSjyM3Otwe" // not stored
   },
   mapProperties: {},
   mapGrid: []
