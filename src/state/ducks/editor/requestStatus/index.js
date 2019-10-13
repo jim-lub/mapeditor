@@ -14,6 +14,9 @@ export default createReducer( initialState )({
   [ types.clearRequestStatus ]: (state, action) => reducers.clearRequestStatus(state, action),
 });
 
+/*** operations ***/
 export const setRequestStatus = operations.setRequestStatus;
 export const clearRequestStatus = operations.clearRequestStatus;
+
+/*** selectors ***/
 export const getRequestStatus = selectors.getRequestStatus;

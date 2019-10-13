@@ -8,8 +8,8 @@ export const initializeStore = ({ layerSortOrder = [], layerPropertiesObject }) 
   if (layerSortOrder.length === 0) return;
   layerSortOrder.forEach(layerId => {
     const {
-      type: layerType,
-      name: layerName,
+      layerType,
+      layerName,
       tileSize,
       visible = true,
       locked = false

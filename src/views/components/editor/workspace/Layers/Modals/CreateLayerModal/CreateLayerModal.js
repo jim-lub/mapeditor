@@ -22,7 +22,6 @@ const Component = ({ actions, onClose }) => {
   const [fieldStateLayerType, setFieldStateLayerType] = useState();
 
   const handleSubmit = () => {
-    console.log(fieldStateLayerType)
     actions.createLayer({
       layerName: fieldStateName.value,
       layerType: fieldStateLayerType.value,

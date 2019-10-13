@@ -27,7 +27,7 @@ const Component = ({ projectId, sceneId, sceneData, mapProperties, actions }) =>
     <>
       <div>
         <LinkButton
-          onClick={() => actions.setCurrentScene({ sceneId })}
+          onClick={() => actions.setCurrentScene({ uid: sceneId })}
           to="/editor/workspace"
           className="blue"
         >

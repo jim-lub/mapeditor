@@ -42,9 +42,9 @@ const Component = ({ activeLayerId, activeTool, disableAllInput, actions, getLay
               key={toolType}
               toolType={toolType}
               isActive={(activeTool === toolType)}
-              onSelect={actions.setActiveTool}
+              onSelect={actions.setCurrentTool}
               disableAllInput={disableAllInput}
-              layerType={(layerProperties) ? layerProperties.type : null}
+              layerType={(layerProperties) ? layerProperties.layerType : null}
             />
           )
         })

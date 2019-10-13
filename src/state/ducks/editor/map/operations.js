@@ -72,7 +72,9 @@ export const initializeMap = () => (dispatch, getState) => {
     .then(tilemapDataObject => dispatch( _handleTilemapReducer({ tilemapDataObject }) ))
 
     // complete
-    .then(() => dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) ))
+    .then(() => {
+      dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) )
+    })
     .catch(e => {
       dispatch( setRequestStatus({ key: 'initializeMap', type: 'FAILURE', error: e }) );
       console.log(e);
@@ -108,6 +110,14 @@ export const storeMap = () => (dispatch, getState) => {
     dispatch( firestore.setMapGrid({ uid: currentScene.uid, mapGrid })),
     // dispatch `firestore.setTilemapData()`
   ])
+  // complete
+  .then(() => {
+    dispatch( setRequestStatus({ key: 'storeMap', type: 'SUCCESS' }) )
+  })
+  .catch(e => {
+    dispatch( setRequestStatus({ key: 'storeMap', type: 'FAILURE', error: e }) );
+    console.log(e);
+  });
 }
 
 export const deleteMap = ({ uid }) => dispatch => Promise.all([

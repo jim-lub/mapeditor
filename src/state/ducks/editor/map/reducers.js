@@ -11,6 +11,22 @@ export const setCurrentScene = (state, action) => {
   }
 }
 
+export const setCurrentSceneProps = (state, action) => {
+  const {
+    initialized = state.currentScene.initialized,
+    modified = state.currentScene.modified,
+  } = action.payload;
+
+  return {
+    ...state,
+    currentScene: {
+      ...state.currentScene,
+      initialized,
+      modified
+    }
+  }
+}
+
 export const clearCurrentScene = (state, action) => {
   return {
     ...state,

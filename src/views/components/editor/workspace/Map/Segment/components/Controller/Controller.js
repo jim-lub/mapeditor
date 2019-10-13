@@ -31,7 +31,7 @@ import styles from '../../segment.module.css';
 const Component = ({
   segmentId, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData, activeTool, actions
+  tilemapData, currentTool, actions
 }) => {
   const [initialized, setInitialized] = useState(false);
   const [disablePointerInput, setDisablePointerInput] = useState(false);
@@ -54,7 +54,7 @@ const Component = ({
     } else {
       setDisablePointerInput(false);
     }
-  }, [activeTool, setDisablePointerInput]);
+  }, [currentTool, setDisablePointerInput]);
 
   const handlePointerEnter = () => setIsActiveSegment(true);
   const handlePointerLeave = () => setIsActiveSegment(false);
@@ -67,14 +67,22 @@ const Component = ({
     });
   }
 
+  const isCurrentTool = () => {
+    if (toolConstants.hasOwnProperty(currentTool)) {
+      return toolConstants[currentTool].isAllowedOnLayers.includes( layerProperties[activeLayerId].layerType )
+    }
+    return false;
+  }
+  
   const enableUserInput = (
     isActiveSegment &&
     !disablePointerInput &&
     (layerSortOrder.length > 0) &&
     layerProperties[activeLayerId] &&
     layerProperties[activeLayerId].visible &&
-    toolConstants[activeTool].isAllowedOnLayers.includes( layerProperties[activeLayerId].type )
+    isCurrentTool()
   )
+
 
   if (!initialized) {
     return (
@@ -107,7 +115,7 @@ const Component = ({
         <UserInput
           segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}
-          activeTool={activeTool}
+          activeTool={currentTool}
           onPointerEvent={handleInteractionNodeEvent}
         />
       }
@@ -125,7 +133,7 @@ const mapStateToProps = (state, ownProps) => {
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataSegmentbyId(state, { segmentId }),
 
-    activeTool: getCurrentTool(state)
+    currentTool: getCurrentTool(state)
   }
 }
 

@@ -7,8 +7,7 @@ import * as reducers from './reducers';
 
 const initialState = {
   currentScene: {
-    // uid: "5wQtFkKj9OktYR56bV7G", // stored
-    uid: "3QSsgUwoNQFSjyM3Otwe" // not stored
+    uid: "XT3QhWipLkAMz2nOR5jF"
   },
   mapProperties: {},
   mapGrid: []
@@ -16,6 +15,7 @@ const initialState = {
 
 export default createReducer( initialState )({
   [ types.setCurrentScene ]: (state, action) => reducers.setCurrentScene(state, action),
+  [ types.setCurrentSceneProps ]: (state, action) => reducers.setCurrentSceneProps(state, action),
   [ types.clearCurrentScene ]: (state, action) => reducers.clearCurrentScene(state, action),
 
   [ types.setMapProperties ]: (state, action) => reducers.setMapProperties(state, action),
@@ -25,14 +25,15 @@ export default createReducer( initialState )({
   [ types.clearMapGrid ]: (state, action) => reducers.clearMapGrid(state, action),
 });
 
+/*** operations ***/
 export const setCurrentScene = operations.setCurrentScene;
 
 export const initializeMap = operations.initializeMap;
 export const storeMap = operations.storeMap;
 export const deleteMap = operations.deleteMap;
 
+/*** selectors ***/
 export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
-
 export const getSegmentId = selectors.getSegmentId;

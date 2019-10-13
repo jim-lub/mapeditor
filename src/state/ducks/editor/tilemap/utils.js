@@ -5,7 +5,7 @@ export const findLayersToAddOnTilemapDataSegment = ({ tilemapDataSegment, layerS
 }
 
 export const findLayersToRemoveFromTilemapDataSegment = ({ tilemapDataSegment, layerSortOrder }) => {
-  return Object.keys(tilemapDataSegment).filter(layerId => !layerSortOrder.includeS(layerId));
+  return Object.keys(tilemapDataSegment).filter(layerId => !layerSortOrder.includes(layerId));
 }
 
 export const buildTilemapDataSegmentLayer = ({ segmentSize, tileSize }) => {

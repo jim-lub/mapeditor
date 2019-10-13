@@ -7,6 +7,13 @@ export const setCurrentScene = ({ uid }) => ({
   }
 });
 
+export const setCurrentSceneProps = ({ initialized, modified }) => ({
+  type: types.setCurrentScene,
+  payload: {
+    initialized, modified
+  }
+});
+
 export const clearCurrentScene = () => ({
   type: types.clearCurrentScene
 });

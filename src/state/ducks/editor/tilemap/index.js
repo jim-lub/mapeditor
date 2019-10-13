@@ -24,6 +24,7 @@ export default createReducer( initialState )({
   [ types.clearSingleTileValue ]: (state, action) => reducers.clearSingleTileValue(state, action),
 });
 
+/*** operations ***/
 export const initializeStore = operations.initializeStore;
 export const clearStore = operations.clearStore;
 
@@ -32,4 +33,5 @@ export const handleCanvasUpdate = operations.handleCanvasUpdate;
 
 export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 
+/*** selectors ***/
 export const getTilemapDataSegmentbyId = selectors.getTilemapDataSegmentById;

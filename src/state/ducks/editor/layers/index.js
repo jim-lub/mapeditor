@@ -11,7 +11,6 @@ const initialState = {
   activeLayerId: null
 }
 
-// REDUCER
 export default createReducer( initialState )({
   [ types.setActiveLayerId ]: (state, action) => reducers.setActiveLayerId(state, action),
   [ types.clearActiveLayerId ]: (state, action) => reducers.clearActiveLayerId(state, action),
@@ -25,7 +24,7 @@ export default createReducer( initialState )({
   [ types.clearAllLayerProperties ]: (state, action) => reducers.clearAllLayerProperties(state, action),
 });
 
-// OPERATONS
+/*** operations ***/
 export const initializeStore = operations.initializeStore;
 export const clearStore = operations.clearStore;
 export const createLayer = operations.createLayer;
@@ -36,7 +35,7 @@ export const toggleLayerVisibility = operations.toggleLayerVisibility;
 export const toggleLayerLock = operations.toggleLayerLock;
 export const setActiveLayerId = operations.setActiveLayerId;
 
-// SELECTORS
+/*** selectors ***/
 export const getActiveLayerId = selectors.getActiveLayerId;
 export const getLayerSortOrder = selectors.getLayerSortOrder;
 export const getLayerPropertiesById = selectors.getLayerPropertiesById;
