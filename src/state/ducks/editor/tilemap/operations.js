@@ -15,10 +15,13 @@ import {
   getLayerPropertiesObject
 } from '../layers';
 
+import { getCurrentTool } from '../tools';
+
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 // import * as layerTypes from 'lib/constants/layerTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
+import toolConstants from 'lib/constants/toolConstants';
 
 export const initializeStore = ({ tilemapDataObject }) => dispatch => {
   return dispatch( actions.setTilemapDataObject({ tilemapDataObject }) );
@@ -28,7 +31,7 @@ export const clearStore = () => dispatch => {
   dispatch( actions.clearTilemapDataObject() );
 }
 
-export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => { // initial load of segment component -> more data to create
+export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => {
   const state = getState();
   const { segmentSize } = getMapProperties(state);
   const tilemapDataSegment = selectors.getTilemapDataSegmentById(state, { segmentId });
@@ -62,32 +65,38 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
   const sceneId = getCurrentScene(state);
   const layerId = getActiveLayerId(state);
   const layerProperties = getLayerPropertiesById(state, { layerId });
-  const currentTool = 'tools/paintBrush';
+  const currentTool = getCurrentTool(state);
+
+  // early exit checks
+  if (!sceneId) return;
+  if (!layerProperties.visible) return;
+  if (!toolConstants.hasOwnProperty(currentTool)) return;
+  if (!toolConstants[currentTool].isAllowedOnLayers.includes( layerProperties.layerType )) return;
 
   switch (currentTool) {
     case toolTypes.paintBrush:
-      return dispatch( userInputHandlers.paintBrush(state, {
+      return dispatch( userInputHandlers.paintBrush({
         sceneId, segmentId, layerId, layerProperties,
         columnIndex, rowIndex,
         inputActions, inputModifiers
       }) );
 
     case toolTypes.tileStamp:
-      return dispatch( userInputHandlers.tileStamp(state, {
+      return dispatch( userInputHandlers.tileStamp({
         sceneId, segmentId, layerId, layerProperties,
         columnIndex, rowIndex,
         inputActions, inputModifiers
       }) );
 
     case toolTypes.eraser:
-      return dispatch( userInputHandlers.eraser(state, {
+      return dispatch( userInputHandlers.eraser({
         sceneId, segmentId, layerId, layerProperties,
         columnIndex, rowIndex,
         inputActions, inputModifiers
       }) );
 
     case toolTypes.eyeDropper:
-      return dispatch( userInputHandlers.eyeDropper(state, {
+      return dispatch( userInputHandlers.eyeDropper({
         sceneId, segmentId, layerId, layerProperties,
         columnIndex, rowIndex,
         inputActions, inputModifiers

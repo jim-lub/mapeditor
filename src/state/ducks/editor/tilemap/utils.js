@@ -15,3 +15,14 @@ export const buildTilemapDataSegmentLayer = ({ segmentSize, tileSize }) => {
     mapFn: () => 0
   })
 }
+
+export const inputModifiersObjectMatches = (inputModifiersObject, modifierKeys = []) => {
+  const activeKeys = Object.entries(inputModifiersObject)
+    .filter(([modifierKey, value]) => value)
+    .map(([modifierKey, value]) => modifierKey);
+
+  if (activeKeys.length !== modifierKeys.length) return false;
+  if (activeKeys.length === 0 && modifierKeys.length === 0) return true;
+
+  return modifierKeys.every(modifierKey => activeKeys.includes(modifierKey));
+}

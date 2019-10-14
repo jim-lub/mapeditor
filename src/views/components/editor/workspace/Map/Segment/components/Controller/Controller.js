@@ -73,7 +73,7 @@ const Component = ({
     }
     return false;
   }
-  
+
   const enableUserInput = (
     isActiveSegment &&
     !disablePointerInput &&

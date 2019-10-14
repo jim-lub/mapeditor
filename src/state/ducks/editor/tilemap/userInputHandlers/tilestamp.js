@@ -1,3 +1,3 @@
-export default () => {
-  return null;
+export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
+  
 }

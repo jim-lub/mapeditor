@@ -83,15 +83,15 @@ export const removeLayerFromTilemapDataSegment = (state, action) => {
 
 export const setSingleTileValue = (state, action) => {
   const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
-
+  
   return {
     ...state,
     tilemapDataObject: {
       ...state.tilemapDataObject,
       [segmentId]: {
         ...state.tilemapDataObject[segmentId],
-        [layerId]: Object.assign([ ...state.tilemapData[segmentId][layerId] ], {
-          [columnIndex]: Object.assign( [...state.tilemapData[segmentId][layerId][columnIndex]], {
+        [layerId]: Object.assign([ ...state.tilemapDataObject[segmentId][layerId] ], {
+          [columnIndex]: Object.assign( [...state.tilemapDataObject[segmentId][layerId][columnIndex]], {
             [rowIndex]: value
           })
         })
@@ -109,8 +109,8 @@ export const clearSingleTileValue = (state, action) => {
       ...state.tilemapDataObject,
       [segmentId]: {
         ...state.tilemapDataObject[segmentId],
-        [layerId]: Object.assign([ ...state.tilemapData[segmentId][layerId] ], {
-          [columnIndex]: Object.assign( [...state.tilemapData[segmentId][layerId][columnIndex]], {
+        [layerId]: Object.assign([ ...state.tilemapDataObject[segmentId][layerId] ], {
+          [columnIndex]: Object.assign( [...state.tilemapDataObject[segmentId][layerId][columnIndex]], {
             [rowIndex]: 0
           })
         })

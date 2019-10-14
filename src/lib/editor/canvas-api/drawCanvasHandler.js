@@ -17,21 +17,21 @@ export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
   utils.setScaleTransform(ctx, { scaleModifier: 1 });
 
   layerSortOrder.forEach((layerId, index) => {
-    const { type, tileSize, visible } = layerProperties[layerId];
+    const { layerType, tileSize, visible } = layerProperties[layerId];
     const tilemap = tilemapData[layerId];
 
-    if (visible && type === layerTypes.color) {
+    if (visible && layerType === layerTypes.color) {
       _drawColorLayer(ctx, {
         tileSize,
         tilemap
       })
     }
 
-    if (visible && type === layerTypes.tileset) {
+    if (visible && layerType === layerTypes.tileset) {
 
     }
 
-    if (visible && type === layerTypes.collision) {
+    if (visible && layerType === layerTypes.collision) {
 
     }
 
