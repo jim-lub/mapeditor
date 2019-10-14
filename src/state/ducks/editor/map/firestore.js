@@ -48,12 +48,12 @@ export const getTilemapData = ({ uid }) => dispatch => {
 
 export const setMapData = ({ uid, mapProperties, layerSortOrder, layerProperties }) => dispatch => {
   return firebase.scene(uid)
-    .set({
+    .update({
       modifiedAt: firebase.serverTimestamp,
       mapProperties,
       layerProperties,
       layerSortOrder
-    }, { merge: true });
+    });
 }
 
 export const setMapGrid = ({ uid, mapGrid }) => dispatch => {
@@ -68,9 +68,9 @@ export const setMapGrid = ({ uid, mapGrid }) => dispatch => {
     .catch(e => console.log(e));
 }
 
-export const setTilemapData = ({ uid, tilemapData }) => dispatch => {
+export const setTilemapData = ({ uid, tilemapDataObject }) => dispatch => {
   return dispatch( clearTilemapData({ uid }) )
-    .then(() => dispatch( utils.convertTilemapDataToDataChunks({ tilemapData }) ))
+    .then(() => dispatch( utils.convertTilemapDataToDataChunks({ tilemapDataObject }) ))
     .then(dataChunks => Promise.all([
       ...dataChunks.map((dataChunk, index) =>
         firebase.scene(uid)

@@ -14,6 +14,8 @@ import {
 import {
   initializeStore as initializeTilemapStore,
   clearStore as clearTilemapStore,
+
+  getTilemapDataObject
 } from '../tilemap';
 
 import {
@@ -21,17 +23,16 @@ import {
 } from '../requestStatus';
 
 export const setCurrentScene = ({ uid }) => dispatch => {
-  return dispatch( clearStore() )
-    .then(() => dispatch( actions.setCurrentScene({ uid }) ));
+  dispatch( setRequestStatus({ key: 'initializeMap', type: 'REQUEST' }) );
+  dispatch( clearStore() );
+  dispatch( actions.setCurrentScene({ uid }) );
 }
 
 export const clearStore = () => dispatch => {
-  return Promise.all([
-    dispatch( clearTilemapStore() ),
-    dispatch( clearLayerStore() ),
-    dispatch( actions.clearMapGrid() ),
-    dispatch( actions.clearMapProperties() )
-  ])
+  dispatch( clearTilemapStore() )
+  dispatch( clearLayerStore() )
+  dispatch( actions.clearMapGrid() )
+  dispatch( actions.clearMapProperties() )
 }
 
 export const initializeMap = () => (dispatch, getState) => {
@@ -73,7 +74,7 @@ export const initializeMap = () => (dispatch, getState) => {
 
     // complete
     .then(() => {
-      dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) )
+      dispatch( setRequestStatus({ key: 'initializeMap', type: 'SUCCESS' }) );
     })
     .catch(e => {
       dispatch( setRequestStatus({ key: 'initializeMap', type: 'FAILURE', error: e }) );
@@ -104,11 +105,12 @@ export const storeMap = () => (dispatch, getState) => {
   const mapGrid = selectors.getMapGrid(state);
   const layerSortOrder = getLayerSortOrder(state)
   const layerProperties = getLayerPropertiesObject(state);
+  const tilemapDataObject = getTilemapDataObject(state);
 
   return Promise.all([
     dispatch( firestore.setMapData({ uid: currentScene.uid, mapProperties, layerSortOrder, layerProperties })),
     dispatch( firestore.setMapGrid({ uid: currentScene.uid, mapGrid })),
-    // dispatch `firestore.setTilemapData()`
+    dispatch( firestore.setTilemapData({ uid: currentScene.uid, tilemapDataObject }))
   ])
   // complete
   .then(() => {

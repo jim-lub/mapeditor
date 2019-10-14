@@ -24,6 +24,7 @@ import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
 export const initializeStore = ({ tilemapDataObject }) => dispatch => {
+  console.log(tilemapDataObject)
   return dispatch( actions.setTilemapDataObject({ tilemapDataObject }) );
 }
 

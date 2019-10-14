@@ -36,6 +36,16 @@ export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
     }
 
   });
+
+  // const  drawSegmentBorder = false;
+  // if (drawSegmentBorder) {
+  //   ctx.strokeStyle = "#b5b5b5";
+  //   ctx.beginPath();
+  //   ctx.moveTo(canvasWidth, 0);
+  //   ctx.lineTo(canvasWidth, canvasHeight);
+  //   ctx.lineTo(0, canvasHeight);
+  //   ctx.stroke();
+  // }
 }
 
 const _drawColorLayer = (ctx, { tileSize, tilemap }) => {

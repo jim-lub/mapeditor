@@ -35,3 +35,4 @@ export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 
 /*** selectors ***/
 export const getTilemapDataSegmentbyId = selectors.getTilemapDataSegmentById;
+export const getTilemapDataObject = selectors.getTilemapDataObject;

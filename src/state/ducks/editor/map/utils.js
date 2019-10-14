@@ -13,7 +13,7 @@ export const buildMapGrid = ({ mapSize }) => {
   })
 }
 
-export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispatch, getState) => {
+export const convertTilemapDataToDataChunks = ({ tilemapDataObject }) => async (dispatch, getState) => {
   const toJSON = (obj) => JSON.stringify(obj);
 
   // lower writes by excluding empty segments
@@ -64,7 +64,7 @@ export const convertTilemapDataToDataChunks = ({ tilemapData }) => async (dispat
     }, [])
   }
 
-  const tilemapDataWithEmptySegmentsRemoved = await removeEmptyTilemapDataSegments(tilemapData);
+  const tilemapDataWithEmptySegmentsRemoved = await removeEmptyTilemapDataSegments(tilemapDataObject);
   const tilemapDataWithMemorySizes = await calculateTilemapDataMemorySize(tilemapDataWithEmptySegmentsRemoved);
 
   return await reduceTilemapDataToChunks(tilemapDataWithMemorySizes);;

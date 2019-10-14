@@ -8,7 +8,7 @@ export const setCurrentScene = ({ uid }) => ({
 });
 
 export const setCurrentSceneProps = ({ initialized, modified }) => ({
-  type: types.setCurrentScene,
+  type: types.setCurrentSceneProps,
   payload: {
     initialized, modified
   }

@@ -6,6 +6,7 @@ import { uuid } from 'lib/utils';
 
 export const initializeStore = ({ layerSortOrder = [], layerPropertiesObject }) => dispatch => {
   if (layerSortOrder.length === 0) return;
+
   layerSortOrder.forEach(layerId => {
     const {
       layerType,
