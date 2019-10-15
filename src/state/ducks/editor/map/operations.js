@@ -62,15 +62,11 @@ export const initializeMap = () => (dispatch, getState) => {
 
     // mapGrid
     .then(mapProperties => {
-      console.log(currentScene)
       return dispatch( firestore.getMapGrid({ uid: currentScene.uid }) )
-        .then(mapGrid => {
-          // console.log()
-          return (!!mapGrid)
-            ? dispatch( actions.setMapGrid({ mapGrid }) )
-            : dispatch( actions.setMapGrid({ mapGrid: utils.buildMapGrid({ mapSize: mapProperties.mapSize }) }))
-        }
-        )
+        .then(mapGrid => (mapGrid)
+          ? dispatch( actions.setMapGrid({ mapGrid }) )
+          : dispatch( actions.setMapGrid({ mapGrid: utils.buildMapGrid({ mapSize: mapProperties.mapSize }) })
+        ))
     })
 
     // tilemapData
