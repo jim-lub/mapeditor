@@ -1,11 +1,10 @@
 # Roadmap
 
 ## In development
-Refactoring state code and writing tests..
-
-## Soon
 - Tools ( tile stamp )
 - Tile selector window
+
+## Soon
 - Zoom
 - Menu bar ( save, load, settings, help )
 - Dashboard
