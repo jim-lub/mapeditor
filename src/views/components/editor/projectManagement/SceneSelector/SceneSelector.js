@@ -18,7 +18,7 @@ import {
   Toolbar
 } from './components';
 
-import styles from './sceneSelector.module.css';
+import styles from './sceneselector.module.css';
 
 const Component = ({ activeProjectId }) => {
   const [CreateSceneModalComponent, openCreateSceneModal] = useModal(CreateSceneModal);

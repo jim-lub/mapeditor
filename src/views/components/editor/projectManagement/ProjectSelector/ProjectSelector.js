@@ -16,7 +16,7 @@ import {
   Toolbar
 } from './components';
 
-import styles from './projectSelector.module.css';
+import styles from './projectselector.module.css';
 
 const Component = () => {
   const [CreateProjectModalComponent, openCreateProjectModal] = useModal(CreateProjectModal);
