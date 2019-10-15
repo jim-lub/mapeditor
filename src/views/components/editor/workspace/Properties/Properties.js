@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { useContextMenu } from 'lib/hooks';
+
 import styles from './properties.module.css';
 
 import {
@@ -14,7 +16,30 @@ import {
 import { WorkspaceModuleWrapper } from '../WorkspaceModuleWrapper';
 
 const Component = ({ mapProperties, zoomScaleModifier }) => {
+  const [ContextMenu, openContextMenu] = useContextMenu();
   if (!mapProperties.mapSize) return null;
+
+  const handleContextMenu = (e, index) => {
+    const children = [
+      {
+        name: 'Menu option 1: ' + index,
+        type: 'clickAndClose', // 'select', 'toggle', 'parent'
+        onClick: () => console.log('Clicked menu option 1')
+      },
+      {
+        name: 'Menu option 2',
+        type: 'select', // 'select', 'toggle', 'parent'
+        onClick: () => console.log('Clicked menu option 2')
+      },
+      {
+        name: 'Menu option 3',
+        type: 'select', // 'select', 'toggle', 'parent'
+        onClick: () => console.log('Clicked menu option 3')
+      }
+    ]
+
+    openContextMenu(e, children)
+  }
 
   const properties = [
     { key: "Columns", value: mapProperties.mapSize.columns },
@@ -25,13 +50,14 @@ const Component = ({ mapProperties, zoomScaleModifier }) => {
   ]
 
   return (
+    <>
     <WorkspaceModuleWrapper moduleName="Properties" minHeight={155} maxHeight={155}>
       <table className={styles.propertiesList}>
         <tbody>
           {
             properties.map((prop, index) => {
               return (
-                <tr key={index} className={styles.node}>
+                <tr key={index} className={styles.node} onContextMenu={(e) => handleContextMenu(e, index)}>
                   <td className={styles.nodeKey}>{ prop.key }</td>
                   <td className={styles.nodeValue}>{ prop.value }</td>
                 </tr>
@@ -45,6 +71,9 @@ const Component = ({ mapProperties, zoomScaleModifier }) => {
         </tbody>
       </table>
     </WorkspaceModuleWrapper>
+
+    <ContextMenu />
+    </>
   )
 }
 
