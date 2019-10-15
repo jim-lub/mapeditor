@@ -4,47 +4,42 @@ import { bindActionCreators } from 'redux';
 
 import {
   getMapProperties,
-  getSegmentPropertiesById,
-  getActiveLayerId,
-  getLayerProperties,
-  getLayerSortOrder,
-  getTilemapDataBySegmentId,
-
-  handleUserInput,
-  handleCanvasUpdate,
-
-  initializeTilemapDataSegment,
-  validateTilemapDataSegment,
 } from 'state/ducks/editor/map';
 
-import { getActiveTool } from 'state/ducks/editor/tools';
-import { useKeyPress } from 'lib/hooks';
+import {
+  handleUserInput,
+  handleCanvasUpdate,
+  validateTilemapDataSegment,
+  getTilemapDataSegmentbyId
+} from 'state/ducks/editor/tilemap';
+
+import {
+  getActiveLayerId,
+  getLayerPropertiesObject,
+  getLayerSortOrder,
+} from 'state/ducks/editor/layers';
+
+import { getCurrentTool } from 'state/ducks/editor/tools';
 // import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
 import { Loader } from 'views/components/Loader';
-import { Canvas, UserInput, Properties } from '../../components';
+import { Canvas, UserInput } from '../../components';
 
 import styles from '../../segment.module.css';
 
 const Component = ({
-  segmentId, segmentProperties: { initialized, modified }, mapProperties: { segmentSize },
+  segmentId, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData, activeTool, actions
+  tilemapData, currentTool, actions
 }) => {
+  const [initialized, setInitialized] = useState(false);
   const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
-  const showProperties = useKeyPress('D');
 
   useEffect(() => {
-    if (!initialized) {
-      actions.initializeTilemapDataSegment({ segmentId })
-    }
-  }, [initialized, segmentId, actions]);
-
-  useEffect(() => {
-    actions.validateTilemapDataSegment({ segmentId })
+    actions.validateTilemapDataSegment({ segmentId }).then(() => setInitialized(true))
   }, [segmentId, layerSortOrder, actions])
 
   useEffect(() => {
@@ -59,7 +54,7 @@ const Component = ({
     } else {
       setDisablePointerInput(false);
     }
-  }, [activeTool, setDisablePointerInput]);
+  }, [currentTool, setDisablePointerInput]);
 
   const handlePointerEnter = () => setIsActiveSegment(true);
   const handlePointerLeave = () => setIsActiveSegment(false);
@@ -72,14 +67,22 @@ const Component = ({
     });
   }
 
+  const isCurrentTool = () => {
+    if (toolConstants.hasOwnProperty(currentTool)) {
+      return toolConstants[currentTool].isAllowedOnLayers.includes( layerProperties[activeLayerId].layerType )
+    }
+    return false;
+  }
+
   const enableUserInput = (
     isActiveSegment &&
     !disablePointerInput &&
     (layerSortOrder.length > 0) &&
     layerProperties[activeLayerId] &&
     layerProperties[activeLayerId].visible &&
-    toolConstants[activeTool].isAllowedOnLayers.includes( layerProperties[activeLayerId].type )
+    isCurrentTool()
   )
+
 
   if (!initialized) {
     return (
@@ -112,16 +115,8 @@ const Component = ({
         <UserInput
           segmentSize={segmentSize}
           layerProperties={layerProperties[activeLayerId]}
-          activeTool={activeTool}
+          activeTool={currentTool}
           onPointerEvent={handleInteractionNodeEvent}
-        />
-      }
-
-      {
-        showProperties && (layerSortOrder.length > 0) &&
-        <Properties
-          initialized={initialized}
-          modified={modified}
         />
       }
     </div>
@@ -133,13 +128,12 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     mapProperties: getMapProperties(state),
-    segmentProperties: getSegmentPropertiesById(state, { segmentId }),
     activeLayerId: getActiveLayerId(state),
-    layerProperties: getLayerProperties(state),
+    layerProperties: getLayerPropertiesObject(state),
     layerSortOrder: getLayerSortOrder(state),
-    tilemapData: getTilemapDataBySegmentId(state, { segmentId }),
+    tilemapData: getTilemapDataSegmentbyId(state, { segmentId }),
 
-    activeTool: getActiveTool(state)
+    currentTool: getCurrentTool(state)
   }
 }
 
@@ -148,7 +142,6 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({
       handleUserInput,
       handleCanvasUpdate,
-      initializeTilemapDataSegment,
       validateTilemapDataSegment
     }, dispatch)
   }

@@ -1,13 +1,13 @@
-export const setActiveTool = (state, action) => {
+export const setCurrentTool = (state, action) => {
   const { toolType } = action.payload;
 
   return {
     ...state,
-    active: toolType
+    currentTool: toolType
   }
 };
 
-export const setColor = (state, action) => {
+export const setColorValue = (state, action) => {
   const { hex, rgb, hsl } = action.payload;
 
   return {

@@ -4,11 +4,10 @@ import { bindActionCreators } from 'redux';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import {
-  updateLayerSortOrder,
-  getCurrentScene,
+  moveLayer,
   getLayerSortOrder,
   getActiveLayerId
-} from 'state/ducks/editor/map';
+} from 'state/ducks/editor/layers';
 
 import { Layer } from './Layer';
 
@@ -23,7 +22,7 @@ const Component = ({ layerSortOrder, activeLayerId, openDeleteLayerModal, action
     const sourceIndex = layerSortOrder.indexOf( sortOrder[source.index] );
     const destinationIndex = layerSortOrder.indexOf( sortOrder[destination.index] );
 
-    actions.updateLayerSortOrder({ sourceIndex, destinationIndex });
+    actions.moveLayer({ sourceIndex, destinationIndex });
   }
 
   return (
@@ -70,7 +69,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ updateLayerSortOrder }, dispatch)
+    actions: bindActionCreators({ moveLayer }, dispatch)
   }
 }
 

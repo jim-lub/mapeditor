@@ -6,8 +6,7 @@ import * as selectors from './selectors';
 import { getActiveProjectId } from 'state/ducks/editor/projects';
 import {
   setCurrentScene,
-  deleteMapGridCollection,
-  deleteTilemapDataCollection
+  deleteMap
 } from 'state/ducks/editor/map';
 
 export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
@@ -93,9 +92,7 @@ export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
 
 
   Promise.all([
-    dispatch( deleteMapGridCollection({ sceneId }) ),
-    dispatch( deleteTilemapDataCollection({ sceneId }) ),
-
+    dispatch( deleteMap({ uid: sceneId }) ),
   ])
     .then(() => {
       dispatch( setCurrentScene({ uid: null }) )

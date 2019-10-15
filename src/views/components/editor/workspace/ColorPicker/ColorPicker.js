@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setColor, getColor } from 'state/ducks/editor/tools';
+import { setColorValue, getColorValue } from 'state/ducks/editor/tools';
 
 import { WorkspaceModuleWrapper } from '../WorkspaceModuleWrapper';
 import { CustomPicker } from './CustomPicker';
@@ -11,7 +11,7 @@ import styles from './colorpicker.module.css';
 
 const Component = ({ color, actions }) => {
   const handleColorValueChange = (colorValue) => {
-    actions.setColor({
+    actions.setColorValue({
       hex: colorValue.hex,
       rgb: colorValue.rgb,
       hsl: colorValue.hsl
@@ -30,13 +30,13 @@ const Component = ({ color, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    color: getColor(state)
+    color: getColorValue(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setColor }, dispatch)
+    actions: bindActionCreators({ setColorValue }, dispatch)
   }
 }
 

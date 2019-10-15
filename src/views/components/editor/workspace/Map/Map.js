@@ -7,13 +7,12 @@ import { FixedSizeGrid } from 'react-window';
 
 import {
   initializeMap,
-  storeMap,
   getCurrentScene,
   getMapProperties,
-  getMapGrid,
-  getDisableAllInput,
-  getStatusMessage
+  getMapGrid
 } from 'state/ducks/editor/map';
+import { getRequestStatus } from 'state/ducks/editor/requestStatus';
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import { Loader } from 'views/components/Loader';
 import { Segment } from './Segment';
@@ -21,19 +20,18 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disableAllInput, statusMessage, actions }) => {
+const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disableAllInput, initializeMapStatus: { initialized = false, loading = false }, actions }) => {
 
   useEffect(() => {
-    if (!currentScene.initialized) {
+    if (!initialized) {
       actions.initializeMap({ sceneId: currentScene.uid })
     }
-  }, [currentScene, actions]);
+  }, [initialized, currentScene, actions]);
 
-  if (!currentScene.initialized) {
+  if (loading) {
     return (
       <div>
         <Loader.Simple />
-        { statusMessage.content }
       </div>
     )
   }
@@ -76,7 +74,7 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disabl
                   >
                     <Loader.Simple width={48} height={48}/>
                   </div>
-                  <div className={styles.disabledInputOverlayStatusMessage}>{ statusMessage.content }</div>
+                  <div className={styles.disabledInputOverlayStatusMessage}></div>
                 </div>
               }
             </>
@@ -90,17 +88,17 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disabl
 
 const mapStateToProps = (state) => {
   return {
+    initializeMapStatus: getRequestStatus(state, { key: 'initializeMap' }),
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
-    disableAllInput: getDisableAllInput(state),
-    statusMessage: getStatusMessage(state)
+    disableAllInput: isAllEditorInputDisabled(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ initializeMap, storeMap}, dispatch)
+    actions: bindActionCreators({ initializeMap }, dispatch)
   }
 }
 

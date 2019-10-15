@@ -4,11 +4,10 @@ import { bindActionCreators } from 'redux';
 
 import styles from './menubar.module.css';
 
-import {
-  storeMap,
-  getStoreMapStatus,
-  getDisableAllInput
-} from 'state/ducks/editor/map'
+import { storeMap } from 'state/ducks/editor/map';
+import { getRequestStatus } from 'state/ducks/editor/requestStatus';
+
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 const Component = ({ storeMapStatus, disableAllInput, actions }) => {
   const handleSave = () => {
@@ -33,8 +32,8 @@ const Component = ({ storeMapStatus, disableAllInput, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    storeMapStatus: getStoreMapStatus(state),
-    disableAllInput: getDisableAllInput(state)
+    storeMapStatus: getRequestStatus(state, { key: 'storeMap' }),
+    disableAllInput: isAllEditorInputDisabled(state)
   }
 }
 

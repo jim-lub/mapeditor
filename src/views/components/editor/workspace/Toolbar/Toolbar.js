@@ -9,15 +9,16 @@ import * as toolTypes from 'lib/constants/toolTypes';
 // import toolConstants from 'lib/constants/toolConstants';
 
 import {
-  setActiveTool,
-  getActiveTool
+  setCurrentTool,
+  getCurrentTool
 } from 'state/ducks/editor/tools';
 
 import {
   getActiveLayerId,
-  getLayerPropertiesById,
-  getDisableAllInput
-} from 'state/ducks/editor/map';
+  getLayerPropertiesById
+} from 'state/ducks/editor/layers';
+
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import ToolNode from './ToolNode';
 
@@ -41,9 +42,9 @@ const Component = ({ activeLayerId, activeTool, disableAllInput, actions, getLay
               key={toolType}
               toolType={toolType}
               isActive={(activeTool === toolType)}
-              onSelect={actions.setActiveTool}
+              onSelect={actions.setCurrentTool}
               disableAllInput={disableAllInput}
-              layerType={(layerProperties) ? layerProperties.type : null}
+              layerType={(layerProperties) ? layerProperties.layerType : null}
             />
           )
         })
@@ -56,15 +57,15 @@ const Component = ({ activeLayerId, activeTool, disableAllInput, actions, getLay
 const mapStateToProps = (state) => {
   return {
     activeLayerId: getActiveLayerId(state),
-    activeTool: getActiveTool(state),
-    disableAllInput: getDisableAllInput(state),
+    activeTool: getCurrentTool(state),
+    disableAllInput: isAllEditorInputDisabled(state),
     getLayerPropertiesById: (layerId) => getLayerPropertiesById(state, { layerId })
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setActiveTool }, dispatch)
+    actions: bindActionCreators({ setCurrentTool }, dispatch)
   }
 }
 

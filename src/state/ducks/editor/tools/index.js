@@ -5,33 +5,22 @@ import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
 
-import * as toolTypes from 'lib/constants/toolTypes';
-
 const initialState = {
-  active: toolTypes.paintBrush,
-
+  currentTool: null,
   colorValue: {
-    hex: "#22194D"
-  },
-
-  properties: {
-    size: {
-      width: 1,
-      height: 1
-    },
-    pattern: []
+    hex: "#D65858"
   }
 }
 
 export default createReducer( initialState )({
-  [ types.setActiveTool ]: (state, action) => reducers.setActiveTool(state, action),
-  [ types.setColor ]: (state, action) => reducers.setColor(state, action),
+  [ types.setCurrentTool ]: (state, action) => reducers.setCurrentTool(state, action),
+  [ types.setColorValue ]: (state, action) => reducers.setColorValue(state, action),
 });
 
 /*** operations ***/
-export const setActiveTool = operations.setActiveTool;
-export const setColor = operations.setColor;
+export const setCurrentTool = operations.setCurrentTool;
+export const setColorValue = operations.setColorValue;
 
 /*** selectors ***/
-export const getActiveTool = selectors.getActiveTool;
-export const getColor = selectors.getColor;
+export const getCurrentTool = selectors.getCurrentTool;
+export const getColorValue = selectors.getColorValue;
