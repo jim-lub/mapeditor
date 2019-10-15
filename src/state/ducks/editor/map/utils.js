@@ -10,7 +10,7 @@ export const buildMapGrid = ({ mapSize }) => {
   return buildTwoDimensionalArray({
     columns: mapSize.columns,
     rows: mapSize.rows,
-    mapFn: () => uuid.create()
+    mapFn: () => uuid()
   });
 }
 

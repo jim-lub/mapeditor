@@ -37,11 +37,11 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomSc
     )
   }
 
-  if (currentScene.initialized && !currentScene.uid) {
+  if (currentScene.initialized || !currentScene.uid) {
     return <div>No scene selected..</div>;
   }
 
-  if (!mapProperties && !mapGrid) {
+  if (!mapProperties || !mapGrid || (mapGrid.length === 0)) {
     return <div>Something went wrong..</div>;
   }
 
