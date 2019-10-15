@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+import configureStore from 'redux-mock-store';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -38,4 +39,8 @@ export const configureTestStore = (initialState = {}) => {
           thunk
       ),
   );
+}
+
+export const configureMockStore = (initialState) => {
+  return configureStore([thunk])(initialState);
 }
