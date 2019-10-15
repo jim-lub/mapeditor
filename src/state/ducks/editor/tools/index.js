@@ -21,6 +21,9 @@ export default createReducer( initialState )({
 
 /*** operations ***/
 export const setCurrentTool = operations.setCurrentTool;
+export const zoomIn = operations.zoomIn;
+export const zoomOut = operations.zoomOut;
+export const resetZoom = operations.resetZoom;
 export const setColorValue = operations.setColorValue;
 
 /*** selectors ***/

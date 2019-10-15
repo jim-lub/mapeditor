@@ -7,9 +7,13 @@ import {
   getMapProperties
 } from 'state/ducks/editor/map';
 
+import {
+  getZoomScaleModifier
+} from 'state/ducks/editor/tools';
+
 import { WorkspaceModuleWrapper } from '../WorkspaceModuleWrapper';
 
-const Component = ({ mapProperties }) => {
+const Component = ({ mapProperties, zoomScaleModifier }) => {
   if (!mapProperties.mapSize) return null;
 
   const properties = [
@@ -21,19 +25,23 @@ const Component = ({ mapProperties }) => {
   ]
 
   return (
-    <WorkspaceModuleWrapper moduleName="Properties" minHeight={145} maxHeight={145}>
+    <WorkspaceModuleWrapper moduleName="Properties" minHeight={155} maxHeight={155}>
       <table className={styles.propertiesList}>
         <tbody>
-        {
-          properties.map((prop, index) => {
-            return (
-              <tr key={index} className={styles.node}>
-                <td className={styles.nodeKey}>{ prop.key }</td>
-                <td className={styles.nodeValue}>{ prop.value }</td>
-              </tr>
-            )
-          })
-        }
+          {
+            properties.map((prop, index) => {
+              return (
+                <tr key={index} className={styles.node}>
+                  <td className={styles.nodeKey}>{ prop.key }</td>
+                  <td className={styles.nodeValue}>{ prop.value }</td>
+                </tr>
+              )
+            })
+          }
+          <tr className={styles.node}>
+            <td className={styles.nodeKey}>Zoom</td>
+            <td className={styles.nodeValue}>{ `${ zoomScaleModifier * 100 }%` }</td>
+          </tr>
         </tbody>
       </table>
     </WorkspaceModuleWrapper>
@@ -42,7 +50,8 @@ const Component = ({ mapProperties }) => {
 
 const mapStateToProps = (state) => {
   return {
-    mapProperties: getMapProperties(state)
+    mapProperties: getMapProperties(state),
+    zoomScaleModifier: getZoomScaleModifier(state)
   }
 }
 
