@@ -15,7 +15,8 @@ import {
   initializeStore as initializeTilemapStore,
   clearStore as clearTilemapStore,
 
-  getTilemapDataObject
+  getTilemapDataObject,
+  getSegmentPropertiesObject
 } from '../tilemap';
 
 import {
@@ -106,11 +107,12 @@ export const storeMap = () => (dispatch, getState) => {
   const layerSortOrder = getLayerSortOrder(state)
   const layerProperties = getLayerPropertiesObject(state);
   const tilemapDataObject = getTilemapDataObject(state);
+  const segmentProperties = getSegmentPropertiesObject(state);
 
   return Promise.all([
     dispatch( firestore.setMapData({ uid: currentScene.uid, mapProperties, layerSortOrder, layerProperties })),
     dispatch( firestore.setMapGrid({ uid: currentScene.uid, mapGrid })),
-    dispatch( firestore.setTilemapData({ uid: currentScene.uid, tilemapDataObject }))
+    dispatch( firestore.setTilemapData({ uid: currentScene.uid, tilemapDataObject, segmentProperties }))
   ])
   // complete
   .then(() => {

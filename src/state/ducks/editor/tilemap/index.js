@@ -28,11 +28,12 @@ export default createReducer( initialState )({
 export const initializeStore = operations.initializeStore;
 export const clearStore = operations.clearStore;
 
+export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
-
-export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 
 /*** selectors ***/
 export const getTilemapDataSegmentbyId = selectors.getTilemapDataSegmentById;
 export const getTilemapDataObject = selectors.getTilemapDataObject;
+export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
+export const getSegmentPropertiesObject = selectors.getSegmentPropertiesObject;

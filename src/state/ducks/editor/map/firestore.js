@@ -41,7 +41,7 @@ export const getTilemapData = ({ uid }) => dispatch => {
 
       return dataChunks;
     })
-    .then(dataChunks => utils.convertDataChunksToTilemapData({ dataChunks }))
+    .then(dataChunks => utils.convertDataChunksToTilemapDataObject({ dataChunks }))
     .catch(e => console.log(e));
 }
 
@@ -68,9 +68,9 @@ export const setMapGrid = ({ uid, mapGrid }) => dispatch => {
     .catch(e => console.log(e));
 }
 
-export const setTilemapData = ({ uid, tilemapDataObject }) => dispatch => {
+export const setTilemapData = ({ uid, tilemapDataObject, segmentProperties }) => dispatch => {
   return dispatch( clearTilemapData({ uid }) )
-    .then(() => dispatch( utils.convertTilemapDataToDataChunks({ tilemapDataObject }) ))
+    .then(() => dispatch( utils.convertTilemapDataObjectToDataChunks({ tilemapDataObject, segmentProperties }) ))
     .then(dataChunks => Promise.all([
       ...dataChunks.map((dataChunk, index) =>
         firebase.scene(uid)

@@ -5,6 +5,19 @@ export const setTilemapDataObject = (state, action) => {
 
   return {
     ...state,
+    segmentProperties: {
+      ...tilemapDataObject.reduce((obj, data) => {
+        const [segmentId] = Object.keys(data);
+
+        return obj = {
+          ...obj,
+          [segmentId]: {
+            includeFirestore: true,
+            modified: false
+          }
+        }
+      }, {})
+    },
     tilemapDataObject: {
       ...tilemapDataObject.reduce((obj, tilemapData) => {
         return obj = {
@@ -83,9 +96,16 @@ export const removeLayerFromTilemapDataSegment = (state, action) => {
 
 export const setSingleTileValue = (state, action) => {
   const { segmentId, layerId, columnIndex, rowIndex, value } = action.payload;
-  
+
   return {
     ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
     tilemapDataObject: {
       ...state.tilemapDataObject,
       [segmentId]: {
@@ -105,6 +125,13 @@ export const clearSingleTileValue = (state, action) => {
 
   return {
     ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      [segmentId]: {
+        ...state.segmentProperties[segmentId],
+        modified: true
+      }
+    },
     tilemapDataObject: {
       ...state.tilemapDataObject,
       [segmentId]: {

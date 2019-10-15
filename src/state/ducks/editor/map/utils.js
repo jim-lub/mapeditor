@@ -1,137 +1,74 @@
-import * as mapConstants from 'lib/constants/mapConstants';
-
 import {
   uuid,
+  memorySizeOf,
   buildTwoDimensionalArray
-} from 'lib/utils';
+} from 'state/lib/utils';
+
+import * as mapConstants from 'lib/constants/mapConstants';
 
 export const buildMapGrid = ({ mapSize }) => {
   return buildTwoDimensionalArray({
     columns: mapSize.columns,
     rows: mapSize.rows,
     mapFn: () => uuid.create()
-  })
+  });
 }
 
-export const convertTilemapDataToDataChunks = ({ tilemapDataObject }) => async (dispatch, getState) => {
+export const convertTilemapDataObjectToDataChunks = ({ tilemapDataObject, segmentProperties }) => async dispatch => {
   const toJSON = (obj) => JSON.stringify(obj);
 
-  // lower writes by excluding empty segments
-  const removeEmptyTilemapDataSegments = async (data) => Promise.all(
-    Object.entries(data)
-      .filter(([segmentId, data]) => {
-        return true;
-        /*
-        * ONLY INCLUDE SEGMENTS THAT ARE MODIFIED!!!!
-        *
-        */
-        // const segmentProperties = selectors.getSegmentPropertiesById(getState(), { segmentId });
-        //
-        // return (segmentProperties.modified || segmentProperties.firestore);
-      })
-    )
+  const filterOutNoDataSegments = async (tilemapDataObject) => Promise.all(
+    Object.entries(tilemapDataObject)
+      .filter(([segmentId, tilemapData]) => {
+        if (segmentProperties.hasOwnProperty(segmentId)) {
+          return (segmentProperties[segmentId].includeFirestore || segmentProperties[segmentId].modified)
+        }
+        return false;
+      }));
 
-  // estimate memory size to determine how many "data chunks" are needed
-  const calculateTilemapDataMemorySize = async (data) => Promise.all(
-    data.map(([key, value]) => ({
-        obj: {
-          [key]: value
-        },
-        memorySize: memorySizeOf( toJSON({ [key]: value }), 'KiB' )
-      }))
-    )
+  const calculateMemorySizeForEachSegment = async (tilemapDataObject) => Promise.all(
+    tilemapDataObject.map(([segmentId, tilemapData]) => ({
+      segmentData: {
+        [segmentId]: tilemapData
+      },
+      memorySize: memorySizeOf( toJSON({ [segmentId]: tilemapData }), 'KiB' )
+    }))
+  )
 
-  const reduceTilemapDataToChunks = async (data) => {
-    let accumulatorKiB = 0, accumulatorDataChunks = [];
+  const mergeSegmentsInDataChunks = async (tilemapDataObject) => {
+    let accumulateMemorySizeForSingleDataChunk = 0,
+        accumulateSegmentsForSingleDataChunk = [];
 
-    return data.reduce((dataChunksArray, segmentData, index) => {
-      const { obj, memorySize } = segmentData;
-      const isLastSegmentInArray = ((data.length - 1 ) === index);
+    return tilemapDataObject.reduce((dataChunksArray, data, index) => {
+      const { segmentData, memorySize } = data;
 
-      if ((accumulatorKiB + memorySize) < mapConstants.MAX_TILEMAP_DATA_CHUNK_SIZE) {
-        accumulatorKiB += memorySize;
-        dataChunksArray = [...dataChunksArray];
-        accumulatorDataChunks.push(obj);
-      }
+      accumulateMemorySizeForSingleDataChunk += memorySize
+      accumulateSegmentsForSingleDataChunk.push(segmentData);
 
-      if ((accumulatorKiB + memorySize) > mapConstants.MAX_TILEMAP_DATA_CHUNK_SIZE || isLastSegmentInArray) {
-        accumulatorKiB = 0;
-        dataChunksArray = [...dataChunksArray, JSON.stringify(accumulatorDataChunks)];
-        accumulatorDataChunks = [];
+      const nextSegmentMemorySize = (tilemapDataObject[(index + 1)])
+        ? tilemapDataObject[(index + 1)].memorySize
+        : null;
+
+      const exceedsDataChunkMaxMemorySize = ((accumulateMemorySizeForSingleDataChunk + nextSegmentMemorySize) > mapConstants.MAX_TILEMAP_DATA_CHUNK_SIZE);
+      const isLastSegmentInArray = (nextSegmentMemorySize === null);
+
+      if (exceedsDataChunkMaxMemorySize || isLastSegmentInArray) {
+        accumulateMemorySizeForSingleDataChunk = 0;
+        dataChunksArray = [...dataChunksArray, JSON.stringify(accumulateSegmentsForSingleDataChunk)];
+        accumulateSegmentsForSingleDataChunk = [];
       }
 
       return dataChunksArray;
     }, [])
   }
 
-  const tilemapDataWithEmptySegmentsRemoved = await removeEmptyTilemapDataSegments(tilemapDataObject);
-  const tilemapDataWithMemorySizes = await calculateTilemapDataMemorySize(tilemapDataWithEmptySegmentsRemoved);
-
-  return await reduceTilemapDataToChunks(tilemapDataWithMemorySizes);;
+  const filteredTilemapDataObject = await filterOutNoDataSegments(tilemapDataObject);
+  const tilemapDataObjectWithMemorySizes = await calculateMemorySizeForEachSegment(filteredTilemapDataObject);
+  return await mergeSegmentsInDataChunks(tilemapDataObjectWithMemorySizes);
 }
 
-export const convertDataChunksToTilemapData = ({ dataChunks = [] }) => (
-  dataChunks
+export const convertDataChunksToTilemapDataObject = ({ dataChunks = [] }) => {
+  return dataChunks
     .map(dataChunk => JSON.parse(dataChunk))
-    .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), [])
-)
-
-export const memorySizeOf = (obj, unit) => {
-  let bytes = 0;
-
-  const sizeOf = (obj) => {
-    if (obj !== null && obj !== undefined) {
-      switch(typeof obj) {
-        case 'number':
-          return bytes += 8;
-        case 'string':
-          return bytes += obj.length * 2;
-        case 'boolean':
-          return bytes += 4;
-        case 'object':
-          let objClass = Object.prototype.toString.call(obj).slice(8, -1);
-
-          if (objClass === 'Object' || objClass === 'Array') {
-            for (let key in obj) {
-              if (!obj.hasOwnProperty(key)) continue;
-              sizeOf(obj[key]);
-            }
-          } else {
-            bytes += obj.toString().length * 2;
-          }
-          break;
-        default:
-          return;
-      }
-    }
-  }
-
-  const bytesToKiB = (bytes) => (bytes / 1024);
-  const bytesToMiB = (bytes) => (bytes / 1048576);
-  const bytesToGiB = (bytes) => (bytes / 1073741824);
-
-  const formatByteSize = (bytes) => {
-    if (bytes < 1024) return { value: bytes, suffix: "bytes"}
-    if (bytes < 1048576) return { value: (bytes / 1024), suffix: "KiB"}
-    if (bytes < 1073741824) return { value: (bytes / 1048576), suffix: "MiB"}
-    return { value: (bytes / 1073741824), suffix: "GiB"}
-  }
-
-  if (unit === 'byte') {
-    return sizeOf(obj);
-  }
-
-  if (unit === 'KiB') {
-    return bytesToKiB( sizeOf(obj) );
-  }
-
-  if (unit === 'MiB') {
-    return bytesToMiB( sizeOf(obj) );
-  }
-
-  if (unit === 'GiB') {
-    return bytesToGiB( sizeOf(obj) );
-  }
-
-  return formatByteSize( sizeOf(obj) );
+    .reduce((mapGrid, dataChunk) => mapGrid.concat( dataChunk ), []);
 }
