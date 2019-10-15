@@ -21,7 +21,7 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomScaleModifier, disableAllInput, initializeMapStatus: { initialized = false, loading = false }, actions }) => {
+const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomScaleModifier, disableAllInput, initializeMapStatus: { initialized = false, loading = true }, actions }) => {
 
   useEffect(() => {
     if (!initialized) {
@@ -29,7 +29,11 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomSc
     }
   }, [initialized, currentScene, actions]);
 
-  if (loading) {
+  if (
+    loading || !initialized ||
+    !mapProperties || !mapProperties.mapSize || !mapProperties.segmentSize |
+    !mapGrid || (mapGrid.length === 0)
+  ) {
     return (
       <div>
         <Loader.Simple />
@@ -39,10 +43,6 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomSc
 
   if (currentScene.initialized || !currentScene.uid) {
     return <div>No scene selected..</div>;
-  }
-
-  if (!mapProperties || !mapGrid || (mapGrid.length === 0)) {
-    return <div>Something went wrong..</div>;
   }
 
   return (

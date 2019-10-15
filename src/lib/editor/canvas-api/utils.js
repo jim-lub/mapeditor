@@ -15,8 +15,8 @@ export const clearCanvasAndResetScaleTransform = (ctx, { canvasWidth, canvasHeig
   ctx.clearRect(
     sX,
     sY,
-    canvasWidth,
-    canvasHeight
+    1000,
+    1000
   )
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
