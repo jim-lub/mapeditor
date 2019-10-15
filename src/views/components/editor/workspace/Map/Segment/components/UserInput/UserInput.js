@@ -9,7 +9,7 @@ import toolConstants from 'lib/constants/toolConstants';
 import styles from '../../segment.module.css';
 
 export default ({
-  segmentSize,
+  segmentSize, zoomScaleModifier,
   layerProperties: { tileSize },
   activeTool,
   onPointerEvent
@@ -57,10 +57,10 @@ export default ({
                 id={`inputNode-${columnIndex}-${rowIndex}`}
                 className={inputNodeClassName}
                 style={{
-                  width: tileSize.width,
-                  height: tileSize.height,
-                  left: tileSize.width * columnIndex,
-                  top: tileSize.height * rowIndex,
+                  width: tileSize.width * zoomScaleModifier,
+                  height: tileSize.height * zoomScaleModifier,
+                  left: (tileSize.width * zoomScaleModifier) * columnIndex,
+                  top: (tileSize.height * zoomScaleModifier) * rowIndex,
                   cursor: toolConstants[activeTool].cursor || "auto"
                 }}
                 onContextMenu={handleContextMenu}

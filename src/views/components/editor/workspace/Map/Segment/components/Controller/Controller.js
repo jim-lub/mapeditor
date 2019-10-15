@@ -19,7 +19,10 @@ import {
   getLayerSortOrder,
 } from 'state/ducks/editor/layers';
 
-import { getCurrentTool } from 'state/ducks/editor/tools';
+import {
+  getZoomScaleModifier,
+  getCurrentTool
+} from 'state/ducks/editor/tools';
 // import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
@@ -31,12 +34,18 @@ import styles from '../../segment.module.css';
 const Component = ({
   segmentId, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData, currentTool, actions
+  tilemapData,
+  zoomScaleModifier, currentTool, actions
 }) => {
   const [initialized, setInitialized] = useState(false);
   const [disablePointerInput, setDisablePointerInput] = useState(false);
   const [isActiveSegment, setIsActiveSegment] = useState(false);
   const canvasRef = useRef(null);
+
+  const segmentSizeAfterZoomScaleModifier = {
+    width: segmentSize.width * zoomScaleModifier,
+    height: segmentSize.height * zoomScaleModifier
+  }
 
   useEffect(() => {
     actions.validateTilemapDataSegment({ segmentId }).then(() => setInitialized(true))
@@ -44,7 +53,7 @@ const Component = ({
 
   useEffect(() => {
     if (initialized && canvasRef && canvasRef.current) {
-      actions.handleCanvasUpdate({ segmentId, canvasRef, canvasWidth: segmentSize.width, canvasHeight: segmentSize.height });
+      actions.handleCanvasUpdate({ segmentId, canvasRef, canvasWidth: segmentSizeAfterZoomScaleModifier.width, canvasHeight: segmentSizeAfterZoomScaleModifier.height, zoomScaleModifier });
     }
   });
 
@@ -86,7 +95,7 @@ const Component = ({
 
   if (!initialized) {
     return (
-      <div className={styles.controllerWrapper} style={{ width: segmentSize.width, height: segmentSize.height }}>
+      <div className={styles.controllerWrapper} style={{ width: segmentSizeAfterZoomScaleModifier.width, height: segmentSizeAfterZoomScaleModifier.height }}>
         <div className={styles.controllerLoaderWrapper}><Loader.Simple width={48} height={48}/></div>
       </div>
     )
@@ -96,8 +105,8 @@ const Component = ({
     <div
       className={styles.controllerWrapper}
       style={{
-        width: segmentSize.width,
-        height: segmentSize.height,
+        width: segmentSizeAfterZoomScaleModifier.width,
+        height: segmentSizeAfterZoomScaleModifier.height,
         cursor: (!enableUserInput) ? "not-allowed" : null
       }}
       onPointerEnter={handlePointerEnter}
@@ -106,14 +115,15 @@ const Component = ({
 
       <Canvas
       ref={canvasRef}
-      canvasWidth={segmentSize.width}
-      canvasHeight={segmentSize.height}
+      canvasWidth={segmentSizeAfterZoomScaleModifier.width}
+      canvasHeight={segmentSizeAfterZoomScaleModifier.height}
       />
 
       {
         enableUserInput &&
         <UserInput
           segmentSize={segmentSize}
+          zoomScaleModifier={zoomScaleModifier}
           layerProperties={layerProperties[activeLayerId]}
           activeTool={currentTool}
           onPointerEvent={handleInteractionNodeEvent}
@@ -132,7 +142,7 @@ const mapStateToProps = (state, ownProps) => {
     layerProperties: getLayerPropertiesObject(state),
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataSegmentbyId(state, { segmentId }),
-
+    zoomScaleModifier: getZoomScaleModifier(state),
     currentTool: getCurrentTool(state)
   }
 }

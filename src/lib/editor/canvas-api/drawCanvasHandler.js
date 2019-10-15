@@ -3,9 +3,9 @@ import * as utils from './utils';
 import * as layerTypes from 'lib/constants/layerTypes';
 
 export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
-  segmentId, segmentProperties,
+  segmentId,
   layerProperties, layerSortOrder,
-  tilemapData
+  tilemapData, zoomScaleModifier
 }) => {
   if (!canvasRef || !canvasRef.current) {
     return;
@@ -14,7 +14,7 @@ export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
   const ctx = canvasRef.current.getContext('2d');
 
   utils.clearCanvasAndResetScaleTransform(ctx, { canvasWidth, canvasHeight });
-  utils.setScaleTransform(ctx, { scaleModifier: 1 });
+  utils.setScaleTransform(ctx, { scaleModifier: zoomScaleModifier });
 
   layerSortOrder.forEach((layerId, index) => {
     const { layerType, tileSize, visible } = layerProperties[layerId];
