@@ -84,16 +84,14 @@ export const initializeMap = () => (dispatch, getState) => {
 }
 
   const _handleLayersReducer = ({ layerSortOrder, layerPropertiesObject }) => dispatch => {
-    console.log(1, '_editor/map/initialize/LAYERS');
     return dispatch( initializeLayerStore({ layerSortOrder, layerPropertiesObject }) );
   }
 
   const _handleToolsReducer = () => dispatch => {
-    console.log(2, '_editor/map/initialize/TOOLS');
+    // initialize tool settings -> not storing these yet
   }
 
   const _handleTilemapReducer = ({ tilemapDataObject }) => dispatch => {
-    console.log(3, '_editor/map/initialize/TILEMAP');
     dispatch( initializeTilemapStore({ tilemapDataObject }) );
   }
 

@@ -107,7 +107,7 @@ export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions
   }
 }
 
-export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight }) => (dispatch, getState) => {
+export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight, zoomScaleModifier }) => (dispatch, getState) => {
   const state = getState();
 
   const layerProperties = getLayerPropertiesObject(state);
@@ -117,6 +117,7 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
   drawCanvasHandler(canvasRef, canvasWidth, canvasHeight, {
     segmentId,
     layerProperties, layerSortOrder,
-    tilemapData
+    tilemapData,
+    zoomScaleModifier
   });
 }

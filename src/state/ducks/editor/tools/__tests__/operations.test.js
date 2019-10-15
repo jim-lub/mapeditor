@@ -103,3 +103,60 @@ describe('tools/operations', () => {
     });
   });
 });
+
+describe('tools/operations', () => {
+  const initialState = {
+    editor: {
+      tools: {
+        zoomScaleModifier: 1
+      }
+    }
+  }
+
+  const { dispatch, getState } = configureTestStore(initialState);
+
+  it('should zoom in #1', () => {
+    dispatch( operations.zoomIn() );
+
+    const newState = getState();
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+
+    expect(zoomScaleModifier).toBe(1.25);
+  });
+
+  it('should zoom in #2', () => {
+    dispatch( operations.zoomIn() );
+
+    const newState = getState();
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+
+    expect(zoomScaleModifier).toBe(1.50);
+  });
+
+  it('should reset zoom', () => {
+    dispatch( operations.resetZoom() );
+
+    const newState = getState();
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+
+    expect(zoomScaleModifier).toBe(1);
+  });
+
+  it('should zoom out #1', () => {
+    dispatch( operations.zoomOut() );
+
+    const newState = getState();
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+
+    expect(zoomScaleModifier).toBe(0.75);
+  });
+
+  it('should zoom out #2', () => {
+    dispatch( operations.zoomOut() );
+
+    const newState = getState();
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+
+    expect(zoomScaleModifier).toBe(0.50);
+  });
+});

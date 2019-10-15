@@ -11,6 +11,7 @@ import {
   getMapProperties,
   getMapGrid
 } from 'state/ducks/editor/map';
+import { getZoomScaleModifier } from 'state/ducks/editor/tools';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
@@ -20,7 +21,7 @@ import { MapGridCustomScrollbar } from './components';
 
 import styles from './map.module.css';
 
-const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disableAllInput, initializeMapStatus: { initialized = false, loading = false }, actions }) => {
+const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, zoomScaleModifier, disableAllInput, initializeMapStatus: { initialized = false, loading = false }, actions }) => {
 
   useEffect(() => {
     if (!initialized) {
@@ -54,8 +55,8 @@ const Component = ({ activeSceneId, currentScene, mapProperties, mapGrid, disabl
               <FixedSizeGrid
                 columnCount={mapProperties.mapSize.columns}
                 rowCount={mapProperties.mapSize.rows}
-                columnWidth={mapProperties.segmentSize.width}
-                rowHeight={mapProperties.segmentSize.height}
+                columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
+                rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
                 width={viewportWidth}
                 height={viewportHeight}
                 outerElementType={MapGridCustomScrollbar}
@@ -92,6 +93,7 @@ const mapStateToProps = (state) => {
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
+    zoomScaleModifier: getZoomScaleModifier(state),
     disableAllInput: isAllEditorInputDisabled(state)
   }
 }

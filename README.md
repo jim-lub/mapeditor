@@ -5,7 +5,6 @@
 - Tile selector window
 
 ## Soon
-- Zoom
 - Menu bar ( save, load, settings, help )
 - Dashboard
 - Improved tools ( size, patterns )
@@ -42,6 +41,7 @@
 
 
 ## Completed
+- ~~Zoom~~
 - ~~New layer types: Tileset / Collision~~
 - ~~Layers~~
 - ~~Initialize / store tilemap data~~

@@ -9,6 +9,10 @@ import * as toolTypes from 'lib/constants/toolTypes';
 // import toolConstants from 'lib/constants/toolConstants';
 
 import {
+  zoomIn,
+  zoomOut,
+  resetZoom,
+
   setCurrentTool,
   getCurrentTool
 } from 'state/ducks/editor/tools';
@@ -49,6 +53,14 @@ const Component = ({ activeLayerId, activeTool, disableAllInput, actions, getLay
           )
         })
       }
+
+      { /* ZOOM TOOLS */ }
+      <div className={styles.zoomButtonsContainer}>
+        <button className={styles.node} onClick={actions.zoomIn}>+</button>
+        <button className={styles.node} onClick={actions.zoomOut}>-</button>
+        <button className={styles.node} onClick={actions.resetZoom}>reset</button>
+      </div>
+
       <ReactTooltip id="toolbar-tooltip-handler" place="right" delayShow={100} className={styles.toolbarTooltip} type="light" border={true}/>
     </div>
   )
@@ -65,7 +77,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setCurrentTool }, dispatch)
+    actions: bindActionCreators({ zoomIn, zoomOut, resetZoom, setCurrentTool }, dispatch)
   }
 }
 

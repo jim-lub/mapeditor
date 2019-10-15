@@ -7,6 +7,13 @@ export const setCurrentTool = ({ toolType }) => ({
   }
 });
 
+export const setZoomScaleModifier = ({ value }) => ({
+  type: types.setZoomScaleModifier,
+  payload: {
+    value
+  }
+});
+
 export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
   type: types.setColorValue,
   payload: {

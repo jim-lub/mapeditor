@@ -7,6 +7,15 @@ export const setCurrentTool = (state, action) => {
   }
 };
 
+export const setZoomScaleModifier = (state, action) => {
+  const { value } = action.payload;
+
+  return {
+    ...state,
+    zoomScaleModifier: value
+  }
+};
+
 export const setColorValue = (state, action) => {
   const { hex, rgb, hsl } = action.payload;
 

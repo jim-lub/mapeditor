@@ -32,3 +32,9 @@
   font-size: 11px;
   color: #6e768f;
 }
+
+.zoomButtonsContainer {
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: solid 1px var(--grey-300);
+}
