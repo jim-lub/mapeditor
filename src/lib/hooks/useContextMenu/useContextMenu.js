@@ -10,14 +10,14 @@ export default () => {
   const [innerWidth, setInnerWidth] = useState(0);
   const [innerHeight, setInnerHeight] = useState(0);
 
-  const [children, setChildren] = useState([]);
+  const [items, setItems] = useState([]);
   const [props, setProps] = useState({});
 
-  const handleOpen = (e, children = [], props = {}) => {
+  const handleOpen = (e, items = [], props = {}) => {
     e.preventDefault();
     e.stopPropagation();
 
-    setChildren(children);
+    setItems(items);
     setProps(props);
 
     setClientX(e.clientX);
@@ -30,17 +30,24 @@ export default () => {
 
   const handleClose = () => setVisibility(false);
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   if (isVisible) {
     return [
-      () => (
+      ({ width = "auto" }) => (
         <ContextMenu
           clientX={clientX}
           clientY={clientY}
           innerWidth={innerWidth}
           innerHeight={innerHeight}
+          width={width}
+          onContextMenu={handleContextMenu}
           onClose={handleClose}
 
-          children={children}
+          items={items}
           props={props}
         />
       ),

@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Select } from './components/Select';
+import { Item, Separator } from './components';
 
 import styles from './contextmenu.module.css';
 
 export default ({
   clientX, clientY, innerWidth, innerHeight,
-  children, props,
+  items,
+  width,
   onClose
 }) => {
   const outerElement = useRef();
-  const innerElementHeight = 30; // height of select, toggle, parent items
-  const outerElementHeight = (children.length * 30);
+  // const innerElementHeight = 28; // height of select, toggle, parent items
+  const outerElementHeight = (items.length * 28);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -43,13 +44,53 @@ export default ({
     <div
       ref={outerElement}
       className={styles.contextmenuWrapper}
-      style={ calculatePosition() }
+      style={{
+        ...calculatePosition(),
+        width: (width) ? width : "auto"
+      }}
     >
-      {
-        children.map(({ name, type, onClick }, index) => {
-          return <Select key={index} height={innerElementHeight} name={name} onClick={onClick} />
-        })
-      }
+      <div className={styles.contextmenuInner}>
+        {
+          items.map((item, index) => {
+            const {
+              type,
+              name,
+              keybinding = null,
+              icon = null,
+              action = null,
+              leaveContextMenuOpenAfterAction = false,
+              // items = []
+            } = item;
+
+            switch(type) {
+              case 'item': {
+                return (
+                  <Item
+                    key={index}
+                    name={name}
+                    keybinding={keybinding}
+                    icon={icon}
+                    action={action}
+                    onClose={(leaveContextMenuOpenAfterAction) ? () => null : onClose}
+                  />
+                )
+              }
+
+              case 'separator': {
+                return (
+                  <Separator
+                    key={index}
+                  />
+                )
+              }
+
+              default: {
+                return null;
+              }
+            }
+          })
+        }
+      </div>
     </div>,
     document.getElementById('contextmenu-root')
   )

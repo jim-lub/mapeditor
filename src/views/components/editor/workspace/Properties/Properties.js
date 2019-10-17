@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import { useContextMenu } from 'lib/hooks';
 
+import { ReactComponent as zoomInIcon } from 'assets/static/icons/editor/zoom-in.svg';
+import { ReactComponent as zoomOutIcon } from 'assets/static/icons/editor/zoom-out.svg';
+import { ReactComponent as deleteIcon } from 'assets/static/icons/editor/delete.svg';
+
 import styles from './properties.module.css';
 
 import {
@@ -20,25 +24,35 @@ const Component = ({ mapProperties, zoomScaleModifier }) => {
   if (!mapProperties.mapSize) return null;
 
   const handleContextMenu = (e, index) => {
-    const children = [
+    const items = [
       {
-        name: 'Menu option 1: ' + index,
-        type: 'clickAndClose', // 'select', 'toggle', 'parent'
-        onClick: () => console.log('Clicked menu option 1')
+        type: 'item', // 'select', 'toggle', 'parent'
+        name: 'Delete layer: ',
+        keybinding: 'Alt + P',
+        action: () => console.log('Clicked menu option 1')
       },
       {
-        name: 'Menu option 2',
-        type: 'select', // 'select', 'toggle', 'parent'
-        onClick: () => console.log('Clicked menu option 2')
+        type: 'separator'
       },
       {
-        name: 'Menu option 3',
-        type: 'select', // 'select', 'toggle', 'parent'
-        onClick: () => console.log('Clicked menu option 3')
+        type: 'item', // 'select', 'toggle', 'parent'
+        name: 'Zoom in',
+        keybinding: 'Alt + +',
+        icon: zoomInIcon,
+        action: () => console.log('Clicked menu option 2'),
+        leaveContextMenuOpenAfterAction: true
+      },
+      {
+        type: 'item', // 'select', 'toggle', 'parent'
+        name: 'Zoom out',
+        keybinding: 'Alt + -',
+        icon: zoomOutIcon,
+        action: () => console.log('Clicked menu option 3'),
+        leaveContextMenuOpenAfterAction: true
       }
-    ]
+    ];
 
-    openContextMenu(e, children)
+    openContextMenu(e, items)
   }
 
   const properties = [
@@ -72,7 +86,7 @@ const Component = ({ mapProperties, zoomScaleModifier }) => {
       </table>
     </WorkspaceModuleWrapper>
 
-    <ContextMenu />
+    <ContextMenu/>
     </>
   )
 }
