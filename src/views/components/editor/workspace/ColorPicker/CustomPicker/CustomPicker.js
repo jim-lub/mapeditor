@@ -2,11 +2,11 @@ import React from 'react';
 import { CustomPicker } from 'react-color';
 import { Hue, Saturation, EditableInput } from 'react-color/lib/components/common';
 
-const ColorPicker = ({ color, onChange, ...rest }) => {
-
+const ColorPicker = ({ color, onChange, contentWidth, contentHeight, ...rest }) => {
+  console.log(contentWidth, contentHeight)
   return (
-    <div style={{height: "100%", margin: 0, border: "solid 1px white"}}>
-      <div style={{position: "relative", height: 150}}>
+    <div style={{height: contentHeight, width: contentWidth, margin: 0, border: "solid 1px white"}}>
+      <div style={{position: "relative", height: (contentHeight - 60)}}>
         <Saturation
           color={color}
           {...rest}
@@ -14,7 +14,7 @@ const ColorPicker = ({ color, onChange, ...rest }) => {
         />
       </div>
 
-      <div style={{position: "relative", height: 15, borderTop: "solid 2px white"}}>
+      <div style={{position: "relative", height: 10, borderTop: "solid 2px white"}}>
         <Hue
           color={color}
           {...rest}
@@ -22,7 +22,7 @@ const ColorPicker = ({ color, onChange, ...rest }) => {
         />
       </div>
 
-      <div style={{position: "relative", borderTop: "solid 2px white" }}>
+      <div style={{position: "relative", height: 40, borderTop: "solid 2px white" }}>
         {/* HEX INPUT */}
         <EditableInput
           label="hex"

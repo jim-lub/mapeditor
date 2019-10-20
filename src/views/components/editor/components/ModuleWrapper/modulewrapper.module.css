@@ -1,0 +1,29 @@
+.wrapperOuter {
+  width: 100%;
+  height: 100%;
+  border: solid 1px var(--grey-500);
+  background-color: var(--grey-200);
+}
+
+.wrapperInner {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 28px auto;
+  width: 100%;
+  height: 100%;
+  border: solid 1px var(--white);
+}
+
+.header {
+  grid-row: 1 / 2;
+  padding: 4px 8px;
+  background-color: var(--grey-300);
+  border-bottom: solid 1px var(--grey-500);
+  font-weight: bold;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+.content {
+  grid-row: 2 / 3;
+}

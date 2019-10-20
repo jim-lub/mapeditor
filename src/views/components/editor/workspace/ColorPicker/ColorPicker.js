@@ -9,7 +9,7 @@ import { CustomPicker } from './CustomPicker';
 
 import styles from './colorpicker.module.css';
 
-const Component = ({ color, actions }) => {
+const Component = ({ color, actions, contentWidth, contentHeight }) => {
   const handleColorValueChange = (colorValue) => {
     actions.setColorValue({
       hex: colorValue.hex,
@@ -19,12 +19,12 @@ const Component = ({ color, actions }) => {
   }
 
   return (
-    <WorkspaceModuleWrapper moduleName="Color Picker" minHeight={237} maxHeight={237}>
-      <CustomPicker
-        color={color}
-        onChangeComplete={handleColorValueChange}
-      />
-    </WorkspaceModuleWrapper>
+    <CustomPicker
+      contentWidth={contentWidth}
+      contentHeight={contentHeight}
+      color={color}
+      onChangeComplete={handleColorValueChange}
+    />
   )
 }
 
