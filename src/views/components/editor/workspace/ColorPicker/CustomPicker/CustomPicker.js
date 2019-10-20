@@ -14,11 +14,12 @@ const ColorPicker = ({ color, onChange, contentWidth, contentHeight, ...rest }) 
         />
       </div>
 
-      <div style={{position: "relative", height: 10, borderTop: "solid 2px white"}}>
+      <div style={{position: "relative", height: 12, marginLeft: 3, marginRight: 3, borderTop: "solid 2px white"}}>
         <Hue
           color={color}
           {...rest}
           onChange={onChange}
+          pointer={HuePointer}
         />
       </div>
 
@@ -52,3 +53,18 @@ const ColorPicker = ({ color, onChange, contentWidth, contentHeight, ...rest }) 
 }
 
 export default CustomPicker(ColorPicker);
+
+const HuePointer = () => {
+  return (
+    <div style={{
+      width: 6,
+      height: 14,
+      backgroundColor: "white",
+      borderRadius: "0 0 5px 5px",
+      border: "solid 1px black",
+      transform: 'translate(-50%, -7px)',
+      cursor: 'pointer',
+      boxShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)"
+    }}/>
+  )
+}

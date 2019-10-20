@@ -7,7 +7,7 @@ import { ColorPicker } from '../../workspace/ColorPicker';
 
 import defaults, { defaultLayout } from 'lib/constants/editorLayouts';
 
-export default () => {
+export default ({ modules }) => {
   return (
     <AutoSizer>
       {({ width, height }) => {
@@ -24,21 +24,15 @@ export default () => {
             cols={defaults.columns}
             draggableHandle=".moduleDragHandle"
           >
-            <div key="colorPicker">
-              <ModuleWrapper displayName="Color Picker">
-                <ColorPicker />
-              </ModuleWrapper>
-            </div>
-            <div key="colorPicker2">
-              <ModuleWrapper displayName="Color Picker">
-                <ColorPicker />
-              </ModuleWrapper>
-            </div>
-            <div key="colorPicker3">
-              <ModuleWrapper displayName="Color Picker longer name">
-                <ColorPicker />
-              </ModuleWrapper>
-            </div>
+            {
+              modules.map(({ key, displayName, Component}) => (
+                <div key={key}>
+                  <ModuleWrapper displayName={displayName}>
+                    <Component />
+                  </ModuleWrapper>
+                </div>
+              ))
+            }
           </ResponsiveGridLayout>
         )
       }}

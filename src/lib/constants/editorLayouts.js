@@ -1,5 +1,7 @@
 export default {
   breakpoints: {
+    xxl: 2000,
+    xl: 1600,
     lg: 1200,
     md: 996,
     sm: 768,
@@ -8,49 +10,45 @@ export default {
   },
 
   columns: {
-    lg: 24,
-    md: 20,
-    sm: 12,
-    xs: 8,
+    xxl: 24,
+    xl: 16,
+    lg: 12,
+    md: 10,
+    sm: 8,
+    xs: 6,
     xxs: 4
   },
 
   rowHeight: 30
 }
 
-const _modules = {
-  'colorPicker': {
-    // minW: 4,
-    // maxW: 4,
-    minH: 8,
-    // maxH: 4
-  }
-}
-
 export const defaultLayout = {
+  xxl: [
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 2, y: 0, w: 22, h: 25, minW: 2, minH: 5},
+  ],
+  xl: [
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 2, y: 0, w: 14, h: 25, minW: 2, minH: 5},
+  ],
   lg: [
-    {i: 'colorPicker', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker2', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker3', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 2, y: 0, w: 10, h: 25, minW: 2, minH: 5},
   ],
   md: [
-    {i: 'colorPicker', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker2', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker3', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 0, y: 1, w: 10, h: 25, minW: 2, minH: 5},
   ],
   sm: [
-    {i: 'colorPicker', x: 0, y: 0, w: 12, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker2', x: 0, y: 0, w: 12, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker3', x: 0, y: 0, w: 12, h: 8, ..._modules['colorPicker']},
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 0, y: 1, w: 8, h: 25, minW: 2, minH: 5},
   ],
   xs: [
-    {i: 'colorPicker', x: 0, y: 0, w: 8, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker2', x: 0, y: 0, w: 8, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker3', x: 0, y: 0, w: 8, h: 8, ..._modules['colorPicker']},
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 0, y: 1, w: 6, h: 25, minW: 2, minH: 5},
   ],
   xxs: [
-    {i: 'colorPicker', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker2', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
-    {i: 'colorPicker3', x: 0, y: 0, w: 4, h: 8, ..._modules['colorPicker']},
+    {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'map', x: 0, y: 1, w: 4, h: 25, minW: 2, minH: 5},
   ],
 }

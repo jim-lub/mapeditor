@@ -9,7 +9,7 @@ const initialState = {
   currentTool: null,
   zoomScaleModifier: 1,
   colorValue: {
-    hex: "#D65858"
+    hex: "#39ADD6"
   }
 }
 
