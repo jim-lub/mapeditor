@@ -2,11 +2,15 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 export const setCurrentTool = actions.setCurrentTool;
+const allowedZoomLevels = [
+  0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90,
+  1.00,
+  1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75, 3.00, 3.25, 3.50, 3.75, 4.00, 4.25, 4.50, 4.75, 5.00
+]
 
 export const zoomIn = () => (dispatch, getState) => {
   const state = getState();
   const currentZoomScaleModifier = selectors.getZoomScaleModifier(state);
-  const allowedZoomLevels = [0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75, 3.00, 3.25, 3.50, 3.75, 4.00];
   const indexOf = allowedZoomLevels.indexOf(currentZoomScaleModifier);
   const nextZoomScaleModifier = allowedZoomLevels[indexOf + 1];
 
@@ -18,7 +22,6 @@ export const zoomIn = () => (dispatch, getState) => {
 export const zoomOut = () => (dispatch, getState) => {
   const state = getState();
   const currentZoomScaleModifier = selectors.getZoomScaleModifier(state);
-  const allowedZoomLevels = [0.25, 0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75, 3.00, 3.25, 3.50, 3.75, 4.00];
   const indexOf = allowedZoomLevels.indexOf(currentZoomScaleModifier);
   const nextZoomScaleModifier = allowedZoomLevels[indexOf - 1];
 

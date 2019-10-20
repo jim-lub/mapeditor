@@ -44,6 +44,7 @@ export default () => {
           innerWidth={innerWidth}
           innerHeight={innerHeight}
           width={width}
+          isVisible={isVisible}
           onContextMenu={handleContextMenu}
           onClose={handleClose}
 

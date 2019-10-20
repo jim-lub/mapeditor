@@ -1,15 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { CSSTransition } from 'react-transition-group';
 
 import { Item, Separator } from './components';
 
 import styles from './contextmenu.module.css';
+import fadeTransition from 'views/css/transitions/fade.module.css';
 
 export default ({
   clientX, clientY, innerWidth, innerHeight,
   items,
   width,
-  onClose
+  isVisible, onClose
 }) => {
   const outerElement = useRef();
   // const innerElementHeight = 28; // height of select, toggle, parent items
@@ -41,57 +43,71 @@ export default ({
   }
 
   return ReactDOM.createPortal(
-    <div
-      ref={outerElement}
-      className={styles.contextmenuWrapper}
-      style={{
-        ...calculatePosition(),
-        width: (width) ? width : "auto"
+    <CSSTransition
+      in={isVisible}
+      timeout={500}
+      classNames={{
+        appear: fadeTransition.appear,
+        appearActive: fadeTransition.appearActive,
+        enter: fadeTransition.enter,
+        enterActive: fadeTransition.enterActive,
+        exit: fadeTransition.exit,
+        exitActive: fadeTransition.exitActive,
       }}
+      appear
     >
-      <div className={styles.contextmenuInner}>
-        {
-          items.map((item, index) => {
-            const {
-              type,
-              name,
-              keybinding = null,
-              icon = null,
-              action = null,
-              leaveContextMenuOpenAfterAction = false,
-              // items = []
-            } = item;
+      <div
+        ref={outerElement}
+        className={styles.contextmenuWrapper}
+        style={{
+          ...calculatePosition(),
+          width: (width) ? width : "auto"
+        }}
+      >
+          <div className={styles.contextmenuInner}>
+            {
+              items.map((item, index) => {
+                const {
+                  type,
+                  name,
+                  keybinding = null,
+                  icon = null,
+                  action = null,
+                  leaveContextMenuOpenAfterAction = false,
+                  // items = []
+                } = item;
 
-            switch(type) {
-              case 'item': {
-                return (
-                  <Item
-                    key={index}
-                    name={name}
-                    keybinding={keybinding}
-                    icon={icon}
-                    action={action}
-                    onClose={(leaveContextMenuOpenAfterAction) ? () => null : onClose}
-                  />
-                )
-              }
+                switch(type) {
+                  case 'item': {
+                    return (
+                      <Item
+                        key={index}
+                        name={name}
+                        keybinding={keybinding}
+                        icon={icon}
+                        action={action}
+                        onClose={(leaveContextMenuOpenAfterAction) ? () => null : onClose}
+                      />
+                    )
+                  }
 
-              case 'separator': {
-                return (
-                  <Separator
-                    key={index}
-                  />
-                )
-              }
+                  case 'separator': {
+                    return (
+                      <Separator
+                        key={index}
+                      />
+                    )
+                  }
 
-              default: {
-                return null;
-              }
+                  default: {
+                    return null;
+                  }
+                }
+              })
             }
-          })
-        }
+          </div>
       </div>
-    </div>,
+    </CSSTransition>,
     document.getElementById('contextmenu-root')
   )
 }
