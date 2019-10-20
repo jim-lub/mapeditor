@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -37,18 +38,13 @@ const Component = ({ layerSortOrder, activeLayerId, openDeleteLayerModal, action
             {[...layerSortOrder].reverse().map((layerId, index) => (
               <Draggable key={layerId} draggableId={layerId} index={index}>
                 {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <Layer
-                      layerId={layerId}
-                      isActive={(layerId === activeLayerId)}
-                      isDragging={snapshot.isDragging}
-                      openDeleteLayerModal={openDeleteLayerModal}
-                    />
-                  </div>
+                  <PortalItem
+                    layerId={layerId}
+                    isActive={layerId === activeLayerId}
+                    openDeleteLayerModal={openDeleteLayerModal}
+                    provided={provided}
+                    snapshot={snapshot}
+                  />
                 )}
               </Draggable>
             ))}
@@ -58,6 +54,34 @@ const Component = ({ layerSortOrder, activeLayerId, openDeleteLayerModal, action
       </Droppable>
     </DragDropContext>
   );
+}
+
+const PortalItem = ({
+  layerId, isActive, openDeleteLayerModal,
+  provided, snapshot
+}) => {
+  const usePortal = snapshot.isDragging;
+
+  const child = (
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
+      <Layer
+        layerId={layerId}
+        isActive={isActive}
+        isDragging={snapshot.isDragging}
+        openDeleteLayerModal={openDeleteLayerModal}
+      />
+    </div>
+  )
+
+  if (!usePortal) {
+    return child;
+  }
+
+  return ReactDOM.createPortal(child, document.getElementById('drag-n-drop-root'))
 }
 
 const mapStateToProps = (state) => {

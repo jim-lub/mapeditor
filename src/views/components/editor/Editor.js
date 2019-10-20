@@ -4,6 +4,7 @@ import { ModuleGrid } from './components/ModuleGrid';
 
 import {
   ColorPicker,
+  Layers,
   Map
 } from './modules';
 
@@ -14,6 +15,11 @@ const modules = [
     key: 'colorPicker',
     displayName: 'Colors',
     Component: ColorPicker
+  },
+  {
+    key: 'layers',
+    displayName: 'Layers',
+    Component: Layers
   },
   {
     key: 'map',

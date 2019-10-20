@@ -21,10 +21,11 @@
   border-bottom: solid 1px var(--grey-500);
   font-weight: bold;
   white-space:nowrap;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .content {
+  position: relative;
   border-top: solid 1px var(--white);
   grid-row: 2 / 3;
 }

@@ -25,30 +25,37 @@ export default {
 export const defaultLayout = {
   xxl: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 2, y: 0, w: 22, h: 25, minW: 2, minH: 5},
   ],
   xl: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 2, y: 0, w: 14, h: 25, minW: 2, minH: 5},
   ],
   lg: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 2, y: 0, w: 10, h: 25, minW: 2, minH: 5},
   ],
   md: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 0, y: 1, w: 10, h: 25, minW: 2, minH: 5},
   ],
   sm: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 0, y: 1, w: 8, h: 25, minW: 2, minH: 5},
   ],
   xs: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 0, y: 1, w: 6, h: 25, minW: 2, minH: 5},
   ],
   xxs: [
     {i: 'colorPicker', x: 0, y: 0, w: 2, h: 5, minW: 2, minH: 5},
+    {i: 'layers', x: 0, y: 1, w: 2, h: 8, minW: 2, minH: 8},
     {i: 'map', x: 0, y: 1, w: 4, h: 25, minW: 2, minH: 5},
   ],
 }

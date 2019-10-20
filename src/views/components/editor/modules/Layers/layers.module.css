@@ -1,16 +1,22 @@
 .listWrapper {
-  height: calc(100% - 30px);
+  height: calc(100% - 31px);
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .toolbarWrapper {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   height: 30px;
   background-color: var(--grey-200);
-  border: solid 1px var(--grey-400);
+  border-top: solid 1px var(--grey-400);
 }
 
   .toolbarCreateLayerButton {
-    float: right;
+    float: left;
     width: auto;
     padding: 5px;
     margin: 2px;
