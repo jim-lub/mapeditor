@@ -7,6 +7,8 @@ import { App } from 'views/App';
 import configureStore from 'state/store';
 
 import 'views/css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 const store = configureStore();
 

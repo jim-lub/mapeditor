@@ -4,7 +4,7 @@ import {
   ProjectSelector,
   SceneSelector,
   SceneOverview
-} from 'views/components/editor/projectManagement';
+} from 'views/components/projectManagement';
 
 import styles from './projects.module.css';
 

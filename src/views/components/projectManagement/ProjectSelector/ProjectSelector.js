@@ -9,7 +9,7 @@ import {
   CreateProjectModal,
   DeleteProjectModal,
   UpdateProjectModal,
-} from 'views/components/editor/projectManagement/Modals';
+} from 'views/components/projectManagement/Modals';
 
 import {
   NodeList,

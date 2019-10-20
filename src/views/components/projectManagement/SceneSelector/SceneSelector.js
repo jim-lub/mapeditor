@@ -11,7 +11,7 @@ import {
   CreateSceneModal,
   DeleteSceneModal,
   UpdateSceneModal,
-} from 'views/components/editor/projectManagement/Modals';
+} from 'views/components/projectManagement/Modals';
 
 import {
   NodeList,
