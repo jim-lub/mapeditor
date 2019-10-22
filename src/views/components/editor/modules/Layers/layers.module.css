@@ -2,7 +2,7 @@
   height: calc(100% - 31px);
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .toolbarWrapper {

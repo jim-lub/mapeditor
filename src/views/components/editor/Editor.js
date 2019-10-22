@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { ModuleGrid } from './components/ModuleGrid';
 
@@ -29,10 +29,28 @@ const modules = [
 ]
 
 export default () => {
+  const [isScrollable, setIsScrollable] = useState(true);
+  const wrapperRef = useRef();
+
+  const handleSomething = () => console.log('something')
+
+  useEffect(() => {
+    wrapperRef.current.addEventListener('resize', handleSomething)
+  }, [wrapperRef])
+
+  const getOffset = () => {
+    const el = document.getElementById('editor-module-wrapper');
+    console.log(el)
+    console.log(el.clientWidth, el.offsetWidth, el.scrollWidth)
+    console.log(el.clientHeight, el.offsetHeight, el.scrollHeight)
+    return 0;
+  }
+
   return (
-    <div className={styles.wrapper}>
+    <div ref={wrapperRef} className={styles.wrapper}>
       <ModuleGrid
         modules={modules}
+        isScrollable={isScrollable}
       />
     </div>
   );

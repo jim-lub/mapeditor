@@ -3,21 +3,18 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
 
 import { ModuleWrapper } from '../ModuleWrapper';
-import { ColorPicker } from '../../workspace/ColorPicker';
 
 import defaults, { defaultLayout } from 'lib/constants/editorLayouts';
 
-export default ({ modules }) => {
+export default ({ modules, isScrollable }) => {
   return (
     <AutoSizer>
       {({ width, height }) => {
-        // console.log(width, height)
-
         return (
           <ResponsiveGridLayout
             className="layout"
             layouts={defaultLayout}
-            width={width}
+            width={(width - ((isScrollable) ? 17 : 0))}
             margin={[2, 2]}
             rowHeight={defaults.rowHeight}
             breakpoints={defaults.breakpoints}

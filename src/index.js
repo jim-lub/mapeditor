@@ -9,6 +9,7 @@ import configureStore from 'state/store';
 import 'views/css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import 'views/css/react-grid-override.css';
 
 const store = configureStore();
 
