@@ -5,6 +5,22 @@ import { Hue, Saturation, EditableInput } from 'react-color/lib/components/commo
 import styles from './custompicker.module.css';
 
 const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) => {
+  const handleChange = (colorValue) => {
+    const [key, value] = Object.entries(colorValue)[0];
+    console.log(key, value)
+    if (key === 'hex') {
+      return onChange({ [key]: value })
+    }
+
+    if (key === 'r' || key === 'g' || key === 'b') {
+      return onChange({
+        r: (key === 'r') ? Number(value) : color.rgb.r,
+        g: (key === 'g') ? Number(value) : color.rgb.g,
+        b: (key === 'b') ? Number(value) : color.rgb.b,
+      })
+    }
+  }
+
   return (
     <div className={styles.wrapper} style={{ width: contentWidth, height: contentHeight }}>
       <div className={styles.grid}>
@@ -43,7 +59,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
                 }
               }}
               value={color.hex}
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.rWrapper}>
@@ -51,7 +67,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
               label="r"
               style={{
                 label: {
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 },
                 input: {
                   width: "100%",
@@ -62,7 +78,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
                 }
               }}
               value={(color.rgb.hasOwnProperty('r')) ? color.rgb.r : null}
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.gWrapper}>
@@ -70,7 +86,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
               label="g"
               style={{
                 label: {
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 },
                 input: {
                   width: "100%",
@@ -81,7 +97,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
                 }
               }}
               value={(color.rgb.hasOwnProperty('g')) ? color.rgb.g : null}
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.bWrapper}>
@@ -89,7 +105,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
               label="b"
               style={{
                 label: {
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 },
                 input: {
                   width: "100%",
@@ -100,7 +116,7 @@ const Component = ({ color, contentWidth, contentHeight, onChange, ...rest }) =>
                 }
               }}
               value={(color.rgb.hasOwnProperty('b')) ? color.rgb.b : null}
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
 
