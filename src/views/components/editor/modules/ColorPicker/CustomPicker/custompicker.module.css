@@ -30,8 +30,10 @@
   flex-flow: row nowrap;
   justify-content: space-around;
   padding-top: 1px;
+  margin-top: 1px;
   text-align: center;
   font-weight: bold;
+  border-top: solid 1px var(--grey-400);
 }
 
   .hexWrapper {

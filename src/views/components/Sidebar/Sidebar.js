@@ -24,35 +24,37 @@ const Component = ({ authUser, authStatus, actions }) => {
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.navList}>
+      <div className={styles.sidebarInner}>
+        <div className={styles.navList}>
+          {
+            routes.filter(route => handleRouteFilter(route))
+              .map((route, index) =>
+                <CustomNavLink
+                  key={index}
+                  exact={route.exact}
+                  path={route.path}
+                  name={route.name}
+                  icon={route.icon}
+                />
+              )
+          }
+        </div>
+
         {
-          routes.filter(route => handleRouteFilter(route))
-            .map((route, index) =>
-              <CustomNavLink
-                key={index}
-                exact={route.exact}
-                path={route.path}
-                name={route.name}
-                icon={route.icon}
-              />
-            )
+          (authUser)
+            ? <div className={styles.signOutButton}><button className="red" style={{padding: "15px 1px", margin: 1}} onClick={actions.signOut}>Sign Out</button></div>
+            : null
         }
+
+        <ReactTooltip
+          id="sidebar-tooltip-handler"
+          place="right"
+          offset={{top: 4, left: 13}}
+          delayShow={200}
+          effect="solid"
+          className={styles.sidebarTooltip}
+        />
       </div>
-
-      {
-        (authUser)
-          ? <div className={styles.signOutButton}><button className="red" style={{padding: "15px 1px", margin: 1}} onClick={actions.signOut}>Sign Out</button></div>
-          : null
-      }
-
-      <ReactTooltip
-        id="sidebar-tooltip-handler"
-        place="right"
-        offset={{top: 4, left: 13}}
-        delayShow={200}
-        effect="solid"
-        className={styles.sidebarTooltip}
-      />
     </div>
   )
 }
