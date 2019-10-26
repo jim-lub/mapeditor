@@ -1,19 +1,21 @@
 .table {
   width: 100%;
-  margin: 0px;
+  border-collapse: separate;
+  border-spacing: 0px;
 }
 
 .row {
-  background-color: var(--white);
+  background-color: var(--grey-050);
 }
 
 .row:nth-child(even) {
-  background-color: var(--grey-050);
+  background-color: var(--white);
 }
 
 .key {
   padding: 1px 2px;
   border-bottom: solid 1px var(--grey-400);
+  border-right: solid 1px var(--grey-300);
   font-size: 10px;
 }
 

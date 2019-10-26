@@ -77,7 +77,7 @@ const Component = ({ layerId, layerProperties, isActive, isDragging, openDeleteL
       }
     ];
 
-    openContextMenu(e, items)
+    openContextMenu(e, items);
   }
 
   const layerWrapperClassNames = concatClassNames([

@@ -1,41 +1,23 @@
 import React from 'react';
 
-import { ModuleGrid } from './components/ModuleGrid';
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
+import moduleConstants from 'lib/constants/editorModuleConstants';
 
-import {
-  ColorPicker,
-  Layers,
-  Map,
-  Properties
-} from './modules';
+import { ModuleGrid } from './components/ModuleGrid';
 
 import styles from './editor.module.css';
 
-const modules = [
-  {
-    key: 'colorPicker',
-    displayName: 'Colors',
-    Component: ColorPicker
-  },
-  {
-    key: 'layers',
-    displayName: 'Layers',
-    Component: Layers
-  },
-  {
-    key: 'map',
-    displayName: 'Map',
-    Component: Map
-  },
-  {
-    key: 'properties',
-    displayName: 'Properties',
-    Component: Properties
-  }
-]
-
 export default () => {
+  const modules = Object.values(moduleTypes).map(type => {
+    const { name, Icon, Component } = moduleConstants[type];
 
+    return {
+      type,
+      name,
+      Icon,
+      Component
+    }
+  })
 
   return (
     <div className={styles.wrapper}>

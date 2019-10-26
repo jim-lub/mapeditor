@@ -4,9 +4,9 @@ import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
 
 import { ModuleWrapper } from '../ModuleWrapper';
 
-import defaults, { defaultLayout } from 'lib/constants/editorLayouts';
+import defaults, { defaultLayout } from 'lib/constants/editorModuleDefaultLayouts';
 
-export default ({ modules, isScrollable }) => {
+export default ({ modules }) => {
   return (
     <AutoSizer>
       {({ width, height }) => {
@@ -14,17 +14,17 @@ export default ({ modules, isScrollable }) => {
           <ResponsiveGridLayout
             className="layout"
             layouts={defaultLayout}
-            width={(width - ((isScrollable) ? 17 : 0))}
-            margin={[2, 2]}
+            width={(width - 17)}
+            margin={[5, 5]}
             rowHeight={defaults.rowHeight}
             breakpoints={defaults.breakpoints}
             cols={defaults.columns}
             draggableHandle=".moduleDragHandle"
           >
             {
-              modules.map(({ key, displayName, Component}) => (
-                <div key={key}>
-                  <ModuleWrapper displayName={displayName}>
+              modules.map(({ type, name, Icon, Component}) => (
+                <div key={type}>
+                  <ModuleWrapper name={name} Icon={Icon}>
                     <Component />
                   </ModuleWrapper>
                 </div>
