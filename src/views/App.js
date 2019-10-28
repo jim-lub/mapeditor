@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
-import { Sidebar } from 'views/components/Sidebar'
+import { Navbar } from 'views/components/Navbar'
 import { PageNotFound } from 'views/pages/404';
 
 import routes from 'lib/routes';
@@ -15,8 +15,8 @@ export const App = ({ store }) => {
 
   return (
     <div className={styles.windowWrapper}>
-      <div className={styles.sidebarWrapper}>
-        <Sidebar></Sidebar>
+      <div className={styles.navbarWrapper}>
+        <Navbar />
       </div>
 
       <div className={styles.contentWrapper}>
