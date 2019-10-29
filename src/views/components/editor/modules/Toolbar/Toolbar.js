@@ -24,6 +24,7 @@ const Component = ({ contentWidth, contentHeight, currentTool, actions }) => {
 
             return (
               <ToolNode
+                key={toolType}
                 toolType={toolType}
                 name={name}
                 description={description}

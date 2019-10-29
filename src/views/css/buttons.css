@@ -8,7 +8,7 @@ button {
     text-decoration: none;
     background-color: #f7f7fa;
     color: #a5abc5;
-    border: solid 1px #d7d8e0;
+    border: solid 1px var(--grey-400);
     border-radius: 5px;
     font-weight: bold;
     line-height: 1;

@@ -59,24 +59,9 @@ const Component = ({
         {Segment}
       </FixedSizeGrid>
 
-      { disableAllInput && <DisabledInputOverlay width={contentWidth} height={contentHeight} /> }
+      { disableAllInput && <Loader.Overlay /> }
     </>
   );
-}
-
-const DisabledInputOverlay = ({ width, height }) => {
-  return (
-    <div className={styles.disabledInputOverlay} style={{ width, height }}>
-      <div
-        style={{
-          marginLeft: (width / 2 - 24),
-          marginTop: (height / 2 - 24)
-        }}
-      >
-        <Loader.Simple width={48} height={48}/>
-      </div>
-    </div>
-  )
 }
 
 const mapStateToProps = (state) => {

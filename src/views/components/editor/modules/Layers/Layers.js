@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getCurrentScene } from 'state/ducks/editor/map';
 import { useModal } from 'lib/hooks';
 
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+
 import {
   CreateLayerModal,
   DeleteLayerModal
@@ -11,10 +13,11 @@ import {
 
 import { LayerList } from './LayerList';
 import { Toolbar } from './Toolbar';
+import { Loader } from 'views/components/Loader';
 
 import styles from './layers.module.css';
 
-const Component = ({ currentScene, layerSortOrder, contentWidth, contentHeight }) => {
+const Component = ({ currentScene, disableAllInput, contentWidth, contentHeight }) => {
   const [CreateLayerModalComponent, openCreateLayerModal] = useModal(CreateLayerModal, { width: 300 });
   const [DeleteLayerModalComponent, openDeleteLayerModal] = useModal(DeleteLayerModal, { width: 300 });
 
@@ -30,6 +33,8 @@ const Component = ({ currentScene, layerSortOrder, contentWidth, contentHeight }
         <Toolbar openCreateLayerModal={openCreateLayerModal} />
       </div>
 
+      { disableAllInput && <Loader.Overlay /> }
+
       <CreateLayerModalComponent />
       <DeleteLayerModalComponent />
     </div>
@@ -38,7 +43,8 @@ const Component = ({ currentScene, layerSortOrder, contentWidth, contentHeight }
 
 const mapStateToProps = (state) => {
   return {
-    currentScene: getCurrentScene(state)
+    currentScene: getCurrentScene(state),
+    disableAllInput: isAllEditorInputDisabled(state)
   }
 }
 

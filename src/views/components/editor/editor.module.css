@@ -1,6 +1,18 @@
-.wrapper {
+.grid {
+  position: relative;
+  display: grid;
   width: 100%;
   height: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: max-content auto;
+}
+
+.actionbarWrapper {
+  grid-row: 1 / 2;
+}
+
+.contentWrapper {
+  grid-row: 2 / 3;
   overflow: auto;
   overflow-x: hidden;
 }
