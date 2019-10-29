@@ -30,7 +30,7 @@ export default {
     description: "...",
     icon: eraserIcon,
     keybinding: "E",
-    cursor: "pointer",
+    cursor: "default",
     isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
   },
 

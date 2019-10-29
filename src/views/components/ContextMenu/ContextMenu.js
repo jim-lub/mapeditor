@@ -46,14 +46,7 @@ export default ({
     <CSSTransition
       in={isVisible}
       timeout={500}
-      classNames={{
-        appear: fadeTransition.appear,
-        appearActive: fadeTransition.appearActive,
-        enter: fadeTransition.enter,
-        enterActive: fadeTransition.enterActive,
-        exit: fadeTransition.exit,
-        exitActive: fadeTransition.exitActive,
-      }}
+      classNames={fadeTransition}
       appear
     >
       <div

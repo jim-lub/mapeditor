@@ -1,4 +1,4 @@
-import { SignIn, Dashboard, Projects, TilesetManager, Workspace } from 'views/pages';
+import { SignIn, Dashboard, Projects, TilesetManager, Editor } from 'views/pages';
 import * as ruleTypes from 'views/lib/authorization/ruleTypes';
 
 import { ReactComponent as DashboardIcon } from 'assets/static/icons/sidebar/dashboard.svg';
@@ -30,16 +30,16 @@ const routes = [
   },
 
   {
-    path: "/editor/workspace",
+    path: "/editor",
     exact: true,
-    component: Workspace,
+    component: Editor,
     ruleset: [ ruleTypes.IS_SIGNED_IN ],
     redirectTo: '/auth/signin',
-    name: "Workspace",
+    name: "Editor",
     icon: EditorIcon
   },
   {
-    path: "/editor/projects",
+    path: "/projects",
     exact: true,
     component: Projects,
     ruleset: [ ruleTypes.IS_SIGNED_IN ],
@@ -48,7 +48,7 @@ const routes = [
     icon: ProjectsIcon
   },
   {
-    path: "/editor/tilesets",
+    path: "/tilesets",
     exact: true,
     component: TilesetManager,
     ruleset: [ ruleTypes.IS_SIGNED_IN ],

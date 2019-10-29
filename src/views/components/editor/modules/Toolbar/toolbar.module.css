@@ -1,0 +1,28 @@
+.wrapper {
+
+}
+
+.button {
+  width: auto;
+  padding: 10px 12px;
+  margin: 1px;
+  border-radius: 2px;
+  fill: var(--grey-500);
+}
+
+.current {
+  fill: var(--blue-300);
+  border: solid 1px var(--blue-700);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: inherit;
+}
+
+.tooltip {
+  font-size: 11px;
+  color: #6e768f;
+  white-space: nowrap;
+}
