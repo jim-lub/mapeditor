@@ -80,3 +80,16 @@ export const clearAllLayerProperties = (state, action) => {
     layerProperties: {}
   }
 }
+
+
+export const incrementCreatedLayersCount = (state, action) => {
+  const { layerType } = action.payload;
+
+  return {
+    ...state,
+    createdLayersCount: {
+      ...state.createdLayersCount,
+      [layerType]: state.createdLayersCount[layerType] + 1
+    }
+  }
+}

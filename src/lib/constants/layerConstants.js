@@ -8,7 +8,7 @@ export default {
   [ layerTypes.color ]: {
     name: "Color",
     description: "...",
-    defaultNewLayerName: "Color Layer #",
+    defaultNewLayerName: "Color layer #",
     disabled: false,
     icon: colorIcon
   },
@@ -16,7 +16,7 @@ export default {
   [ layerTypes.tileset ]: {
     name: "Tileset",
     description: "...",
-    defaultNewLayerName: "Tileset Layer #",
+    defaultNewLayerName: "Tileset layer #",
     disabled: false,
     icon: tilesetIcon
   },
@@ -24,7 +24,7 @@ export default {
   [ layerTypes.collision ]: {
     name: "Collision",
     description: "...",
-    defaultNewLayerName: "Collision Layer #",
+    defaultNewLayerName: "Collision layer #",
     disabled: false,
     icon: collisionIcon
   },

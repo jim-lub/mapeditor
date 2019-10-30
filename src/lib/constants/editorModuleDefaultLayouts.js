@@ -73,7 +73,7 @@ export const defaultLayout = {
     {
       i: moduleTypes.map,
       x: 16, y: 0,
-      w: 84, h: 36,
+      w: 84, h: 38,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },

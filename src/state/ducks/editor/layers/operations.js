@@ -3,6 +3,7 @@ import * as selectors from './selectors';
 import * as utils from './utils';
 
 import { uuid } from 'lib/utils';
+import layerConstants from 'lib/constants/layerConstants';
 
 export const initializeStore = ({ layerSortOrder = [], layerPropertiesObject }) => dispatch => {
   if (layerSortOrder.length === 0) return;
@@ -36,14 +37,18 @@ export const clearStore = () => dispatch => {
 }
 
 export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, getState) => {
+  const state = getState();
   const layerId = uuid.create();
-  const sortOrder = selectors.getLayerSortOrder( getState() );
+  const sortOrder = selectors.getLayerSortOrder( state );
   const layerSortOrder = utils.modifyLayerSortOrderArray({ sortOrder, layerId, action: 'add' });
+  const defaultLayerName = layerConstants[layerType].defaultNewLayerName + (selectors.getCreatedLayersCount(state, { layerType }) + 1).toString();
+
+  dispatch( actions.incrementCreatedLayersCount({ layerType }) );
 
   dispatch( actions.setLayerPropertiesById({
       layerId,
       layerType,
-      layerName,
+      layerName: layerName || defaultLayerName,
       tileSize,
       visible: true,
       locked: false

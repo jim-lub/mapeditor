@@ -5,10 +5,17 @@ import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
 
+import * as layerTypes from 'lib/constants/layerTypes';
+
 const initialState = {
   layerProperties: {},
   layerSortOrder: [],
-  activeLayerId: null
+  activeLayerId: null,
+  createdLayersCount: {
+    [layerTypes.color]: 0,
+    [layerTypes.collision]: 0,
+    [layerTypes.tileset]: 0
+  }
 }
 
 export default createReducer( initialState )({
@@ -22,6 +29,8 @@ export default createReducer( initialState )({
   [ types.clearLayerPropertiesById ]: (state, action) => reducers.clearLayerPropertiesById(state, action),
 
   [ types.clearAllLayerProperties ]: (state, action) => reducers.clearAllLayerProperties(state, action),
+
+  [ types.incrementCreatedLayersCount ]: (state, action) => reducers.incrementCreatedLayersCount(state, action),
 });
 
 /*** operations ***/
