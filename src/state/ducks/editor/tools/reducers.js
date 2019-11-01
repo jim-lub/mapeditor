@@ -30,10 +30,10 @@ export const setColorValue = (state, action) => {
 };
 
 export const setTileValue = (state, action) => {
-  const { value } = action.payload;
+  const { columnIndex, rowIndex } = action.payload;
 
   return {
     ...state,
-    tileValue: value
+    tileValue: [columnIndex, rowIndex]
   }
 };

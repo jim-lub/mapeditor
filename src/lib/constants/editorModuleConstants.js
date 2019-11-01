@@ -5,6 +5,7 @@ import {
   Layers,
   Map,
   Properties,
+  TileSelector,
   Toolbar
 } from 'views/components/Editor/modules';
 
@@ -27,6 +28,11 @@ export default {
   [ moduleTypes.properties ]: {
     name: "Properties",
     Component: Properties
+  },
+
+  [ moduleTypes.tileSelector ]: {
+    name: "Selection",
+    Component: TileSelector
   },
 
   [ moduleTypes.toolbar ]: {

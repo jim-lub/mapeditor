@@ -23,9 +23,10 @@ export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
   }
 });
 
-export const setTileValue = ({ value }) => ({
+export const setTileValue = ({ columnIndex, rowIndex }) => ({
   type: types.setTileValue,
   payload: {
-    value
+    columnIndex,
+    rowIndex
   }
 });

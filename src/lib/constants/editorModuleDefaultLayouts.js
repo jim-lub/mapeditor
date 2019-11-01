@@ -35,7 +35,7 @@ export const defaultLayout = {
     {
       i: moduleTypes.map,
       x: 8, y: 0,
-      w: 92, h: 40,
+      w: 62, h: 40,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
@@ -44,6 +44,13 @@ export const defaultLayout = {
       x: 0, y: 34,
       w: 8, h: 6,
       minW: 8, minH: 6,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.tileSelector,
+      x: 70, y: 0,
+      w: 30, h: 40,
+      minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
     {
@@ -73,7 +80,7 @@ export const defaultLayout = {
     {
       i: moduleTypes.map,
       x: 16, y: 0,
-      w: 84, h: 38,
+      w: 54, h: 38,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
@@ -82,6 +89,13 @@ export const defaultLayout = {
       x: 0, y: 32,
       w: 16, h: 6,
       minW: 8, minH: 6,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.tileSelector,
+      x: 70, y: 0,
+      w: 30, h: 38,
+      minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
     {
@@ -117,9 +131,16 @@ export const defaultLayout = {
     },
     {
       i: moduleTypes.properties,
-      x: 0, y: 25,
+      x: 0, y: 35,
       w: 8, h: 10,
       minW: 2, minH: 2,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.tileSelector,
+      x: 0, y: 25,
+      w: 20, h: 10,
+      minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
     {

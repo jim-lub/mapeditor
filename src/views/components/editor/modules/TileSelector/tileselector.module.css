@@ -1,0 +1,21 @@
+.userInputWrapperOuter {
+  overflow: auto;
+}
+
+  .userInputWrapperInner {
+    position: relative;
+    background-repeat: no-repeat;
+  }
+
+    .userInputNode {
+      position: absolute;
+      box-sizing: border-box;
+      background-color: transparent;
+      border: dotted 1px var(--black);
+      cursor: default;
+    }
+
+    .userInputNode:hover {
+      background-color: rgb(90, 176, 238, 0.5);
+      border: solid 2px var(--blue-500);
+    }

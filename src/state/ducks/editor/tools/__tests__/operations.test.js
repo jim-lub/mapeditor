@@ -118,7 +118,8 @@ describe('tools/operations', () => {
 
   it('should change the tile value', () => {
     dispatch( operations.setTileValue({
-      value: [1, 1]
+      columnIndex: 1,
+      rowIndex: 1
     }) );
 
     const newState = getState();

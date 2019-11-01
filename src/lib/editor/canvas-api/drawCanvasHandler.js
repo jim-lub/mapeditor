@@ -2,6 +2,11 @@ import * as utils from './utils';
 
 import * as layerTypes from 'lib/constants/layerTypes';
 
+import tilesetImage from 'assets/static/tilesets/TownColor2@64x64.png';
+
+let image = new Image();
+image.src = tilesetImage;
+
 export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
   segmentId,
   layerProperties, layerSortOrder,
@@ -73,6 +78,8 @@ const _drawColorLayer = (ctx, { tileSize, tilemap }) => {
 const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
   tilemap.forEach((tilemapColumn, columnIndex) => {
     tilemapColumn.forEach((tileValue, rowIndex) => {
+      const tilesetColumnIndex = tileValue[0];
+      const tilesetRowIndex = tileValue[1];
 
       if (tileValue && tileValue !== 0) {
         ctx.fillStyle = "red";
@@ -82,6 +89,18 @@ const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
           Math.round(tileSize.width * columnIndex + 5),
           Math.round(tileSize.height * rowIndex + 10),
         );
+
+        ctx.drawImage(
+          image,
+          tileSize.width * tilesetColumnIndex,
+          tileSize.height * tilesetRowIndex,
+          tileSize.width,
+          tileSize.height,
+          tileSize.width * columnIndex,
+          tileSize.height * rowIndex,
+          64,
+          64
+        )
       }
 
     })
