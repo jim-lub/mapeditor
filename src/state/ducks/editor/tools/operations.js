@@ -35,3 +35,4 @@ export const resetZoom = () => (dispatch, getState) => {
 }
 
 export const setColorValue = actions.setColorValue;
+export const setTileValue = actions.setTileValue;

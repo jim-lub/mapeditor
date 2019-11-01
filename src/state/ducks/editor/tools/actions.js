@@ -22,3 +22,10 @@ export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
     hsl
   }
 });
+
+export const setTileValue = ({ value }) => ({
+  type: types.setTileValue,
+  payload: {
+    value
+  }
+});

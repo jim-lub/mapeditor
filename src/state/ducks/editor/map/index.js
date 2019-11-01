@@ -8,8 +8,8 @@ import * as reducers from './reducers';
 const initialState = {
   currentScene: {
     // uid: "qYOFnxf8E88wbT7mlrnm",
-    // uid: "QVTmWKKpAuMMzGGMQTlx",
-    uid: null
+    uid: "QVTmWKKpAuMMzGGMQTlx",
+    // uid: null
   },
   mapProperties: {},
   mapGrid: []

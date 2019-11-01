@@ -9,7 +9,7 @@ describe('tools/operations', () => {
     editor: {
       tools: {
         currentTool: null,
-        color: {}
+        colorValue: {}
       }
     }
   }
@@ -58,7 +58,7 @@ describe('tools/operations', () => {
     editor: {
       tools: {
         currentTool: null,
-        color: {}
+        colorValue: null
       }
     }
   }
@@ -101,6 +101,30 @@ describe('tools/operations', () => {
       },
       hsl: {}
     });
+  });
+});
+
+describe('tools/operations', () => {
+  const initialState = {
+    editor: {
+      tools: {
+        currentTool: null,
+        tileValue: {}
+      }
+    }
+  }
+
+  const { dispatch, getState } = configureTestStore(initialState);
+
+  it('should change the tile value', () => {
+    dispatch( operations.setTileValue({
+      value: [1, 1]
+    }) );
+
+    const newState = getState();
+    const tileValue = selectors.getTileValue(newState);
+
+    expect(tileValue).toEqual([1, 1]);
   });
 });
 

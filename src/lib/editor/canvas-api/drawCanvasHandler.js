@@ -28,7 +28,10 @@ export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
     }
 
     if (visible && layerType === layerTypes.tileset) {
-
+      _drawTilesetLayer(ctx, {
+        tileSize,
+        tilemap
+      })
     }
 
     if (visible && layerType === layerTypes.collision) {
@@ -67,10 +70,24 @@ const _drawColorLayer = (ctx, { tileSize, tilemap }) => {
   })
 }
 
-// const _drawTilesetLayer = (ctx, { tileSize }) => {
-//
-// }
-//
+const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
+  tilemap.forEach((tilemapColumn, columnIndex) => {
+    tilemapColumn.forEach((tileValue, rowIndex) => {
+
+      if (tileValue && tileValue !== 0) {
+        ctx.fillStyle = "red";
+        ctx.font = "10px Arial";
+        ctx.fillText(
+          `${tileValue}`,
+          Math.round(tileSize.width * columnIndex + 5),
+          Math.round(tileSize.height * rowIndex + 10),
+        );
+      }
+
+    })
+  })
+}
+
 // const _drawCollisionLayer = (ctx, { tileSize }) => {
 //
 // }
