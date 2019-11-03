@@ -25,5 +25,6 @@ export const clearCanvasAndResetScaleTransform = (ctx, { canvasWidth, canvasHeig
 export const setScaleTransform = (ctx, { scaleModifier }) => {
   if (!ctx) return;
 
-  ctx.scale(scaleModifier, scaleModifier);
+  ctx.setTransform(scaleModifier, 0, 0, scaleModifier, 0, 0);
+  // ctx.scale(scaleModifier, scaleModifier);
 }

@@ -82,13 +82,6 @@ const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
       const tilesetRowIndex = tileValue[1];
 
       if (tileValue && tileValue !== 0) {
-        ctx.fillStyle = "red";
-        ctx.font = "10px Arial";
-        ctx.fillText(
-          `${tileValue}`,
-          Math.round(tileSize.width * columnIndex + 5),
-          Math.round(tileSize.height * rowIndex + 10),
-        );
 
         ctx.drawImage(
           image,
@@ -98,9 +91,18 @@ const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
           tileSize.height,
           tileSize.width * columnIndex,
           tileSize.height * rowIndex,
-          64,
-          64
+          65,
+          65
         )
+
+        // text
+        // ctx.fillStyle = "red";
+        // ctx.font = "10px Arial";
+        // ctx.fillText(
+        //   `${tileValue}`,
+        //   Math.round(tileSize.width * columnIndex + 5),
+        //   Math.round(tileSize.height * rowIndex + 10),
+        // );
       }
 
     })

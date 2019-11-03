@@ -13,16 +13,20 @@ import {
   zoomOut
 } from 'state/ducks/editor/tools';
 
-import { ActionNode } from './ActionNode';
+import { Item } from './Item';
 
-import { ReactComponent as saveIcon } from 'assets/static/icons/editor/save.svg';
+import { ReactComponent as zoomInIcon } from 'assets/static/icons/editor/zoom-in.svg';
+import { ReactComponent as zoomResetIcon } from 'assets/static/icons/editor/zoom-reset.svg';
+import { ReactComponent as zoomOutIcon } from 'assets/static/icons/editor/zoom-out.svg';
 
 import styles from './actionbar.module.css';
 
 const Component = ({ storemapStatus, disableAllInput, actions }) => {
   return (
     <div className={"clearfix " + styles.actionbarWrapper}>
-      <ActionNode icon={saveIcon} action={actions.storeMap} disabled={disableAllInput} />
+      <Item icon={zoomInIcon} action={actions.zoomIn} disabled={disableAllInput} />
+      <Item icon={zoomResetIcon} action={actions.resetZoom} disabled={disableAllInput} />
+      <Item icon={zoomOutIcon} action={actions.zoomOut} disabled={disableAllInput} />
     </div>
   );
 }

@@ -11,7 +11,9 @@
       position: absolute;
       box-sizing: border-box;
       background-color: transparent;
-      border: dotted 1px var(--black);
+      border: solid 1px transparent;
+      border-right: dotted 1px var(--grey-500);
+      border-bottom: dotted 1px var(--grey-500);
       cursor: default;
     }
 

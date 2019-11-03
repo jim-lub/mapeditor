@@ -1,9 +1,12 @@
-.disabledInputOverlay {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--grey-800);
-  opacity: 0.5;
+.wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+}
+
+.actionbar {
+  grid-row: 1 / 2;
+}
+
+.segments {
+  grid-row: 2 / 3;
 }

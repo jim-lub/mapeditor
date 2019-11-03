@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeGrid } from 'react-window';
 
 import {
@@ -18,6 +17,7 @@ import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import { Loader } from 'views/components/Loader';
+import { Actionbar } from './Actionbar';
 import { Segment } from './Segment';
 
 import styles from './map.module.css';
@@ -48,17 +48,24 @@ const Component = ({
 
   return (
     <>
-      <FixedSizeGrid
-        columnCount={mapProperties.mapSize.columns}
-        rowCount={mapProperties.mapSize.rows}
-        columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
-        rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
-        width={contentWidth}
-        height={contentHeight}
-      >
-        {Segment}
-      </FixedSizeGrid>
+      <div className={styles.wrapper}>
+        <div className={styles.actionbar}>
+          <Actionbar />
+        </div>
 
+        <div className={styles.segments}>
+          <FixedSizeGrid
+            columnCount={mapProperties.mapSize.columns}
+            rowCount={mapProperties.mapSize.rows}
+            columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
+            rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
+            width={contentWidth}
+            height={(contentHeight - 42)}
+          >
+            {Segment}
+          </FixedSizeGrid>
+        </div>
+      </div>
       { disableAllInput && <Loader.Overlay /> }
     </>
   );
