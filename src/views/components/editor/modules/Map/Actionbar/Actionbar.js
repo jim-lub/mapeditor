@@ -13,6 +13,8 @@ import {
   zoomOut
 } from 'state/ducks/editor/tools';
 
+import { UserInputHelper } from '../UserInputHelper';
+
 import { Item } from './Item';
 
 import { ReactComponent as zoomInIcon } from 'assets/static/icons/editor/zoom-in.svg';
@@ -27,6 +29,8 @@ const Component = ({ storemapStatus, disableAllInput, actions }) => {
       <Item icon={zoomInIcon} action={actions.zoomIn} disabled={disableAllInput} />
       <Item icon={zoomResetIcon} action={actions.resetZoom} disabled={disableAllInput} />
       <Item icon={zoomOutIcon} action={actions.zoomOut} disabled={disableAllInput} />
+
+      <div style={{float: "right"}}><UserInputHelper /></div>
     </div>
   );
 }

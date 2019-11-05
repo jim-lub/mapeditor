@@ -91,8 +91,8 @@ const _drawTilesetLayer = (ctx, { tileSize, tilemap }) => {
           tileSize.height,
           tileSize.width * columnIndex,
           tileSize.height * rowIndex,
-          65,
-          65
+          64,
+          64
         )
 
         // text

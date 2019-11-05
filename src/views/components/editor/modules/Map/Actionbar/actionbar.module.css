@@ -1,8 +1,8 @@
 .actionbarWrapper {
   width: 100%;
   padding: 2px;
-  background-color: var(--grey-100);
-  border-bottom: solid 1px var(--grey-500);
+  background-color: var(--grey-200);
+  border-bottom: solid 1px var(--grey-600);
 }
 
 .itemWrapper {

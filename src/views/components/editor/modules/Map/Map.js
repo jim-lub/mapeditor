@@ -50,7 +50,7 @@ const Component = ({
     <>
       <div className={styles.wrapper}>
         <div className={styles.actionbar}>
-          <Actionbar />
+          <Actionbar disabled={disableAllInput}/>
         </div>
 
         <div className={styles.segments}>
@@ -64,9 +64,9 @@ const Component = ({
           >
             {Segment}
           </FixedSizeGrid>
+          { disableAllInput && <Loader.Overlay /> }
         </div>
       </div>
-      { disableAllInput && <Loader.Overlay /> }
     </>
   );
 }

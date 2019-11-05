@@ -1,0 +1,68 @@
+.wrapper {
+  position: relative;
+  height: 35px;
+}
+
+.iconContainer {
+  float: left;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 7px;
+  margin-right: 1px;
+  background-color: var(--grey-300);
+  border: solid 1px var(--grey-500);
+  border-radius: 3px 0 0 3px;
+  fill: var(--light-green-900);
+}
+
+    .iconWrapper {
+      float: left;
+      padding: 9px 5px 0 5px;
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      fill: var(--grey-700);
+    }
+
+    .colorValueContainer {
+      float: left;
+      padding: 11px 5px 9px 10px;
+      margin-left: 5px;
+      border-left: solid 1px var(--grey-400);
+      font-size: 11px;
+    }
+
+    .colorValue {
+      width: 12px;
+      height: 12px;
+      border-radius: 20px;
+    }
+
+.textContainer {
+  float: left;
+  height: 100%;
+  padding: 0 7px;
+  background-color: var(--light-green-300);
+  border: solid 1px var(--light-green-700);
+  border-radius: 0 3px 3px 0;
+  color: var(--light-green-900);
+  fill: var(--light-green-900);
+}
+
+    .textContainerErrors {
+      background-color: var(--red-100);
+      border: solid 1px var(--red-400);
+      color: var(--red-900);
+      fill: var(--red-700);
+    }
+
+    .textContainerContent {
+      float: left;
+      padding: 10px 5px 0 0;
+      margin-left: 5px;
+      color: inherit;
+      font-size: 10px;
+      font-weight: bold;
+    }
