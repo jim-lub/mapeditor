@@ -18,6 +18,8 @@ import toolConstants from 'lib/constants/toolConstants';
 
 import { concatClassNames } from 'lib/utils';
 
+import { ReactComponent as UndefinedIcon } from 'assets/static/icons/editor/undefined.svg';
+
 import styles from './userinputhandler.module.css';
 
 const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorValue, tileValue }) => {
@@ -39,17 +41,24 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
   }, [activeLayerId, getLayerPropertiesById])
 
   useEffect(() => {
+    if (!layerType) return;
+
     const properties = layerConstants[layerType];
+    const { visible, locked } = getLayerPropertiesById({ layerId: activeLayerId });
 
     if (properties) {
       const { name, icon } = properties;
 
       setLayerIcon(icon);
-      return setLayerProperties({ name });
+      return setLayerProperties({
+        name,
+        visible,
+        locked
+      });
     }
 
     setLayerProperties(null);
-  }, [layerType]);
+  }, [activeLayerId, layerType, getLayerPropertiesById]);
 
   useEffect(() => {
     const properties = toolConstants[currentTool];
@@ -73,6 +82,8 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
     if (globalErrors.length > 0) return setErrors(globalErrors);
 
     const specificErrors = [
+      (layerProperties.visible) ? null : 'Layer is hidden',
+      (layerProperties.locked) ? 'Layer is locked' : null,
       (toolProperties.isAllowedOnLayers.includes(layerType)) ? null : `${toolProperties.name} is inapplicable on ${layerProperties.name.toLowerCase()} layers`,
     ]
     .filter(error => error);
@@ -93,6 +104,13 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
           (LayerIcon) &&
           <div className={styles.iconWrapper}>
             <LayerIcon className={styles.icon} />
+          </div>
+        }
+
+        {
+          (!LayerIcon) &&
+          <div className={styles.iconWrapper}>
+            <UndefinedIcon className={styles.icon} />
           </div>
         }
 
@@ -119,15 +137,22 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
             { errors[0] }
             {
               (errors.length > 1) &&
-              ` (${(errors.length - 1)} more..)`
+              ` (+${(errors.length - 1)})`
             }
           </div>
         }
 
         {
-          (errors.length === 0) &&
+          (layerType === layerTypes.color && errors.length === 0) &&
           <div className={styles.textContainerContent}>
-            Selection: 1 tile(s)
+            Size: 1 tile(s)
+          </div>
+        }
+
+        {
+          (layerType === layerTypes.tileset && errors.length === 0) &&
+          <div className={styles.textContainerContent}>
+            Selected: 1 tile(s)
           </div>
         }
       </div>
