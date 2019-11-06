@@ -1,5 +1,5 @@
 import React from 'react';
-import { TSelectableItemProps, createSelectable } from 'react-selectable-fast';
+import { createSelectable } from 'react-selectable-fast';
 
 import { concatClassNames } from 'lib/utils';
 

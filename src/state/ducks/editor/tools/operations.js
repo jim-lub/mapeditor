@@ -1,5 +1,9 @@
+import _ from 'lodash';
+
 import * as actions from './actions';
 import * as selectors from './selectors';
+
+import { buildTwoDimensionalArray } from 'lib/utils';
 
 export const setCurrentTool = actions.setCurrentTool;
 const allowedZoomLevels = [
@@ -37,5 +41,48 @@ export const resetZoom = () => (dispatch, getState) => {
 export const setColorValue = actions.setColorValue;
 export const setTileValue = actions.setTileValue;
 
-export const setTileSelection = actions.setTileSelection;
+export const setTileSelection = ({ selection }) => dispatch => {
+  if (selection.length === 0) return;
+  const sortedSelection = _.sortBy(selection, ['columnIndex', 'rowIndex']);
+
+  const { columnIndex: lowestColumnIndex } = _.minBy(sortedSelection, 'columnIndex');
+  const { columnIndex: highestColumnIndex } = _.maxBy(sortedSelection, 'columnIndex');
+  const { rowIndex: lowestRowIndex } = _.minBy(sortedSelection, 'rowIndex');
+  const { rowIndex: highestRowIndex } = _.maxBy(sortedSelection, 'rowIndex');
+
+  const selectionWidth = (highestColumnIndex + 1) - lowestColumnIndex;
+  const selectionHeight = (highestRowIndex + 1) - lowestRowIndex;
+  const columnOffset = lowestColumnIndex;
+  const rowOffset = lowestRowIndex;
+
+  const normalizedSelection = sortedSelection.map(({ columnIndex, rowIndex }) => ({
+    columnIndex: columnIndex - columnOffset,
+    rowIndex: rowIndex - rowOffset,
+    tilesetColumnIndex: columnIndex,
+    tilesetRowIndex: rowIndex
+  }));
+
+  const selectionPattern = buildTwoDimensionalArray({
+    columns: selectionWidth,
+    rows: selectionHeight,
+    mapFn: ({ columnIndex: patternColumIndex, rowIndex: patternRowIndex }) => {
+      const selected = _.find(normalizedSelection, { columnIndex: patternColumIndex, rowIndex: patternRowIndex });
+
+      if (selected) {
+        const { tilesetColumnIndex, tilesetRowIndex } = selected;
+
+        return ({
+          tilesetColumnIndex,
+          tilesetRowIndex
+        });
+      }
+
+      return null;
+    }
+  });
+
+  console.log(normalizedSelection);
+  console.log(selectionPattern);
+};
+
 export const clearTileSelection = actions.clearTileSelection;

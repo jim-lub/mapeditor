@@ -7,8 +7,7 @@ import { useKeyPress } from 'lib/hooks';
 import { buildTwoDimensionalArray } from 'lib/utils';
 
 import {
-  setTileValue,
-  getTileValue
+  setTileSelection
 } from 'state/ducks/editor/tools';
 
 import SelectableTile from './SelectableTile';
@@ -17,14 +16,15 @@ import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight }) => {
+const Component = ({ contentWidth, contentHeight, actions }) => {
   const { image, imageSize, tileSize } = tilesetImageConfig;
   const ctrlKeyPressed = useKeyPress('s');
 
-  const handleSelectionFinish = (data) => {
-    console.log(data.map(({ props: { columnIndex, rowIndex } }) => {
-      return [columnIndex, rowIndex]
-    }))
+  const handleSelectionFinish = (tileSelection) => {
+    const selection = tileSelection
+      .map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }));
+
+    actions.setTileSelection({ selection })
   }
 
   const handleSelectionClear = () => {
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ }, dispatch)
+    actions: bindActionCreators({ setTileSelection }, dispatch)
   }
 }
 
