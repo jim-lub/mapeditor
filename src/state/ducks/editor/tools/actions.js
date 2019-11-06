@@ -30,3 +30,15 @@ export const setTileValue = ({ columnIndex, rowIndex }) => ({
     rowIndex
   }
 });
+
+export const setTileSelection = ({ columnIndex, rowIndex }) => ({
+  type: types.setTileSelection,
+  payload: {
+    columnIndex,
+    rowIndex
+  }
+});
+
+export const clearTileSelection = () => ({
+  type: types.clearTileSelection
+});

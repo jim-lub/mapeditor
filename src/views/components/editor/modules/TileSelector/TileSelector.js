@@ -1,77 +1,72 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { SelectableGroup } from 'react-selectable-fast';
 
+import { useKeyPress } from 'lib/hooks';
 import { buildTwoDimensionalArray } from 'lib/utils';
 
-import { setTileValue } from 'state/ducks/editor/tools';
+import {
+  setTileValue,
+  getTileValue
+} from 'state/ducks/editor/tools';
 
-import tilesetImage from 'assets/static/tilesets/TownColor2@64x64.png';
+import SelectableTile from './SelectableTile';
+
+import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight, actions }) => {
-  const tilesetSize = { width: 1024, height: 1024 };
-  const tileSize = { width: 64, height: 64 };
-  const onPointerEvent = ({ columnIndex, rowIndex }) => {
-    actions.setTileValue({ columnIndex, rowIndex })
+const Component = ({ contentWidth, contentHeight }) => {
+  const { image, imageSize, tileSize } = tilesetImageConfig;
+  const ctrlKeyPressed = useKeyPress('s');
+
+  const handleSelectionFinish = (data) => {
+    console.log(data.map(({ props: { columnIndex, rowIndex } }) => {
+      return [columnIndex, rowIndex]
+    }))
   }
 
-  const columns = tilesetSize.width / tileSize.width;
-  const rows = tilesetSize.height / tileSize.height;
+  const handleSelectionClear = () => {
 
-  const handleContextMenu = (e) => e.preventDefault();
-  const handlePointerDown = (e) => handlePointerEvent(e);
-  // const handlePointerOver = (e) => handlePointerEvent(e);
+  }
 
-  const handlePointerEvent = (pointerEvent) => {
-    const { pointerType, button, buttons, altKey, ctrlKey, shiftKey, target } = pointerEvent;
-    const { columnIndex, rowIndex } = _targetIdToIndexes(target.id);
-    pointerEvent.preventDefault();
+  const selectables = () => {
+    const columns = imageSize.width / tileSize.width;
+    const rows = imageSize.height / tileSize.height;
 
-    const pointerActions = _toPointerActionsObject({ button, buttons });
-
-    if (pointerType === "mouse") {
-      onPointerEvent({
-        columnIndex, rowIndex,
-        inputActions: {
-          ...pointerActions.mouse
-        },
-        inputModifiers: {
-          altKey, ctrlKey, shiftKey
-        }
-      })
-    }
+    return buildTwoDimensionalArray({
+      columns, rows,
+      mapFn: ({ columnIndex, rowIndex }) => (
+        <SelectableTile
+          key={columnIndex + rowIndex}
+          columnIndex={columnIndex}
+          rowIndex={rowIndex}
+          tileSize={tileSize}
+          position={{
+            left: tileSize.width * columnIndex,
+            top: tileSize.height * rowIndex,
+          }}
+        />
+      )
+    })
   }
 
   return (
-    <div className={styles.userInputWrapperOuter} style={{width: contentWidth, height: contentHeight}}>
-      <div className={styles.userInputWrapperInner} style={{width: tilesetSize.width, height: tilesetSize.height, backgroundImage: `url(${tilesetImage})`}}>
-        {
-          buildTwoDimensionalArray({
-            columns, rows,
-            mapFn: ({ columnIndex, rowIndex }) => (
-              <div
-                key={`${columnIndex}-${rowIndex}`}
-                id={`inputNode-${columnIndex}-${rowIndex}`}
-                className={styles.userInputNode}
-                style={{
-                  width: tileSize.width,
-                  height: tileSize.height,
-                  left: (tileSize.width) * columnIndex,
-                  top: (tileSize.height) * rowIndex,
-                }}
-                onContextMenu={handleContextMenu}
-                onPointerDown={handlePointerDown}
-              >
-                { columnIndex }, { rowIndex }
-              </div>
-            )
-          })
-        }
+    <div className={styles.overflowContainer} style={{width: contentWidth, height: contentHeight}}>
+      <div className={styles.selectableContainer} style={{width: imageSize.width, height: imageSize.height, backgroundImage: `url(${image})`}}>
+        <SelectableGroup
+          onSelectionFinish={handleSelectionFinish}
+          onSelectionClear={handleSelectionClear}
+          selectboxClassName={styles.selectBox}
+          resetOnStart={(ctrlKeyPressed) ? false : true}
+          enableDeselect
+        >
+          { selectables() }
+        </SelectableGroup>
       </div>
     </div>
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -82,23 +77,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setTileValue }, dispatch)
+    actions: bindActionCreators({ }, dispatch)
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
-
-const _targetIdToIndexes = (id) => ({
-  columnIndex: id.split('-')[1],
-  rowIndex: id.split('-')[2],
-});
-
-const _toPointerActionsObject = ({ button, buttons }) => ({
-  mouse: {
-    hover: (button === -1 && buttons === 0),
-    leftClick: (button === 0 && buttons === 1),
-    rightClick: (button === 2 && buttons === 2),
-    leftClickAndHold: (button === -1 && buttons === 1),
-    rightClickAndHold: (button === -1 && buttons === 2)
-  },
-})

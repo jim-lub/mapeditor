@@ -37,3 +37,21 @@ export const setTileValue = (state, action) => {
     tileValue: [columnIndex, rowIndex]
   }
 };
+
+export const setTileSelection = (state, action) => {
+  const { columnIndex, rowIndex } = action.payload;
+
+  return {
+    ...state,
+    tileSelection: []
+  }
+};
+
+export const clearTileSelection = (state, action) => {
+  const { columnIndex, rowIndex } = action.payload;
+
+  return {
+    ...state,
+    tileSelection: []
+  }
+};

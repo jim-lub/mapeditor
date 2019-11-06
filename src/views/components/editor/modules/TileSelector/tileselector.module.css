@@ -1,23 +1,26 @@
-.userInputWrapperOuter {
+.overflowContainer {
   overflow: auto;
 }
 
-  .userInputWrapperInner {
-    position: relative;
-    background-repeat: no-repeat;
+.selectableContainer {
+  position: relative;
+}
+
+.selectable {
+  position: absolute;
+  border-right: dotted 1px var(--grey-900);
+  border-bottom: dotted 1px var(--grey-900);
+}
+
+  .selected {
+    background-color: rgb(90, 176, 238, 0.5);
+    /* border: solid 2px var(--blue-500); */
   }
 
-    .userInputNode {
-      position: absolute;
-      box-sizing: border-box;
-      background-color: transparent;
-      border: solid 1px transparent;
-      border-right: dotted 1px var(--grey-500);
-      border-bottom: dotted 1px var(--grey-500);
-      cursor: default;
-    }
+  .selecting {
+    background-color: rgb(90, 176, 238, 0.3);
+  }
 
-    .userInputNode:hover {
-      background-color: rgb(90, 176, 238, 0.5);
-      border: solid 2px var(--blue-500);
-    }
+.selectBox {
+  border: dashed 2px var(--blue-500);
+}
