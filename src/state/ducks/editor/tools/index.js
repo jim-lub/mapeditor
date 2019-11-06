@@ -30,7 +30,6 @@ export const zoomIn = operations.zoomIn;
 export const zoomOut = operations.zoomOut;
 export const resetZoom = operations.resetZoom;
 export const setColorValue = operations.setColorValue;
-export const setTileValue = operations.setTileValue;
 export const setTileSelection = operations.setTileSelection;
 export const clearTileSelection = operations.clearTileSelection;
 
