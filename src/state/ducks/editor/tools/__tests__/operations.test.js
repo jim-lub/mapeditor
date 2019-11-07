@@ -109,23 +109,58 @@ describe('tools/operations', () => {
     editor: {
       tools: {
         currentTool: null,
-        tileValue: {}
+        tileSelection: {
+          grid: [],
+          list: []
+        }
       }
     }
   }
 
   const { dispatch, getState } = configureTestStore(initialState);
 
-  it('should change the tile value', () => {
-    dispatch( operations.setTileValue({
-      columnIndex: 1,
-      rowIndex: 1
+  it('should convert the selected tiles to a grid and list', () => {
+    dispatch( operations.setTileSelection({
+      selected: [
+        {
+          columnIndex: 1,
+          rowIndex: 1
+        },
+        {
+          columnIndex: 2,
+          rowIndex: 0
+        },
+        {
+          columnIndex: 3,
+          rowIndex: 1
+        },
+      ]
     }) );
 
     const newState = getState();
-    const tileValue = selectors.getTileValue(newState);
+    const { grid, list } = selectors.getTileSelection(newState);
 
-    expect(tileValue).toEqual([1, 1]);
+    expect(grid).toEqual([
+      [null, { tilesetColumnIndex: 1, tilesetRowIndex: 1 }],
+      [{ tilesetColumnIndex: 2, tilesetRowIndex: 0 }, null],
+      [null, { tilesetColumnIndex: 3, tilesetRowIndex: 1 }]
+    ]);
+
+    expect(list).toEqual([
+      { columnIndex: 0, rowIndex: 1, tilesetColumnIndex: 1, tilesetRowIndex: 1 },
+      { columnIndex: 1, rowIndex: 0, tilesetColumnIndex: 2, tilesetRowIndex: 0 },
+      { columnIndex: 2, rowIndex: 1, tilesetColumnIndex: 3, tilesetRowIndex: 1 },
+    ]);
+  });
+
+  it('should clear the tile selection', () => {
+    dispatch( operations.clearTileSelection() );
+
+    const newState = getState();
+    const { grid, list } = selectors.getTileSelection(newState);
+
+    expect(grid).toEqual([]);
+    expect(list).toEqual([]);
   });
 });
 

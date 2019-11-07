@@ -29,29 +29,24 @@ export const setColorValue = (state, action) => {
   }
 };
 
-export const setTileValue = (state, action) => {
-  const { columnIndex, rowIndex } = action.payload;
-
-  return {
-    ...state,
-    tileValue: [columnIndex, rowIndex]
-  }
-};
-
 export const setTileSelection = (state, action) => {
-  const { columnIndex, rowIndex } = action.payload;
+  const { grid, list } = action.payload;
 
   return {
     ...state,
-    tileSelection: []
+    tileSelection: {
+      grid,
+      list
+    }
   }
 };
 
 export const clearTileSelection = (state, action) => {
-  const { columnIndex, rowIndex } = action.payload;
-
   return {
     ...state,
-    tileSelection: []
+    tileSelection: {
+      grid: [],
+      list: []
+    }
   }
 };

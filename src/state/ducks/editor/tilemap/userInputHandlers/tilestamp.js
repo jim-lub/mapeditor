@@ -2,7 +2,7 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import * as utils from '../utils';
 
-import { getTileValue } from '../../tools';
+import { getTileSelection } from '../../tools';
 
 export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
   if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, [])) {
@@ -27,7 +27,7 @@ const _leftClickNoModifiers = ({
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
   const state = getState();
-  const value = getTileValue(state);
+  const value = getTileSelection(state);
   const currentValue = selectors.getTilemapDataSegmentById(state, { segmentId })[layerId][columnIndex][rowIndex];
 
   if (value === currentValue) return;
@@ -40,7 +40,7 @@ const _leftClickAndHoldNoModifiers = ({
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
   const state = getState();
-  const value = getTileValue(state);
+  const value = getTileSelection(state);
   const currentValue = selectors.getTilemapDataSegmentById(state, { segmentId })[layerId][columnIndex][rowIndex];
 
   if (value === currentValue) return;

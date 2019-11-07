@@ -9,7 +9,7 @@ import {
 import {
   getCurrentTool,
   getColorValue,
-  getTileValue
+  getTileSelection
 } from 'state/ducks/editor/tools';
 
 import * as layerTypes from 'lib/constants/layerTypes';
@@ -167,7 +167,7 @@ const mapStateToProps = (state) => {
 
     currentTool: getCurrentTool(state),
     colorValue: getColorValue(state),
-    tileValue: getTileValue(state)
+    tileValue: getTileSelection(state)
   }
 }
 

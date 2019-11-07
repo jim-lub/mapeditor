@@ -11,15 +11,16 @@ const initialState = {
   colorValue: {
     hex: "#39ADD6"
   },
-  tileValue: [1, 1],
-  tileSelection: []
+  tileSelection: {
+    grid: [],
+    list: []
+  }
 }
 
 export default createReducer( initialState )({
   [ types.setCurrentTool ]: (state, action) => reducers.setCurrentTool(state, action),
   [ types.setZoomScaleModifier ]: (state, action) => reducers.setZoomScaleModifier(state, action),
   [ types.setColorValue ]: (state, action) => reducers.setColorValue(state, action),
-  [ types.setTileValue ]: (state, action) => reducers.setTileValue(state, action),
   [ types.setTileSelection ]: (state, action) => reducers.setTileSelection(state, action),
   [ types.clearTileSelection ]: (state, action) => reducers.clearTileSelection(state, action),
 });
@@ -37,5 +38,6 @@ export const clearTileSelection = operations.clearTileSelection;
 export const getCurrentTool = selectors.getCurrentTool;
 export const getZoomScaleModifier = selectors.getZoomScaleModifier;
 export const getColorValue = selectors.getColorValue;
-export const getTileValue = selectors.getTileValue;
 export const getTileSelection = selectors.getTileSelection;
+export const getTileSelectionGrid = selectors.getTileSelectionGrid;
+export const getTileSelectionList = selectors.getTileSelectionList;

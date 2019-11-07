@@ -23,19 +23,11 @@ export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
   }
 });
 
-export const setTileValue = ({ columnIndex, rowIndex }) => ({
-  type: types.setTileValue,
-  payload: {
-    columnIndex,
-    rowIndex
-  }
-});
-
-export const setTileSelection = ({ columnIndex, rowIndex }) => ({
+export const setTileSelection = ({ grid, list }) => ({
   type: types.setTileSelection,
   payload: {
-    columnIndex,
-    rowIndex
+    grid,
+    list
   }
 });
 

@@ -40,49 +40,34 @@ export const resetZoom = () => (dispatch, getState) => {
 
 export const setColorValue = actions.setColorValue;
 
-export const setTileSelection = ({ selection: selectionList }) => dispatch => {
-  /**
-    --> selectionList: array of selected tiles; child objects contain the columnIndex and
-    rowIndex of their location on the tileset image
-      columnIndex -> columnIndex of selection starting from left side of the tileset
-      rowIndex -> rowIndex of selection starting from top row of the tileset
+export const setTileSelection = ({ selected }) => dispatch => {
+  if (selected.length === 0) return;
 
-    --> normalizedSelectionList: selection starting in the top-left corner of the actual selection
-      normalizedSelectionColumnIndex -> columnIndex of selection starting from left column of actual selection
-      normalizedSelectionRowIndex -> rowIndex of selection starting from top row of actual selection
+  const { columnIndex: lowestColumnIndex } = _.minBy(selected, 'columnIndex');
+  const { columnIndex: highestColumnIndex } = _.maxBy(selected, 'columnIndex');
+  const { rowIndex: lowestRowIndex } = _.minBy(selected, 'rowIndex');
+  const { rowIndex: highestRowIndex } = _.maxBy(selected, 'rowIndex');
 
-    --> selectionGrid: two dimensional array representing the normalized selection area including empty spaces.
-    Contains either an object with the tilesetColumnIndex and tilesetRowIndex OR a null value.
-      tilesetColumnIndex -> columnIndex location in tileset image
-      tilesetRowIndex -> rowIndex location in tileset image
-  **/
-  if (selectionList.length === 0) return;
-  // const sortedSelection = _.sortBy(selection, ['columnIndex', 'rowIndex']);
+  const selectionBoundaryWidth = (highestColumnIndex + 1) - lowestColumnIndex;
+  const selectionBoundaryHeight = (highestRowIndex + 1) - lowestRowIndex;
+  const selectionColumnOffset = lowestColumnIndex;
+  const selectionRowOffset = lowestRowIndex;
+  // const selectionCount = selected.length;
 
-  const { columnIndex: lowestColumnIndex } = _.minBy(selectionList, 'columnIndex');
-  const { columnIndex: highestColumnIndex } = _.maxBy(selectionList, 'columnIndex');
-  const { rowIndex: lowestRowIndex } = _.minBy(selectionList, 'rowIndex');
-  const { rowIndex: highestRowIndex } = _.maxBy(selectionList, 'rowIndex');
-
-  const selectionWidth = (highestColumnIndex + 1) - lowestColumnIndex;
-  const selectionHeight = (highestRowIndex + 1) - lowestRowIndex;
-  const columnOffset = lowestColumnIndex;
-  const rowOffset = lowestRowIndex;
-  const selectionCount = selectionList.length;
-
-  const normalizedSelectionList = selectionList
+  const sortedSelection = _.sortBy(selected, ['columnIndex', 'rowIndex']);
+  const selectionList = sortedSelection
     .map(({ columnIndex, rowIndex }) => ({
-      columnIndex: columnIndex - columnOffset,
-      rowIndex: rowIndex - rowOffset,
+      columnIndex: columnIndex - selectionColumnOffset,
+      rowIndex: rowIndex - selectionRowOffset,
       tilesetColumnIndex: columnIndex,
       tilesetRowIndex: rowIndex
     }));
 
   const selectionGrid = buildTwoDimensionalArray({
-    columns: selectionWidth,
-    rows: selectionHeight,
+    columns: selectionBoundaryWidth,
+    rows: selectionBoundaryHeight,
     mapFn: ({ columnIndex, rowIndex }) => {
-      const selected = _.find(normalizedSelectionList, { columnIndex , rowIndex });
+      const selected = _.find(selectionList, { columnIndex , rowIndex });
 
       if (selected) {
         const { tilesetColumnIndex, tilesetRowIndex } = selected;
@@ -97,9 +82,7 @@ export const setTileSelection = ({ selection: selectionList }) => dispatch => {
     }
   });
 
-  console.log(normalizedSelectionList);
-  console.log(selectionGrid);
-  console.log(selectionCount);
-};
+  return dispatch( actions.setTileSelection({ grid: selectionGrid, list: selectionList }) );
+}
 
 export const clearTileSelection = actions.clearTileSelection;

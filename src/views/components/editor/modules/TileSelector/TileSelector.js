@@ -7,7 +7,8 @@ import { useKeyPress } from 'lib/hooks';
 import { buildTwoDimensionalArray } from 'lib/utils';
 
 import {
-  setTileSelection
+  setTileSelection,
+  clearTileSelection
 } from 'state/ducks/editor/tools';
 
 import SelectableTile from './SelectableTile';
@@ -18,18 +19,15 @@ import styles from './tileselector.module.css';
 
 const Component = ({ contentWidth, contentHeight, actions }) => {
   const { image, imageSize, tileSize } = tilesetImageConfig;
-  const ctrlKeyPressed = useKeyPress('s');
+  const addToSelectionKeyPressed = useKeyPress('s');
 
-  const handleSelectionFinish = (tileSelection) => {
-    const selection = tileSelection
-      .map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }));
-
-    actions.setTileSelection({ selection })
+  const handleSelectionFinish = (selected) => {
+    actions.setTileSelection({
+      selected: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
+    })
   }
 
-  const handleSelectionClear = () => {
-
-  }
+  const handleSelectionClear = () => actions.clearTileSelection();
 
   const selectables = () => {
     const columns = imageSize.width / tileSize.width;
@@ -59,7 +57,7 @@ const Component = ({ contentWidth, contentHeight, actions }) => {
           onSelectionFinish={handleSelectionFinish}
           onSelectionClear={handleSelectionClear}
           selectboxClassName={styles.selectBox}
-          resetOnStart={(ctrlKeyPressed) ? false : true}
+          resetOnStart={(addToSelectionKeyPressed) ? false : true}
           enableDeselect
         >
           { selectables() }
@@ -77,7 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setTileSelection }, dispatch)
+    actions: bindActionCreators({ setTileSelection, clearTileSelection }, dispatch)
   }
 }
 
