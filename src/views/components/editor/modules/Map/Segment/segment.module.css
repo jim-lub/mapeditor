@@ -34,7 +34,7 @@
 
     .userInputNode:hover {
       background-color: rgb(90, 176, 238, 0.5);
-      background-color: rgb(255, 255, 255, 0.3);
+      /* background-color: rgb(255, 255, 255, 0.3); */
       border: solid 2px var(--blue-500);
     }
 

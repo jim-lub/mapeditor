@@ -4,8 +4,18 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import * as utils from '../utils';
 
-import { getSegmentId, getColumnAndRowIndexBySegmentId } from '../../map';
-import { getTileSelectionList, getTileSelectionGrid } from '../../tools';
+import {
+  getMapProperties,
+  getSegmentId,
+  getColumnAndRowIndexBySegmentId
+} from '../../map';
+
+import {
+  getTileSelectionList,
+  getTileSelectionGrid
+} from '../../tools';
+
+import * as selectionUtils from 'lib/editor/selection';
 
 export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
   if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, [])) {
@@ -26,123 +36,106 @@ export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
 }
 
 const _leftClickNoModifiers = ({
-  sceneId, segmentId, layerId, layerProperties,
+  segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
-  const state = getState();
-  const selectionGrid = getTileSelectionGrid(state);
-
-  const initialSegmentIndexes = getColumnAndRowIndexBySegmentId(state, { segmentId });
-
-  const indexes = dispatch( _getColumnAndRowIndexesOfSelection({ selectionGrid, initialColumnIndex: Number(columnIndex), initialRowIndex: Number(rowIndex), initialSegmentIndexes }) );
-
-  const flattenIndexes = _.flatten(indexes).filter(val => val);
-  const list = flattenIndexes.map(({
-      mapGridColumnIndex, mapGridRowIndex,
-      tilemapColumnIndex, tilemapRowIndex,
-      tilesetColumnIndex, tilesetRowIndex
-    }) => {
-      const segmentId = getSegmentId(state, { columnIndex: mapGridColumnIndex, rowIndex: mapGridRowIndex });
-      if (!segmentId) return null;
-
-      return {
-        segmentId,
-        columnIndex: tilemapColumnIndex,
-        rowIndex: tilemapRowIndex,
-        value: [tilesetColumnIndex, tilesetRowIndex]
-      }
-    }).filter(val => val)
-
-  const segmentIDs = _.uniq( list.map(({ segmentId }) => segmentId) );
+  const { list, segmentIDs } = dispatch(
+    _convertSelection({
+      type: 'SET',
+      segmentId, layerProperties,
+      columnIndex, rowIndex
+    })
+  );
 
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
-const _getColumnAndRowIndexesOfSelection = ({ selectionGrid, initialColumnIndex, initialRowIndex, initialSegmentIndexes }) => dispatch => {
-  const tilemapWidth = 8;
-  let startColumnIndex = initialColumnIndex;
-  let mapGridColumnIndex = initialSegmentIndexes.columnIndex;
-  let stepColumns = 0;
-
-  return selectionGrid.map((column, columnIndex) => {
-    let tilemapColumnIndex = startColumnIndex + columnIndex;
-
-    if ((tilemapColumnIndex + 1) > tilemapWidth) {
-      startColumnIndex = -stepColumns;
-      tilemapColumnIndex = 0;
-      mapGridColumnIndex += 1;
-    }
-    stepColumns++;
-
-    return dispatch( _getRowIndexesOfCurrentColumn({ column, columnIndex, tilemapColumnIndex, mapGridColumnIndex, initialRowIndex, initialSegmentIndexes }) )
-  })
-}
-
-const _getRowIndexesOfCurrentColumn = ({ column, columnIndex, tilemapColumnIndex, mapGridColumnIndex, initialRowIndex, initialSegmentIndexes }) => dispatch => {
-  const tilemapHeight = 8;
-  let startRowIndex = initialRowIndex;
-  let mapGridRowIndex = initialSegmentIndexes.rowIndex;
-  let stepRows = 0;
-
-  return column.map((indexes, rowIndex) => {
-    if (!indexes) return null;
-    const { tilesetColumnIndex, tilesetRowIndex } = indexes;
-
-    let tilemapRowIndex = startRowIndex + rowIndex;
-
-    if ((tilemapRowIndex + 1) > tilemapHeight) {
-      startRowIndex = -stepRows;
-      tilemapRowIndex = 0;
-      mapGridRowIndex += 1;
-    }
-    stepRows++;
-
-    return {
-      mapGridColumnIndex,
-      mapGridRowIndex,
-
-      tilemapColumnIndex,
-      tilemapRowIndex,
-
-      tilesetColumnIndex,
-      tilesetRowIndex
-    }
-  })
-}
-
 const _leftClickAndHoldNoModifiers = ({
-  sceneId, segmentId, layerId, layerProperties,
+  segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
-  const state = getState();
-  const value = getTileSelectionList(state);
-  const currentValue = selectors.getTilemapDataSegmentById(state, { segmentId })[layerId][columnIndex][rowIndex];
+  const { list, segmentIDs } = dispatch(
+    _convertSelection({
+      type: 'SET',
+      segmentId, layerProperties,
+      columnIndex, rowIndex
+    })
+  );
 
-  if (value === currentValue) return;
-
-  dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value }) );
+  dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
 const _leftClickAltModifier = ({
-  sceneId, segmentId, layerId, layerProperties,
+  segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
-  const state = getState();
-  const currentValue = selectors.getTilemapDataSegmentById(state, { segmentId })[layerId][columnIndex][rowIndex];
+  const { list, segmentIDs } = dispatch(
+    _convertSelection({
+      type: 'CLEAR',
+      segmentId, layerProperties,
+      columnIndex, rowIndex
+    })
+  )
 
-  if (currentValue === 0) return;
-
-  dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
+  dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
 const _leftClickAndHoldAltModifier = ({
-  sceneId, segmentId, layerId, layerProperties,
+  segmentId, layerId, layerProperties,
+  columnIndex, rowIndex
+}) => (dispatch, getState) => {
+  const { list, segmentIDs } = dispatch(
+    _convertSelection({
+      type: 'CLEAR',
+      segmentId, layerProperties,
+      columnIndex, rowIndex
+    })
+  )
+
+  dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
+}
+
+const _convertSelection = ({
+  type,
+  segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
   const state = getState();
-  const currentValue = selectors.getTilemapDataSegmentById(state, { segmentId })[layerId][columnIndex][rowIndex];
+  const selectionGrid = getTileSelectionGrid(state);
+  const { segmentSize } = getMapProperties(state);
+  const { tileSize } = layerProperties;
 
-  if (currentValue === 0) return;
+  const { columnIndex: initialMapGridColumnIndex, rowIndex: initialMapGridRowIndex } = getColumnAndRowIndexBySegmentId(state, { segmentId });
 
-  dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
+  const indexList = selectionUtils.selectionGridToFlattenedTilemapIndexList({
+    selectionGrid,
+    tilemapSize: {
+      columns: segmentSize.width / tileSize.width,
+      rows: segmentSize.height / tileSize.height
+    },
+    initialMapGridColumnIndex,
+    initialMapGridRowIndex,
+    initialTilemapColumnIndex: columnIndex,
+    initialTilemapRowIndex: rowIndex,
+  });
+
+  const indexListWithSegmentIDs = indexList.map(({
+    mapGridColumnIndex, mapGridRowIndex,
+    tilemapColumnIndex, tilemapRowIndex,
+    tilesetColumnIndex, tilesetRowIndex
+  }) => {
+    const segmentId = getSegmentId(state, { columnIndex: mapGridColumnIndex, rowIndex: mapGridRowIndex });
+    if (!segmentId) return null;
+
+    return {
+      segmentId,
+      columnIndex: tilemapColumnIndex,
+      rowIndex: tilemapRowIndex,
+      value: (type === 'SET') ? [tilesetColumnIndex, tilesetRowIndex] : 0
+    }
+  });
+
+  const segmentIDs = _.uniq( indexListWithSegmentIDs.map(({ segmentId }) => segmentId) );
+
+  return { list: indexListWithSegmentIDs, segmentIDs, layerId };
 }
