@@ -1,30 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   buildTwoDimensionalArray,
   concatClassNames
 } from 'lib/utils';
+
+import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
+
+import { Selection } from '../../components';
 
 import styles from '../../segment.module.css';
 
 export default ({
   segmentSize, zoomScaleModifier,
   layerProperties: { tileSize },
-  activeTool,
+  currentTool, tileSelectionGrid,
   onPointerEvent
 }) => {
+  const [last, setLast] = useState({ columnIndex: null, rowIndex: 0 });
+  const [selectionPosition, setSelectionPosition] = useState({ left: 0, top: 0 });
   const columns = segmentSize.width / tileSize.width;
   const rows = segmentSize.height / tileSize.height;
+  const scaleModifiedTileSize = {
+    width: tileSize.width * zoomScaleModifier,
+    height: tileSize.height * zoomScaleModifier,
+  }
 
   const handleContextMenu = (e) => e.preventDefault();
   const handlePointerDown = (e) => handlePointerEvent(e);
   const handlePointerOver = (e) => handlePointerEvent(e);
+  const handlePointerOut = (e) => null;
 
   const handlePointerEvent = (pointerEvent) => {
     const { pointerType, button, buttons, altKey, ctrlKey, shiftKey, target } = pointerEvent;
     const { columnIndex, rowIndex } = _targetIdToIndexes(target.id);
     pointerEvent.preventDefault();
+
+    if (last.columnIndex !== columnIndex && last.rowIndex !== rowIndex) {
+      setSelectionPosition({
+        left: (scaleModifiedTileSize.width) * columnIndex,
+        top: (scaleModifiedTileSize.height) * rowIndex,
+      })
+    }
 
     const pointerActions = _toPointerActionsObject({ button, buttons });
 
@@ -42,7 +60,8 @@ export default ({
   }
 
   const inputNodeClassName = concatClassNames([
-    styles.userInputNode
+    styles.userInputNode,
+    (currentTool === toolTypes.tileStamp) ? styles.tileStamp : null
   ])
 
   return (
@@ -57,18 +76,24 @@ export default ({
                 id={`inputNode-${columnIndex}-${rowIndex}`}
                 className={inputNodeClassName}
                 style={{
-                  width: tileSize.width * zoomScaleModifier,
-                  height: tileSize.height * zoomScaleModifier,
-                  left: (tileSize.width * zoomScaleModifier) * columnIndex,
-                  top: (tileSize.height * zoomScaleModifier) * rowIndex,
-                  cursor: toolConstants[activeTool].cursor || "auto"
+                  width: scaleModifiedTileSize.width,
+                  height: scaleModifiedTileSize.height,
+                  left: (scaleModifiedTileSize.width) * columnIndex,
+                  top: (scaleModifiedTileSize.height) * rowIndex,
+                  cursor: toolConstants[currentTool].cursor || "auto"
                 }}
                 onContextMenu={handleContextMenu}
                 onPointerDown={handlePointerDown}
                 onPointerOver={handlePointerOver}
+                onPointerOut={handlePointerOut}
               />
             )
           })
+        }
+
+        {
+          (currentTool === toolTypes.tileStamp) &&
+          <Selection tileSize={scaleModifiedTileSize} grid={tileSelectionGrid} position={selectionPosition} />
         }
       </div>
     </div>

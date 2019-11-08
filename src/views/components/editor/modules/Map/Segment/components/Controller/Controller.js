@@ -21,7 +21,8 @@ import {
 
 import {
   getZoomScaleModifier,
-  getCurrentTool
+  getCurrentTool,
+  getTileSelectionGrid
 } from 'state/ducks/editor/tools';
 // import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
@@ -34,7 +35,7 @@ import styles from '../../segment.module.css';
 const Component = ({
   segmentId, mapProperties: { segmentSize },
   activeLayerId, layerProperties, layerSortOrder,
-  tilemapData,
+  tilemapData, tileSelectionGrid,
   zoomScaleModifier, currentTool, actions
 }) => {
   const [initialized, setInitialized] = useState(false);
@@ -125,8 +126,9 @@ const Component = ({
           segmentSize={segmentSize}
           zoomScaleModifier={zoomScaleModifier}
           layerProperties={layerProperties[activeLayerId]}
-          activeTool={currentTool}
+          currentTool={currentTool}
           onPointerEvent={handleInteractionNodeEvent}
+          tileSelectionGrid={tileSelectionGrid}
         />
       }
     </div>
@@ -143,7 +145,8 @@ const mapStateToProps = (state, ownProps) => {
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataSegmentbyId(state, { segmentId }),
     zoomScaleModifier: getZoomScaleModifier(state),
-    currentTool: getCurrentTool(state)
+    currentTool: getCurrentTool(state),
+    tileSelectionGrid: getTileSelectionGrid(state)
   }
 }
 

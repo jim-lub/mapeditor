@@ -39,3 +39,4 @@ export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
 export const getSegmentId = selectors.getSegmentId;
+export const getColumnAndRowIndexBySegmentId = selectors.getColumnAndRowIndexBySegmentId;
