@@ -24,7 +24,7 @@ import {
   getCurrentTool,
   getTileSelectionGrid
 } from 'state/ducks/editor/tools';
-// import * as toolTypes from 'lib/constants/toolTypes';
+import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
 import { Loader } from 'views/components/Loader';
@@ -90,7 +90,7 @@ const Component = ({
     (layerSortOrder.length > 0) &&
     layerProperties[activeLayerId] &&
     layerProperties[activeLayerId].visible &&
-    (tileSelectionGrid.length > 0) &&
+    !(currentTool === toolTypes.tileStamp && tileSelectionGrid.length === 0) &&
     isCurrentTool()
   )
 

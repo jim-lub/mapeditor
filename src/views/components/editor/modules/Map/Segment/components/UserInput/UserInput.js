@@ -18,7 +18,7 @@ export default ({
   currentTool, tileSelectionGrid,
   onPointerEvent
 }) => {
-  const [last, setLast] = useState({ columnIndex: null, rowIndex: 0 });
+  const [last, setLast] = useState({ columnIndex: null, rowIndex: null });
   const [selectionPosition, setSelectionPosition] = useState({ left: 0, top: 0 });
   const columns = segmentSize.width / tileSize.width;
   const rows = segmentSize.height / tileSize.height;

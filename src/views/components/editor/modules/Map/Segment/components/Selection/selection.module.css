@@ -14,7 +14,13 @@
 
 .tile {
   position: absolute;
-  background-color: rgb(90, 176, 238, 0.5);
-  /* background-color: rgb(255, 255, 255, 0.3); */
   pointer-events: none;
+}
+
+.tile.set {
+  background-color: rgb(90, 176, 238, 0.4);
+}
+
+.tile.clear {
+  background-color: rgb(244, 67, 54, 0.3);
 }

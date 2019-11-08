@@ -12,30 +12,30 @@ const allowedZoomLevels = [
   1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00
 ]
 
-export const zoomIn = () => (dispatch, getState) => {
+export const zoomIn = ({ type }) => (dispatch, getState) => {
   const state = getState();
-  const currentZoomScaleModifier = selectors.getZoomScaleModifier(state);
+  const currentZoomScaleModifier = selectors.getZoomScaleModifier(state, { type });
   const indexOf = allowedZoomLevels.indexOf(currentZoomScaleModifier);
   const nextZoomScaleModifier = allowedZoomLevels[indexOf + 1];
 
   if (nextZoomScaleModifier) {
-    dispatch( actions.setZoomScaleModifier({ value: nextZoomScaleModifier }) );
+    dispatch( actions.setZoomScaleModifier({ type, value: nextZoomScaleModifier }) );
   }
 }
 
-export const zoomOut = () => (dispatch, getState) => {
+export const zoomOut = ({ type }) => (dispatch, getState) => {
   const state = getState();
-  const currentZoomScaleModifier = selectors.getZoomScaleModifier(state);
+  const currentZoomScaleModifier = selectors.getZoomScaleModifier(state, { type });
   const indexOf = allowedZoomLevels.indexOf(currentZoomScaleModifier);
   const nextZoomScaleModifier = allowedZoomLevels[indexOf - 1];
 
   if (nextZoomScaleModifier) {
-    dispatch( actions.setZoomScaleModifier({ value: nextZoomScaleModifier }) );
+    dispatch( actions.setZoomScaleModifier({ type, value: nextZoomScaleModifier }) );
   }
 }
 
-export const resetZoom = () => (dispatch, getState) => {
-  dispatch( actions.setZoomScaleModifier({ value: 1 }));
+export const resetZoom = ({ type }) => (dispatch, getState) => {
+  dispatch( actions.setZoomScaleModifier({ type, value: 1 }));
 }
 
 export const setColorValue = actions.setColorValue;

@@ -7,7 +7,7 @@ import * as reducers from './reducers';
 
 const initialState = {
   currentTool: null,
-  zoomScaleModifier: 1,
+  zoomScaleModifier: {},
   colorValue: {
     hex: "#39ADD6"
   },

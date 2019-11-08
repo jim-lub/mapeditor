@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 import * as actions from '../actions';
-import * as selectors from '../selectors';
 import * as utils from '../utils';
 
 import {
@@ -10,10 +9,7 @@ import {
   getColumnAndRowIndexBySegmentId
 } from '../../map';
 
-import {
-  getTileSelectionList,
-  getTileSelectionGrid
-} from '../../tools';
+import { getTileSelectionGrid } from '../../tools';
 
 import * as selectionUtils from 'lib/editor/selection';
 
@@ -26,12 +22,12 @@ export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
     dispatch( _leftClickAndHoldNoModifiers(rest) );
   }
 
-  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAltModifier(rest) );
+  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickShiftModifier(rest) );
   }
 
-  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAndHoldAltModifier(rest) );
+  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickAndHoldShiftModifier(rest) );
   }
 }
 
@@ -65,7 +61,7 @@ const _leftClickAndHoldNoModifiers = ({
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
-const _leftClickAltModifier = ({
+const _leftClickShiftModifier = ({
   segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
@@ -80,7 +76,7 @@ const _leftClickAltModifier = ({
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
-const _leftClickAndHoldAltModifier = ({
+const _leftClickAndHoldShiftModifier = ({
   segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
@@ -133,7 +129,7 @@ const _convertSelection = ({
       rowIndex: tilemapRowIndex,
       value: (type === 'SET') ? [tilesetColumnIndex, tilesetRowIndex] : 0
     }
-  });
+  }).filter(segment => segment);
 
   const segmentIDs = _.uniq( indexListWithSegmentIDs.map(({ segmentId }) => segmentId) );
 

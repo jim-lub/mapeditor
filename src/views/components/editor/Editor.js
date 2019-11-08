@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import moduleConstants from 'lib/constants/editorModuleConstants';
 
-import { ModuleGrid } from './components/ModuleGrid';
+import { EventListener, ModuleGrid } from './components';
 import { Actionbar } from './modules';
 
 import styles from './editor.module.css';
@@ -22,17 +22,20 @@ const Component = ({ storeMapStatus }) => {
   })
 
   return (
-    <div className={styles.grid}>
-      <div className={styles.actionbarWrapper}>
-        <Actionbar />
-      </div>
+    <>
+      <div className={styles.grid}>
+        <div className={styles.actionbarWrapper}>
+          <Actionbar />
+        </div>
 
-      <div className={styles.contentWrapper}>
-        <ModuleGrid
-          modules={modules}
-        />
+        <div className={styles.contentWrapper}>
+          <ModuleGrid
+            modules={modules}
+          />
+        </div>
       </div>
-    </div>
+      <EventListener />
+    </>
   );
 }
 

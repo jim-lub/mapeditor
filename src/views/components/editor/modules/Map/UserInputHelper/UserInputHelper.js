@@ -14,6 +14,7 @@ import {
 
 import * as layerTypes from 'lib/constants/layerTypes';
 import layerConstants from 'lib/constants/layerConstants';
+import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
 import { concatClassNames } from 'lib/utils';
@@ -85,12 +86,12 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
       (layerProperties.visible) ? null : 'Layer is hidden',
       (layerProperties.locked) ? 'Layer is locked' : null,
       (toolProperties.isAllowedOnLayers.includes(layerType)) ? null : `${toolProperties.name} is inapplicable on ${layerProperties.name.toLowerCase()} layers`,
-      (tileSelectionList.length > 0) ? null : `No selection`,
+      (currentTool === toolTypes.tileStamp && tileSelectionList.length === 0) ? 'No selection' : null,
     ]
     .filter(error => error);
 
     setErrors(specificErrors);
-  }, [layerType, layerProperties, toolProperties, tileSelectionList])
+  }, [currentTool, layerType, layerProperties, toolProperties, tileSelectionList])
 
   const textContainerClassNames = concatClassNames([
     'clearfix',

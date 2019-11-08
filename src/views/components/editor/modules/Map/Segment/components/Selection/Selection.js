@@ -1,12 +1,23 @@
 import React from 'react';
 
+import { useKeyPress } from 'lib/hooks';
+
+import { concatClassNames } from 'lib/utils';
+
 import styles from './selection.module.css';
 
-export default ({ tileSize, grid, position }) => {
+export default ({ tileSize, grid, position, type = 'set'}) => {
+  const shiftKeyPressed = useKeyPress('shift');
   if (grid.length === 0) return null;
 
   const wrapperWidth = tileSize.width * grid.length;
   const wrapperHeight = tileSize.height * grid[0].length;
+
+  const tileClassNames = concatClassNames([
+      styles.tile,
+      (shiftKeyPressed) ? styles.clear : styles.set,
+  ]);
+
 
   return (
     <div
@@ -24,7 +35,7 @@ export default ({ tileSize, grid, position }) => {
               (tileValue)
                 ? <div
                   key={`${columnIndex}-${rowIndex}`}
-                  className={styles.tile}
+                  className={tileClassNames}
                   style={{
                     width: tileSize.width,
                     height: tileSize.height,

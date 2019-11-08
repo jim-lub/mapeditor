@@ -8,11 +8,14 @@ export const setCurrentTool = (state, action) => {
 };
 
 export const setZoomScaleModifier = (state, action) => {
-  const { value } = action.payload;
+  const { type, value } = action.payload;
 
   return {
     ...state,
-    zoomScaleModifier: value
+    zoomScaleModifier: {
+      ...state.zoomScaleModifier,
+      [type]: value
+    }
   }
 };
 

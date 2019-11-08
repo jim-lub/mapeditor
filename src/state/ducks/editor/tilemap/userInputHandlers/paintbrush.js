@@ -13,12 +13,12 @@ export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
     dispatch( _leftClickAndHoldNoModifiers(rest) );
   }
 
-  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAltModifier(rest) );
+  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickShiftModifier(rest) );
   }
 
-  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAndHoldAltModifier(rest) );
+  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickAndHoldShiftModifier(rest) );
   }
 }
 
@@ -50,7 +50,7 @@ const _leftClickAndHoldNoModifiers = ({
   dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value }) );
 }
 
-const _leftClickAltModifier = ({
+const _leftClickShiftModifier = ({
   sceneId, segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
@@ -62,7 +62,7 @@ const _leftClickAltModifier = ({
   dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
 }
 
-const _leftClickAndHoldAltModifier = ({
+const _leftClickAndHoldShiftModifier = ({
   sceneId, segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {

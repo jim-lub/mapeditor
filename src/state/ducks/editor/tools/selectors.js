@@ -1,5 +1,5 @@
 export const getCurrentTool = state => state.editor.tools.currentTool;
-export const getZoomScaleModifier = state => state.editor.tools.zoomScaleModifier;
+export const getZoomScaleModifier = (state, { type }) => state.editor.tools.zoomScaleModifier[type] || 1;
 export const getColorValue = state => state.editor.tools.colorValue;
 export const getTileSelection = state => state.editor.tools.tileSelection;
 export const getTileSelectionGrid = state => state.editor.tools.tileSelection.grid;
