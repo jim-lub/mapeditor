@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import * as utils from '../utils';
@@ -34,24 +36,26 @@ const _leftClickNoModifiers = ({
 
   const indexes = dispatch( _getColumnAndRowIndexesOfSelection({ selectionGrid, initialColumnIndex: Number(columnIndex), initialRowIndex: Number(rowIndex), initialSegmentIndexes }) );
 
-  indexes.forEach(column => {
-    column.forEach(({
+  const flattenIndexes = _.flatten(indexes).filter(val => val);
+  const list = flattenIndexes.map(({
       mapGridColumnIndex, mapGridRowIndex,
       tilemapColumnIndex, tilemapRowIndex,
       tilesetColumnIndex, tilesetRowIndex
     }) => {
       const segmentId = getSegmentId(state, { columnIndex: mapGridColumnIndex, rowIndex: mapGridRowIndex });
-      if (!segmentId) return;
+      if (!segmentId) return null;
 
-      dispatch( actions.setSingleTileValue({
+      return {
         segmentId,
-        layerId,
         columnIndex: tilemapColumnIndex,
         rowIndex: tilemapRowIndex,
         value: [tilesetColumnIndex, tilesetRowIndex]
-      }));
-    });
-  });
+      }
+    }).filter(val => val)
+
+  const segmentIDs = _.uniq( list.map(({ segmentId }) => segmentId) );
+
+  dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
 const _getColumnAndRowIndexesOfSelection = ({ selectionGrid, initialColumnIndex, initialRowIndex, initialSegmentIndexes }) => dispatch => {
@@ -80,7 +84,10 @@ const _getRowIndexesOfCurrentColumn = ({ column, columnIndex, tilemapColumnIndex
   let mapGridRowIndex = initialSegmentIndexes.rowIndex;
   let stepRows = 0;
 
-  return column.map(({ tilesetColumnIndex, tilesetRowIndex }, rowIndex) => {
+  return column.map((indexes, rowIndex) => {
+    if (!indexes) return null;
+    const { tilesetColumnIndex, tilesetRowIndex } = indexes;
+
     let tilemapRowIndex = startRowIndex + rowIndex;
 
     if ((tilemapRowIndex + 1) > tilemapHeight) {

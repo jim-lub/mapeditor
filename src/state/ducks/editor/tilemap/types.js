@@ -8,4 +8,5 @@ export const addLayerToTilemapDataSegment = "editor/tilemap/ADD_LAYER_TO_DATA_SE
 export const removeLayerFromTilemapDataSegment = "editor/tilemap/REMOVE_LAYER_FROM_DATA_SEGMENT";
 
 export const setSingleTileValue = "editor/tilemap/SET_SINGLE_TILE_VALUE";
+export const setMultipleTileValues = "editor/tilemap/SET_MULTIPLE_TILE_VALUES";
 export const clearSingleTileValue = "editor/tilemap/CLEAR_SINGLE_TILE_VALUE";

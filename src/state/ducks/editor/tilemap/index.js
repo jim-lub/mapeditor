@@ -21,6 +21,7 @@ export default createReducer( initialState )({
   [ types.removeLayerFromTilemapDataSegment ]: (state, action) => reducers.removeLayerFromTilemapDataSegment(state, action),
 
   [ types.setSingleTileValue ]: (state, action) => reducers.setSingleTileValue(state, action),
+  [ types.setMultipleTileValues ]: (state, action) => reducers.setMultipleTileValues(state, action),
   [ types.clearSingleTileValue ]: (state, action) => reducers.clearSingleTileValue(state, action),
 });
 

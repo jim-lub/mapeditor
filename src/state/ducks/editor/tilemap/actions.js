@@ -53,6 +53,15 @@ export const setSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex, 
   }
 });
 
+export const setMultipleTileValues = ({ list, segmentIDs, layerId }) => ({
+  type: types.setMultipleTileValues,
+  payload: {
+    list,
+    segmentIDs,
+    layerId
+  }
+});
+
 export const clearSingleTileValue = ({ segmentId, layerId, columnIndex, rowIndex }) => ({
   type: types.clearSingleTileValue,
   payload: {
