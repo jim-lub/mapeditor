@@ -9,7 +9,7 @@ import {
 import {
   getCurrentTool,
   getColorValue,
-  getTileSelection
+  getTileSelectionList
 } from 'state/ducks/editor/tools';
 
 import * as layerTypes from 'lib/constants/layerTypes';
@@ -22,7 +22,7 @@ import { ReactComponent as UndefinedIcon } from 'assets/static/icons/editor/unde
 
 import styles from './userinputhandler.module.css';
 
-const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorValue, tileValue }) => {
+const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorValue, tileSelectionList }) => {
   const [layerType, setLayerType] = useState(null);
   const [layerProperties, setLayerProperties] = useState(null);
   const [LayerIcon, setLayerIcon] = useState(null);
@@ -85,11 +85,12 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
       (layerProperties.visible) ? null : 'Layer is hidden',
       (layerProperties.locked) ? 'Layer is locked' : null,
       (toolProperties.isAllowedOnLayers.includes(layerType)) ? null : `${toolProperties.name} is inapplicable on ${layerProperties.name.toLowerCase()} layers`,
+      (tileSelectionList.length > 0) ? null : `No selection`,
     ]
     .filter(error => error);
 
     setErrors(specificErrors);
-  }, [layerType, layerProperties, toolProperties])
+  }, [layerType, layerProperties, toolProperties, tileSelectionList])
 
   const textContainerClassNames = concatClassNames([
     'clearfix',
@@ -152,7 +153,7 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
         {
           (layerType === layerTypes.tileset && errors.length === 0) &&
           <div className={styles.textContainerContent}>
-            Selected: 1 tile(s)
+            { `Selected: ${ tileSelectionList.length } tile(s)` }
           </div>
         }
       </div>
@@ -167,7 +168,7 @@ const mapStateToProps = (state) => {
 
     currentTool: getCurrentTool(state),
     colorValue: getColorValue(state),
-    tileValue: getTileSelection(state)
+    tileSelectionList: getTileSelectionList(state)
   }
 }
 

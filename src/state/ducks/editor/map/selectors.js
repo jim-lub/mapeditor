@@ -4,25 +4,18 @@ export const getMapProperties = state => state.editor.map.mapProperties;
 export const getMapGrid = state => state.editor.map.mapGrid;
 
 export const getSegmentId = (state, { columnIndex, rowIndex }) => (state.editor.map.mapGrid.hasOwnProperty(columnIndex)) ? state.editor.map.mapGrid[columnIndex][rowIndex] : null;
-export const getColumnAndRowIndexBySegmentId = (state, { segmentId }) => findIndexes({ mapGrid: state.editor.map.mapGrid, segmentId });
+export const getColumnAndRowIndexBySegmentId = (state, { segmentId }) => _findIndexOfSegmentId({ mapGrid: state.editor.map.mapGrid, segmentId });
 
-const findIndexes = ({ mapGrid, segmentId }) => {
-  let segmentColumnIndex = -1;
-  let segmentRowIndex = -1;
-
-  mapGrid.forEach((column, columnIndex) => {
+const _findIndexOfSegmentId = ({ mapGrid, segmentId }) => {
+  const { columnIndex, rowIndex } = mapGrid.reduce((obj, column, columnIndex) => {
     const rowIndex = column.indexOf(segmentId);
 
     if (rowIndex >= 0) {
-      segmentColumnIndex = columnIndex;
-      segmentRowIndex = rowIndex;
+      obj = { columnIndex, rowIndex}
     }
 
-    return false;
-  });
+    return obj;
+  }, {});
 
-  return {
-    columnIndex: segmentColumnIndex,
-    rowIndex: segmentRowIndex
-  }
+  return { columnIndex, rowIndex }
 }

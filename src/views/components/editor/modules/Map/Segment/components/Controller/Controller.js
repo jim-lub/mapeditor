@@ -90,6 +90,7 @@ const Component = ({
     (layerSortOrder.length > 0) &&
     layerProperties[activeLayerId] &&
     layerProperties[activeLayerId].visible &&
+    (tileSelectionGrid.length > 0) &&
     isCurrentTool()
   )
 

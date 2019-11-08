@@ -37,11 +37,13 @@ export default ({
     const { columnIndex, rowIndex } = _targetIdToIndexes(target.id);
     pointerEvent.preventDefault();
 
-    if (last.columnIndex !== columnIndex && last.rowIndex !== rowIndex) {
+    if (last.columnIndex !== columnIndex || last.rowIndex !== rowIndex) {
       setSelectionPosition({
         left: (scaleModifiedTileSize.width) * columnIndex,
         top: (scaleModifiedTileSize.height) * rowIndex,
-      })
+      });
+
+      setLast({ columnIndex, rowIndex })
     }
 
     const pointerActions = _toPointerActionsObject({ button, buttons });
