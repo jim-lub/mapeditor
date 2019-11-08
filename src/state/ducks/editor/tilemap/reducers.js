@@ -127,6 +127,19 @@ export const setMultipleTileValues = (state, action) => {
 
   return {
     ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      ...segmentIDs.reduce((obj, segmentId) => {
+        return {
+          ...obj,
+          [segmentId]: {
+            ...state.segmentProperties[segmentId],
+            modified: true
+          }
+        }
+      }, {})
+    },
+
     tilemapDataObject: {
       ...state.tilemapDataObject,
       ...segmentIDs.reduce((obj, segmentId) => {
