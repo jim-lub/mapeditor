@@ -133,9 +133,5 @@ const _convertSelection = ({
 
   const segmentIDs = _.uniq( indexListWithSegmentIDs.map(({ segmentId }) => segmentId) );
 
-  console.log(
-    _.sortBy(indexListWithSegmentIDs, { segmentId, columnIndex, rowIndex })
-  )
-
   return { list: indexListWithSegmentIDs, segmentIDs, layerId };
 }

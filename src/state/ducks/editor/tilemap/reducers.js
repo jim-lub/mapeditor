@@ -129,24 +129,29 @@ export const setMultipleTileValues = (state, action) => {
     ...state,
     tilemapDataObject: {
       ...state.tilemapDataObject,
-      ...segmentIDs.reduce((obj, segmentId) => ({
-        ...obj,
-        [segmentId]: {
-          ...state.tilemapDataObject[segmentId],
-          [layerId]: [
-            ...state.tilemapDataObject[segmentId][layerId]
-              .map((column, columnIndex) => column
-                .map((currentValue, rowIndex) => {
-                  const listValue = _.find(list, { segmentId, columnIndex, rowIndex });
+      ...segmentIDs.reduce((obj, segmentId) => {
+        if (!state.tilemapDataObject.hasOwnProperty(segmentId)) return obj;
+        if (!state.tilemapDataObject[segmentId].hasOwnProperty(layerId)) return obj;
 
-                  if (listValue) return listValue.value;
+        return {
+          ...obj,
+          [segmentId]: {
+            ...state.tilemapDataObject[segmentId],
+            [layerId]: [
+              ...state.tilemapDataObject[segmentId][layerId]
+                .map((column, columnIndex) => column
+                  .map((currentValue, rowIndex) => {
+                    const listValue = _.find(list, { segmentId, columnIndex, rowIndex });
 
-                  return currentValue;
-                })
-              )
-          ]
+                    if (listValue) return listValue.value;
+
+                    return currentValue;
+                  })
+                )
+            ]
+          }
         }
-      }), {})
+      }, {})
     }
   }
 }

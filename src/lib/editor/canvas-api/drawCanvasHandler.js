@@ -2,10 +2,10 @@ import * as utils from './utils';
 
 import * as layerTypes from 'lib/constants/layerTypes';
 
-import tilesetImage from 'assets/static/tilesets/TownColor2@64x64.png';
+import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 let image = new Image();
-image.src = tilesetImage;
+image.src = tilesetImageConfig.image;
 
 export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
   segmentId,

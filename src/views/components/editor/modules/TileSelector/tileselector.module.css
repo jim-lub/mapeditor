@@ -1,4 +1,19 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+}
+
+.actionbar {
+  grid-row: 1 / 2;
+}
+
+.segments {
+  position: relative;
+  grid-row: 2 / 3;
+}
+
 .overflowContainer {
+  position: relative;
   overflow: auto;
 }
 
@@ -8,8 +23,8 @@
 
 .selectable {
   position: absolute;
-  border-right: dotted 1px var(--grey-900);
-  border-bottom: dotted 1px var(--grey-900);
+  border-right: dashed 1px var(--grey-900);
+  border-bottom: dashed 1px var(--grey-900);
 }
 
   .selected {

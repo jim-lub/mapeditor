@@ -9,7 +9,7 @@ const initialState = {
   currentScene: {
     // uid: "qYOFnxf8E88wbT7mlrnm",
     // uid: "QVTmWKKpAuMMzGGMQTlx", // 50x50
-    uid: "1covmNky5ghzQfxwtsBu", // 1x1
+    // uid: "1covmNky5ghzQfxwtsBu", // 1x1
     // uid: null
   },
   mapProperties: {},

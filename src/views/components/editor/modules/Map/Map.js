@@ -16,6 +16,8 @@ import { getZoomScaleModifier } from 'state/ducks/editor/tools';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
+
 import { Loader } from 'views/components/Loader';
 import { Actionbar } from './Actionbar';
 import { Segment } from './Segment';
@@ -47,27 +49,25 @@ const Component = ({
   }
 
   return (
-    <>
-      <div className={styles.wrapper}>
-        <div className={styles.actionbar}>
-          <Actionbar disabled={disableAllInput}/>
-        </div>
-
-        <div className={styles.segments}>
-          <FixedSizeGrid
-            columnCount={mapProperties.mapSize.columns}
-            rowCount={mapProperties.mapSize.rows}
-            columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
-            rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
-            width={contentWidth}
-            height={(contentHeight - 42)}
-          >
-            {Segment}
-          </FixedSizeGrid>
-          { disableAllInput && <Loader.Overlay /> }
-        </div>
+    <div className={styles.wrapper}>
+      <div className={styles.actionbar}>
+        <Actionbar disabled={disableAllInput}/>
       </div>
-    </>
+
+      <div className={styles.segments}>
+        <FixedSizeGrid
+          columnCount={mapProperties.mapSize.columns}
+          rowCount={mapProperties.mapSize.rows}
+          columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
+          rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
+          width={contentWidth}
+          height={(contentHeight - 42)}
+        >
+          {Segment}
+        </FixedSizeGrid>
+        { disableAllInput && <Loader.Overlay /> }
+      </div>
+    </div>
   );
 }
 
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => {
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
-    zoomScaleModifier: getZoomScaleModifier(state),
+    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map }),
     disableAllInput: isAllEditorInputDisabled(state)
   }
 }

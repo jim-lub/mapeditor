@@ -24,6 +24,8 @@ import {
   getCurrentTool,
   getTileSelectionGrid
 } from 'state/ducks/editor/tools';
+
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
@@ -145,7 +147,7 @@ const mapStateToProps = (state, ownProps) => {
     layerProperties: getLayerPropertiesObject(state),
     layerSortOrder: getLayerSortOrder(state),
     tilemapData: getTilemapDataSegmentbyId(state, { segmentId }),
-    zoomScaleModifier: getZoomScaleModifier(state),
+    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map }),
     currentTool: getCurrentTool(state),
     tileSelectionGrid: getTileSelectionGrid(state)
   }

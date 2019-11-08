@@ -5,6 +5,8 @@ import { getMapProperties } from 'state/ducks/editor/map';
 import { getLayerSortOrder } from 'state/ducks/editor/layers';
 import { getZoomScaleModifier } from 'state/ducks/editor/tools';
 
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
+
 import styles from './properties.module.css';
 
 const Component = ({
@@ -47,7 +49,7 @@ const mapStateToProps = (state) => {
   return {
     mapProperties: getMapProperties(state),
     layerSortOrder: getLayerSortOrder(state),
-    zoomScaleModifier: getZoomScaleModifier(state)
+    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map })
   }
 }
 

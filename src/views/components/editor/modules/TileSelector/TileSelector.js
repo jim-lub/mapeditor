@@ -6,19 +6,34 @@ import { SelectableGroup } from 'react-selectable-fast';
 import { useKeyPress } from 'lib/hooks';
 import { buildTwoDimensionalArray } from 'lib/utils';
 
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+
 import {
+  getZoomScaleModifier,
   setTileSelection,
-  clearTileSelection
+  clearTileSelection,
 } from 'state/ducks/editor/tools';
 
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
+
+import { Actionbar } from './Actionbar';
 import SelectableTile from './SelectableTile';
 
 import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight, actions }) => {
+const Component = ({ contentWidth, contentHeight, zoomScaleModifier, disableAllInput, actions }) => {
   const { image, imageSize, tileSize } = tilesetImageConfig;
+  const scaleModifiedImageSize = {
+    width: imageSize.width * zoomScaleModifier,
+    height: imageSize.height * zoomScaleModifier
+  }
+
+  const scaleModifiedTileSize = {
+    width: tileSize.width * zoomScaleModifier,
+    height: tileSize.height * zoomScaleModifier
+  }
   const addToSelectionKeyPressed = useKeyPress('s');
 
   const handleSelectionFinish = (selected) => {
@@ -40,10 +55,10 @@ const Component = ({ contentWidth, contentHeight, actions }) => {
           key={columnIndex + rowIndex}
           columnIndex={columnIndex}
           rowIndex={rowIndex}
-          tileSize={tileSize}
+          tileSize={scaleModifiedTileSize}
           position={{
-            left: tileSize.width * columnIndex,
-            top: tileSize.height * rowIndex,
+            left: scaleModifiedTileSize.width * columnIndex,
+            top: scaleModifiedTileSize.height * rowIndex,
           }}
         />
       )
@@ -51,17 +66,32 @@ const Component = ({ contentWidth, contentHeight, actions }) => {
   }
 
   return (
-    <div className={styles.overflowContainer} style={{width: contentWidth, height: contentHeight}}>
-      <div className={styles.selectableContainer} style={{width: imageSize.width, height: imageSize.height, backgroundImage: `url(${image})`}}>
-        <SelectableGroup
-          onSelectionFinish={handleSelectionFinish}
-          onSelectionClear={handleSelectionClear}
-          selectboxClassName={styles.selectBox}
-          resetOnStart={(addToSelectionKeyPressed) ? false : true}
-          enableDeselect
-        >
-          { selectables() }
-        </SelectableGroup>
+    <div className={styles.wrapper}>
+      <div className={styles.actionbar}>
+        <Actionbar disabled={disableAllInput}/>
+      </div>
+
+      <div className={styles.segments}>
+        <div className={styles.overflowContainer} style={{width: contentWidth, height: contentHeight - 42}}>
+          <div
+            className={styles.selectableContainer}
+            style={{
+              width: scaleModifiedImageSize.width,
+              height: scaleModifiedImageSize.height,
+              backgroundImage: `url(${image})`,
+              backgroundSize: `${scaleModifiedImageSize.width}px ${scaleModifiedImageSize.height}px`
+          }}>
+            <SelectableGroup
+              onSelectionFinish={handleSelectionFinish}
+              onSelectionClear={handleSelectionClear}
+              selectboxClassName={styles.selectBox}
+              resetOnStart={(addToSelectionKeyPressed) ? false : true}
+              enableDeselect
+            >
+              { selectables() }
+            </SelectableGroup>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -69,7 +99,8 @@ const Component = ({ contentWidth, contentHeight, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-
+    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.tileSelector }),
+    disableAllInput: isAllEditorInputDisabled(state)
   }
 }
 
