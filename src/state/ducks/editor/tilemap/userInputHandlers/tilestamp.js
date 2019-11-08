@@ -41,6 +41,7 @@ const _leftClickNoModifiers = ({
       tilesetColumnIndex, tilesetRowIndex
     }) => {
       const segmentId = getSegmentId(state, { columnIndex: mapGridColumnIndex, rowIndex: mapGridRowIndex });
+      if (!segmentId) return;
 
       dispatch( actions.setSingleTileValue({
         segmentId,
