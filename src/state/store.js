@@ -20,16 +20,29 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 }
 
+let middleWare ;
+switch(process.env.NODE_ENV) {
+  case 'development': {
+    middleWare = applyMiddleware(thunk, logger)
+    break;
+  }
+
+  default: {
+    middleWare = applyMiddleware(thunk)
+  }
+}
+if (process.env.NODE_ENV === 'development') {
+
+}
+
 export default (initialState = {}) => {
   return createStore(
-      rootReducer,
-      initialState,
-      applyMiddleware(
-          thunk,
-          logger
-      ),
+    rootReducer,
+    initialState,
+    middleWare,
   );
 }
+
 
 export const configureTestStore = (initialState = {}) => {
   return createStore(

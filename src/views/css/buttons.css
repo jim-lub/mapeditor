@@ -82,7 +82,7 @@ button.red {
 
   button.red:hover,
   button.red:focus {
-    background-color: var(--red-100);
+    background-color: var(--red-200);
   }
 
   button.red:active {

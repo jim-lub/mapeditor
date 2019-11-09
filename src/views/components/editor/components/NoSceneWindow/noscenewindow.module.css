@@ -53,10 +53,11 @@
   box-sizing: border-box;
   padding: 10px;
   margin: 5px;
+  background-color: var(--grey-100);
   border: solid 1px var(--grey-400);
   border-radius: 2px;
   text-align: center;
-  font-weight: bold;
+  /* font-weight: bold; */
   cursor: pointer;
 }
 

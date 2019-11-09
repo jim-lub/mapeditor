@@ -40,7 +40,7 @@ export const defaultLayout = {
       // maxW: 0, maxH: 0
     },
     {
-      i: moduleTypes.properties,
+      i: moduleTypes.hints,
       x: 0, y: 34,
       w: 8, h: 6,
       minW: 8, minH: 6,
@@ -85,7 +85,7 @@ export const defaultLayout = {
       // maxW: 0, maxH: 0
     },
     {
-      i: moduleTypes.properties,
+      i: moduleTypes.hints,
       x: 0, y: 32,
       w: 16, h: 6,
       minW: 8, minH: 6,
@@ -130,7 +130,7 @@ export const defaultLayout = {
       // maxW: 0, maxH: 0
     },
     {
-      i: moduleTypes.properties,
+      i: moduleTypes.hints,
       x: 0, y: 35,
       w: 8, h: 10,
       minW: 2, minH: 2,

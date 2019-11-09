@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  createLayer
+  createLayer,
+  getCreatedLayersCount
 } from 'state/ducks/editor/layers';
 
 import mapPresets from 'lib/constants/mapPresets';
 import * as layerTypes from 'lib/constants/layerTypes';
 import layerConstants from 'lib/constants/layerConstants';
+
+import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 import { ModalComponent } from 'views/components/Modal';
 import Form, { Field } from 'views/components/Forms';
@@ -19,7 +22,7 @@ const Component = ({ actions, onClose }) => {
   const [fieldStateName, setFieldStateName] = useState();
   const [fieldStateTileWidth, setFieldStateTileWidth] = useState();
   const [fieldStateTileHeight, setFieldStateTileHeight] = useState();
-  const [fieldStateLayerType, setFieldStateLayerType] = useState();
+  const [fieldStateLayerType, setFieldStateLayerType] = useState({});
 
   const handleSubmit = () => {
     actions.createLayer({
@@ -44,7 +47,7 @@ const Component = ({ actions, onClose }) => {
       }
     });
 
-  const tileSizeOptions = () => Object.values(mapPresets['default'].allowedTileSizes)
+  const tileSizeOptions = () => Object.values(mapPresets['dev'].allowedTileSizes)
     .map(tileSize => {
       return {
         name: tileSize,
@@ -56,7 +59,7 @@ const Component = ({ actions, onClose }) => {
     <>
       <div className={styles.container}>
         <div className={styles.warning}>
-          Tileset and collision layers can be added to the map, but can't be painted on as of yet.
+          Tilesize fixed at 64 by 64 pixels until the tileset uploader is complete
         </div>
 
         <div className={styles.form}>
@@ -89,6 +92,17 @@ const Component = ({ actions, onClose }) => {
               options={tileSizeOptions()}
               onStateChange={setFieldStateTileHeight}
             />
+
+            {
+              (fieldStateLayerType.hasOwnProperty('value')) &&
+              (fieldStateLayerType.value === layerTypes.tileset) &&
+              <Field.Text
+                name="layerName"
+                label="Tileset"
+                initialValue={tilesetImageConfig.name}
+                disabled={true}
+              />
+            }
           </Form.Group>
         </div>
 

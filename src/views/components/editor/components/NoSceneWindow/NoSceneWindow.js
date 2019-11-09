@@ -22,7 +22,7 @@ const Component = ({ sceneCollection, actions }) => {
           <div className={styles.iconWrapper}>
             <NotFoundIcon className={styles.icon}/>
           </div>
-          <h3 className={styles.textBold}>Sorry, we couldn't find any scenes on your account..</h3>
+          <h3 className={styles.textBold}>We couldn't find any scenes on your account..</h3>
           <br/>
           <LinkButton className="blue" to="/projects">Get started</LinkButton>
         </div>
@@ -41,7 +41,7 @@ const Component = ({ sceneCollection, actions }) => {
 
         <div className={styles.flexBox}>
           {
-            sceneList.map(({ uid, name, modifiedAt }, index) => {
+            sceneList.map(({ uid, name, projectId, modifiedAt }, index) => {
               return (
                 <div
                   key={index}

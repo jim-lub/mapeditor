@@ -20,6 +20,11 @@ import {
 } from '../tilemap';
 
 import {
+  initializeStore as initializeToolStore,
+  clearStore as clearToolStore,
+} from '../tools';
+
+import {
   setRequestStatus
 } from '../requestStatus';
 
@@ -30,10 +35,11 @@ export const setCurrentScene = ({ uid }) => dispatch => {
 }
 
 export const clearStore = () => dispatch => {
-  dispatch( clearTilemapStore() )
-  dispatch( clearLayerStore() )
-  dispatch( actions.clearMapGrid() )
-  dispatch( actions.clearMapProperties() )
+  dispatch( clearTilemapStore() );
+  dispatch( clearLayerStore() );
+  dispatch( clearToolStore() );
+  dispatch( actions.clearMapGrid() );
+  dispatch( actions.clearMapProperties() );
 }
 
 export const initializeMap = () => (dispatch, getState) => {

@@ -26,6 +26,7 @@ export default createReducer( initialState )({
 });
 
 /*** operations ***/
+export const clearStore = operations.clearStore;
 export const setCurrentTool = operations.setCurrentTool;
 export const zoomIn = operations.zoomIn;
 export const zoomOut = operations.zoomOut;

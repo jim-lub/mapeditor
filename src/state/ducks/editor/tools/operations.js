@@ -5,6 +5,10 @@ import * as selectors from './selectors';
 
 import { buildTwoDimensionalArray } from 'lib/utils';
 
+export const clearStore = () => dispatch => {
+  dispatch( actions.clearTileSelection() );
+}
+
 export const setCurrentTool = actions.setCurrentTool;
 const allowedZoomLevels = [
   0.125, 0.25, 0.50, 0.75,

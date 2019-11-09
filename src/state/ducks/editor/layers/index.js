@@ -49,3 +49,4 @@ export const getActiveLayerId = selectors.getActiveLayerId;
 export const getLayerSortOrder = selectors.getLayerSortOrder;
 export const getLayerPropertiesById = selectors.getLayerPropertiesById;
 export const getLayerPropertiesObject = selectors.getLayerPropertiesObject;
+export const getCreatedLayersCount = selectors.getCreatedLayersCount;

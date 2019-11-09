@@ -2,6 +2,7 @@ import * as moduleTypes from './editorModuleTypes';
 
 import {
   ColorPicker,
+  Hints,
   Layers,
   Map,
   Properties,
@@ -15,6 +16,11 @@ export default {
     Component:  ColorPicker
   },
 
+  [ moduleTypes.hints ]: {
+    name: "Hints",
+    Component: Hints
+  },
+
   [ moduleTypes.layers ]: {
     name: "Layers",
     Component: Layers
@@ -25,10 +31,10 @@ export default {
     Component: Map
   },
 
-  [ moduleTypes.properties ]: {
-    name: "Properties",
-    Component: Properties
-  },
+  // [ moduleTypes.properties ]: {
+  //   name: "Properties",
+  //   Component: Properties
+  // },
 
   [ moduleTypes.tileSelector ]: {
     name: "Selection",

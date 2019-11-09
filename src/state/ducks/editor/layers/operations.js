@@ -55,6 +55,7 @@ export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, ge
   }));
 
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
+  dispatch( actions.setActiveLayerId({ layerId }));
 }
 
 export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
