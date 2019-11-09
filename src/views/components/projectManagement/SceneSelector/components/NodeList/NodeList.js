@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -11,7 +11,6 @@ import {
 } from 'state/ducks/editor/projects';
 
 import {
-  listenToSceneChanges,
   setActiveScene,
   getActiveSceneId,
   getSceneDataById,
@@ -26,7 +25,6 @@ const Component = ({
   getSceneSortOrderByProjectId, activeSceneId,
   actions, openDeleteModal, openUpdateModal
 }) => {
-  useEffect(() => actions.listenToSceneChanges({ userId: authUser.uid }), [authUser, actions]);
 
   const nodeList = getSceneSortOrderByProjectId(activeProjectId).map(sceneId => {
     const { name, description, modifiedAt } = getSceneDataById(sceneId);
@@ -64,7 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ listenToSceneChanges, setActiveScene }, dispatch)
+    actions: bindActionCreators({ setActiveScene }, dispatch)
   }
 }
 

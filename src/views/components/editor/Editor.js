@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { getCurrentScene } from 'state/ducks/editor/map';
+
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import moduleConstants from 'lib/constants/editorModuleConstants';
 
-import { EventListener, ModuleGrid } from './components';
+import { EventListener, ModuleGrid, NoSceneWindow } from './components';
 import { Actionbar } from './modules';
 
 import styles from './editor.module.css';
 
-const Component = ({ storeMapStatus }) => {
+const Component = ({ currentScene }) => {
   const modules = Object.values(moduleTypes).map(type => {
     const { name, Icon, Component } = moduleConstants[type];
 
@@ -19,7 +21,11 @@ const Component = ({ storeMapStatus }) => {
       Icon,
       Component
     }
-  })
+  });
+
+  if (!currentScene.hasOwnProperty('uid')) {
+    return <NoSceneWindow />
+  }
 
   return (
     <>
@@ -41,7 +47,7 @@ const Component = ({ storeMapStatus }) => {
 
 const mapStateToProps = (state) => {
   return {
-
+    currentScene: getCurrentScene(state)
   }
 }
 

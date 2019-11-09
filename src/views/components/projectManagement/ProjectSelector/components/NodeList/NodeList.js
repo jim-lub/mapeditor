@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -7,7 +7,6 @@ import {
 } from 'state/ducks/auth';
 
 import {
-  listenToProjectChanges,
   setActiveProject,
   getProjectDataById,
   getProjectSortOrder,
@@ -26,7 +25,6 @@ const Component = ({
   getSceneSortOrderByProjectId,
   actions, openDeleteModal, openUpdateModal
 }) => {
-  useEffect(() => actions.listenToProjectChanges({ userId: authUser.uid }), [authUser, actions]);
 
   const nodeList = projectSortOrder.map(projectId => {
     const { name, description, modifiedAt } = getProjectDataById(projectId);
@@ -66,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ listenToProjectChanges, setActiveProject }, dispatch)
+    actions: bindActionCreators({ setActiveProject }, dispatch)
   }
 }
 

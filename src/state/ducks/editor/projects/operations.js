@@ -7,7 +7,7 @@ import { deleteScene } from 'state/ducks/editor/scenes';
 import { setCurrentScene, getCurrentScene } from 'state/ducks/editor/map';
 
 export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {
-  if (!userId) return null;
+  if (!userId) return () => null;
 
   return firebase.projects()
     .where("ownerId", "==", userId)
