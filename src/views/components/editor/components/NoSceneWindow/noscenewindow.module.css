@@ -11,10 +11,22 @@
   background-color: var(--white);
 }
 
-.headerText {
+.text {
+  width: 100%;
+  text-align: center;
+}
+
+.textBold {
   width: 100%;
   font-weight: bold;
   text-align: center;
+}
+
+.or {
+  margin: 15px 0 5px 0;
+  padding: 15px 0 10px 0;
+  /* border-bottom: solid 1px var(--grey-300); */
+  border-top: solid 1px var(--grey-300);
 }
 
 .iconWrapper {
@@ -26,3 +38,29 @@
   width: 64px;
   height: 64px;
 }
+
+.flexBox {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flexItem {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 5px;
+  border: solid 1px var(--grey-400);
+  border-radius: 2px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+  .flexItem:hover {
+    border: solid 2px var(--blue-700);
+    padding: 9px;
+  }

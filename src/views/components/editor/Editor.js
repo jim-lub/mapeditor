@@ -12,6 +12,10 @@ import { Actionbar } from './modules';
 import styles from './editor.module.css';
 
 const Component = ({ currentScene }) => {
+  if (!currentScene.hasOwnProperty('uid')) {
+    return <NoSceneWindow />
+  }
+   
   const modules = Object.values(moduleTypes).map(type => {
     const { name, Icon, Component } = moduleConstants[type];
 
@@ -23,9 +27,6 @@ const Component = ({ currentScene }) => {
     }
   });
 
-  if (!currentScene.hasOwnProperty('uid')) {
-    return <NoSceneWindow />
-  }
 
   return (
     <>
