@@ -20,7 +20,7 @@ import {
 } from '../tilemap';
 
 import {
-  initializeStore as initializeToolStore,
+  // initializeStore as initializeToolStore,
   clearStore as clearToolStore,
 } from '../tools';
 

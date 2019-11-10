@@ -1,0 +1,13 @@
+.container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+}
+
+.button {
+  max-width: 200px;
+}

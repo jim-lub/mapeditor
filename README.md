@@ -1,11 +1,13 @@
 # Roadmap
 
 ## In development
-- Menu bar ( ~~save~~, load, settings, help )
-- Revamping tools ( set OR clear actions, size, patterns )
 - Tweaking UX
+- Improving react components ( forms / context menu / modals )
+- Refactoring editor modules ( code health++, responsiveness++)
+- Revamping tools ( set OR clear actions, size, patterns )
 
 ## Soon
+- Menu bar ( ~~save~~, load, settings, help )
 - History
 - Upload tile sets
 - Draw-a-pattern module

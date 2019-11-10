@@ -1,6 +1,7 @@
 .wrapper {
   display: grid;
   grid-template-rows: min-content auto;
+  width: 100%;
 }
 
 .actionbar {
@@ -10,4 +11,8 @@
 .segments {
   position: relative;
   grid-row: 2 / 3;
+}
+
+.noLayersContainer {
+  margin: 0 auto;
 }

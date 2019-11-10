@@ -7,11 +7,11 @@ import {
 } from 'state/ducks/editor/tilemap';
 
 import {
- getActiveLayerId
+ // getActiveLayerId
 } from 'state/ducks/editor/layers';
 
 import {
- getCurrentTool
+ // getCurrentTool
 } from 'state/ducks/editor/tools';
 
 import {

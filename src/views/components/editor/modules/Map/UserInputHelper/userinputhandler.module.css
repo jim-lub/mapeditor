@@ -1,6 +1,7 @@
 .wrapper {
   position: relative;
-  height: 35px;
+  height: 34px;
+  margin: 1px;
 }
 
 .iconContainer {

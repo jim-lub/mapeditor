@@ -5,7 +5,7 @@ import {
   Hints,
   Layers,
   Map,
-  Properties,
+  // Properties,
   TileSelector,
   Toolbar
 } from 'views/components/Editor/modules';

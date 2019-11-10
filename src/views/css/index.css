@@ -45,6 +45,18 @@ h5 {
   color: inherit;
 }
 
+.regular {
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
 .clearfix {
   overflow: hidden;
 }

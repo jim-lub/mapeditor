@@ -1,12 +1,12 @@
 export default [
   {
-    title: 'Tools & Layers',
-    message: 'The `paint brush` is only applicable to `color` layers, while the `tile stamp` can only be used on `tileset` layers.'
+    title: 'Map',
+    message: 'No input allowed? Keep an eye on the `input helper` in the top-right corner of the map module.'
   },
 
   {
-    title: 'Map',
-    message: 'No input allowed? Keep an eye on the `input helper` in the top-right corner of the map module.'
+    title: 'Tools & Layers',
+    message: 'The `paint brush` is only applicable to `color` layers, while the `tile stamp` can only be used on `tileset` layers.'
   },
 
   {

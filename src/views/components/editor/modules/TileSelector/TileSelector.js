@@ -14,8 +14,15 @@ import {
   clearTileSelection,
 } from 'state/ducks/editor/tools';
 
-import * as moduleTypes from 'lib/constants/editorModuleTypes';
+import {
+  getActiveLayerId,
+  getLayerPropertiesById
+} from 'state/ducks/editor/layers';
 
+import * as moduleTypes from 'lib/constants/editorModuleTypes';
+import * as layerTypes from 'lib/constants/layerTypes';
+
+import { Loader } from 'views/components/Loader';
 import { Actionbar } from './Actionbar';
 import SelectableTile from './SelectableTile';
 
@@ -23,7 +30,7 @@ import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight, zoomScaleModifier, disableAllInput, actions }) => {
+const Component = ({ contentWidth, contentHeight, activeLayerId, zoomScaleModifier, disableAllInput, actions }) => {
   const { image, imageSize, tileSize } = tilesetImageConfig;
   const scaleModifiedImageSize = {
     width: imageSize.width * zoomScaleModifier,
@@ -65,6 +72,12 @@ const Component = ({ contentWidth, contentHeight, zoomScaleModifier, disableAllI
     })
   }
 
+  if (!activeLayerId) {
+    return (
+      <Loader.Overlay />
+    )
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.actionbar}>
@@ -93,12 +106,14 @@ const Component = ({ contentWidth, contentHeight, zoomScaleModifier, disableAllI
           </div>
         </div>
       </div>
+      { (disableAllInput) && <Loader.Overlay /> }
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
+    activeLayerId: getActiveLayerId(state),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.tileSelector }),
     disableAllInput: isAllEditorInputDisabled(state)
   }

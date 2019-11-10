@@ -1,39 +1,33 @@
 .wrapper {
   padding: 5px;
   background-color: var(--white);
-}
-
-.title {
-  width: 100%;
-  margin-top: 6px;
-  padding-top: 6px;
-  font-weight: bold;
-  border-top: solid 1px var(--grey-400);
-  font-size: 14px;
-}
-
-.message {
-  width: 100%;
-  font-size: 12px;
-}
-
-.iconWrapper {
-  float: left;
-  margin: 2px;
-  width: 16px;
-}
-
-.icon {
-  width: 14px;
-  height: 14px;
+  overflow-x: hidden;
+  overflow: scroll;
 }
 
 .buttonContainer {
   width: 100%;
 }
 
-.button {
-  width: auto;
-  padding: 6px 8px;
-  font-size: 10px;
+  .button {
+    width: auto;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+.textWrapper {
+  width: 100%;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: solid 1px var(--grey-400);
+  font-size: 12px;
 }
+
+  .title {
+    font-weight: bold;
+    font-size: inherit;
+  }
+
+  .message {
+    font-size: inherit;
+  }

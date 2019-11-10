@@ -12,12 +12,14 @@ import {
   getMapGrid
 } from 'state/ducks/editor/map';
 
+import { getLayerSortOrder } from 'state/ducks/editor/layers';
 import { getZoomScaleModifier } from 'state/ducks/editor/tools';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 
+import { NoLayersNotification } from 'views/components/Editor/components';
 import { Loader } from 'views/components/Loader';
 import { Actionbar } from './Actionbar';
 import { Segment } from './Segment';
@@ -27,9 +29,10 @@ import styles from './map.module.css';
 const Component = ({
   initializeMapStatus: { initialized = false, loading = true },
   currentScene, mapProperties, mapGrid,
-  zoomScaleModifier, disableAllInput,
+  layerSortOrder, zoomScaleModifier, disableAllInput,
   contentWidth, contentHeight, actions
 }) => {
+
   useEffect(() => {
     if (!initialized) {
       actions.initializeMap({ sceneId: currentScene.uid })
@@ -42,8 +45,14 @@ const Component = ({
     !mapGrid || (mapGrid.length === 0)
   ) {
     return (
-      <div>
-        <Loader.Simple />
+      <Loader.Overlay />
+    )
+  }
+
+  if (layerSortOrder.length === 0 ) {
+    return (
+      <div style={{width: contentWidth, height: contentHeight, overflow: 'scroll'}}>
+        <NoLayersNotification width={contentWidth / 2} height={contentHeight / 2} />
       </div>
     )
   }
@@ -68,7 +77,7 @@ const Component = ({
         { disableAllInput && <Loader.Overlay /> }
       </div>
     </div>
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -77,6 +86,7 @@ const mapStateToProps = (state) => {
     currentScene: getCurrentScene(state),
     mapProperties: getMapProperties(state),
     mapGrid: getMapGrid(state),
+    layerSortOrder: getLayerSortOrder(state),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map }),
     disableAllInput: isAllEditorInputDisabled(state)
   }
