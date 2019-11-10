@@ -101,13 +101,23 @@ const Component = ({ currentTool, disableAllInput, disabled, actions }) => {
   return (
     <>
       <div className={"clearfix " + styles.actionbarContainer}>
-        { renderTools() }
+        <div className={styles.toolGroup}>
+          <div className={styles.textContainer}>Tools</div>
+          <div className={"clearfix"}>{ renderTools() }</div>
+        </div>
 
-        <div className={styles.spacer} />
+        <div className={styles.actionGroup}>
+          <div className={styles.textContainer}>Actions</div>
+          <div className={"clearfix"}>{ renderActions() }</div>
+        </div>
 
-        { renderActions() }
+        <div className={styles.toggleGroup}>
+          <div className={styles.textContainer} style={{height: 18}}></div>
+          <div className={"clearfix"}></div>
+        </div>
 
-        <div className={styles.userInputHelperWrapper}>
+        <div className={styles.inputHelperGroup}>
+          <div className={styles.textContainer}>Input helper</div>
           <UserInputHelper />
         </div>
       </div>

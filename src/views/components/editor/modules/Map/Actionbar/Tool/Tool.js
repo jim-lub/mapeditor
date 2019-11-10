@@ -6,7 +6,7 @@ import styles from '../actionbar.module.css';
 
 export default ({ toolType, name, description, icon: Icon, currentTool, disabled, onClick }) => {
   const handleClick = () => onClick({ toolType });
-  console.log(toolType, currentTool)
+
   const buttonClassNames = concatClassNames([
     styles.toolContainer,
     (toolType === currentTool) ? styles.active : null

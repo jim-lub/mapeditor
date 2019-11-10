@@ -1,4 +1,7 @@
 .actionbarContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
   width: 100%;
   padding: 1px;
   background-color: var(--grey-200);
@@ -10,7 +13,7 @@
   width: auto;
   margin: 1px;
   padding: 5px 8px;
-  border: solid 1px var(--grey-500);
+  border: solid 1px var(--grey-400);
   border-radius: 1px;
   fill: var(--grey-500);
 }
@@ -30,7 +33,7 @@
   width: auto;
   margin: 1px;
   padding: 5px 8px;
-  border: solid 1px var(--grey-500);
+  border: solid 1px var(--grey-400);
   border-radius: 1px;
   fill: var(--grey-500);
 }
@@ -41,7 +44,7 @@
   }
 
   .toolContainer:disabled {
-    border: solid 1px var(--grey-500);
+    border: solid 1px var(--grey-400);
     fill: var(--grey-500);
   }
 
@@ -59,9 +62,37 @@
 .spacer {
   float: left;
   width: 1px;
-  height: 32px;
+  height: 54px;
   margin: 2px 5px;
   background-color: var(--grey-400);
+}
+
+.toolGroup {
+  flex: 0 0 auto;
+}
+
+.actionGroup {
+  flex: 0 0 auto;
+}
+
+.toggleGroup {
+  flex: 1 0 auto;
+}
+
+.inputHelperGroup {
+  flex: 0 0 auto;
+  /* margin-left: auto; */
+}
+
+.textContainer {
+  text-align: center;
+  width: calc(100% - 2px);
+  padding: 1px 0;
+  margin: 1px;
+  border: solid 1px var(--grey-400);
+  border-radius: 1px;
+  background-color: var(--grey-300);
+  font-size: 9px;
 }
 
 .userInputHelperWrapper {

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { FixedSizeGrid } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 import {
   initializeMap,
@@ -58,23 +58,33 @@ const Component = ({
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{width: contentWidth, height: contentHeight}}>
       <div className={styles.actionbar}>
         <Actionbar disabled={disableAllInput}/>
       </div>
 
       <div className={styles.segments}>
-        <FixedSizeGrid
-          columnCount={mapProperties.mapSize.columns}
-          rowCount={mapProperties.mapSize.rows}
-          columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
-          rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
-          width={contentWidth}
-          height={(contentHeight - 42)}
-        >
-          {Segment}
-        </FixedSizeGrid>
-        { disableAllInput && <Loader.Overlay /> }
+        {
+          <AutoSizer>
+            {({ width, height }) => {
+              return (
+                <>
+                  <FixedSizeGrid
+                    columnCount={mapProperties.mapSize.columns}
+                    rowCount={mapProperties.mapSize.rows}
+                    columnWidth={mapProperties.segmentSize.width * zoomScaleModifier}
+                    rowHeight={mapProperties.segmentSize.height * zoomScaleModifier}
+                    width={width}
+                    height={(height)}
+                  >
+                    {Segment}
+                  </FixedSizeGrid>
+                  { disableAllInput && <Loader.Overlay /> }
+                </>
+              )
+            }}
+          </AutoSizer>
+        }
       </div>
     </div>
   )
