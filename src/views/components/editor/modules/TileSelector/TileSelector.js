@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import { SelectableGroup } from 'react-selectable-fast';
 
 import { useKeyPress } from 'lib/hooks';
@@ -19,6 +20,10 @@ import {
   getLayerPropertiesById
 } from 'state/ducks/editor/layers';
 
+import {
+  getTilesetById
+} from 'state/ducks/editor/tilesets';
+
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as layerTypes from 'lib/constants/layerTypes';
 
@@ -26,12 +31,10 @@ import { Loader } from 'views/components/Loader';
 import { Actionbar } from './Actionbar';
 import SelectableTile from './SelectableTile';
 
-import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
-
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight, activeLayerId, zoomScaleModifier, disableAllInput, actions }) => {
-  const { image, imageSize, tileSize } = tilesetImageConfig;
+const Component = ({ contentWidth, contentHeight, activeLayerId, tileset, zoomScaleModifier, disableAllInput, actions }) => {
+  const { image, imageSize, tileSize, selectableGrid } = tileset;
   const scaleModifiedImageSize = {
     width: imageSize.width * zoomScaleModifier,
     height: imageSize.height * zoomScaleModifier
@@ -52,12 +55,8 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, zoomScaleModifi
   const handleSelectionClear = () => actions.clearTileSelection();
 
   const selectables = () => {
-    const columns = imageSize.width / tileSize.width;
-    const rows = imageSize.height / tileSize.height;
-
-    return buildTwoDimensionalArray({
-      columns, rows,
-      mapFn: ({ columnIndex, rowIndex }) => (
+    return selectableGrid.map((column, columnIndex) => (
+      column.map((row, rowIndex) => (
         <SelectableTile
           key={columnIndex + rowIndex}
           columnIndex={columnIndex}
@@ -68,45 +67,55 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, zoomScaleModifi
             top: scaleModifiedTileSize.height * rowIndex,
           }}
         />
-      )
-    })
+      ))
+    ))
   }
 
-  if (!activeLayerId) {
-    return (
-      <Loader.Overlay />
-    )
-  }
+  // if (!activeLayerId) {
+  //   return (
+  //     <Loader.Overlay />
+  //   )
+  // }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{width: contentWidth, height: contentHeight}}>
       <div className={styles.actionbar}>
         <Actionbar disabled={disableAllInput}/>
       </div>
 
       <div className={styles.segments}>
-        <div className={styles.overflowContainer} style={{width: contentWidth, height: contentHeight - 42}}>
-          <div
-            className={styles.selectableContainer}
-            style={{
-              width: scaleModifiedImageSize.width,
-              height: scaleModifiedImageSize.height,
-              backgroundImage: `url(${image})`,
-              backgroundSize: `${scaleModifiedImageSize.width}px ${scaleModifiedImageSize.height}px`
-          }}>
-            <SelectableGroup
-              onSelectionFinish={handleSelectionFinish}
-              onSelectionClear={handleSelectionClear}
-              selectboxClassName={styles.selectBox}
-              resetOnStart={(addToSelectionKeyPressed) ? false : true}
-              enableDeselect
-            >
-              { selectables() }
-            </SelectableGroup>
-          </div>
-        </div>
+        {
+          <AutoSizer>
+            {({ width, height }) => {
+              return (
+                <>
+                <div className={styles.overflowContainer} style={{width, height}}>
+                  <div
+                    className={styles.selectableContainer}
+                    style={{
+                      width: scaleModifiedImageSize.width,
+                      height: scaleModifiedImageSize.height,
+                      backgroundImage: `url(${image})`,
+                      backgroundSize: `${scaleModifiedImageSize.width}px ${scaleModifiedImageSize.height}px`
+                  }}>
+                    <SelectableGroup
+                      onSelectionFinish={handleSelectionFinish}
+                      onSelectionClear={handleSelectionClear}
+                      selectboxClassName={styles.selectBox}
+                      resetOnStart={(addToSelectionKeyPressed) ? false : true}
+                      enableDeselect
+                    >
+                      { selectables() }
+                    </SelectableGroup>
+                  </div>
+                </div>
+                { (disableAllInput) && <Loader.Overlay /> }
+                </>
+              )
+            }}
+          </AutoSizer>
+        }
       </div>
-      { (disableAllInput) && <Loader.Overlay /> }
     </div>
   )
 }
@@ -114,6 +123,7 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, zoomScaleModifi
 const mapStateToProps = (state) => {
   return {
     activeLayerId: getActiveLayerId(state),
+    tileset: getTilesetById(state, { tilesetId: 'randomtilesetid' }),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.tileSelector }),
     disableAllInput: isAllEditorInputDisabled(state)
   }
