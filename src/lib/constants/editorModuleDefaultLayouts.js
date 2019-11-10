@@ -53,13 +53,6 @@ export const defaultLayout = {
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
-    {
-      i: moduleTypes.toolbar,
-      x: 0, y: 10,
-      w: 8, h: 4,
-      minW: 4, minH: 4,
-      // maxW: 8, maxH: 4
-    },
   ],
 
   lg: [
@@ -98,13 +91,6 @@ export const defaultLayout = {
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
-    {
-      i: moduleTypes.toolbar,
-      x: 0, y: 10,
-      w: 16, h: 4,
-      minW: 4, minH: 4,
-      // maxW: 8, maxH: 4
-    },
   ],
 
   sm: [
@@ -142,13 +128,6 @@ export const defaultLayout = {
       w: 20, h: 10,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
-    },
-    {
-      i: moduleTypes.toolbar,
-      x: 17, y: 15,
-      w: 3, h: 10,
-      minW: 2, minH: 2,
-      // maxW: 8, maxH: 4
     },
   ],
 }

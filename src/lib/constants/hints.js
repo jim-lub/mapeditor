@@ -1,7 +1,7 @@
 export default [
   {
     title: 'Map',
-    message: 'No input allowed? Keep an eye on the `input helper` in the top-right corner of the map module.'
+    message: 'No input allowed? Keep an eye on the `input helper` in the top-right corner of the map module. It will help you figure out the issue.'
   },
 
   {
