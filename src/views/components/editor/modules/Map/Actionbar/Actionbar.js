@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTooltip from 'react-tooltip';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { getActiveLayerProperties } from 'state/ducks/editor/layers';
 
 import {
   zoomIn,
@@ -15,6 +15,8 @@ import {
   setCurrentTool,
   getCurrentTool
 } from 'state/ducks/editor/tools';
+
+import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
@@ -31,7 +33,7 @@ import { ReactComponent as zoomOutIcon } from 'assets/static/icons/editor/zoom-o
 
 import styles from './actionbar.module.css';
 
-const Component = ({ currentTool, disabled, actions }) => {
+const Component = ({ layerProperties, currentTool, disabled, actions }) => {
 
   const handleToolClick = ({ toolType }) => actions.setCurrentTool({ toolType });
 
@@ -42,7 +44,8 @@ const Component = ({ currentTool, disabled, actions }) => {
   const renderTools = () => {
     return Object.values(toolTypes)
       .map(toolType => {
-        const { name, description, icon } = toolConstants[toolType];
+        const { name, description, icon, isAllowedOnLayers } = toolConstants[toolType];
+        const toolDisabled = disabled || !isAllowedOnLayers.includes( layerProperties.layerType );
 
         return (
           <Tool
@@ -51,7 +54,7 @@ const Component = ({ currentTool, disabled, actions }) => {
             name={name}
             description={description}
             icon={icon}
-            disabled={disabled}
+            disabled={toolDisabled}
             currentTool={currentTool}
             onClick={handleToolClick}
           />
@@ -133,6 +136,7 @@ const Component = ({ currentTool, disabled, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
+    layerProperties: getActiveLayerProperties(state),
     currentTool: getCurrentTool(state),
     disableAllInput: isAllEditorInputDisabled(state)
   }

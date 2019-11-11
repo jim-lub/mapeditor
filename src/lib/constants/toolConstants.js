@@ -31,7 +31,7 @@ export default {
     icon: eraserIcon,
     keybinding: "E",
     cursor: "default",
-    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
+    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset ],
   },
 
   [ toolTypes.eyeDropper ]: {
