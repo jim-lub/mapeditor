@@ -28,7 +28,15 @@ export default ({
   }
 
   const handleContextMenu = (e) => e.preventDefault();
-  const handlePointerDown = (e) => handlePointerEvent(e);
+  const handlePointerDown = (e) => {
+    // set history collection start
+    console.log('HISTORY: Start recording..');
+    handlePointerEvent(e);
+  };
+  const handlePointerUp = (e) => {
+    // set history collection  end
+    console.log('HISTORY: End recording')
+  };
   const handlePointerOver = (e) => handlePointerEvent(e);
   const handlePointerOut = (e) => null;
 
@@ -86,6 +94,7 @@ export default ({
                 }}
                 onContextMenu={handleContextMenu}
                 onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
                 onPointerOver={handlePointerOver}
                 onPointerOut={handlePointerOut}
               />

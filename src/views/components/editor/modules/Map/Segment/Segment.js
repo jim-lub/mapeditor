@@ -47,7 +47,7 @@ const Component = ({ columnIndex, rowIndex, style, segmentId, actions }) => {
     <div style={{ ...style }} className={styles.segmentWrapper} onContextMenu={handleContextMenu}>
       { /* segmentId */ }
       <Controller segmentId={segmentId} />
-      <ContextMenu width={200}/>
+      { /* <ContextMenu width={200}/> */ }
     </div>
   )
 }
