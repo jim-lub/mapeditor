@@ -2,11 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setColorValue, getColorValue } from 'state/ducks/editor/tools';
+import {
+  getActiveLayerId,
+  getLayerPropertiesById
+} from 'state/ducks/editor/layers';
 
+import {
+  setColorValue,
+  getColorValue
+} from 'state/ducks/editor/tools';
+
+import * as layerTypes from 'lib/constants/layerTypes';
+
+import { NoColorLayerNotification } from 'views/components/Editor/components';
 import { CustomPicker } from './CustomPicker';
 
-const Component = ({ color, actions, contentWidth, contentHeight }) => {
+const Component = ({ activeLayerId, layerProperties, color, actions, contentWidth, contentHeight }) => {
   const handleColorValueChange = (colorValue) => {
     actions.setColorValue({
       hex: colorValue.hex,
@@ -31,6 +42,14 @@ const Component = ({ color, actions, contentWidth, contentHeight }) => {
     hsl: color.hsl || {}
   }
 
+  if (!activeLayerId || layerProperties.layerType !== layerTypes.color) {
+    return (
+      <div style={{width: contentWidth, height: contentHeight, overflow: 'auto'}}>
+        <NoColorLayerNotification width={contentWidth / 1.5} height={contentHeight / 1.5}/>
+      </div>
+    )
+  }
+
   return (
     <CustomPicker
       contentWidth={contentWidth}
@@ -43,6 +62,8 @@ const Component = ({ color, actions, contentWidth, contentHeight }) => {
 
 const mapStateToProps = (state) => {
   return {
+    activeLayerId: getActiveLayerId(state),
+    layerProperties: getLayerPropertiesById(state, { layerId: getActiveLayerId(state) }),
     color: getColorValue(state)
   }
 }

@@ -25,6 +25,8 @@ export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
     const { layerType, tileSize, visible } = layerProperties[layerId];
     const tilemap = tilemapData[layerId];
 
+    if (!tilemap) return;
+
     if (visible && layerType === layerTypes.color) {
       _drawColorLayer(ctx, {
         tileSize,

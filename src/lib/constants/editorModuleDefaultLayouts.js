@@ -11,9 +11,7 @@ export default {
     // md: 10,
     sm: 20,
     xs: 6,
-  },
-
-  rowHeight: 20
+  }
 }
 
 export const defaultLayout = {
@@ -21,35 +19,35 @@ export const defaultLayout = {
     {
       i: moduleTypes.colorPicker,
       x: 0, y: 0,
-      w: 8, h: 10,
+      w: 8, h: 25,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.layers,
-      x: 0, y: 14,
-      w: 8, h: 20,
+      x: 0, y: 25,
+      w: 8, h: 45,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.map,
       x: 8, y: 0,
-      w: 62, h: 40,
+      w: 62, h: 100,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.hints,
-      x: 0, y: 34,
-      w: 8, h: 6,
+      x: 0, y: 70,
+      w: 8, h: 30,
       minW: 8, minH: 6,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.tileSelector,
       x: 70, y: 0,
-      w: 30, h: 40,
+      w: 30, h: 100,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
@@ -59,35 +57,35 @@ export const defaultLayout = {
     {
       i: moduleTypes.colorPicker,
       x: 0, y: 0,
-      w: 16, h: 10,
+      w: 16, h: 25,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.layers,
-      x: 0, y: 14,
-      w: 16, h: 18,
+      x: 0, y: 25,
+      w: 16, h: 45,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.map,
       x: 16, y: 0,
-      w: 54, h: 38,
+      w: 54, h: 100,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.hints,
-      x: 0, y: 32,
-      w: 16, h: 6,
+      x: 0, y: 70,
+      w: 16, h: 30,
       minW: 8, minH: 6,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.tileSelector,
       x: 70, y: 0,
-      w: 30, h: 38,
+      w: 30, h: 100,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },
@@ -96,36 +94,36 @@ export const defaultLayout = {
   sm: [
     {
       i: moduleTypes.colorPicker,
-      x: 0, y: 15,
-      w: 8, h: 10,
+      x: 0, y: 50,
+      w: 10, h: 35,
       minW: 2, minH: 2,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.layers,
-      x: 8, y: 15,
-      w: 9, h: 10,
+      x: 10, y: 50,
+      w: 10, h: 35,
       minW: 2, minH: 2,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.map,
       x: 0, y: 0,
-      w: 20, h: 15,
+      w: 20, h: 50,
       minW: 10, minH: 5,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.hints,
-      x: 0, y: 35,
-      w: 8, h: 10,
+      x: 0, y: 125,
+      w: 8, h: 30,
       minW: 2, minH: 2,
       // maxW: 0, maxH: 0
     },
     {
       i: moduleTypes.tileSelector,
-      x: 0, y: 25,
-      w: 20, h: 10,
+      x: 0, y: 85,
+      w: 20, h: 40,
       minW: 10, minH: 10,
       // maxW: 0, maxH: 0
     },

@@ -18,10 +18,9 @@
   .toolbarCreateLayerButton {
     float: left;
     width: auto;
-    padding: 5px;
+    padding: 6px 8px;
     margin: 2px;
-    border-radius: 1px;
-    font-weight: normal;
+    font-size: 10px;
   }
 
 .layerWrapper {

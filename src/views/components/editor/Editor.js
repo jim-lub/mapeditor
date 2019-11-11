@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { getCurrentScene } from 'state/ducks/editor/map';
@@ -12,10 +12,18 @@ import { Actionbar } from './modules';
 import styles from './editor.module.css';
 
 const Component = ({ currentScene }) => {
+  const contentRef = useRef();
+
+  const getScrollWidth = () => {
+    if (contentRef.current) {
+      return (contentRef.current.scrollWidth > contentRef.current.clientWidth)
+    }
+  }
+
   if (!currentScene.hasOwnProperty('uid')) {
     return <NoSceneWindow />
   }
-   
+
   const modules = Object.values(moduleTypes).map(type => {
     const { name, Icon, Component } = moduleConstants[type];
 
@@ -35,9 +43,10 @@ const Component = ({ currentScene }) => {
           <Actionbar />
         </div>
 
-        <div className={styles.contentWrapper}>
+        <div ref={contentRef} className={styles.contentWrapper}>
           <ModuleGrid
             modules={modules}
+            hasScrollbar={getScrollWidth}
           />
         </div>
       </div>

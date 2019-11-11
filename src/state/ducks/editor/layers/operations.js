@@ -2,6 +2,8 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as utils from './utils';
 
+import { clearTileSelection } from 'state/ducks/editor/tools';
+
 import { uuid } from 'lib/utils';
 import layerConstants from 'lib/constants/layerConstants';
 
@@ -55,7 +57,7 @@ export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, ge
   }));
 
   dispatch( actions.setLayerSortOrder({ layerSortOrder }));
-  dispatch( actions.setActiveLayerId({ layerId }));
+  dispatch( setActiveLayerId({ layerId }));
 }
 
 export const deleteLayer = ({ layerId }) => (dispatch, getState) => {
@@ -96,4 +98,7 @@ export const toggleLayerLock = ({ layerId }) => (dispatch, getState) => {
   }));
 }
 
-export const setActiveLayerId = actions.setActiveLayerId;
+export const setActiveLayerId = ({ layerId }) => dispatch => {
+  dispatch( clearTileSelection() );
+  dispatch( actions.setActiveLayerId({ layerId }) );
+};

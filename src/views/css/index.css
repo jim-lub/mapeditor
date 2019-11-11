@@ -45,6 +45,11 @@ h5 {
   color: inherit;
 }
 
+span {
+  font-size: inherit;
+  color: inherit;
+}
+
 .regular {
   font-weight: normal;
 }

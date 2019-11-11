@@ -65,3 +65,19 @@
     border: solid 2px var(--blue-700);
     padding: 9px;
   }
+
+.container {
+  min-width: 400px;
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+}
+
+.button {
+  max-width: 200px;
+}

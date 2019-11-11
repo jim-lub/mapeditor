@@ -31,8 +31,7 @@ import { ReactComponent as zoomOutIcon } from 'assets/static/icons/editor/zoom-o
 
 import styles from './actionbar.module.css';
 
-const Component = ({ currentTool, disableAllInput, disabled, actions }) => {
-  const disable = disabled || disableAllInput;
+const Component = ({ currentTool, disabled, actions }) => {
 
   const handleToolClick = ({ toolType }) => actions.setCurrentTool({ toolType });
 
@@ -52,7 +51,7 @@ const Component = ({ currentTool, disableAllInput, disabled, actions }) => {
             name={name}
             description={description}
             icon={icon}
-            disabled={disable}
+            disabled={disabled}
             currentTool={currentTool}
             onClick={handleToolClick}
           />
@@ -91,7 +90,7 @@ const Component = ({ currentTool, disableAllInput, disabled, actions }) => {
             name={name}
             description={description}
             icon={icon}
-            disabled={disable}
+            disabled={disabled}
             onClick={action}
           />
         )
