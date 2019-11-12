@@ -135,7 +135,7 @@ const _convertSelection = ({
       columnIndex: tilemapColumnIndex,
       rowIndex: tilemapRowIndex,
       value: (type === 'SET') ? [tilesetColumnIndex, tilesetRowIndex] : 0,
-      currentValue
+      undoValue: currentValue
     }
   }).filter(segment => segment);
 

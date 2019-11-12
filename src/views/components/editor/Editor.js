@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 
 import { getCurrentScene } from 'state/ducks/editor/map';
@@ -20,7 +20,7 @@ const Component = ({ currentScene }) => {
     }
   }
 
-  if (!currentScene.hasOwnProperty('uid')) {
+  if (!currentScene.uid) {
     return <NoSceneWindow />
   }
 

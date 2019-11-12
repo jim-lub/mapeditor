@@ -26,7 +26,7 @@ export const defaultLayout = {
     {
       i: moduleTypes.layers,
       x: 0, y: 25,
-      w: 8, h: 45,
+      w: 8, h: 35,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
@@ -39,8 +39,15 @@ export const defaultLayout = {
     },
     {
       i: moduleTypes.hints,
-      x: 0, y: 70,
-      w: 8, h: 30,
+      x: 0, y: 80,
+      w: 8, h: 20,
+      minW: 8, minH: 6,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.history,
+      x: 0, y: 60,
+      w: 8, h: 20,
       minW: 8, minH: 6,
       // maxW: 0, maxH: 0
     },
@@ -64,7 +71,7 @@ export const defaultLayout = {
     {
       i: moduleTypes.layers,
       x: 0, y: 25,
-      w: 16, h: 45,
+      w: 16, h: 35,
       minW: 4, minH: 8,
       // maxW: 0, maxH: 0
     },
@@ -77,8 +84,15 @@ export const defaultLayout = {
     },
     {
       i: moduleTypes.hints,
-      x: 0, y: 70,
-      w: 16, h: 30,
+      x: 0, y: 80,
+      w: 16, h: 20,
+      minW: 8, minH: 6,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.history,
+      x: 0, y: 60,
+      w: 16, h: 20,
       minW: 8, minH: 6,
       // maxW: 0, maxH: 0
     },
@@ -116,7 +130,14 @@ export const defaultLayout = {
     {
       i: moduleTypes.hints,
       x: 0, y: 125,
-      w: 8, h: 30,
+      w: 10, h: 30,
+      minW: 2, minH: 2,
+      // maxW: 0, maxH: 0
+    },
+    {
+      i: moduleTypes.history,
+      x: 10, y: 125,
+      w: 10, h: 30,
       minW: 2, minH: 2,
       // maxW: 0, maxH: 0
     },

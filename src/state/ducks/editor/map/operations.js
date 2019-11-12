@@ -4,6 +4,10 @@ import * as selectors from './selectors';
 import * as utils from './utils';
 
 import {
+  clearStore as clearHistoryStore
+} from '../history';
+
+import {
   initializeStore as initializeLayerStore,
   clearStore as clearLayerStore,
 
@@ -38,6 +42,7 @@ export const clearStore = () => dispatch => {
   dispatch( clearTilemapStore() );
   dispatch( clearLayerStore() );
   dispatch( clearToolStore() );
+  dispatch( clearHistoryStore() );
   dispatch( actions.clearMapGrid() );
   dispatch( actions.clearMapProperties() );
 }

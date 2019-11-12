@@ -3,6 +3,7 @@ import * as moduleTypes from './editorModuleTypes';
 import {
   ColorPicker,
   Hints,
+  History,
   Layers,
   Map,
   // Properties,
@@ -18,6 +19,11 @@ export default {
   [ moduleTypes.hints ]: {
     name: "Hints",
     Component: Hints
+  },
+
+  [ moduleTypes.history ]: {
+    name: "History",
+    Component: History
   },
 
   [ moduleTypes.layers ]: {

@@ -1,63 +1,124 @@
 import _ from 'lodash';
 
 export const undo = (state, action) => {
-  return state
+  return {
+    ...state,
+    undo: [
+      ...state.undo.map((data, index) => {
+        if (index !== 0) {
+          return data;
+        }
+
+        return null;
+      })
+      .filter(val => val)
+    ],
+    redo: [
+      state.undo[0],
+      ...state.redo
+    ]
+  }
 }
 
 export const redo = (state, action) => {
-  return state
+  return {
+    ...state,
+    undo: [
+      state.redo[0],
+      ...state.undo
+    ],
+    redo: [
+      ...state.redo.map((data, index) => {
+        if (index !== 0) {
+          return data;
+        }
+
+        return null;
+      })
+      .filter(val => val)
+    ]
+  }
 }
 
 export const openUndoAction = (state, action) => {
-  // clear any undo's above max
+  const MAX_HISTORY = 50;
+
+  if (state.undo.length < MAX_HISTORY) {
+    return state;
+  }
+
   return {
-    ...state
+    ...state,
+    undo: [
+      ...state.undo.map((data, index) => {
+        if (index < MAX_HISTORY) {
+          return data;
+        }
+
+        return null;
+      })
+      .filter(val => val)
+    ]
   }
 }
 
 export const recordUndoAction = (state, action) => {
   const { type, toolType, list } = action.payload;
-  console.log(list)
+
   return {
     ...state,
-    recording: [
+    recording: {
       ...state.recording,
-      ...list.map(({ segmentId, layerId, columnIndex, rowIndex, currentValue: value }) => {
-        if (_.find(state.recording, { segmentId, layerId, columnIndex, rowIndex })) {
-          console.log('duplicate: ', segmentId, layerId, columnIndex, rowIndex)
-          return null;
-        }
-        console.log('new entry: ', segmentId, layerId, columnIndex, rowIndex, value)
-        return {
-          segmentId,
-          layerId,
-          columnIndex,
-          rowIndex,
-          value,
-          uniqueId: `${segmentId}-${layerId}-${columnIndex}-${rowIndex}`
-        }
-      }).filter(val => val)
-    ]
+      type,
+      toolType,
+      list: [
+        ...state.recording.list,
+        ...list.map(({ segmentId, layerId, columnIndex, rowIndex, value, undoValue }) =>
+          (_.find(state.recording.list, { segmentId, layerId, columnIndex, rowIndex }))
+            ?  null
+            : { segmentId, layerId, columnIndex, rowIndex, value, undoValue }
+        ).filter(val => val)
+      ]
+    }
   }
 }
 
 export const closeUndoAction = (state, action) => {
-
-  console.log(state.recording)
   return {
     ...state,
-    recording: [],
+    recording: {
+      type: null,
+      toolType: null,
+      list: []
+    },
     undo: [
-      [...state.recording],
+      state.recording,
       ...state.undo
-    ]
+    ],
+    redo: []
   }
 }
 
 export const clearUndoCollection = (state, action) => {
-  return state
+  return {
+    ...state,
+    recording: {
+      type: null,
+      toolType: null,
+      list: []
+    },
+    undo: []
+  }
 }
 
 export const clearRedoCollection = (state, action) => {
-  return state
+  return {
+    ...state,
+    recording: {
+      type: null,
+      toolType: null,
+      list: []
+    },
+    redo: []
+  }
 }

@@ -123,3 +123,5 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
     zoomScaleModifier
   });
 }
+
+export const setMultipleTileValues = actions.setMultipleTileValues;

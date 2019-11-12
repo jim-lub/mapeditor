@@ -32,6 +32,7 @@ export const clearStore = operations.clearStore;
 export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
+export const setMultipleTileValues = operations.setMultipleTileValues;
 
 /*** selectors ***/
 export const getTilemapDataSegmentbyId = selectors.getTilemapDataSegmentById;
