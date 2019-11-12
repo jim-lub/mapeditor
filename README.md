@@ -1,7 +1,7 @@
 # Roadmap
 
 ## In development
-- History
+- Refactoring CPU intensive code to increase performance
 - Tweaking UX
 - Improving react components ( forms / context menu / modals )
 - Refactoring editor modules ( code health++, responsiveness++)
@@ -47,6 +47,7 @@
 
 
 ## Completed
+- ~~History~~
 - ~~Tools ( tile stamp )~~
 - ~~Tile selector module~~
 - ~~Zoom~~
