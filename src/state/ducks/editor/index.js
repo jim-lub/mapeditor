@@ -10,8 +10,9 @@ import { default as requestStatus } from './requestStatus';
 import { default as tilemap } from './tilemap';
 import { default as tilesets } from './tilesets';
 import { default as tools } from './tools';
+import { default as userInput } from './user-input';
 
-export default combineReducers({ 
+export default combineReducers({
   projects,
   scenes,
   history,
@@ -21,4 +22,5 @@ export default combineReducers({
   tilemap,
   tilesets,
   tools,
+  userInput
 });

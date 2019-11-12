@@ -3,6 +3,8 @@ import _ from 'lodash';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import { testUserInput } from '../user-input';
+
 import { buildTwoDimensionalArray } from 'lib/utils';
 
 export const clearStore = () => dispatch => {
@@ -46,6 +48,14 @@ export const setColorValue = actions.setColorValue;
 
 export const setTileSelection = ({ selected }) => dispatch => {
   if (selected.length === 0) return;
+  // dispatch( testUserInput({
+  //   selection: selected,
+  //   size: {
+  //     columns: 5,
+  //     rows: 5
+  //   },
+  //   value: "#AAFFAA"
+  // }));
 
   const { columnIndex: lowestColumnIndex } = _.minBy(selected, 'columnIndex');
   const { columnIndex: highestColumnIndex } = _.maxBy(selected, 'columnIndex');
