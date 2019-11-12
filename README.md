@@ -5,7 +5,7 @@
 - Tweaking UX
 - Improving react components ( forms / context menu / modals )
 - Refactoring editor modules ( code health++, responsiveness++)
-- Revamping tools ( set OR clear actions, size, patterns )
+- Revamping tools ( get, set, clear actions, size, patterns )
 
 ## Soon
 - Menu bar ( ~~save~~, load, settings, help )

@@ -54,11 +54,8 @@ const _convertIndexesInRow = ({
   let rowStep = -1;
   let rowOffset = initialTilemapRowIndex;
   let mapGridRowIndex = initialMapGridRowIndex;
-
   return selectionColumn.map((selectionValue, selectionRowIndex) => {
     rowStep++;
-    if (!selectionValue) return null;
-    const { tilesetColumnIndex, tilesetRowIndex } = selectionValue;
     let tilemapRowIndex = selectionRowIndex + rowOffset;
 
     if ((tilemapRowIndex + 1) > tilemapSize.rows) {
@@ -66,6 +63,9 @@ const _convertIndexesInRow = ({
       rowOffset = -rowStep;
       mapGridRowIndex++;
     }
+
+    if (!selectionValue) return null;
+    const { tilesetColumnIndex, tilesetRowIndex } = selectionValue;
 
     return {
       mapGridColumnIndex,

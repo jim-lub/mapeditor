@@ -11,26 +11,8 @@ const initialState = {
     toolType: null,
     list: []
   },
-  undo: [
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1', '2'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'CLEAR', toolType: 'editor/tools/ERASER', list: ['1'] },
-    // { type: 'CLEAR', toolType: 'editor/tools/ERASER', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/PAINT_BRUSH', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/PAINT_BRUSH', list: ['1'] },
-  ],
-  redo: [
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1', '3', '4'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/TILE_STAMP', list: ['1'] },
-    // { type: 'CLEAR', toolType: 'editor/tools/ERASER', list: ['1'] },
-    // { type: 'CLEAR', toolType: 'editor/tools/ERASER', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/PAINT_BRUSH', list: ['1'] },
-    // { type: 'SET', toolType: 'editor/tools/PAINT_BRUSH', list: ['1'] },
-  ]
+  undo: [],
+  redo: []
 }
 
 export default createReducer( initialState )({

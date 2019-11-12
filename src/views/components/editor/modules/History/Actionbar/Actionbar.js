@@ -12,8 +12,6 @@ import {
 
 import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
 
-import * as moduleTypes from 'lib/constants/editorModuleTypes';
-
 import { Action } from './Action';
 
 import { ReactComponent as undoIcon } from 'assets/static/icons/editor/undo.svg';

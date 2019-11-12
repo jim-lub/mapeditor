@@ -84,6 +84,11 @@ export const recordUndoAction = (state, action) => {
 }
 
 export const closeUndoAction = (state, action) => {
+
+  if (!state.recording.type || !state.recording.toolType || (state.recording.list.length === 0)) {
+    return state
+  }
+  
   return {
     ...state,
     recording: {
