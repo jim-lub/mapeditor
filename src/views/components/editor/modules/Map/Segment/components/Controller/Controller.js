@@ -3,6 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
+  openUndoAction,
+  closeUndoAction
+} from 'state/ducks/editor/history';
+
+import {
+  getActiveLayerId,
+  getLayerPropertiesObject,
+  getLayerSortOrder,
+} from 'state/ducks/editor/layers';
+
+import {
   getMapProperties,
 } from 'state/ducks/editor/map';
 
@@ -12,12 +23,6 @@ import {
   validateTilemapDataSegment,
   getTilemapDataSegmentbyId
 } from 'state/ducks/editor/tilemap';
-
-import {
-  getActiveLayerId,
-  getLayerPropertiesObject,
-  getLayerSortOrder,
-} from 'state/ducks/editor/layers';
 
 import {
   getZoomScaleModifier,
@@ -132,6 +137,8 @@ const Component = ({
           currentTool={currentTool}
           onPointerEvent={handleInteractionNodeEvent}
           tileSelectionGrid={tileSelectionGrid}
+          openUndoAction={actions.openUndoAction}
+          closeUndoAction={actions.closeUndoAction}
         />
       }
     </div>
@@ -156,6 +163,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
+      openUndoAction,
+      closeUndoAction,
       handleUserInput,
       handleCanvasUpdate,
       validateTilemapDataSegment

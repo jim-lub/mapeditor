@@ -16,7 +16,8 @@ export default ({
   segmentSize, zoomScaleModifier,
   layerProperties: { tileSize },
   currentTool, tileSelectionGrid,
-  onPointerEvent
+  onPointerEvent,
+  openUndoAction, recordUndoAction, closeUndoAction
 }) => {
   const [last, setLast] = useState({ columnIndex: null, rowIndex: null });
   const [selectionPosition, setSelectionPosition] = useState({ left: 0, top: 0 });
@@ -29,13 +30,11 @@ export default ({
 
   const handleContextMenu = (e) => e.preventDefault();
   const handlePointerDown = (e) => {
-    // set history collection start
-    console.log('HISTORY: Start recording..');
+    openUndoAction()
     handlePointerEvent(e);
   };
   const handlePointerUp = (e) => {
-    // set history collection  end
-    console.log('HISTORY: End recording')
+    closeUndoAction()
   };
   const handlePointerOver = (e) => handlePointerEvent(e);
   const handlePointerOut = (e) => null;

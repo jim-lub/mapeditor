@@ -1,7 +1,10 @@
 import _ from 'lodash';
 
 import * as actions from '../actions';
+import * as selectors from '../selectors';
 import * as utils from '../utils';
+
+import { recordUndoAction } from '../../history';
 
 import {
   getMapProperties,
@@ -12,6 +15,8 @@ import {
 import { getTileSelectionGrid } from '../../tools';
 
 import * as selectionUtils from 'lib/editor/selection';
+
+import * as toolTypes from 'lib/constants/toolTypes';
 
 export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
   if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, [])) {
@@ -38,11 +43,11 @@ const _leftClickNoModifiers = ({
   const { list, segmentIDs } = dispatch(
     _convertSelection({
       type: 'SET',
-      segmentId, layerProperties,
+      segmentId, layerId, layerProperties,
       columnIndex, rowIndex
     })
   );
-
+  dispatch( recordUndoAction({ type: 'SET', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
@@ -53,11 +58,11 @@ const _leftClickAndHoldNoModifiers = ({
   const { list, segmentIDs } = dispatch(
     _convertSelection({
       type: 'SET',
-      segmentId, layerProperties,
+      segmentId, layerId, layerProperties,
       columnIndex, rowIndex
     })
   );
-
+  dispatch( recordUndoAction({ type: 'SET', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
@@ -68,11 +73,11 @@ const _leftClickShiftModifier = ({
   const { list, segmentIDs } = dispatch(
     _convertSelection({
       type: 'CLEAR',
-      segmentId, layerProperties,
+      segmentId, layerId, layerProperties,
       columnIndex, rowIndex
     })
   )
-
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.eraser, list }) );
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
@@ -83,11 +88,11 @@ const _leftClickAndHoldShiftModifier = ({
   const { list, segmentIDs } = dispatch(
     _convertSelection({
       type: 'CLEAR',
-      segmentId, layerProperties,
+      segmentId, layerId, layerProperties,
       columnIndex, rowIndex
     })
   )
-
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.eraser, list }) );
   dispatch( actions.setMultipleTileValues({ list, segmentIDs, layerId }) );
 }
 
@@ -122,12 +127,15 @@ const _convertSelection = ({
   }) => {
     const segmentId = getSegmentId(state, { columnIndex: mapGridColumnIndex, rowIndex: mapGridRowIndex });
     if (!segmentId) return null;
+    const currentValue = selectors.getCurrentTileValueByColumnIndexAndRowIndex(state, { segmentId, layerId, columnIndex: tilemapColumnIndex, rowIndex: tilemapRowIndex });
 
     return {
       segmentId,
+      layerId,
       columnIndex: tilemapColumnIndex,
       rowIndex: tilemapRowIndex,
-      value: (type === 'SET') ? [tilesetColumnIndex, tilesetRowIndex] : 0
+      value: (type === 'SET') ? [tilesetColumnIndex, tilesetRowIndex] : 0,
+      currentValue
     }
   }).filter(segment => segment);
 

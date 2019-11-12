@@ -38,3 +38,4 @@ export const getTilemapDataSegmentbyId = selectors.getTilemapDataSegmentById;
 export const getTilemapDataObject = selectors.getTilemapDataObject;
 export const getSegmentPropertiesById = selectors.getSegmentPropertiesById;
 export const getSegmentPropertiesObject = selectors.getSegmentPropertiesObject;
+export const getCurrentTileValueByColumnIndexAndRowIndex = selectors.getCurrentTileValueByColumnIndexAndRowIndex;
