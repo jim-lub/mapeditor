@@ -1,0 +1,5 @@
+.segmentContainer {
+  border-right: dotted 1px var(--grey-900);
+  border-bottom: dotted 1px var(--grey-900);
+  background-color: var(--grey-050);
+}

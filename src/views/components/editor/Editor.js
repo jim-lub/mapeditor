@@ -1,18 +1,29 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { getCurrentScene } from 'state/ducks/editor/map';
+import { getCurrentScene, initializeMap } from 'state/ducks/editor/map';
+import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import moduleConstants from 'lib/constants/editorModuleConstants';
 
 import { EventListener, ModuleGrid, NoSceneWindow } from './components';
 import { Actionbar } from './modules';
+import { Loader } from 'views/components/Loader';
 
 import styles from './editor.module.css';
 
-const Component = ({ currentScene }) => {
+const Component = ({ currentScene, initializeMapStatus: { initialized = false, loading = true }, actions }) => {
   const contentRef = useRef();
+
+  useEffect(() => {
+    if (!currentScene.uid) return;
+
+    if (!initialized) {
+      actions.initializeMap({ sceneId: currentScene.uid })
+    }
+  }, [initialized, currentScene, actions]);
 
   const getScrollWidth = () => {
     if (contentRef.current) {
@@ -20,11 +31,7 @@ const Component = ({ currentScene }) => {
     }
   }
 
-  if (!currentScene.uid) {
-    return <NoSceneWindow />
-  }
-
-  const modules = Object.values(moduleTypes).map(type => {
+  const modules = () => Object.values(moduleTypes).map(type => {
     const { name, Icon, Component } = moduleConstants[type];
 
     return {
@@ -35,6 +42,17 @@ const Component = ({ currentScene }) => {
     }
   });
 
+  if (!currentScene.uid) {
+    return <NoSceneWindow />
+  }
+
+  if (!initialized || loading) {
+    return (
+      <div style={{width: "100%", height: "100%", position: 'relative'}}>
+        <Loader.Overlay />;
+      </div>
+    )
+  }
 
   return (
     <>
@@ -45,7 +63,7 @@ const Component = ({ currentScene }) => {
 
         <div ref={contentRef} className={styles.contentWrapper}>
           <ModuleGrid
-            modules={modules}
+            modules={modules()}
             hasScrollbar={getScrollWidth}
           />
         </div>
@@ -57,8 +75,15 @@ const Component = ({ currentScene }) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentScene: getCurrentScene(state)
+    currentScene: getCurrentScene(state),
+    initializeMapStatus: getRequestStatus(state, { key: 'initializeMap' }),
   }
 }
 
-export default connect(mapStateToProps)(Component);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ initializeMap }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

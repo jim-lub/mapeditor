@@ -17,6 +17,9 @@ import {
 
 import { getCurrentTool } from '../tools';
 
+import { asyncIterator } from 'lib/editor/performance/utils';
+import { setRequestStatus } from '../requestStatus';
+
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 // import * as layerTypes from 'lib/constants/layerTypes';
@@ -29,6 +32,23 @@ export const initializeStore = ({ tilemapDataObject }) => dispatch => {
 
 export const clearStore = () => dispatch => {
   dispatch( actions.clearTilemapDataObject() );
+}
+
+export const validateTilemapDataSegmentTest = ({ segmentId }) => (dispatch, getState) => {
+  function generateRandomInteger(min, max) {
+    return Math.floor(min + Math.random()*(max + 1 - min))
+  }
+
+  dispatch( setRequestStatus({ key: `segment-${segmentId}`, type: 'REQUEST' }) );
+  const dataSet = [...new Array( generateRandomInteger(1000, 9999) )].map(() => 0);
+
+  asyncIterator({
+    func: () => [...new Array( 500 )].map((val, index) => ({ index })),
+    dataSet
+  })
+  .then(() => {
+    dispatch( setRequestStatus({ key: `segment-${segmentId}`, type: 'SUCCESS' }) );
+  })
 }
 
 export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => {

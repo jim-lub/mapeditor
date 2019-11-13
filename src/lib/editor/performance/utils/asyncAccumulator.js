@@ -1,4 +1,4 @@
-export const asyncAccumulator = ({ func, dataSet, batchSize }) => new Promise((resolve, reject) => {
+export const asyncAccumulator = ({ func, dataSet, batchSize = 50 }) => new Promise((resolve, reject) => {
   const totalOperations = dataSet.length;
   const accumulator = [];
   let operationIndex = 0;

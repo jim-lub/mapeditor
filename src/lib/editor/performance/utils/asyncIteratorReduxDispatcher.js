@@ -1,4 +1,4 @@
-export const asyncIterator = ({ func, dispatch, dataSet, batchSize }) => new Promise((resolve, reject) => {
+export const asyncIteratorReduxDispatcher = ({ func, dispatch, dataSet, batchSize = 50 }) => new Promise((resolve, reject) => {
   const totalOperations = dataSet.length;
   let operationIndex = 0;
 

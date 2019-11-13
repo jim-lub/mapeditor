@@ -1,0 +1,12 @@
+.wrapper{
+  display: grid;
+  grid-template-rows: min-content auto;
+}
+
+  .actionbarWrapper {
+
+  }
+
+  .contentWrapper {
+    position: relative;
+  }

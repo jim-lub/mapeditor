@@ -1,4 +1,4 @@
-export const asyncIterator = ({ func, dataSet, batchSize }) => new Promise((resolve, reject) => {
+export const asyncIterator = ({ func, dataSet, batchSize = 50 }) => new Promise((resolve, reject) => {
   const totalOperations = dataSet.length;
   let operationIndex = 0;
 
@@ -13,6 +13,7 @@ export const asyncIterator = ({ func, dataSet, batchSize }) => new Promise((reso
       operationIndex++;
       func( dataSet[ i ]);
     }
+    // console.log(operationIndex, totalOperations)
 
     if (operationIndex < totalOperations) {
       window.requestAnimationFrame(performOperation);

@@ -1,10 +1,11 @@
 # Roadmap
 
 ## In development
-- Refactoring CPU intensive code to increase performance
-- Tweaking UX
+- Refactoring CPU intensive code to increase performance ( workers? )
+- Refactoring state code ( cleanup code, performance )
+- Refactoring editor modules ( cleanup code, responsiveness, performance )
 - Improving react components ( forms / context menu / modals )
-- Refactoring editor modules ( code health++, responsiveness++)
+- Tweaking UX
 - Revamping tools ( get, set, clear actions, size, patterns )
 
 ## Soon
