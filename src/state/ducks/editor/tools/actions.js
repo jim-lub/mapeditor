@@ -7,9 +7,10 @@ export const setCurrentTool = ({ toolType }) => ({
   }
 });
 
-export const setZoomScaleModifier = ({ value }) => ({
+export const setZoomScaleModifier = ({ type, value }) => ({
   type: types.setZoomScaleModifier,
   payload: {
+    type,
     value
   }
 });
@@ -21,4 +22,16 @@ export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
     rgb,
     hsl
   }
+});
+
+export const setTileSelection = ({ grid, list }) => ({
+  type: types.setTileSelection,
+  payload: {
+    grid,
+    list
+  }
+});
+
+export const clearTileSelection = () => ({
+  type: types.clearTileSelection
 });

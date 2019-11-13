@@ -18,7 +18,7 @@ export const clearAuthUser = (state, action) => {
 }
 
 export const setAuthError = (state, action) => {
-  const { form, error } = action.payload;
+  const { error } = action.payload;
 
   return {
     ...state,

@@ -8,3 +8,5 @@ export const setLayerPropertiesById = "editor/layers/SET_PROPERTIES_BY_ID";
 export const clearLayerPropertiesById = "editor/layers/CLEAR_PROPERTIES_BY_ID";
 
 export const clearAllLayerProperties = "editor/layers/CLEAR_ALL_PROPERTIES";
+
+export const incrementCreatedLayersCount = "editor/layers/INCREMENT_CREATED_LAYERS_COUNT";

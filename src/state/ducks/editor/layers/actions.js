@@ -43,3 +43,8 @@ export const clearLayerPropertiesById = ({ layerId }) => ({
 export const clearAllLayerProperties = () => ({
   type: types.clearAllLayerProperties
 });
+
+export const incrementCreatedLayersCount = ({ layerType }) => ({
+  type: types.incrementCreatedLayersCount,
+  payload: { layerType }
+});

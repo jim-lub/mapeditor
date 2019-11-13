@@ -1,0 +1,41 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+}
+
+.actionbar {
+  grid-row: 1 / 2;
+}
+
+.segments {
+  position: relative;
+  grid-row: 2 / 3;
+}
+
+.overflowContainer {
+  position: relative;
+  overflow: auto;
+}
+
+.selectableContainer {
+  position: relative;
+}
+
+.selectable {
+  position: absolute;
+  border-right: dashed 1px var(--grey-900);
+  border-bottom: dashed 1px var(--grey-900);
+}
+
+  .selected {
+    background-color: rgb(90, 176, 238, 0.5);
+    /* border: solid 2px var(--blue-500); */
+  }
+
+  .selecting {
+    background-color: rgb(90, 176, 238, 0.3);
+  }
+
+.selectBox {
+  border: dashed 2px var(--blue-500);
+}

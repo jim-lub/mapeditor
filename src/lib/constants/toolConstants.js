@@ -8,7 +8,7 @@ import { ReactComponent as eyedropperIcon } from 'assets/static/icons/editor/too
 
 export default {
   [ toolTypes.paintBrush ]: {
-    name: "Paint Brush",
+    name: "Paint brush",
     description: "...",
     icon: paintBrushIcon,
     keybinding: "P",
@@ -30,8 +30,8 @@ export default {
     description: "...",
     icon: eraserIcon,
     keybinding: "E",
-    cursor: "pointer",
-    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset, layerTypes.collision ],
+    cursor: "default",
+    isAllowedOnLayers: [ layerTypes.color, layerTypes.tileset ],
   },
 
   [ toolTypes.eyeDropper ]: {
@@ -40,6 +40,6 @@ export default {
     icon: eyedropperIcon,
     keybinding: "I",
     cursor: "alias",
-    isAllowedOnLayers: [ layerTypes.color ],
+    isAllowedOnLayers: [],
   },
 }

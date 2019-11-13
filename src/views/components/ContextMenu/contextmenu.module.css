@@ -1,0 +1,56 @@
+.contextmenuWrapper {
+  position: absolute;
+  min-width: 150px;
+  background-color: var(--grey-050);
+  border: solid 1px var(--grey-400);
+  border-right: solid 1px var(--grey-700);
+  border-bottom: solid 1px var(--grey-700);
+  border-radius: 1px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.contextmenuInner {
+  position: relative;
+  border: solid 1px var(--white);
+  font-size: 12px;
+}
+
+.submenuWrapper {
+
+}
+
+.itemWrapper {
+  padding: 4px 8px;
+  font-size: inherit;
+}
+
+  .itemWrapper:hover {
+    background-color: var(--light-blue-100);
+  }
+
+  .itemIcon {
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin-top: 2px;
+    fill: var(--grey-700);
+  }
+
+  .itemName {
+    padding-left: 5px;
+  }
+
+  .itemKeybindingWrapper {
+    float: right;
+    font-size: 11px;
+  }
+
+.toggleWrapper {
+
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: var(--grey-300);
+}

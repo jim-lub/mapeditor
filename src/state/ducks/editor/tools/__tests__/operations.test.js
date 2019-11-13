@@ -9,7 +9,7 @@ describe('tools/operations', () => {
     editor: {
       tools: {
         currentTool: null,
-        color: {}
+        colorValue: {}
       }
     }
   }
@@ -58,7 +58,7 @@ describe('tools/operations', () => {
     editor: {
       tools: {
         currentTool: null,
-        color: {}
+        colorValue: null
       }
     }
   }
@@ -108,7 +108,67 @@ describe('tools/operations', () => {
   const initialState = {
     editor: {
       tools: {
-        zoomScaleModifier: 1
+        currentTool: null,
+        tileSelection: {
+          grid: [],
+          list: []
+        }
+      }
+    }
+  }
+
+  const { dispatch, getState } = configureTestStore(initialState);
+
+  it('should convert the selected tiles to a grid and list', () => {
+    dispatch( operations.setTileSelection({
+      selected: [
+        {
+          columnIndex: 1,
+          rowIndex: 1
+        },
+        {
+          columnIndex: 2,
+          rowIndex: 0
+        },
+        {
+          columnIndex: 3,
+          rowIndex: 1
+        },
+      ]
+    }) );
+
+    const newState = getState();
+    const { grid, list } = selectors.getTileSelection(newState);
+
+    expect(grid).toEqual([
+      [null, { tilesetColumnIndex: 1, tilesetRowIndex: 1 }],
+      [{ tilesetColumnIndex: 2, tilesetRowIndex: 0 }, null],
+      [null, { tilesetColumnIndex: 3, tilesetRowIndex: 1 }]
+    ]);
+
+    expect(list).toEqual([
+      { columnIndex: 0, rowIndex: 1, tilesetColumnIndex: 1, tilesetRowIndex: 1 },
+      { columnIndex: 1, rowIndex: 0, tilesetColumnIndex: 2, tilesetRowIndex: 0 },
+      { columnIndex: 2, rowIndex: 1, tilesetColumnIndex: 3, tilesetRowIndex: 1 },
+    ]);
+  });
+
+  it('should clear the tile selection', () => {
+    dispatch( operations.clearTileSelection() );
+
+    const newState = getState();
+    const { grid, list } = selectors.getTileSelection(newState);
+
+    expect(grid).toEqual([]);
+    expect(list).toEqual([]);
+  });
+});
+
+describe('tools/operations', () => {
+  const initialState = {
+    editor: {
+      tools: {
+        zoomScaleModifier: {}
       }
     }
   }
@@ -116,46 +176,46 @@ describe('tools/operations', () => {
   const { dispatch, getState } = configureTestStore(initialState);
 
   it('should zoom in #1', () => {
-    dispatch( operations.zoomIn() );
+    dispatch( operations.zoomIn({ type: 'testZoom' }) );
 
     const newState = getState();
-    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState, { type: 'testZoom' });
 
     expect(zoomScaleModifier).toBe(1.25);
   });
 
   it('should zoom in #2', () => {
-    dispatch( operations.zoomIn() );
+    dispatch( operations.zoomIn({ type: 'testZoom' }) );
 
     const newState = getState();
-    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState, { type: 'testZoom' });
 
     expect(zoomScaleModifier).toBe(1.50);
   });
 
   it('should reset zoom', () => {
-    dispatch( operations.resetZoom() );
+    dispatch( operations.resetZoom({ type: 'testZoom' }) );
 
     const newState = getState();
-    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState, { type: 'testZoom' });
 
     expect(zoomScaleModifier).toBe(1);
   });
 
   it('should zoom out #1', () => {
-    dispatch( operations.zoomOut() );
+    dispatch( operations.zoomOut({ type: 'testZoom' }) );
 
     const newState = getState();
-    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState, { type: 'testZoom' });
 
     expect(zoomScaleModifier).toBe(0.75);
   });
 
   it('should zoom out #2', () => {
-    dispatch( operations.zoomOut() );
+    dispatch( operations.zoomOut({ type: 'testZoom' }) );
 
     const newState = getState();
-    const zoomScaleModifier = selectors.getZoomScaleModifier(newState);
+    const zoomScaleModifier = selectors.getZoomScaleModifier(newState, { type: 'testZoom' });
 
     expect(zoomScaleModifier).toBe(0.50);
   });

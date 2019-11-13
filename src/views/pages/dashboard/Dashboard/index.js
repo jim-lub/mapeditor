@@ -22,7 +22,7 @@ export const Dashboard = () => {
           <span style={{fontWeight: "bold", marginLeft: 2}}>..To get you started while I take my sweet time to improve the UX..</span>
         </div>
         <ol style={{marginLeft: 5, paddingLeft: 28, borderLeft: "solid 1px #d5d5d5"}}>
-          <li>Go to the projects page by using the navigation bar on the left</li>
+          <li>Go to the projects page</li>
           <li>Create a project by clicking the '+' sign on the bottom of the left column</li>
           <li>Enter a project name (required) and a description (optional) and click create</li>
           <li>Create a scene by click the '+' sign on the bottom of the right column</li>
@@ -32,8 +32,7 @@ export const Dashboard = () => {
             <span style={{fontSize: 9}}>These values will specify the amount of segments (512 x 512px) the map will have. Each segment can contain multiple layers which hold tiles ranging from 32px to 512px</span>
           <li>Click create and the scene you just created will be selected</li>
           <li>Click the blue 'Open Scene' button which just appeared</li>
-          <li>PLAY AROUND!</li>
-          <li>Report the stuff you broke.. please?</li>
+          <li>Play around, break some stuff.. report the broken stuff?!</li>
         </ol>
       </div>
     </div>

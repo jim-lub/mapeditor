@@ -1,0 +1,76 @@
+.wrapper {
+  /* padding: 2px; */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto 15px;
+  grid-template-rows: auto 42px;
+  grid-template-areas:
+    'saturation hue'
+    'inputs inputs';
+  width: 100%;
+  height: 100%;
+}
+
+.saturationWrapper {
+  position: relative;
+  grid-area: saturation;
+}
+
+.hueWrapper {
+  position: relative;
+  grid-area: hue;
+  margin-left: 2px;
+}
+
+.inputWrapper {
+  grid-area: inputs;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  padding-top: 1px;
+  margin-top: 1px;
+  text-align: center;
+  font-weight: bold;
+  border-top: solid 1px var(--grey-400);
+}
+
+  .hexWrapper {
+    flex: 2 2 auto;
+    padding: 1px;
+    text-align: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .rWrapper {
+    flex: 1 3 auto;
+    padding: 1px;
+    text-align: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .gWrapper {
+    flex: 1 3 auto;
+    padding: 1px;
+    text-align: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .bWrapper {
+    flex: 1 3 auto;
+    padding: 1px;
+    text-align: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .input {
+    width: 100%;
+    padding: 1px;
+    text-align: center;
+    font-size: 10px;
+  }

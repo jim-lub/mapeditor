@@ -2,7 +2,10 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import * as utils from '../utils';
 
+import { recordUndoAction } from '../../history';
 import { getColorValue } from '../../tools';
+
+import * as toolTypes from 'lib/constants/toolTypes';
 
 export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
   if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, [])) {
@@ -13,12 +16,12 @@ export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
     dispatch( _leftClickAndHoldNoModifiers(rest) );
   }
 
-  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAltModifier(rest) );
+  if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickShiftModifier(rest) );
   }
 
-  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['altKey'])) {
-    dispatch( _leftClickAndHoldAltModifier(rest) );
+  if (inputActions.leftClickAndHold && utils.inputModifiersObjectMatches(inputModifiers, ['shiftKey'])) {
+    dispatch( _leftClickAndHoldShiftModifier(rest) );
   }
 }
 
@@ -33,6 +36,9 @@ const _leftClickNoModifiers = ({
 
   if (value === currentValue) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'SET', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value }) );
 }
 
@@ -47,10 +53,13 @@ const _leftClickAndHoldNoModifiers = ({
 
   if (value === currentValue) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'SET', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.setSingleTileValue({ segmentId, layerId, columnIndex, rowIndex, value }) );
 }
 
-const _leftClickAltModifier = ({
+const _leftClickShiftModifier = ({
   sceneId, segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
@@ -59,10 +68,13 @@ const _leftClickAltModifier = ({
 
   if (currentValue === 0) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value: 0, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
 }
 
-const _leftClickAndHoldAltModifier = ({
+const _leftClickAndHoldShiftModifier = ({
   sceneId, segmentId, layerId, layerProperties,
   columnIndex, rowIndex
 }) => (dispatch, getState) => {
@@ -71,5 +83,8 @@ const _leftClickAndHoldAltModifier = ({
 
   if (currentValue === 0) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value: 0, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.tileStamp, list }) );
   dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
 }

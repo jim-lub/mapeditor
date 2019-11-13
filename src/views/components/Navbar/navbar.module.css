@@ -1,0 +1,59 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 1px;
+  background: linear-gradient(90deg, var(--blue-100) 0%, var(--blue-700) 100%);
+  border-top: solid 1px var(--white);
+}
+
+.wrapperInner {
+  width: 100%;
+  height: 100%;
+  background-color: var(--grey-200);
+}
+
+
+.navLinkWrapper {
+  float: left;
+  padding: 6px 10px 2px 10px;
+  border-right: solid 1px var(--grey-300);
+}
+
+.navLink {
+  cursor: pointer;
+  fill: var(--blue-grey-200);
+  color: var(--blue-grey-300);
+  text-decoration: none;
+}
+
+.navLink:hover {
+  fill: var(--blue-grey-600);
+  color: var(--blue-grey-600);
+}
+
+.navLinkActive {
+  fill: var(--blue-grey-600);
+  color: var(--blue-grey-600);
+  outline: none;
+}
+
+.navLinkTextWrapper {
+  float: left;
+  padding: 3px;
+  font-size: 12px;
+  color: inherit;
+}
+
+.navLinkIconWrapper {
+  float: left;
+  fill: inherit;
+  stroke: inherit;
+}
+
+.navLinkIcon {
+  margin: 2px 4px;
+  width: 20px;
+  height: 20px;
+  fill: inherit;
+  stroke: inherit;
+}

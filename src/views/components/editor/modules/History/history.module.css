@@ -1,0 +1,72 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: auto min-content;
+}
+
+.content {
+  grid-row: 1 / 2;
+}
+
+.actionbar {
+  grid-row: 2 / 3;
+}
+
+.undoContainer {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  margin: 1px;
+  border: solid 1px var(--grey-400);
+  background-color: var(--white);
+}
+
+.undoContainer.current {
+  border: solid 1px var(--blue-700);
+  background-color: var(--light-blue-100);
+}
+
+.redoContainer {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  margin: 1px;
+  border: solid 1px var(--grey-400);
+  background-color: var(--white);
+  opacity: 0.5;
+}
+
+.undoWrapper {
+  float: left;
+  margin-right: 5px;
+}
+
+.redoWrapper {
+  float: left;
+  margin-right: 5px;
+}
+
+.toolTypeWrapper {
+  float: left;
+}
+
+.toolTypeIcon {
+  width: 16px;
+  height: 16px;
+  fill: var(--grey-500);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--grey-700);
+}
+
+
+.typeWrapper {
+  float: left;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 1px 0 0 6px;
+}
+
+.tileCountWrapper {
+  float: right;
+}

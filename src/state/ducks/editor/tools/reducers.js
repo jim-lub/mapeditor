@@ -8,11 +8,14 @@ export const setCurrentTool = (state, action) => {
 };
 
 export const setZoomScaleModifier = (state, action) => {
-  const { value } = action.payload;
+  const { type, value } = action.payload;
 
   return {
     ...state,
-    zoomScaleModifier: value
+    zoomScaleModifier: {
+      ...state.zoomScaleModifier,
+      [type]: value
+    }
   }
 };
 
@@ -25,6 +28,28 @@ export const setColorValue = (state, action) => {
       hex,
       rgb,
       hsl
+    }
+  }
+};
+
+export const setTileSelection = (state, action) => {
+  const { grid, list } = action.payload;
+
+  return {
+    ...state,
+    tileSelection: {
+      grid,
+      list
+    }
+  }
+};
+
+export const clearTileSelection = (state, action) => {
+  return {
+    ...state,
+    tileSelection: {
+      grid: [],
+      list: []
     }
   }
 };

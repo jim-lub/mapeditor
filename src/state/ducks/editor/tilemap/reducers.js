@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { deleteKeyValuePairFromObject } from 'state/lib/utils';
 
 export const setTilemapDataObject = (state, action) => {
@@ -116,6 +118,53 @@ export const setSingleTileValue = (state, action) => {
           })
         })
       }
+    }
+  }
+}
+
+export const setMultipleTileValues = (state, action) => {
+  const { list, segmentIDs, layerId } = action.payload;
+
+  return {
+    ...state,
+    segmentProperties: {
+      ...state.segmentProperties,
+      ...segmentIDs.reduce((obj, segmentId) => {
+        return {
+          ...obj,
+          [segmentId]: {
+            ...state.segmentProperties[segmentId],
+            modified: true
+          }
+        }
+      }, {})
+    },
+
+    tilemapDataObject: {
+      ...state.tilemapDataObject,
+      ...segmentIDs.reduce((obj, segmentId) => {
+        if (!state.tilemapDataObject.hasOwnProperty(segmentId)) return obj;
+        if (!state.tilemapDataObject[segmentId].hasOwnProperty(layerId)) return obj;
+
+        return {
+          ...obj,
+          [segmentId]: {
+            ...state.tilemapDataObject[segmentId],
+            [layerId]: [
+              ...state.tilemapDataObject[segmentId][layerId]
+                .map((column, columnIndex) => column
+                  .map((currentValue, rowIndex) => {
+                    const listValue = _.find(list, { segmentId, columnIndex, rowIndex });
+
+                    if (listValue) return listValue.value;
+
+                    return currentValue;
+                  })
+                )
+            ]
+          }
+        }
+      }, {})
     }
   }
 }

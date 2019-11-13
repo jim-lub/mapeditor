@@ -4,6 +4,10 @@ import * as selectors from './selectors';
 import * as utils from './utils';
 
 import {
+  clearStore as clearHistoryStore
+} from '../history';
+
+import {
   initializeStore as initializeLayerStore,
   clearStore as clearLayerStore,
 
@@ -20,6 +24,11 @@ import {
 } from '../tilemap';
 
 import {
+  // initializeStore as initializeToolStore,
+  clearStore as clearToolStore,
+} from '../tools';
+
+import {
   setRequestStatus
 } from '../requestStatus';
 
@@ -30,10 +39,12 @@ export const setCurrentScene = ({ uid }) => dispatch => {
 }
 
 export const clearStore = () => dispatch => {
-  dispatch( clearTilemapStore() )
-  dispatch( clearLayerStore() )
-  dispatch( actions.clearMapGrid() )
-  dispatch( actions.clearMapProperties() )
+  dispatch( clearTilemapStore() );
+  dispatch( clearLayerStore() );
+  dispatch( clearToolStore() );
+  dispatch( clearHistoryStore() );
+  dispatch( actions.clearMapGrid() );
+  dispatch( actions.clearMapProperties() );
 }
 
 export const initializeMap = () => (dispatch, getState) => {

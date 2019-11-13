@@ -7,11 +7,11 @@ import {
 } from 'state/ducks/editor/tilemap';
 
 import {
- getActiveLayerId
+ // getActiveLayerId
 } from 'state/ducks/editor/layers';
 
 import {
- getCurrentTool
+ // getCurrentTool
 } from 'state/ducks/editor/tools';
 
 import {
@@ -21,5 +21,6 @@ import {
 export const isAllEditorInputDisabled = state => (
   !getCurrentScene(state).uid ||
   !!getRequestStatus(state, { key: 'initializeMap'}).loading ||
-  !!getRequestStatus(state, { key: 'storeMap'}).loading
+  !!getRequestStatus(state, { key: 'storeMap'}).loading ||
+  !!getRequestStatus(state, { key: 'history'}).loading
 );

@@ -1,54 +1,63 @@
 # Roadmap
 
 ## In development
-- Tools ( tile stamp )
-- Tile selector window
+- Refactoring CPU intensive code to increase performance
+- Tweaking UX
+- Improving react components ( forms / context menu / modals )
+- Refactoring editor modules ( code health++, responsiveness++)
+- Revamping tools ( get, set, clear actions, size, patterns )
 
 ## Soon
-- Menu bar ( save, load, settings, help )
-- Dashboard
-- Improved tools ( size, patterns )
+- Menu bar ( ~~save~~, load, settings, help )
+- Upload tile sets
+- Draw-a-pattern module
+- Prefabs
 
 ## Soon-ish
-- History
+- Fill tool
+- Dashboard
 - Color Swatches
 - Custom cursors
-- Tools ( bucket )
 - Crop / expand map
-- Upload custom tile sets
-- Modify custom tile sets
-- Upgrades to project- and scene management interface
-- Smooth transition animations
+- Modify tile sets
+- Refactor project- and scene management interface
+- Export / Import ( json, ??? )
 
 ## Future
-- Export / Import ( json, ??? )
 - Full touch / pen support
 - Customizable key bindings
 - Customizable workspace layouts
-- Mobile support
-- Actual collision layer implementation
-- Prefabs
-- Performance optimization
+- Worlds ( link multiple maps )
+- Map preview thumbnails
+- Export map to image file
+- Collision layers
+- Object layers
 - Improved user system
   - Sign up with Facebook and Github
   - Link accounts
   - Account settings
   - Forgot password
   - Enhanced role-based authorization system
-- Share projects and scenes
+- Smooth transition animations
+- Mobile support
+- Performance optimization
 - Collaboration
+- Share projects and scenes
 - Lots of QoL fixes
 
 
 ## Completed
+- ~~History~~
+- ~~Tools ( tile stamp )~~
+- ~~Tile selector module~~
 - ~~Zoom~~
-- ~~New layer types: Tileset / Collision~~
+- ~~New layer types: Tileset~~
 - ~~Layers~~
 - ~~Initialize / store tilemap data~~
 - ~~Color Picker~~
 - ~~Tools ( paint brush, eraser, eye dropper )~~
 - ~~Toolbar~~
-- ~~Properties panel~~
+- ~~Properties module~~
 - ~~Segments: canvas layer, interaction layer~~
 - ~~Map: "virtualized" scrolling grid~~
 - ~~Create, delete, update scenes~~

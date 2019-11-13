@@ -1,0 +1,16 @@
+.grid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 210px 200px auto;
+  grid-template-rows: auto;
+}
+
+.projectSelector {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.sceneSelector {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}

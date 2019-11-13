@@ -10,7 +10,7 @@
 }
 
 html, body {
-  background-color: #f9f9f9;
+  background-color: var(--grey-050);
   height: 100%;
   scroll-behavior: smooth;
 }
@@ -43,6 +43,23 @@ h4 {
 h5 {
   font-size: 16px;
   color: inherit;
+}
+
+span {
+  font-size: inherit;
+  color: inherit;
+}
+
+.regular {
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .clearfix {

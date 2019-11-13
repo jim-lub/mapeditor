@@ -14,7 +14,7 @@ export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
 
   return firebase.scenes()
     .where("ownerId", "==", userId)
-    .orderBy("createdAt", "desc")
+    .orderBy("modifiedAt", "desc")
     .onSnapshot(snapshot => {
       dispatch( actions.setSceneCollectionRequest() );
 

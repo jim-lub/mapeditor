@@ -47,7 +47,12 @@ describe('layer/operations', () => {
         layers: {
           activeLayerId: null,
           layerProperties: {},
-          layerSortOrder: []
+          layerSortOrder: [],
+          createdLayersCount: {
+            [layerTypes.color]: 0,
+            [layerTypes.collision]: 0,
+            [layerTypes.tileset]: 0
+          }
         }
       }
     }

@@ -60,12 +60,14 @@ export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState
   resolve();
 })
 
-export const handleUserInput = ({ segmentId, columnIndex, rowIndex, inputActions, inputModifiers }) => (dispatch, getState) => {
+export const handleUserInput = ({ segmentId, columnIndex: inputColumnIndex, rowIndex: inputRowIndex, inputActions, inputModifiers }) => (dispatch, getState) => {
   const state = getState();
   const sceneId = getCurrentScene(state);
   const layerId = getActiveLayerId(state);
   const layerProperties = getLayerPropertiesById(state, { layerId });
   const currentTool = getCurrentTool(state);
+  const columnIndex = Number(inputColumnIndex);
+  const rowIndex = Number(inputRowIndex);
 
   // early exit checks
   if (!sceneId) return;
@@ -121,3 +123,6 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
     zoomScaleModifier
   });
 }
+
+export const setSingleTileValue = actions.setSingleTileValue;
+export const setMultipleTileValues = actions.setMultipleTileValues;

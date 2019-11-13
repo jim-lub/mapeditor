@@ -2,6 +2,10 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import * as utils from '../utils';
 
+import { recordUndoAction } from '../../history';
+
+import * as toolTypes from 'lib/constants/toolTypes';
+
 export default ({ inputActions, inputModifiers, ...rest }) => dispatch => {
   if (inputActions.leftClick && utils.inputModifiersObjectMatches(inputModifiers, [])) {
     dispatch( _leftClickNoModifiers(rest) );
@@ -21,6 +25,9 @@ const _leftClickNoModifiers = ({
 
   if (currentValue === 0) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value: 0, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.eraser, list }) );
   dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
 }
 
@@ -33,5 +40,8 @@ const _leftClickAndHoldNoModifiers = ({
 
   if (currentValue === 0) return;
 
+  const list = [{ segmentId, layerId, columnIndex, rowIndex, value: 0, undoValue: currentValue }];
+
+  dispatch( recordUndoAction({ type: 'CLEAR', toolType: toolTypes.eraser, list }) );
   dispatch( actions.clearSingleTileValue({ segmentId, layerId, columnIndex, rowIndex }) );
 }

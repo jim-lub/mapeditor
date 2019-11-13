@@ -7,7 +7,11 @@ import * as reducers from './reducers';
 
 const initialState = {
   currentScene: {
-    // uid: "qN48dXmqDbqD2BDImAtP"
+    // uid: "qYOFnxf8E88wbT7mlrnm",
+    // uid: "QVTmWKKpAuMMzGGMQTlx", // 50x50
+    // uid: "1covmNky5ghzQfxwtsBu", // 1x1
+    uid: '7s4YBQafR5vPWIQXdijr', // 5x5
+    // uid: null
   },
   mapProperties: {},
   mapGrid: []
@@ -37,3 +41,4 @@ export const getCurrentScene = selectors.getCurrentScene;
 export const getMapProperties = selectors.getMapProperties;
 export const getMapGrid = selectors.getMapGrid;
 export const getSegmentId = selectors.getSegmentId;
+export const getColumnAndRowIndexBySegmentId = selectors.getColumnAndRowIndexBySegmentId;

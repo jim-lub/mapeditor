@@ -40,8 +40,8 @@ export const setLayerPropertiesById = (state, action) => {
     layerType = state.layerProperties[layerId].layerType,
     layerName = state.layerProperties[layerId].layerName,
     tileSize = state.layerProperties[layerId].tileSize,
-    visible = state.layerProperties[layerId].visible || true,
-    locked = state.layerProperties[layerId].locked || false,
+    visible = state.layerProperties[layerId].visible,
+    locked = state.layerProperties[layerId].locked,
   } = action.payload;
 
   return {
@@ -78,5 +78,18 @@ export const clearAllLayerProperties = (state, action) => {
   return {
     ...state,
     layerProperties: {}
+  }
+}
+
+
+export const incrementCreatedLayersCount = (state, action) => {
+  const { layerType } = action.payload;
+
+  return {
+    ...state,
+    createdLayersCount: {
+      ...state.createdLayersCount,
+      [layerType]: state.createdLayersCount[layerType] + 1
+    }
   }
 }
