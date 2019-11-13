@@ -21,5 +21,6 @@ import {
 export const isAllEditorInputDisabled = state => (
   !getCurrentScene(state).uid ||
   !!getRequestStatus(state, { key: 'initializeMap'}).loading ||
-  !!getRequestStatus(state, { key: 'storeMap'}).loading
+  !!getRequestStatus(state, { key: 'storeMap'}).loading ||
+  !!getRequestStatus(state, { key: 'history'}).loading
 );

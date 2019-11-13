@@ -124,4 +124,5 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
   });
 }
 
+export const setSingleTileValue = actions.setSingleTileValue;
 export const setMultipleTileValues = actions.setMultipleTileValues;

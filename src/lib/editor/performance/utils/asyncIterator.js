@@ -1,6 +1,7 @@
-export const asyncIterator = ({ dispatch, func, dataSet = [], batchSize = 50 }) => new Promise((resolve, reject) => {
+export const asyncIterator = ({ func, dataSet, batchSize }) => new Promise((resolve, reject) => {
   const totalOperations = dataSet.length;
   let operationIndex = 0;
+
   const performOperation = () => {
     if (operationIndex > totalOperations) return;
 
@@ -10,9 +11,7 @@ export const asyncIterator = ({ dispatch, func, dataSet = [], batchSize = 50 }) 
       if (operationIndex >= totalOperations) break;
 
       operationIndex++;
-      dispatch(
-        func( dataSet[ i ])
-      );
+      func( dataSet[ i ]);
     }
 
     if (operationIndex < totalOperations) {
@@ -20,8 +19,6 @@ export const asyncIterator = ({ dispatch, func, dataSet = [], batchSize = 50 }) 
     } else {
       resolve();
     }
-
-    console.log('asyncIterator', operationIndex, totalOperations)
   }
 
   performOperation();

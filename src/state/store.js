@@ -8,7 +8,8 @@ import * as reducers from './ducks';
 const appReducer = combineReducers(reducers);
 const logger = createLogger({
   // diff: true,
-  collapsed: true
+  collapsed: true,
+  predicate: (getState, action) => !action.type.includes('editor/tilemap'),
 });
 
 const rootReducer = (state, action) => {
