@@ -12,6 +12,8 @@ import { default as tilesets } from './tilesets';
 import { default as tools } from './tools';
 import { default as userInput } from './user-input';
 
+import { default as workers } from './workers';
+
 import * as selectors from './selectors';
 
 export default combineReducers({
@@ -24,7 +26,8 @@ export default combineReducers({
   tilemap,
   tilesets,
   tools,
-  userInput
+  userInput,
+  workers
 });
 
 export const userInputActionsAllowedOnMap = selectors.userInputActionsAllowedOnMap;

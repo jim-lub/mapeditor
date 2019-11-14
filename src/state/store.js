@@ -24,7 +24,10 @@ const rootReducer = (state, action) => {
 let middleWare ;
 switch(process.env.NODE_ENV) {
   case 'development': {
-    middleWare = applyMiddleware(thunk, logger)
+    middleWare = applyMiddleware(
+      thunk,
+      // logger
+    )
     break;
   }
 

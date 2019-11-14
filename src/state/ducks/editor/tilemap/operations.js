@@ -17,8 +17,10 @@ import {
 
 import { getCurrentTool } from '../tools';
 
-import { asyncIterator } from 'lib/editor/performance/utils';
+import { asyncIterator } from 'state/lib/utils';
 import { setRequestStatus } from '../requestStatus';
+
+import { addTask } from 'state/ducks/editor/workers';
 
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
@@ -35,20 +37,25 @@ export const clearStore = () => dispatch => {
 }
 
 export const validateTilemapDataSegmentTest = ({ segmentId }) => (dispatch, getState) => {
-  function generateRandomInteger(min, max) {
-    return Math.floor(min + Math.random()*(max + 1 - min))
-  }
+  dispatch( addTask({
+    type: 'fn',
+    fn: 'testCalculation',
+    data: {
+      segmentId,
+      values: [3232, 323, 32]
+    }
+  }) );
 
-  dispatch( setRequestStatus({ key: `segment-${segmentId}`, type: 'REQUEST' }) );
-  const dataSet = [...new Array( generateRandomInteger(1000, 9999) )].map(() => 0);
-
-  asyncIterator({
-    func: () => [...new Array( 500 )].map((val, index) => ({ index })),
-    dataSet
-  })
-  .then(() => {
-    dispatch( setRequestStatus({ key: `segment-${segmentId}`, type: 'SUCCESS' }) );
-  })
+  // const dataSet = [...new Array( 100 )].map(() => 0);
+  //
+  // asyncIterator({
+  //   fn: () => [...new Array( 32 )].map((val, index) => [...new Array( 32 )].map((val, index) => ({ index }))),
+  //   // fn: () => 0,
+  //   dataSet,
+  //   batchSize: 2
+  // })
+  // .then(() => {
+  // });
 }
 
 export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => {

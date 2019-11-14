@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
@@ -12,8 +12,11 @@ import styles from './app.module.css';
 import withAuthorization from 'views/lib/authorization/withAuthorization';
 import { listenToAuthChanges } from 'state/ducks/auth';
 
+import { controller } from 'state/ducks/editor/workers';
+
 export const App = ({ store }) => {
   store.dispatch( listenToAuthChanges() );
+  store.dispatch( controller() );
 
   return (
     <>

@@ -32,12 +32,13 @@ const Component = ({
   currentTool, zoomScaleModifier,
   actions
 }) => {
+
   useEffect(() => {
-    actions.validateTilemapDataSegmentTest({ segmentId });
-  }, [segmentId, layerSortOrder, actions])
+    actions.validateTilemapDataSegmentTest({ segmentId })
+  }, [segmentId, layerSortOrder, actions]);
 
   return (
-    <div>Segment: { segmentId }</div>
+    <div style={{fontSize: 20 * zoomScaleModifier}}>{ segmentId }</div>
   );
 }
 
