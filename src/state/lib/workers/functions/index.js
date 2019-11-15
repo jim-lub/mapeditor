@@ -1,5 +1,5 @@
-import testCalculation from './testCalculation';
+import { validateSegment } from './validateSegment';
 
 export default {
-  'testCalculation': testCalculation
+  'validateSegment': validateSegment
 }

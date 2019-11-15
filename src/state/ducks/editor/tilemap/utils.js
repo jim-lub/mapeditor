@@ -1,4 +1,4 @@
-import { buildTwoDimensionalArray, buildEmptyTilemapGrid } from 'lib/utils';
+import { buildEmptyGrid } from 'lib/utils';
 
 export const findLayersToAddOnTilemapDataSegment = ({ tilemapDataSegment, layerSortOrder }) => {
   return layerSortOrder.filter(layerId => !tilemapDataSegment.hasOwnProperty(layerId));
@@ -9,15 +9,10 @@ export const findLayersToRemoveFromTilemapDataSegment = ({ tilemapDataSegment, l
 }
 
 export const buildTilemapDataSegmentLayer = ({ segmentSize, tileSize }) => {
-  return buildEmptyTilemapGrid({
+  return buildEmptyGrid({
     columns: segmentSize.width / tileSize.width,
     rows: segmentSize.height / tileSize.height,
   })
-  // return buildTwoDimensionalArray({
-  //   columns: segmentSize.width / tileSize.width,
-  //   rows: segmentSize.height / tileSize.height,
-  //   mapFn: () => 0
-  // })
 }
 
 export const inputModifiersObjectMatches = (inputModifiersObject, modifierKeys = []) => {

@@ -37,25 +37,23 @@ export const clearStore = () => dispatch => {
 }
 
 export const validateTilemapDataSegmentTest = ({ segmentId }) => (dispatch, getState) => {
+  const state = getState();
+  const { segmentSize } = getMapProperties(state);
+  const tilemapData = selectors.getTilemapDataSegmentById(state, { segmentId });
+  const layerSortOrder = getLayerSortOrder(state);
+  const layerProperties = getLayerPropertiesObject(state);
+
   dispatch( addTask({
-    type: 'fn',
-    fn: 'testCalculation',
-    data: {
+    key: segmentId,
+    functionName: 'validateSegment',
+    payload: {
       segmentId,
-      values: [3232, 323, 32]
+      segmentSize,
+      tilemapData,
+      layerSortOrder,
+      layerProperties
     }
   }) );
-
-  // const dataSet = [...new Array( 100 )].map(() => 0);
-  //
-  // asyncIterator({
-  //   fn: () => [...new Array( 32 )].map((val, index) => [...new Array( 32 )].map((val, index) => ({ index }))),
-  //   // fn: () => 0,
-  //   dataSet,
-  //   batchSize: 2
-  // })
-  // .then(() => {
-  // });
 }
 
 export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => {

@@ -10,7 +10,7 @@ export const buildGrid = ({ columns, rows, fill }) => (
   )
 )
 
-export const buildEmptyTilemapGrid = ({ columns, rows }) => {
+export const buildEmptyGrid = ({ columns, rows }) => {
   const grid = new Array(columns);
   const copy = new Array(rows);
 

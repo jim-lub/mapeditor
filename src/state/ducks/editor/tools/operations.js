@@ -5,7 +5,7 @@ import * as selectors from './selectors';
 
 import { testUserInput } from '../user-input';
 
-import { buildTwoDimensionalArray } from 'lib/utils';
+import { buildGrid } from 'lib/utils';
 
 export const clearStore = () => dispatch => {
   dispatch( actions.clearTileSelection() );
@@ -13,7 +13,7 @@ export const clearStore = () => dispatch => {
 
 export const setCurrentTool = actions.setCurrentTool;
 const allowedZoomLevels = [
-  0.125, 0.25, 0.50, 0.75,
+  0.25, 0.50, 0.75,
   1.00,
   1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00
 ]
@@ -77,7 +77,7 @@ export const setTileSelection = ({ selected }) => dispatch => {
       tilesetRowIndex: rowIndex
     }));
 
-  const selectionGrid = buildTwoDimensionalArray({
+  const selectionGrid = buildGrid({
     columns: selectionBoundaryWidth,
     rows: selectionBoundaryHeight,
     mapFn: ({ columnIndex, rowIndex }) => {

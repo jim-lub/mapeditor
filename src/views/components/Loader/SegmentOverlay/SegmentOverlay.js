@@ -13,7 +13,7 @@ export default ({ width = 0, height = 0, scale = 5 }) => {
           marginTop: (height / 2 - ((height / scale) / 2))
         }}
       >
-        { (width > 0) && (height > 0) && <SimpleLoader width={width / scale} height={height / scale}/> }
+        <SimpleLoader width={width / scale} height={height / scale}/>
       </div>
     </div>
   )

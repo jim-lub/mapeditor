@@ -1,10 +1,5 @@
 import functions from './functions';
 
-import types from './tasks.types';
-
-const tasks = [];
-const completedTasks = [];
-
 const state = {
   running: false,
   tasks: [],
@@ -22,10 +17,7 @@ self.addEventListener("message", ({ data }) => {
   state.tasks.push( data );
 
   if (!state.running) {
-    setTimeout(
-      controller,
-      0
-    )
+    setTimeout(controller, 0)
     state.running = true;
   }
 });
@@ -57,10 +49,14 @@ function *runTasks() {
   let i = 0;
 
   while (state.tasks.length > 0) {
-    const { fn, data } = state.tasks.shift();
+    const { key, functionName, payload } = state.tasks.shift();
+    const fn = functions[functionName];
 
-    const result = functions[fn]( data );
-    state.completedTasks.push( result );
+    if (typeof fn === "function") {
+      const result = fn(payload);
+      state.completedTasks.push({ key, result });
+    }
+
 
     if (++i > config.batchSize.tasks) {
       yield 1;

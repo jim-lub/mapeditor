@@ -15,7 +15,7 @@ const Component = ({ segmentId, initialized = false, loading = true, error = nul
       <Controller segmentId={segmentId} />
       {
         (!initialized || loading) &&
-        <Loader.OverlayCustomProps
+        <Loader.SegmentOverlay
           width={style.width}
           height={style.height}
           scale={8}
@@ -28,9 +28,10 @@ const Component = ({ segmentId, initialized = false, loading = true, error = nul
 const mapStateToProps = (state, ownProps) => {
   const { columnIndex, rowIndex } = ownProps;
   const segmentId = getSegmentId(state, { columnIndex, rowIndex });
+
   return {
     segmentId,
-    ...getRequestStatus(state, { key: `segment-${segmentId}` }) // pull initialized + loading + error
+    ...getRequestStatus(state, { key: segmentId }) // pull initialized + loading + error
   }
 }
 

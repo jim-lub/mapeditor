@@ -9,7 +9,7 @@ const appReducer = combineReducers(reducers);
 const logger = createLogger({
   // diff: true,
   collapsed: true,
-  predicate: (getState, action) => !action.type.includes('editor/tilemap'),
+  predicate: (getState, action) => !action.type.includes('editor/requestStatus'),
 });
 
 const rootReducer = (state, action) => {
@@ -26,7 +26,7 @@ switch(process.env.NODE_ENV) {
   case 'development': {
     middleWare = applyMiddleware(
       thunk,
-      // logger
+      logger
     )
     break;
   }

@@ -1,9 +1,9 @@
 import { Overlay } from './Overlay';
-import { OverlayCustomProps } from './OverlayCustomProps';
+import { SegmentOverlay } from './SegmentOverlay';
 import { Simple } from './Simple';
 
 export const Loader = {
   Overlay,
-  OverlayCustomProps,
+  SegmentOverlay,
   Simple
 }

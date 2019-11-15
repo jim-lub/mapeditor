@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  buildTwoDimensionalArray,
+  buildGrid,
   concatClassNames
 } from 'lib/utils';
 
@@ -77,7 +77,7 @@ export default ({
     <div className={styles.userInputWrapperOuter}>
       <div className={styles.userInputWrapperInner}>
         {
-          buildTwoDimensionalArray({
+          buildGrid({
             columns, rows,
             mapFn: ({ columnIndex, rowIndex }) => (
               <div
