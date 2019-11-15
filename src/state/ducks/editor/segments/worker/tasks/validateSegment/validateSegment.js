@@ -1,4 +1,4 @@
-import { buildEmptyGrid } from '../../utils';
+import { buildEmptyGrid } from 'lib/utils/buildEmptyGrid';
 
 export default ({ segmentId, segmentSize, tilemapData, layerSortOrder, layerProperties }) => {
   const redundantLayers = _findRedundantLayers({ tilemapData, layerSortOrder });

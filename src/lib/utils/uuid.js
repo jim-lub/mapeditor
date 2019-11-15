@@ -34,4 +34,8 @@ const getRandomValuesFunc = window.crypto && window.crypto.getRandomValues ?
     d3: Math.random() * 0x100000000 >>> 0,
   });
 
-export const generateUuid = (prefix) => formatUuid(prefix, getRandomValuesFunc());
+const generateUuid = (prefix) => formatUuid(prefix, getRandomValuesFunc());
+
+export const uuid = {
+  create: generateUuid
+}

@@ -20,7 +20,7 @@ import { getCurrentTool } from '../tools';
 import { asyncIterator } from 'state/lib/utils';
 import { setRequestStatus } from '../requestStatus';
 
-import { addTask } from 'state/ducks/editor/workers';
+import { addTaskToWorker } from 'state/ducks/editor/segments';
 
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
@@ -43,9 +43,10 @@ export const validateTilemapDataSegmentTest = ({ segmentId }) => (dispatch, getS
   const layerSortOrder = getLayerSortOrder(state);
   const layerProperties = getLayerPropertiesObject(state);
 
-  dispatch( addTask({
+  dispatch( addTaskToWorker({
     key: segmentId,
-    functionName: 'validateSegment',
+    taskType: "editor/segments/worker/VALIDATE_SEGMENT",
+    reduxActionType: "setTilemapData",
     payload: {
       segmentId,
       segmentSize,

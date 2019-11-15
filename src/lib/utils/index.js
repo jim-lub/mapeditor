@@ -1,4 +1,5 @@
 export { concatClassNames } from './concatClassNames';
-export { uuid } from './UUID';
+export { uuid } from './uuid';
 
-export { buildGrid, buildEmptyGrid } from './buildGrid';
+export { buildGrid } from './buildGrid';
+export { buildEmptyGrid } from './buildEmptyGrid';

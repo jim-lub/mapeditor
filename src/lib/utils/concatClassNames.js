@@ -1,4 +1,4 @@
-export default (arr) => {
+export const concatClassNames = (arr) => {
   let str = "";
 
   arr.forEach(classname => {

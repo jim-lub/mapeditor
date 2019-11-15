@@ -1,4 +1,4 @@
-import functions from './functions';
+import workerTasks from './tasks';
 
 const state = {
   running: false,
@@ -7,9 +7,7 @@ const state = {
 }
 
 const config = {
-  batchSize: {
-    tasks: 5,
-  }
+  batchSize: 5
 }
 
 //eslint-disable-next-line
@@ -34,7 +32,7 @@ const controller = () => {
     }
 
     if (!result.done) {
-      setTimeout(run, 50);
+      setTimeout(run, 0);
     }
 
     if (result.done) {
@@ -42,24 +40,30 @@ const controller = () => {
     }
   }
 
-  setTimeout(run, 50);
+  setTimeout(run, 0);
 }
 
 function *runTasks() {
   let i = 0;
 
   while (state.tasks.length > 0) {
-    const { key, functionName, payload } = state.tasks.shift();
-    const fn = functions[functionName];
+    const { key, taskType, reduxActionType, payload } = state.tasks.shift();
+    const fn = workerTasks[taskType];
 
-    if (typeof fn === "function") {
-      const result = fn(payload);
-      state.completedTasks.push({ key, result });
+    const result = (typeof fn === "function") ? fn(payload) : null;
+    const error = { type: null, message: '' };
+
+    if (!result) {
+      error.type = 'no-function';
+      error.message = 'Provided `functionName` does not match any worker function.';
     }
 
+    (result)
+      ? state.completedTasks.push({ key, reduxActionType, result })
+      : state.completedTasks.push({ key, error });
 
-    if (++i > config.batchSize.tasks) {
-      yield 1;
+    if (++i > config.batchSize) {
+      yield;
       i = 0
     }
   }
