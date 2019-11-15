@@ -13,7 +13,7 @@ import {
 // import { getMapProperties } from 'state/ducks/editor/map';
 // import { handleUserInput } from 'state/ducks/editor/user-input';
 
-import { validateTilemapDataSegmentTest } from 'state/ducks/editor/tilemap';
+import { validateSegment } from 'state/ducks/editor/segments';
 
 import {
   getCurrentTool,
@@ -34,7 +34,7 @@ const Component = ({
 }) => {
 
   useEffect(() => {
-    actions.validateTilemapDataSegmentTest({ segmentId })
+    actions.validateSegment({ segmentId })
   }, [segmentId, layerSortOrder, actions]);
 
   return (
@@ -54,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ validateTilemapDataSegmentTest }, dispatch)
+    actions: bindActionCreators({ validateSegment }, dispatch)
   }
 }
 

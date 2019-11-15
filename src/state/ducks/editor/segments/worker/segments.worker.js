@@ -7,7 +7,7 @@ const state = {
 }
 
 const config = {
-  batchSize: 5
+  batchSize: 20
 }
 
 //eslint-disable-next-line
@@ -51,16 +51,29 @@ function *runTasks() {
     const fn = workerTasks[taskType];
 
     const result = (typeof fn === "function") ? fn(payload) : null;
-    const error = { type: null, message: '' };
 
     if (!result) {
-      error.type = 'no-function';
-      error.message = 'Provided `functionName` does not match any worker function.';
+      state.completedTasks.push({
+        key,
+        error: {
+          type: 'no-function',
+          message: 'Provided `functionName` does not match any worker function.'
+        }
+      });
     }
 
-    (result)
-      ? state.completedTasks.push({ key, reduxActionType, result })
-      : state.completedTasks.push({ key, error });
+    if (result) {
+      const { updateReduxStore, payload } = result;
+
+      state.completedTasks.push({
+        key,
+        result: {
+          updateReduxStore,
+          reduxActionType,
+          payload
+        }
+       })
+    }
 
     if (++i > config.batchSize) {
       yield;

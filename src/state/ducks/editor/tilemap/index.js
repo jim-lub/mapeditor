@@ -26,11 +26,6 @@ export default createReducer( initialState )({
 });
 
 /*** operations ***/
-export const initializeStore = operations.initializeStore;
-export const clearStore = operations.clearStore;
-
-export const validateTilemapDataSegment = operations.validateTilemapDataSegment;
-export const validateTilemapDataSegmentTest = operations.validateTilemapDataSegmentTest;
 export const handleUserInput = operations.handleUserInput;
 export const handleCanvasUpdate = operations.handleCanvasUpdate;
 export const setSingleTileValue = operations.setSingleTileValue;

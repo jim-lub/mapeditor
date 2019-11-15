@@ -1,17 +1,12 @@
-.wrapper {
+.wrapper{
   display: grid;
   grid-template-rows: min-content auto;
 }
 
-.actionbar {
-  grid-row: 1 / 2;
-}
+  .actionbarWrapper {
 
-.segments {
-  position: relative;
-  grid-row: 2 / 3;
-}
+  }
 
-.noLayersContainer {
-  margin: 0 auto;
-}
+  .contentWrapper {
+    position: relative;
+  }

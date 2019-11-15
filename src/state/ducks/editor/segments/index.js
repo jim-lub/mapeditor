@@ -7,15 +7,23 @@ import * as reducers from './reducers';
 
 const initialState = {
   properties: {},
-  tilemap: {}
+  tilemapData: {}
 }
 
 export default createReducer( initialState )({
+  [ types.initializeStore ]: (state, action) => reducers.initializeStore(state, action),
+  [ types.clearStore ]: (state, action) => reducers.clearStore(state, action),
 
+  [ types.setTilemapData ]: (state, action) => reducers.setTilemapData(state, action),
+  [ types.clearTilemapData ]: (state, action) => reducers.clearTilemapData(state, action),
 });
 
 /*** operations ***/
 export const listenToTaskWorkerEvents = operations.listenToTaskWorkerEvents;
-export const addTaskToWorker = operations.addTaskToWorker;
+
+export const initializeStore = operations.initializeStore;
+export const clearStore = operations.clearStore;
+
+export const validateSegment = operations.validateSegment;
 
 /*** selectors ***/

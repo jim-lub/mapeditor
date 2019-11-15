@@ -16,9 +16,11 @@ import {
 } from '../layers';
 
 import {
-  initializeStore as initializeTilemapStore,
-  clearStore as clearTilemapStore,
+  initializeStore as initializeSegmentsStore,
+  clearStore as clearSegmentsStore,
+} from '../segments';
 
+import {
   getTilemapDataObject,
   getSegmentPropertiesObject
 } from '../tilemap';
@@ -39,7 +41,7 @@ export const setCurrentScene = ({ uid }) => dispatch => {
 }
 
 export const clearStore = () => dispatch => {
-  dispatch( clearTilemapStore() );
+  dispatch( clearSegmentsStore() );
   dispatch( clearLayerStore() );
   dispatch( clearToolStore() );
   dispatch( clearHistoryStore() );
@@ -103,7 +105,7 @@ export const initializeMap = () => (dispatch, getState) => {
   }
 
   const _handleTilemapReducer = ({ tilemapDataObject }) => dispatch => {
-    dispatch( initializeTilemapStore({ tilemapDataObject }) );
+    dispatch( initializeSegmentsStore({ tilemapDataObject }) );
   }
 
 export const storeMap = () => (dispatch, getState) => {

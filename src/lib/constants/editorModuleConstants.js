@@ -5,8 +5,7 @@ import {
   Hints,
   History,
   Layers,
-  // Map
-  _Map as Map,
+  Map,
   // Properties,
   TileSelector
 } from 'views/components/Editor/modules';

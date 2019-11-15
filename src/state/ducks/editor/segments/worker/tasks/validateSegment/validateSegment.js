@@ -4,6 +4,13 @@ export default ({ segmentId, segmentSize, tilemapData, layerSortOrder, layerProp
   const redundantLayers = _findRedundantLayers({ tilemapData, layerSortOrder });
   const missingLayers = _findMissingLayers({ tilemapData, layerSortOrder });
 
+  if (redundantLayers.length === 0 && missingLayers.length === 0) {
+    return {
+      updateReduxStore: false,
+      payload: {}
+    }
+  }
+
   const tilemapDataWithRedundantLayersRemoved =
     _removeReduntantLayersFromTilemap({
       redundantLayers,
@@ -18,9 +25,13 @@ export default ({ segmentId, segmentSize, tilemapData, layerSortOrder, layerProp
       layerProperties
     });
 
-  return ({
-    tilemapData: tilemapDataWithMissingLayersAdded
-  })
+  return {
+    updateReduxStore: true,
+    payload: {
+      segmentId,
+      tilemapData: tilemapDataWithMissingLayersAdded
+    }
+  }
 }
 
 
@@ -43,11 +54,16 @@ const _removeReduntantLayersFromTilemap = ({ redundantLayers, tilemapData }) => 
 
 const _addMissingLayersToTilemap = ({ missingLayers, tilemapData, segmentSize, layerProperties }) => ({
   ...tilemapData,
-  ...missingLayers.map(layerId => {
+  ...missingLayers.reduce((obj, layerId) => {
     const { tileSize } = layerProperties[layerId];
     const columns = segmentSize.width / tileSize.width;
     const rows = segmentSize.height / tileSize.height;
 
-    return [layerId] = buildEmptyGrid({ columns, rows });
-  })
+    obj = {
+      ...obj,
+      [layerId]: buildEmptyGrid({ columns, rows })
+    }
+
+    return obj;
+  }, {})
 })

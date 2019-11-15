@@ -17,74 +17,12 @@ import {
 
 import { getCurrentTool } from '../tools';
 
-import { asyncIterator } from 'state/lib/utils';
-import { setRequestStatus } from '../requestStatus';
-
-import { addTaskToWorker } from 'state/ducks/editor/segments';
 
 import { drawCanvasHandler } from 'lib/editor/canvas-api';
 
 // import * as layerTypes from 'lib/constants/layerTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
-
-export const initializeStore = ({ tilemapDataObject }) => dispatch => {
-  return dispatch( actions.setTilemapDataObject({ tilemapDataObject }) );
-}
-
-export const clearStore = () => dispatch => {
-  dispatch( actions.clearTilemapDataObject() );
-}
-
-export const validateTilemapDataSegmentTest = ({ segmentId }) => (dispatch, getState) => {
-  const state = getState();
-  const { segmentSize } = getMapProperties(state);
-  const tilemapData = selectors.getTilemapDataSegmentById(state, { segmentId });
-  const layerSortOrder = getLayerSortOrder(state);
-  const layerProperties = getLayerPropertiesObject(state);
-
-  dispatch( addTaskToWorker({
-    key: segmentId,
-    taskType: "editor/segments/worker/VALIDATE_SEGMENT",
-    reduxActionType: "setTilemapData",
-    payload: {
-      segmentId,
-      segmentSize,
-      tilemapData,
-      layerSortOrder,
-      layerProperties
-    }
-  }) );
-}
-
-export const validateTilemapDataSegment = ({ segmentId }) => (dispatch, getState) => new Promise((resolve, reject) => {
-  const state = getState();
-  const { segmentSize } = getMapProperties(state);
-  const tilemapDataSegment = selectors.getTilemapDataSegmentById(state, { segmentId });
-  const layerSortOrder = getLayerSortOrder(state);
-  const layersToAdd = utils.findLayersToAddOnTilemapDataSegment({ tilemapDataSegment, layerSortOrder });
-  const layersToRemove = utils.findLayersToRemoveFromTilemapDataSegment({ tilemapDataSegment, layerSortOrder });
-
-  layersToAdd.map(layerId => {
-    const { tileSize } = getLayerPropertiesById(state, { layerId });
-    const tilemapDataSegmentLayer = utils.buildTilemapDataSegmentLayer({ segmentSize, tileSize });
-
-    return dispatch( actions.addLayerToTilemapDataSegment({
-      segmentId,
-      layerId,
-      tilemapDataSegmentLayer
-    }));
-  });
-
-  layersToRemove.map(layerId => {
-    return dispatch( actions.removeLayerFromTilemapDataSegment({
-      segmentId,
-      layerId
-    }));
-  });
-
-  resolve();
-})
 
 export const handleUserInput = ({ segmentId, columnIndex: inputColumnIndex, rowIndex: inputRowIndex, inputActions, inputModifiers }) => (dispatch, getState) => {
   const state = getState();
