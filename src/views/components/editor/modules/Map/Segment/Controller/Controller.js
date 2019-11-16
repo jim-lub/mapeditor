@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -16,17 +16,12 @@ import { getMapProperties } from 'state/ducks/editor/map';
 import { validateSegment } from 'state/ducks/editor/segments';
 
 import {
-  handleCanvasUpdate
-} from 'state/ducks/editor/tilemap';
-
-import {
   getCurrentTool,
   getZoomScaleModifier
 } from 'state/ducks/editor/tools';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 
-import { Canvas } from '../Canvas';
 import { SelectionOverlay } from '../SelectionOverlay';
 import { UserInput } from '../UserInput';
 
@@ -38,33 +33,18 @@ const Component = ({
   currentTool, zoomScaleModifier,
   actions
 }) => {
-  const canvasRef = useRef(null);
 
-  const scaledSegmentSize = {
-    width: segmentSize.width * zoomScaleModifier,
-    height: segmentSize.height * zoomScaleModifier
-  }
+  // const scaledSegmentSize = {
+  //   width: segmentSize.width * zoomScaleModifier,
+  //   height: segmentSize.height * zoomScaleModifier
+  // }
 
   useEffect(() => {
     actions.validateSegment({ segmentId });
   }, [segmentId, layerSortOrder, actions]);
 
-  useEffect(() => {
-    if (canvasRef && canvasRef.current) {
-      actions.handleCanvasUpdate({
-        segmentId,
-        canvasRef,
-        canvasWidth: scaledSegmentSize.width,
-        canvasHeight: scaledSegmentSize.height,
-        zoomScaleModifier
-      })
-    }
-  //eslint-disable-next-line
-}, [layerSortOrder, zoomScaleModifier]);
-
   return (
     <div className={styles.controllerWrapper} style={{fontSize: 20 * zoomScaleModifier}}>
-      <Canvas ref={canvasRef} canvasWidth={scaledSegmentSize.width} canvasHeight={scaledSegmentSize.height} />
       { segmentId }
     </div>
   );
@@ -85,8 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
-      validateSegment,
-      handleCanvasUpdate
+      validateSegment
     }, dispatch)
   }
 }

@@ -7,10 +7,12 @@ import tilesetImageConfig from 'lib/constants/__dev__/tilesetImageConfig';
 let image = new Image();
 image.src = tilesetImageConfig.image;
 
-export const drawCanvasHandler = (canvasRef, canvasWidth, canvasHeight, {
+export const drawCanvasHandler = ({
+  canvasRef, canvasWidth, canvasHeight,
   segmentId,
   layerProperties, layerSortOrder,
-  tilemapData, zoomScaleModifier
+  tilemapData,
+  zoomScaleModifier
 }) => {
   if (!canvasRef || !canvasRef.current) {
     return;

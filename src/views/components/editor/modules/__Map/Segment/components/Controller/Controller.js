@@ -19,7 +19,6 @@ import {
 
 import {
   handleUserInput,
-  handleCanvasUpdate,
   validateTilemapDataSegment,
   getTilemapDataSegmentbyId
 } from 'state/ducks/editor/tilemap';

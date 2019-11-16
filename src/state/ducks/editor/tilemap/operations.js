@@ -75,20 +75,5 @@ export const handleUserInput = ({ segmentId, columnIndex: inputColumnIndex, rowI
   }
 }
 
-export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight, zoomScaleModifier }) => (dispatch, getState) => {
-  const state = getState();
-
-  const layerProperties = getLayerPropertiesObject(state);
-  const layerSortOrder = getLayerSortOrder(state);
-  const tilemapData = getTilemapData(state, { segmentId });
-
-  drawCanvasHandler(canvasRef, canvasWidth, canvasHeight, {
-    segmentId,
-    layerProperties, layerSortOrder,
-    tilemapData,
-    zoomScaleModifier
-  });
-}
-
 export const setSingleTileValue = actions.setSingleTileValue;
 export const setMultipleTileValues = actions.setMultipleTileValues;
