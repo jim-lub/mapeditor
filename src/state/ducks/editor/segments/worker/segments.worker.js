@@ -28,7 +28,7 @@ const controller = () => {
 
     while (state.completedTasks.length > 0) {
       const result = state.completedTasks.shift();
-      postMessage(result);
+      postMessage(result)
     }
 
     if (!result.done) {

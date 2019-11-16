@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getSegmentId } from 'state/ducks/editor/map';
+import { getZoomScaleModifier } from 'state/ducks/editor/tools';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 
 import { Controller } from './Controller';
@@ -9,9 +10,9 @@ import { Loader } from 'views/components/Loader';
 
 import styles from './segment.module.css';
 
-const Component = ({ segmentId, initialized = false, loading = true, error = null, style }) => {
+const Component = ({ segmentId, initialized = false, loading = true, error = null, zoomScaleModifier, style }) => {
   return (
-    <div className={styles.segmentContainer} style={{...style}}>
+    <div className={styles.segmentContainer} style={{...style, transform: `scale(${zoomScaleModifier})`}}>
       <Controller segmentId={segmentId} />
       {
         (!initialized || loading) &&
@@ -31,6 +32,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     segmentId,
+    zoomScaleModifier: getZoomScaleModifier(state, { type: 'map' }),
     ...getRequestStatus(state, { key: segmentId }) // pull initialized + loading + error
   }
 }

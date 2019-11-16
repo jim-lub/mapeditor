@@ -13,6 +13,7 @@ import { default as tilesets } from './tilesets';
 import { default as tools } from './tools';
 import { default as userInput } from './user-input';
 
+import * as operations from './operations';
 import * as selectors from './selectors';
 
 export default combineReducers({
@@ -29,5 +30,10 @@ export default combineReducers({
   userInput
 });
 
+
+/*** operations ***/
+export const handleCanvasUpdate = operations.handleCanvasUpdate;
+
+/*** selectors ***/
 export const userInputActionsAllowedOnMap = selectors.userInputActionsAllowedOnMap;
 export const disableAllEditorInput = selectors.disableAllEditorInput;

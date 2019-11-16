@@ -27,3 +27,6 @@ export const clearStore = operations.clearStore;
 export const validateSegment = operations.validateSegment;
 
 /*** selectors ***/
+export const getTilemapData = selectors.getTilemapData;
+export const getTilemapDataObject = selectors.getTilemapDataObject;
+export const getPropertiesObject = selectors.getPropertiesObject;

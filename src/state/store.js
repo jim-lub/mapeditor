@@ -26,7 +26,7 @@ switch(process.env.NODE_ENV) {
   case 'development': {
     middleWare = applyMiddleware(
       thunk,
-      logger
+      // logger
     )
     break;
   }

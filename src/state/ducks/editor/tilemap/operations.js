@@ -8,6 +8,8 @@ import {
   getMapProperties
 } from '../map';
 
+import { getTilemapData } from '../segments';
+
 import {
   getActiveLayerId,
   getLayerSortOrder,
@@ -78,7 +80,7 @@ export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHe
 
   const layerProperties = getLayerPropertiesObject(state);
   const layerSortOrder = getLayerSortOrder(state);
-  const tilemapData = selectors.getTilemapDataSegmentById(state, { segmentId });
+  const tilemapData = getTilemapData(state, { segmentId });
 
   drawCanvasHandler(canvasRef, canvasWidth, canvasHeight, {
     segmentId,

@@ -18,12 +18,10 @@ import {
 import {
   initializeStore as initializeSegmentsStore,
   clearStore as clearSegmentsStore,
-} from '../segments';
 
-import {
   getTilemapDataObject,
-  getSegmentPropertiesObject
-} from '../tilemap';
+  getPropertiesObject
+} from '../segments';
 
 import {
   // initializeStore as initializeToolStore,
@@ -118,7 +116,7 @@ export const storeMap = () => (dispatch, getState) => {
   const layerSortOrder = getLayerSortOrder(state)
   const layerProperties = getLayerPropertiesObject(state);
   const tilemapDataObject = getTilemapDataObject(state);
-  const segmentProperties = getSegmentPropertiesObject(state);
+  const segmentProperties = getPropertiesObject(state);
 
   return Promise.all([
     dispatch( firestore.setMapData({ uid: currentScene.uid, mapProperties, layerSortOrder, layerProperties })),

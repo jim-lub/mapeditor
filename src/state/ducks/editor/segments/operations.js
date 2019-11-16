@@ -20,25 +20,29 @@ const taskWorker = new TaskWorker();
 
 export const listenToTaskWorkerEvents = () => dispatch => {
   taskWorker.addEventListener('message', ({ data: { key, result, error } }) => {
+    const handleDispatch = () => dispatch( _dispatchTaskWorkerEvent({ key, result, error}) );
 
-    if (result) {
-      const { updateReduxStore = false, reduxActionType, payload = {} } = result;
-
-      if (updateReduxStore && Object.values(types).includes(reduxActionType)) {
-        dispatch({
-          type: reduxActionType,
-          payload
-        });
-      }
-      dispatch( setRequestStatus({ key, type: 'SUCCESS' }) );
-    }
-
-    if (error) {
-      // handle error
-      dispatch( setRequestStatus({ key, type: 'FAILURE', error }) );
-    }
-
+    setTimeout(handleDispatch, 0);
   });
+}
+
+const _dispatchTaskWorkerEvent = ({ key, result, error }) => dispatch => {
+  if (result) {
+    const { updateReduxStore = false, reduxActionType, payload = {} } = result;
+
+    if (updateReduxStore && Object.values(types).includes(reduxActionType)) {
+      dispatch({
+        type: reduxActionType,
+        payload
+      });
+    }
+    dispatch( setRequestStatus({ key, type: 'SUCCESS' }) );
+  }
+
+  if (error) {
+    // handle error
+    dispatch( setRequestStatus({ key, type: 'FAILURE', error }) );
+  }
 }
 
 const _sendTaskToWorker = ({ key, taskType, reduxActionType, payload }) => dispatch => {
@@ -80,25 +84,10 @@ export const validateSegment = ({ segmentId }) => (dispatch, getState) => {
   }));
 }
 
+export const convertInputToTilemapIndexes = ({ inputColumnIndex, inputRowIndex }) => dispatch => {
 
+}
 
+export const setTileValues = ({ list }) => dispatch => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
+}
