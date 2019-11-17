@@ -21,7 +21,9 @@ import {
   clearTileSelection,
 } from 'state/ducks/editor/tools';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { createPattern } from 'state/ducks/editor/user-input'
+
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as layerTypes from 'lib/constants/layerTypes';
@@ -59,9 +61,13 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties
   const addToSelectionKeyPressed = useKeyPress('s');
 
   const handleSelectionFinish = (selected) => {
-    actions.setTileSelection({
-      selected: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
+    actions.createPattern({
+      layerType: layerTypes.tileset,
+      selection: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
     })
+    // actions.setTileSelection({
+    //   selected: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
+    // })
   }
 
   const handleSelectionClear = () => actions.clearTileSelection();
@@ -141,13 +147,13 @@ const mapStateToProps = (state) => {
     layerProperties: getLayerPropertiesById(state, { layerId: getActiveLayerId(state) }),
     tileset: getTilesetById(state, { tilesetId: 'randomtilesetid' }),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.tileSelector }),
-    disableAllInput: isAllEditorInputDisabled(state)
+    disableAllInput: disableAllEditorInput(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ setTileSelection, clearTileSelection }, dispatch)
+    actions: bindActionCreators({ createPattern, setTileSelection, clearTileSelection }, dispatch)
   }
 }
 

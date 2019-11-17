@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTooltip from 'react-tooltip';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import {
   zoomIn,
@@ -91,7 +91,7 @@ const Component = ({ currentTool, disabled, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    disableAllInput: isAllEditorInputDisabled(state)
+    disableAllInput: disableAllEditorInput(state)
   }
 }
 

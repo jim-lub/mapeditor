@@ -16,7 +16,7 @@ import {
   getCurrentTool
 } from 'state/ducks/editor/tools';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as toolTypes from 'lib/constants/toolTypes';
@@ -138,7 +138,7 @@ const mapStateToProps = (state) => {
   return {
     layerProperties: getActiveLayerProperties(state),
     currentTool: getCurrentTool(state),
-    disableAllInput: isAllEditorInputDisabled(state)
+    disableAllInput: disableAllEditorInput(state)
   }
 }
 

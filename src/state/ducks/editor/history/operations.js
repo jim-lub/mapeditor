@@ -3,7 +3,7 @@ import _ from 'lodash';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import { setMultipleTileValues } from '../tilemap';
+import { setTileValues } from '../segments';
 
 // import { asyncAccumulator } from 'lib/editor/performance/utils';
 
@@ -38,7 +38,7 @@ export const undo = () => (dispatch, getState) => {
     const segmentIDs = _.uniq( undo.list.map(({ segmentId }) => segmentId) );
     const layerId = undo.list[0].layerId;
     const undoList = undo.list.map(({ value, undoValue, ...rest}) => ({ value: undoValue, ...rest }));
-    dispatch( setMultipleTileValues({ list: undoList, segmentIDs, layerId }) );
+    dispatch( setTileValues({ list: undoList, segmentIDs, layerId }) );
     dispatch( actions.undo() );
   }
 }
@@ -51,7 +51,7 @@ export const redo = () => (dispatch, getState) => {
     const segmentIDs = _.uniq( redo.list.map(({ segmentId }) => segmentId) );
     const layerId = redo.list[0].layerId;
     const redoList = redo.list.map(({ value, undoValue, ...rest}) => ({ value, ...rest }));
-    dispatch( setMultipleTileValues({ list: redoList, segmentIDs, layerId }) );
+    dispatch( setTileValues({ list: redoList, segmentIDs, layerId }) );
     dispatch( actions.redo() );
   }
 }

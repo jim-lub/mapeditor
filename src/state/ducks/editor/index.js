@@ -8,7 +8,6 @@ import { default as layers } from './layers';
 import { default as map } from './map';
 import { default as requestStatus } from './requestStatus';
 import { default as segments } from './segments';
-import { default as tilemap } from './tilemap';
 import { default as tilesets } from './tilesets';
 import { default as tools } from './tools';
 import { default as userInput } from './user-input';
@@ -24,7 +23,6 @@ export default combineReducers({
   requestStatus,
   map,
   segments,
-  tilemap,
   tilesets,
   tools,
   userInput

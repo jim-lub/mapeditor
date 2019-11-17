@@ -3,10 +3,6 @@ import {
 } from 'state/ducks/editor/map';
 
 import {
-
-} from 'state/ducks/editor/tilemap';
-
-import {
   // getActiveLayerId
   getActiveLayerProperties
 } from 'state/ducks/editor/layers';

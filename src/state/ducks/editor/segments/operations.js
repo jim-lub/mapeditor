@@ -5,10 +5,14 @@ import * as selectors from './selectors';
 import * as types from './types';
 
 import {
-  getMapProperties
+  getMapGrid,
+  getMapProperties,
+  getColumnAndRowIndexBySegmentId
 } from '../map';
 
 import {
+  getActiveLayerId,
+  getActiveLayerProperties,
   getLayerSortOrder,
   getLayerPropertiesObject
 } from '../layers';
@@ -19,7 +23,7 @@ import TaskWorker from './worker/segments.worker';
 const taskWorker = new TaskWorker();
 
 export const listenToTaskWorkerEvents = () => dispatch => {
-  taskWorker.addEventListener('message', ({ data: { key, result, error } }) => {
+  taskWorker.addEventListener('message', ({ data: { key, result, error, activeTasks } }) => {
     const handleDispatch = () => dispatch( _dispatchTaskWorkerEvent({ key, result, error}) );
 
     setTimeout(handleDispatch, 0);
@@ -84,10 +88,56 @@ export const validateSegment = ({ segmentId }) => (dispatch, getState) => {
   }));
 }
 
-export const convertInputToTilemapIndexes = ({ inputColumnIndex, inputRowIndex }) => dispatch => {
+export const setTileValues = ({ inputSegmentId, inputColumnIndex, inputRowIndex, pattern }) => (dispatch, getState)=> {
+  const state = getState();
+  const mapGrid = getMapGrid(state);
+  const { columnIndex: inputSegmentColumnIndex, rowIndex: inputSegmentRowIndex } = getColumnAndRowIndexBySegmentId(state, { segmentId: inputSegmentId });
+  const { segmentSize } = getMapProperties(state);
+  const layerId = getActiveLayerId(state);
+  const layerProperties = getActiveLayerProperties(state);
 
+  dispatch( _sendTaskToWorker({
+    /* payload return: { segmentId, tilemapData } */
+    key: 'randomBatchId',
+    taskType: taskTypes.convertPatternToTilemapIndexes,
+    reduxActionType: types.setTileValues,
+    payload: {
+      inputSegmentColumnIndex,
+      inputSegmentRowIndex,
+      inputTilemapColumnIndex: inputColumnIndex,
+      inputTilemapRowIndex: inputRowIndex,
+      pattern,
+      mapGrid,
+      segmentSize,
+      layerId,
+      layerProperties
+    }
+  }));
 }
 
-export const setTileValues = ({ list }) => dispatch => {
+export const clearTileValues = ({ inputSegmentId, inputColumnIndex, inputRowIndex, pattern }) => (dispatch, getState)=> {
+  const state = getState();
+  const mapGrid = getMapGrid(state);
+  const { columnIndex: inputSegmentColumnIndex, rowIndex: inputSegmentRowIndex } = getColumnAndRowIndexBySegmentId(state, { segmentId: inputSegmentId });
+  const { segmentSize } = getMapProperties(state);
+  const layerId = getActiveLayerId(state);
+  const layerProperties = getActiveLayerProperties(state);
 
+  dispatch( _sendTaskToWorker({
+    /* payload return: { segmentId, tilemapData } */
+    key: 'randomBatchId',
+    taskType: taskTypes.convertPatternToTilemapIndexes,
+    reduxActionType: types.clearTileValues,
+    payload: {
+      inputSegmentColumnIndex,
+      inputSegmentRowIndex,
+      inputTilemapColumnIndex: inputColumnIndex,
+      inputTilemapRowIndex: inputRowIndex,
+      pattern,
+      mapGrid,
+      segmentSize,
+      layerId,
+      layerProperties
+    }
+  }));
 }

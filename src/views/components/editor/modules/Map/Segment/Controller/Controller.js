@@ -63,7 +63,9 @@ const Component = ({
   return (
     <div
       className={styles.controllerWrapper}
-      style={{fontSize: 20 * zoomScaleModifier}}
+      style={{
+        cursor: (enableUserInput) ? "auto" : "not-allowed"
+      }}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
     >

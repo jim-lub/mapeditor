@@ -5,9 +5,11 @@
 *   so will silently terminate the worker.
 *******************************************************************************/
 import { validateSegment } from './validateSegment';
+import { convertPatternToTilemapIndexes } from './convertPatternToTilemapIndexes';
 
 import * as taskTypes from './types';
 
 export default ({
-  [ taskTypes.validateSegment ]: validateSegment
+  [ taskTypes.validateSegment ]: validateSegment,
+  [ taskTypes.convertPatternToTilemapIndexes ]: convertPatternToTilemapIndexes
 })

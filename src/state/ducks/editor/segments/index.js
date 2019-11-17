@@ -16,6 +16,9 @@ export default createReducer( initialState )({
 
   [ types.setTilemapData ]: (state, action) => reducers.setTilemapData(state, action),
   [ types.clearTilemapData ]: (state, action) => reducers.clearTilemapData(state, action),
+
+  [ types.setTileValues ]: (state, action) => reducers.setTileValues(state, action),
+  [ types.clearTileValues ]: (state, action) => reducers.clearTileValues(state, action),
 });
 
 /*** operations ***/
@@ -25,6 +28,8 @@ export const initializeStore = operations.initializeStore;
 export const clearStore = operations.clearStore;
 
 export const validateSegment = operations.validateSegment;
+export const setTileValues = operations.setTileValues;
+export const clearTileValues = operations.clearTileValues;
 
 /*** selectors ***/
 export const getTilemapData = selectors.getTilemapData;

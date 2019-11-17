@@ -3,15 +3,45 @@ import _ from 'lodash';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import { testUserInput } from '../user-input';
+import { createPattern } from '../user-input';
 
 import { buildGrid } from 'lib/utils';
+
+import * as layerTypes from 'lib/constants/layerTypes';
 
 export const clearStore = () => dispatch => {
   dispatch( actions.clearTileSelection() );
 }
 
-export const setCurrentTool = actions.setCurrentTool;
+export const setCurrentTool = ({ toolType }) => (dispatch, getState) => {
+  const state = getState();
+  const colorValue = selectors.getColorValue(state);
+
+  dispatch( createPattern({
+    layerType: layerTypes.color,
+    size: {
+      columns: 5,
+      rows: 2,
+    },
+    value: colorValue.hex
+  }));
+
+  dispatch( actions.setCurrentTool({ toolType }) );
+};
+
+export const setColorValue = ({ hex, rgb, hsl }) => dispatch => {
+  dispatch( createPattern({
+    layerType: layerTypes.color,
+    size: {
+      columns: 5,
+      rows: 2,
+    },
+    value: hex
+  }));
+
+  dispatch( actions.setColorValue({ hex, rgb, hsl }) );
+};
+
 const allowedZoomLevels = [
   0.25, 0.50, 0.75,
   1.00,
@@ -44,18 +74,8 @@ export const resetZoom = ({ type }) => (dispatch, getState) => {
   dispatch( actions.setZoomScaleModifier({ type, value: 1 }));
 }
 
-export const setColorValue = actions.setColorValue;
-
 export const setTileSelection = ({ selected }) => dispatch => {
   if (selected.length === 0) return;
-  // dispatch( testUserInput({
-  //   selection: selected,
-  //   size: {
-  //     columns: 5,
-  //     rows: 5
-  //   },
-  //   value: "#AAFFAA"
-  // }));
 
   const { columnIndex: lowestColumnIndex } = _.minBy(selected, 'columnIndex');
   const { columnIndex: highestColumnIndex } = _.maxBy(selected, 'columnIndex');

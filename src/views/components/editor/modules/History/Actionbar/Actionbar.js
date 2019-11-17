@@ -10,7 +10,7 @@ import {
   getRedoCount
 } from 'state/ducks/editor/history';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import { Action } from './Action';
 
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
   return {
     undoCount: getUndoCount(state),
     redoCount: getRedoCount(state),
-    disabled: isAllEditorInputDisabled(state)
+    disabled: disableAllEditorInput(state)
   }
 }
 

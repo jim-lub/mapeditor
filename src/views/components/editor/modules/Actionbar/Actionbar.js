@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { storeMap } from 'state/ducks/editor/map';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import {
   zoomIn,
@@ -30,7 +30,7 @@ const Component = ({ storemapStatus, disableAllInput, actions }) => {
 const mapStateToProps = (state) => {
   return {
     storeMapStatus: getRequestStatus(state, { key: 'storeMap' }),
-    disableAllInput: isAllEditorInputDisabled(state)
+    disableAllInput: disableAllEditorInput(state)
   }
 }
 

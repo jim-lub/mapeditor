@@ -7,7 +7,7 @@ const state = {
 }
 
 const config = {
-  batchSize: 20
+  batchSize: 5
 }
 
 //eslint-disable-next-line

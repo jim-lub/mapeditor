@@ -2,23 +2,7 @@ import _ from 'lodash';
 
 import { buildGrid } from 'lib/utils';
 
-export const createPattern = ({ size, value, selection }) => {
-  if (size) {
-    const { grid = [], list = [] } = _createPatternBySize({ size, value });
-
-    console.log(grid, list);
-  }
-
-  if (selection) {
-    const { grid = [], list = [] } = _createPatternBySelection({ selection });
-
-    console.log(grid, list);
-  }
-
-  return [];
-}
-
-const _createPatternBySize = ({ size: { columns = 0, rows = 0 }, value }) => {
+export const createPatternBySize = ({ size: { columns = 0, rows = 0 }, value }) => {
   const grid = buildGrid({
     columns,
     rows,
@@ -41,7 +25,7 @@ const _createPatternBySize = ({ size: { columns = 0, rows = 0 }, value }) => {
   }
 }
 
-const _createPatternBySelection = ({ selection }) => {
+export const createPatternBySelection = ({ selection }) => {
   if (selection.length === 0) return {};
 
   const { columnIndex: lowestColumnIndex } = _.minBy(selection, 'columnIndex');
@@ -72,10 +56,10 @@ const _createPatternBySelection = ({ selection }) => {
       if (selected) {
         const { tilesetColumnIndex, tilesetRowIndex } = selected;
 
-        return ({
+        return ([
           tilesetColumnIndex,
           tilesetRowIndex
-        });
+        ]);
       }
 
       return null;

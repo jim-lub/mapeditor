@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getCurrentScene } from 'state/ducks/editor/map';
 import { useModal } from 'lib/hooks';
 
-import { isAllEditorInputDisabled } from 'state/ducks/editor/utils';
+import { disableAllEditorInput } from 'state/ducks/editor';
 
 import {
   CreateLayerModal,
@@ -44,7 +44,7 @@ const Component = ({ currentScene, disableAllInput, contentWidth, contentHeight 
 const mapStateToProps = (state) => {
   return {
     currentScene: getCurrentScene(state),
-    disableAllInput: isAllEditorInputDisabled(state)
+    disableAllInput: disableAllEditorInput(state)
   }
 }
 
