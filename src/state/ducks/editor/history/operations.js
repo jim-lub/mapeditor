@@ -5,8 +5,6 @@ import * as selectors from './selectors';
 
 import { setTileValues } from '../segments';
 
-// import { asyncAccumulator } from 'lib/editor/performance/utils';
-
 export const clearStore = () => dispatch => {
   dispatch( actions.clearUndoCollection() );
   dispatch( actions.clearRedoCollection() );
@@ -15,24 +13,6 @@ export const clearStore = () => dispatch => {
 export const undo = () => (dispatch, getState) => {
   const state = getState();
   const undo = selectors.getUndo(state);
-
-  // const entries = 5000;
-  // const dataSet = [...new Array( entries )].map((val, index) => ({
-  //   index
-  // }));
-  //
-  // const accFunc = ({ index }) => ({
-  //   index,
-  //   acc: true
-  // })
-  //
-  // asyncAccumulator({
-  //   func: accFunc,
-  //   dataSet,
-  //   batchSize: 500,
-  //   log: true
-  // })
-  // .then((acc) => console.log(acc));
 
   if (undo) {
     const segmentIDs = _.uniq( undo.list.map(({ segmentId }) => segmentId) );

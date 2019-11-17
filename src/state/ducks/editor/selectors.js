@@ -12,18 +12,19 @@ import {
 } from 'state/ducks/editor/tools';
 
 import {
+  getPattern
+} from 'state/ducks/editor/user-input';
+
+import {
   getRequestStatus
 } from 'state/ducks/editor/requestStatus';
 
-// import * as moduleTypes from 'lib/constants/editorModuleTypes';
-// import * as layerTypes from 'lib/constants/layerTypes';
-// import layerConstants from 'lib/constants/layerConstants';
-// import * as toolTypes from 'lib/constants/toolTypes';
 import toolConstants from 'lib/constants/toolConstants';
 
 export const userInputActionsAllowedOnMap = state => {
   const layerProperties = getActiveLayerProperties(state);
   const currentTool = getCurrentTool(state);
+  const pattern = getPattern(state);
 
   return (
     !disableAllEditorInput(state)
@@ -31,6 +32,7 @@ export const userInputActionsAllowedOnMap = state => {
     && !!layerProperties.visible
     && !!currentTool
     && !!(toolConstants[currentTool].isAllowedOnLayers.includes(layerProperties.layerType))
+    && !!(pattern.list.length > 0)
     // && !(currentTool === toolTypes.tileStamp && )
   )
 }

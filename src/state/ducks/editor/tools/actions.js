@@ -23,15 +23,3 @@ export const setColorValue = ({ hex = "", rgb = {}, hsl = {} }) => ({
     hsl
   }
 });
-
-export const setTileSelection = ({ grid, list }) => ({
-  type: types.setTileSelection,
-  payload: {
-    grid,
-    list
-  }
-});
-
-export const clearTileSelection = () => ({
-  type: types.clearTileSelection
-});

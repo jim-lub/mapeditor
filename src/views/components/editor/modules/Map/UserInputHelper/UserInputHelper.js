@@ -8,9 +8,10 @@ import {
 
 import {
   getCurrentTool,
-  getColorValue,
-  getTileSelectionList
+  getColorValue
 } from 'state/ducks/editor/tools';
+
+import { getPattern } from 'state/ducks/editor/user-input';
 
 import * as layerTypes from 'lib/constants/layerTypes';
 import layerConstants from 'lib/constants/layerConstants';
@@ -23,7 +24,7 @@ import { ReactComponent as UndefinedIcon } from 'assets/static/icons/editor/unde
 
 import styles from './userinputhandler.module.css';
 
-const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorValue, tileSelectionList }) => {
+const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorValue, pattern }) => {
   const [layerType, setLayerType] = useState(null);
   const [layerProperties, setLayerProperties] = useState(null);
   const [LayerIcon, setLayerIcon] = useState(null);
@@ -86,12 +87,12 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
       (layerProperties.visible) ? null : 'Layer is hidden',
       (layerProperties.locked) ? 'Layer is locked' : null,
       (toolProperties.isAllowedOnLayers.includes(layerType)) ? null : `${toolProperties.name} is inapplicable on ${layerProperties.name.toLowerCase()} layers`,
-      (currentTool === toolTypes.tileStamp && tileSelectionList.length === 0) ? 'No selection' : null,
+      (currentTool === toolTypes.tileStamp && pattern.list.length === 0) ? 'No selection' : null,
     ]
     .filter(error => error);
 
     setErrors(specificErrors);
-  }, [currentTool, layerType, layerProperties, toolProperties, tileSelectionList])
+  }, [currentTool, layerType, layerProperties, toolProperties, pattern])
 
   const textContainerClassNames = concatClassNames([
     'clearfix',
@@ -154,7 +155,7 @@ const Component = ({ activeLayerId, getLayerPropertiesById, currentTool, colorVa
         {
           (layerType === layerTypes.tileset && errors.length === 0) &&
           <div className={styles.textContainerContent}>
-            { `Selected: ${ tileSelectionList.length } tile(s)` }
+            { `Selected: ${ pattern.list.length } tile(s)` }
           </div>
         }
       </div>
@@ -169,7 +170,7 @@ const mapStateToProps = (state) => {
 
     currentTool: getCurrentTool(state),
     colorValue: getColorValue(state),
-    tileSelectionList: getTileSelectionList(state)
+    pattern: getPattern(state)
   }
 }
 

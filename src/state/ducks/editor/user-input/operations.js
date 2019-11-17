@@ -4,11 +4,19 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as utils from './utils';
 
-import { getCurrentTool } from '../tools';
-import { setTileValues, clearTileValues } from '../segments';
+import { getActiveLayerProperties } from '../layers';
+
+import {
+  getCurrentTool,
+  getColorValue
+} from '../tools';
+
+import {
+  setTileValues,
+  clearTileValues
+} from '../segments';
 
 import * as toolTypes from 'lib/constants/toolTypes';
-// import toolConstants from 'lib/constants/toolConstants';
 
 export const createPattern = ({ layerType, size, value, selection }) => dispatch => {
   if (size) {
@@ -22,6 +30,28 @@ export const createPattern = ({ layerType, size, value, selection }) => dispatch
 
     dispatch( actions.setPattern({ layerType, grid, list }) );
   }
+}
+
+export const clearPattern = () => (dispatch, getState) => {
+  const state = getState();
+  const { layerType } = getActiveLayerProperties(state);
+  const currentTool = getCurrentTool(state);
+  const { hex } = getColorValue(state);
+
+  (currentTool === toolTypes.tileStamp)
+    ? dispatch( actions.clearPattern() )
+    : dispatch( _resetPatternToDefault({ layerType, hex }) )
+}
+
+const _resetPatternToDefault = ({ layerType, hex }) => dispatch => {
+  dispatch( createPattern({
+    layerType: layerType,
+    size: {
+      columns: 1,
+      rows: 1,
+    },
+    value: hex
+  }));
 }
 
 export const handleUserInput = ({

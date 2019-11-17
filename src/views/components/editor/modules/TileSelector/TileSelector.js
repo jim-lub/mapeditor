@@ -4,29 +4,29 @@ import { bindActionCreators } from 'redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { SelectableGroup } from 'react-selectable-fast';
 
-import { useKeyPress } from 'lib/hooks';
-
 import {
   getActiveLayerId,
   getLayerPropertiesById
 } from 'state/ducks/editor/layers';
 
-import {
-  getTilesetById
-} from 'state/ducks/editor/tilesets';
+import { getTilesetById } from 'state/ducks/editor/tilesets';
 
 import {
-  getZoomScaleModifier,
-  setTileSelection,
-  clearTileSelection,
+  getCurrentTool,
+  getZoomScaleModifier
 } from 'state/ducks/editor/tools';
 
-import { createPattern } from 'state/ducks/editor/user-input'
+import {
+  createPattern,
+  clearPattern
+} from 'state/ducks/editor/user-input'
 
 import { disableAllEditorInput } from 'state/ducks/editor';
 
+import { useKeyPress } from 'lib/hooks';
 import * as moduleTypes from 'lib/constants/editorModuleTypes';
 import * as layerTypes from 'lib/constants/layerTypes';
+import * as toolTypes from 'lib/constants/toolTypes';
 
 import { NoTilesetLayerNotification } from 'views/components/Editor/components';
 import { Loader } from 'views/components/Loader';
@@ -35,7 +35,7 @@ import SelectableTile from './SelectableTile';
 
 import styles from './tileselector.module.css';
 
-const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties, tileset, zoomScaleModifier, disableAllInput, actions }) => {
+const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties, tileset, currentTool, zoomScaleModifier, disableAllInput, actions }) => {
   const [lastActiveLayerId, setLastActiveLayerId] = useState(null);
   const selectionRef = useRef();
   const { image, imageSize, tileSize, selectableGrid } = tileset;
@@ -48,6 +48,15 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties
       setLastActiveLayerId(activeLayerId);
     }
   }, [activeLayerId, lastActiveLayerId])
+
+  useEffect(() => {
+    if (!selectionRef.current) return;
+
+    if (currentTool !== toolTypes.tileStamp) {
+      selectionRef.current.clearSelection();
+      actions.clearPattern();
+    }
+  }, [currentTool, actions])
 
   const scaleModifiedImageSize = {
     width: imageSize.width * zoomScaleModifier,
@@ -65,12 +74,9 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties
       layerType: layerTypes.tileset,
       selection: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
     })
-    // actions.setTileSelection({
-    //   selected: selected.map(({ props: { columnIndex, rowIndex } }) => ({ columnIndex, rowIndex }))
-    // })
   }
 
-  const handleSelectionClear = () => actions.clearTileSelection();
+  const handleSelectionClear = () => actions.clearPattern();
 
   const selectables = () => {
     return selectableGrid.map((column, columnIndex) => (
@@ -116,7 +122,8 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties
                       width: scaleModifiedImageSize.width,
                       height: scaleModifiedImageSize.height,
                       backgroundImage: `url(${image})`,
-                      backgroundSize: `${scaleModifiedImageSize.width}px ${scaleModifiedImageSize.height}px`
+                      backgroundSize: `${scaleModifiedImageSize.width}px ${scaleModifiedImageSize.height}px`,
+                      cursor: (currentTool === toolTypes.tileStamp) ? "auto" : "not-allowed"
                   }}>
                     <SelectableGroup
                       ref={selectionRef}
@@ -125,6 +132,7 @@ const Component = ({ contentWidth, contentHeight, activeLayerId, layerProperties
                       selectboxClassName={styles.selectBox}
                       resetOnStart={(addToSelectionKeyPressed) ? false : true}
                       enableDeselect
+                      disabled={(currentTool === toolTypes.tileStamp) ? false : true}
                     >
                       { selectables() }
                     </SelectableGroup>
@@ -146,6 +154,7 @@ const mapStateToProps = (state) => {
     activeLayerId: getActiveLayerId(state),
     layerProperties: getLayerPropertiesById(state, { layerId: getActiveLayerId(state) }),
     tileset: getTilesetById(state, { tilesetId: 'randomtilesetid' }),
+    currentTool: getCurrentTool(state),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.tileSelector }),
     disableAllInput: disableAllEditorInput(state)
   }
@@ -153,7 +162,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ createPattern, setTileSelection, clearTileSelection }, dispatch)
+    actions: bindActionCreators({ createPattern, clearPattern }, dispatch)
   }
 }
 

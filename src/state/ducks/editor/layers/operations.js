@@ -2,7 +2,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as utils from './utils';
 
-import { clearTileSelection } from 'state/ducks/editor/tools';
+import { clearPattern } from 'state/ducks/editor/user-input';
 
 import { uuid } from 'lib/utils';
 import layerConstants from 'lib/constants/layerConstants';
@@ -99,6 +99,6 @@ export const toggleLayerLock = ({ layerId }) => (dispatch, getState) => {
 }
 
 export const setActiveLayerId = ({ layerId }) => dispatch => {
-  dispatch( clearTileSelection() );
+  dispatch( clearPattern() );
   dispatch( actions.setActiveLayerId({ layerId }) );
 };

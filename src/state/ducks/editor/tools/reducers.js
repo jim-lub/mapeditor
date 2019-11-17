@@ -31,25 +31,3 @@ export const setColorValue = (state, action) => {
     }
   }
 };
-
-export const setTileSelection = (state, action) => {
-  const { grid, list } = action.payload;
-
-  return {
-    ...state,
-    tileSelection: {
-      grid,
-      list
-    }
-  }
-};
-
-export const clearTileSelection = (state, action) => {
-  return {
-    ...state,
-    tileSelection: {
-      grid: [],
-      list: []
-    }
-  }
-};

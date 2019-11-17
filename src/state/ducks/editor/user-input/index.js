@@ -2,9 +2,9 @@ import { createReducer } from 'state/lib/utils';
 
 import * as types from './types';
 import * as operations from './operations';
-// import * as selectors from './selectors';
+import * as selectors from './selectors';
 import * as reducers from './reducers';
-import * as utils from './utils';
+// import * as utils from './utils';
 
 // import * as layerTypes from 'lib/constants/layerTypes';
 // import * as toolTypes from 'lib/constants/toolTypes';
@@ -25,5 +25,7 @@ export default createReducer( initialState )({
 /*** operations ***/
 export const handleUserInput = operations.handleUserInput;
 export const createPattern = operations.createPattern;
+export const clearPattern = operations.clearPattern;
 
 /*** selectors ***/
+export const getPattern = selectors.getPattern;
