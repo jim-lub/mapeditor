@@ -130,4 +130,4 @@ const _toPointerActionsObject = ({ button, buttons }) => ({
   //   leftClickAndHold: (button === -1 && buttons === 2), // right click button and hover
   //   rightClickAndHold: (button === -1 && buttons === 2) // right click button and hover
   // }
-})
+});

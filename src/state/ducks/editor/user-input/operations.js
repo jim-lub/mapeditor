@@ -5,10 +5,13 @@ import * as utils from './utils';
 import * as toolTypes from 'lib/constants/toolTypes';
 
 export const handleUserInput = ({
-  inputSegmentId, inputColumnIndex, inputRowIndex,
+  segmentId: inputSegmentId, columnIndex: inputColumnIndex, rowIndex: inputRowIndex,
   inputActions, inputModifiers
 }) => (dispatch, getState) => {
   const currentTool = 'paintBrush';
+
+  console.log(inputSegmentId, inputColumnIndex, inputRowIndex, inputActions, inputModifiers)
+  console.log(inputRowIndex)
 
   switch (currentTool) {
     case toolTypes.paintBrush:

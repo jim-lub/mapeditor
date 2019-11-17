@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import FadeIn from 'react-fade-in';
 
 import {
   moveLayer,
@@ -35,6 +36,7 @@ const Component = ({ layerSortOrder, activeLayerId, openDeleteLayerModal, action
             ref={provided.innerRef}
             // style={getListStyle(snapshot.isDraggingOver)}
           >
+            <FadeIn>
             {[...layerSortOrder].reverse().map((layerId, index) => (
               <Draggable key={layerId} draggableId={layerId} index={index}>
                 {(provided, snapshot) => (
@@ -49,6 +51,7 @@ const Component = ({ layerSortOrder, activeLayerId, openDeleteLayerModal, action
               </Draggable>
             ))}
             {provided.placeholder}
+            </FadeIn>
           </div>
         )}
       </Droppable>

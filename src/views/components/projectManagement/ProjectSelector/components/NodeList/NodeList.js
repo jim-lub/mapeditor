@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import FadeIn from 'react-fade-in';
 
 import {
   getAuthUser
@@ -26,7 +27,7 @@ const Component = ({
   actions, openDeleteModal, openUpdateModal
 }) => {
 
-  const nodeList = projectSortOrder.map(projectId => {
+  const nodeList = () => projectSortOrder.map(projectId => {
     const { name, description, modifiedAt } = getProjectDataById(projectId);
     const childScenes = getSceneSortOrderByProjectId(projectId).length;
 
@@ -46,9 +47,9 @@ const Component = ({
   });
 
   return (
-    <>
-      { nodeList }
-    </>
+    <FadeIn>
+      { nodeList() }
+    </FadeIn>
   );
 }
 

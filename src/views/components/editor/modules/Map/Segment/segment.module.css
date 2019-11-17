@@ -19,3 +19,22 @@
   pointer-events: none;
   touch-action: none;
 }
+
+.userInputWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.userInputNode {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.userInputNode:hover {
+  background-color: rgb(90, 176, 238, 0.5);
+  /* border: solid 2px var(--blue-500); */
+  border: dashed 1px var(--black);
+}

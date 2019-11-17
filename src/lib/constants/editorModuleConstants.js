@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import * as moduleTypes from './editorModuleTypes';
 
 import {

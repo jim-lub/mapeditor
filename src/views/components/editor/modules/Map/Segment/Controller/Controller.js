@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
-// import { handleCanvasUpdate } from 'state/ducks/editor';
+import { userInputActionsAllowedOnMap } from 'state/ducks/editor';
 // import { newUndoAction } from 'state/ducks/editor/history';
 
 import {
@@ -11,7 +12,7 @@ import {
 } from 'state/ducks/editor/layers';
 
 import { getMapProperties } from 'state/ducks/editor/map';
-// import { handleUserInput } from 'state/ducks/editor/user-input';
+import { handleUserInput } from 'state/ducks/editor/user-input';
 
 import { validateSegment } from 'state/ducks/editor/segments';
 
@@ -31,8 +32,9 @@ const Component = ({
   segmentId, segmentSize,
   activeLayerProperties, layerSortOrder,
   currentTool, zoomScaleModifier,
-  actions
+  enableUserInput, actions
 }) => {
+  const [active, setActive] = useState(false);
 
   // const scaledSegmentSize = {
   //   width: segmentSize.width * zoomScaleModifier,
@@ -43,9 +45,37 @@ const Component = ({
     actions.validateSegment({ segmentId });
   }, [segmentId, layerSortOrder, actions]);
 
+  const handlePointerEnter = () => setActive(true);
+  const handlePointerLeave = () => setActive(false);
+
+  const handleUserInput = ({ columnIndex, rowIndex, inputActions, inputModifiers }) => {
+    if (inputActions.hover) return;
+
+    actions.handleUserInput({
+      segmentId,
+      columnIndex,
+      rowIndex,
+      inputActions,
+      inputModifiers
+    });
+  }
+
   return (
-    <div className={styles.controllerWrapper} style={{fontSize: 20 * zoomScaleModifier}}>
-      { segmentId }
+    <div
+      className={styles.controllerWrapper}
+      style={{fontSize: 20 * zoomScaleModifier}}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+    >
+      {
+        active && enableUserInput &&
+        <UserInput
+          segmentSize={segmentSize}
+          tileSize={activeLayerProperties.tileSize}
+          zoomScaleModifier={zoomScaleModifier}
+          onPointerEvent={handleUserInput}
+        />
+      }
     </div>
   );
 }
@@ -58,14 +88,17 @@ const mapStateToProps = (state, ownProps) => {
     layerSortOrder: getLayerSortOrder(state),
 
     currentTool: getCurrentTool(state),
-    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map })
+    zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map }),
+
+    enableUserInput: userInputActionsAllowedOnMap(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
-      validateSegment
+      validateSegment,
+      handleUserInput
     }, dispatch)
   }
 }
