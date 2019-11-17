@@ -15,6 +15,7 @@ export const buildMapGrid = ({ mapSize }) => {
 }
 
 export const convertTilemapDataObjectToDataChunks = ({ tilemapDataObject, segmentProperties }) => async dispatch => {
+  console.log(segmentProperties)
   const toJSON = (obj) => JSON.stringify(obj);
 
   const filterOutNoDataSegments = async (tilemapDataObject) => Promise.all(

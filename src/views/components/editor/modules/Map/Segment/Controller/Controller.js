@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'lodash';
 
 import { userInputActionsAllowedOnMap } from 'state/ducks/editor';
 // import { newUndoAction } from 'state/ducks/editor/history';
@@ -12,7 +11,11 @@ import {
 } from 'state/ducks/editor/layers';
 
 import { getMapProperties } from 'state/ducks/editor/map';
-import { handleUserInput } from 'state/ducks/editor/user-input';
+
+import {
+  handleUserInput,
+  getPattern
+} from 'state/ducks/editor/user-input';
 
 import { validateSegment } from 'state/ducks/editor/segments';
 
@@ -32,8 +35,9 @@ const Component = ({
   segmentId, segmentSize,
   activeLayerProperties, layerSortOrder,
   currentTool, zoomScaleModifier,
-  enableUserInput, actions
+  pattern, enableUserInput, actions
 }) => {
+  const [selection, setSelection] = useState({ display: 'none', left: 0, top: 0 });
   const [active, setActive] = useState(false);
 
   // const scaledSegmentSize = {
@@ -45,10 +49,23 @@ const Component = ({
     actions.validateSegment({ segmentId });
   }, [segmentId, layerSortOrder, actions]);
 
+  const { tileSize = { width: 0, height: 0 } } = activeLayerProperties;
+
+  const scaledTileSize = {
+    width: tileSize.width * zoomScaleModifier,
+    height: tileSize.height * zoomScaleModifier
+  }
+
   const handlePointerEnter = () => setActive(true);
   const handlePointerLeave = () => setActive(false);
 
   const handleUserInput = ({ columnIndex, rowIndex, inputActions, inputModifiers }) => {
+    setSelection({
+      display: 'block',
+      left: (scaledTileSize.width) * columnIndex,
+      top: (scaledTileSize.height) * rowIndex,
+    });
+
     if (inputActions.hover) return;
 
     actions.handleUserInput({
@@ -73,9 +90,17 @@ const Component = ({
         active && enableUserInput &&
         <UserInput
           segmentSize={segmentSize}
-          tileSize={activeLayerProperties.tileSize}
+          tileSize={tileSize}
           zoomScaleModifier={zoomScaleModifier}
           onPointerEvent={handleUserInput}
+        />
+      }
+      {
+        active &&
+        <SelectionOverlay
+          style={selection}
+          grid={pattern.grid}
+          tileSize={scaledTileSize}
         />
       }
     </div>
@@ -91,7 +116,7 @@ const mapStateToProps = (state, ownProps) => {
 
     currentTool: getCurrentTool(state),
     zoomScaleModifier: getZoomScaleModifier(state, { type: moduleTypes.map }),
-
+    pattern: getPattern(state),
     enableUserInput: userInputActionsAllowedOnMap(state)
   }
 }

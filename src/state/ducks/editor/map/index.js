@@ -11,7 +11,7 @@ const initialState = {
     // uid: "QVTmWKKpAuMMzGGMQTlx", // 50x50
     // uid: "1covmNky5ghzQfxwtsBu", // 1x1
     // uid: '7s4YBQafR5vPWIQXdijr', // 5x5
-    uid: "SIWyhzOHOV6VT89MoWCN", // pattern test
+    // uid: "SIWyhzOHOV6VT89MoWCN", // pattern test
     // uid: null
   },
   mapProperties: {},

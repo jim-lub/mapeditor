@@ -14,7 +14,7 @@ import { concatClassNames } from 'lib/utils';
 import toolConstants from 'lib/constants/toolConstants';
 
 import { Actionbar } from './Actionbar';
-
+import { HistoryDisabledNotification } from './HistoryDisabledNotification';
 import { ReactComponent as undoIcon } from 'assets/static/icons/editor/undo-2.svg';
 import { ReactComponent as redoIcon } from 'assets/static/icons/editor/redo-2.svg';
 
@@ -86,18 +86,24 @@ const Component = ({ undoCollection, redoCollection, actions, contentWidth, cont
   }
 
   return (
-    <div className={styles.wrapper} style={{width: contentWidth, height: contentHeight}}>
-
-      <div className={styles.content} style={{overflow: 'auto'}}>
-        { renderRedoHistory() }
-        { renderUndoHistory() }
-      </div>
-
-      <div className={styles.actionbar}>
-      <Actionbar />
-      </div>
+    <div style={{width: contentWidth, height: contentHeight, overflow: 'auto'}}>
+      <HistoryDisabledNotification width={contentWidth / 1.5} height={contentHeight / 1.5}/>
     </div>
   )
+
+  // return (
+  //   <div className={styles.wrapper} style={{width: contentWidth, height: contentHeight}}>
+  //
+  //     <div className={styles.content} style={{overflow: 'auto'}}>
+  //       { renderRedoHistory() }
+  //       { renderUndoHistory() }
+  //     </div>
+  //
+  //     <div className={styles.actionbar}>
+  //     <Actionbar />
+  //     </div>
+  //   </div>
+  // )
 }
 
 const mapStateToProps = (state) => {

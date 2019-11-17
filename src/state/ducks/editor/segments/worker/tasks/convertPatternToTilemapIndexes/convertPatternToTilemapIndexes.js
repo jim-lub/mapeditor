@@ -29,7 +29,11 @@ export default ({
   });
 
   const indexesListWithSegmentIDs = indexesList
-    .map(({ segmentColumnIndex, segmentRowIndex, ...rest }) => {
+    .map((data) => {
+      if (!data) return null;
+      
+      const { segmentColumnIndex, segmentRowIndex, ...rest } = data;
+
       const segmentId = (mapGrid[segmentColumnIndex]) ? mapGrid[segmentColumnIndex][segmentRowIndex] : null;
 
       return (segmentId)

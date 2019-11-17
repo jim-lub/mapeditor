@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import FadeIn from 'react-fade-in';
 
 import {
   getAuthUser
@@ -45,9 +44,9 @@ const Component = ({
   });
 
   return (
-    <FadeIn>
+    <>
       { nodeList() }
-    </FadeIn>
+    </>
   );
 }
 

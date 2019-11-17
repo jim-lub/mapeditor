@@ -5,6 +5,7 @@ import { useModal } from 'lib/hooks';
 import { CreateLayerModal } from 'views/components/Editor/modules/Layers/Modals';
 
 import { ReactComponent as LayersIcon } from 'assets/static/icons/other/layers-blue.svg';
+
 import styles from './nolayersnotification.module.css';
 
 export default ({ width, height }) => {

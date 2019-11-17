@@ -4,6 +4,7 @@ import * as types from './types';
 import * as operations from './operations';
 import * as selectors from './selectors';
 import * as reducers from './reducers';
+// import * as segmentTypes from '../segments/types';
 
 const initialState = {
   recording: {
@@ -20,7 +21,7 @@ export default createReducer( initialState )({
   [ types.redo ]: (state, action) => reducers.redo(state, action),
 
   [ types.openUndoAction ]: (state, action) => reducers.openUndoAction(state, action),
-  [ types.recordUndoAction ]: (state, action) => reducers.recordUndoAction(state, action),
+  // [ segmentTypes.setTileValues ]: (state, action) => reducers.recordUndoAction(state, action),
   [ types.closeUndoAction ]: (state, action) => reducers.closeUndoAction(state, action),
 
   [ types.clearUndoCollection ]: (state, action) => reducers.clearUndoCollection(state, action),

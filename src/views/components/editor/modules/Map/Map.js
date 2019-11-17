@@ -15,6 +15,7 @@ import { Loader } from 'views/components/Loader';
 import { Actionbar } from './Actionbar';
 import { Grid } from './Grid';
 import { Segment } from './Segment';
+import { NewSceneNotification } from './NewSceneNotification';
 
 import styles from './map.module.css';
 
@@ -26,6 +27,14 @@ const Component = ({
   zoomScaleModifier,
   contentWidth, contentHeight
 }) => {
+  if (layerSortOrder.length === 0) {
+    return (
+      <div style={{width: contentWidth, height: contentHeight, overflow: 'auto'}}>
+        <NewSceneNotification width={contentWidth / 1.5} height={contentHeight / 1.5}/>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.wrapper} style={{width: contentWidth, height: contentHeight}}>
       <div className={styles.actionbarWrapper}>

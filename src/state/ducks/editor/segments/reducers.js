@@ -14,7 +14,7 @@ export const initializeStore = (state, action) => {
           ...obj,
           [segmentId]: {
             includeFirestore: true,
-            modified: false
+            modified: true
           }
         }
 
@@ -73,6 +73,20 @@ export const setTileValues = (state, action) => {
 
   return {
     ...state,
+    properties: {
+      ...state.properties,
+      ...segmentIDs.reduce((obj, segmentId) => {
+        obj = {
+          ...obj,
+          [segmentId]: {
+            ...state.properties[segmentId],
+            modified: true
+          }
+        }
+
+        return obj;
+      }, {})
+    },
     tilemapData: {
       ...state.tilemapData,
 
@@ -108,6 +122,20 @@ export const clearTileValues = (state, action) => {
 
   return {
     ...state,
+    properties: {
+      ...state.properties,
+      ...segmentIDs.reduce((obj, segmentId) => {
+        obj = {
+          ...obj,
+          [segmentId]: {
+            ...state.properties[segmentId],
+            modified: false
+          }
+        }
+
+        return obj;
+      }, {})
+    },
     tilemapData: {
       ...state.tilemapData,
 
@@ -124,7 +152,7 @@ export const clearTileValues = (state, action) => {
                 .map((column, tilemapColumnIndex) =>
                   column.map((currentValue, tilemapRowIndex) => {
                     const update = _.find(list, { segmentId, tilemapColumnIndex, tilemapRowIndex });
-                    
+
                     return (update)
                       ? 0
                       : currentValue
