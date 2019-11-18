@@ -5,21 +5,20 @@ import {
 
 import { getTilemapData } from './segments';
 
-import { drawCanvasHandler } from 'lib/editor/canvas-api';
+import { render } from 'lib/editor/canvas';
 
 export const handleCanvasUpdate = ({ segmentId, canvasRef, canvasWidth, canvasHeight, zoomScaleModifier }) => (dispatch, getState) => {
   const state = getState();
 
-  const layerProperties = getLayerPropertiesObject(state);
   const layerSortOrder = getLayerSortOrder(state);
+  const layerPropertiesObject = getLayerPropertiesObject(state);
   const tilemapData = getTilemapData(state, { segmentId });
 
-  const paint = () => drawCanvasHandler({
+  const paint = () => render({
     canvasRef, canvasWidth, canvasHeight,
-    segmentId,
-    layerSortOrder, layerProperties,
+    layerSortOrder, layerPropertiesObject,
     tilemapData,
-    zoomScaleModifier
+    scale: zoomScaleModifier
   });
 
   window.requestAnimationFrame(paint);
