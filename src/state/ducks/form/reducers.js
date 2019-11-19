@@ -3,7 +3,7 @@ export const newForm = (state, action) => {
 
   return {
     ...state,
-    data: {
+    collection: {
       ...state.data,
       [id]: {
         initialized: true,
@@ -17,34 +17,26 @@ export const newForm = (state, action) => {
   }
 }
 
-export const updateForm = (state, action) => {
+export const setValue = (state, action) => {
   const { id, currentStep, name, value } = action.payload;
 
   return {
     ...state,
-    data: {
-      ...state.data,
+    collection: {
+      ...state.collection,
       [id]: {
-        ...state.data[id],
+        ...state.collection[id],
         data: {
-          ...state.data[id].data,
+          ...state.collection[id].data,
           [currentStep]: {
-            ...state.data[id].data[currentStep],
+            ...state.collection[id].data[currentStep],
             [name]: {
-              ...state.data[id].data[currentStep][name],
+              ...state.collection[id].data[currentStep][name],
               value
             }
           }
         }
       }
     }
-  }
-}
-
-export const deleteForm = (state, action) => {
-  const { id } = action.payload;
-
-  return {
-    ...state
   }
 }

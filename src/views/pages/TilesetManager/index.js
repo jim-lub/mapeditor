@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
-import { ReduxForm, Field } from 'views/components/ReduxForm';
+import { Form, Field } from 'views/components/Form';
 import reduxFormTestSchema from './reduxFormTestSchema';
 
 export const TilesetManager = () => {
@@ -21,7 +21,7 @@ const ReduxFormTestComponent = () => {
   ];
 
   return (
-    <ReduxForm id={"reduxFormTestComponent"} schema={reduxFormTestSchema} components={steps}>
+    <Form id={"reduxFormTestComponent"} schema={reduxFormTestSchema} components={steps}>
       {
         ({ Component, currentStep, totalSteps }) => {
           return (
@@ -32,12 +32,11 @@ const ReduxFormTestComponent = () => {
           )
         }
       }
-    </ReduxForm>
+    </Form>
   )
 }
 
 const StepOne = ({ state, update }) => {
-  console.log(state)
   return (
     <>
       <Field.Text {...state['firstName']} onChange={update} /> <br /><br/>
