@@ -1,4 +1,4 @@
-import { configureTestStore, configureMockStore } from 'state/store';
+import { configureTestStore } from 'state/store';
 
 import * as operations from '../operations';
 import * as selectors from '../selectors';

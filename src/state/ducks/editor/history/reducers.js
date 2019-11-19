@@ -63,26 +63,24 @@ export const openUndoAction = (state, action) => {
 }
 
 export const recordUndoAction = (state, action) => {
-  // console.log('history', action.payload)
-  return state;
-  // const { type, toolType, list } = action.payload;
-  //
-  // return {
-  //   ...state,
-  //   recording: {
-  //     ...state.recording,
-  //     type,
-  //     toolType,
-  //     list: [
-  //       ...state.recording.list,
-  //       ...list.map(({ segmentId, layerId, columnIndex, rowIndex, value, undoValue }) =>
-  //         (_.find(state.recording.list, { segmentId, layerId, columnIndex, rowIndex }))
-  //           ?  null
-  //           : { segmentId, layerId, columnIndex, rowIndex, value, undoValue }
-  //       ).filter(val => val)
-  //     ]
-  //   }
-  // }
+  const { type, toolType, list } = action.payload;
+
+  return {
+    ...state,
+    recording: {
+      ...state.recording,
+      type,
+      toolType,
+      list: [
+        ...state.recording.list,
+        ...list.map(({ segmentId, layerId, columnIndex, rowIndex, value, undoValue }) =>
+          (_.find(state.recording.list, { segmentId, layerId, columnIndex, rowIndex }))
+            ?  null
+            : { segmentId, layerId, columnIndex, rowIndex, value, undoValue }
+        ).filter(val => val)
+      ]
+    }
+  }
 }
 
 export const closeUndoAction = (state, action) => {

@@ -35,3 +35,4 @@ export const clearTileValues = operations.clearTileValues;
 export const getTilemapData = selectors.getTilemapData;
 export const getTilemapDataObject = selectors.getTilemapDataObject;
 export const getPropertiesObject = selectors.getPropertiesObject;
+export const getCurrentTileValue = selectors.getCurrentTileValue;

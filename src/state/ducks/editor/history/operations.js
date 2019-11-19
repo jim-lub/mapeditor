@@ -3,7 +3,10 @@ import _ from 'lodash';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import { setTileValues } from '../segments';
+import {
+  setTileValues,
+  getCurrentTileValue
+} from '../segments';
 
 export const clearStore = () => dispatch => {
   dispatch( actions.clearUndoCollection() );
@@ -36,6 +39,28 @@ export const redo = () => (dispatch, getState) => {
   }
 }
 
+export const recordUndoAction = ({ payload: { layerId, list } }) => (dispatch, getState) => {
+  const state = getState();
+
+  const undoList = list.map((props) =>
+    ({ undoValue: getCurrentTileValue(state, { layerId, ...props }), layerId, ...props }));
+
+  console.log(undoList)
+  // const historyList = list.map(({ segmentId, tilemapColumnIndex, tilemapRowIndex, value }) => {
+  //   const undoValue = getCurrentTileValue(state, { segmentId, layerId, tilemapColumnIndex, tilemapRowIndex });
+  //
+  //   return ({
+  //     segmentId,
+  //     layerId,
+  //     tilemapColumnIndex,
+  //     tilemapRowIndex,
+  //     redoValue: value,
+  //     undoValue
+  //   })
+  // });
+
+  // dispatch( actions.recordUndoAction({ list: historyList }) );
+};
+
 export const openUndoAction = actions.openUndoAction;
-export const recordUndoAction = actions.recordUndoAction;
 export const closeUndoAction = actions.closeUndoAction;

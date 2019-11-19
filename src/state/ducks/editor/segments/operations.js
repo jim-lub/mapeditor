@@ -1,8 +1,8 @@
-import { setRequestStatus } from '../requestStatus';
-
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as types from './types';
+
+import { recordUndoAction } from '../history';
 
 import {
   getMapGrid,
@@ -17,14 +17,17 @@ import {
   getLayerPropertiesObject
 } from '../layers';
 
+import { setRequestStatus } from '../requestStatus';
+
 import * as taskTypes from './worker/tasks/types';
 import TaskWorker from './worker/segments.worker';
-
-const taskWorker = new TaskWorker();
+let taskWorker;
 
 export const listenToTaskWorkerEvents = () => dispatch => {
-  taskWorker.addEventListener('message', ({ data: { key, result, error, activeTasks } }) => {
-    const handleDispatch = () => dispatch( _dispatchTaskWorkerEvent({ key, result, error}) );
+  taskWorker = new TaskWorker();
+
+  taskWorker.addEventListener('message', ({ data: { key, result, error } }) => {
+    const handleDispatch = () => dispatch( _dispatchTaskWorkerEvent({ key, result, error }) );
 
     setTimeout(handleDispatch, 0);
   });
@@ -33,6 +36,11 @@ export const listenToTaskWorkerEvents = () => dispatch => {
 const _dispatchTaskWorkerEvent = ({ key, result, error }) => dispatch => {
   if (result) {
     const { updateReduxStore = false, reduxActionType, payload = {} } = result;
+
+    // Abstract this code block away in future; currently needed to pass state to history
+    if (reduxActionType === types.setTileValues) {
+      dispatch( recordUndoAction({ payload }) )
+    }
 
     if (updateReduxStore && Object.values(types).includes(reduxActionType)) {
       dispatch({
@@ -50,6 +58,8 @@ const _dispatchTaskWorkerEvent = ({ key, result, error }) => dispatch => {
 }
 
 const _sendTaskToWorker = ({ key, taskType, reduxActionType, payload }) => dispatch => {
+  if (!taskWorker) return;
+  
   dispatch( setRequestStatus({ key, type: 'REQUEST' }) );
 
   taskWorker.postMessage({
@@ -97,8 +107,8 @@ export const setTileValues = ({ inputSegmentId, inputColumnIndex, inputRowIndex,
   const layerProperties = getActiveLayerProperties(state);
 
   dispatch( _sendTaskToWorker({
-    /* payload return: { segmentId, tilemapData } */
-    key: 'randomBatchId',
+    /* payload return: { segmentIDs, layerId, list  } */
+    key: 'randomKey',
     taskType: taskTypes.convertPatternToTilemapIndexes,
     reduxActionType: types.setTileValues,
     payload: {
@@ -124,8 +134,8 @@ export const clearTileValues = ({ inputSegmentId, inputColumnIndex, inputRowInde
   const layerProperties = getActiveLayerProperties(state);
 
   dispatch( _sendTaskToWorker({
-    /* payload return: { segmentId, tilemapData } */
-    key: 'randomBatchId',
+    /* payload return: { segmentIDs, layerId, list  } */
+    key: 'randomKey',
     taskType: taskTypes.convertPatternToTilemapIndexes,
     reduxActionType: types.clearTileValues,
     payload: {

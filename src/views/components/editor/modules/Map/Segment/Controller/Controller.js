@@ -49,6 +49,16 @@ const Component = ({
     actions.validateSegment({ segmentId });
   }, [segmentId, layerSortOrder, actions]);
 
+  useEffect(() => {
+    if (!active || !enableUserInput) {
+      setSelection({
+        display: 'none',
+        left: 0,
+        top: 0
+      })
+    }
+  }, [active, enableUserInput])
+
   const { tileSize = { width: 0, height: 0 } } = activeLayerProperties;
 
   const scaledTileSize = {
@@ -96,7 +106,7 @@ const Component = ({
         />
       }
       {
-        active &&
+        active && enableUserInput &&
         <SelectionOverlay
           style={selection}
           grid={pattern.grid}
