@@ -39,7 +39,7 @@ const _dispatchTaskWorkerEvent = ({ key, result, error }) => dispatch => {
 
     // Abstract this code block away in future; currently needed to pass state to history
     if (reduxActionType === types.setTileValues) {
-      dispatch( recordUndoAction({ payload }) )
+      // dispatch( recordUndoAction({ payload }) )
     }
 
     if (updateReduxStore && Object.values(types).includes(reduxActionType)) {
@@ -59,7 +59,7 @@ const _dispatchTaskWorkerEvent = ({ key, result, error }) => dispatch => {
 
 const _sendTaskToWorker = ({ key, taskType, reduxActionType, payload }) => dispatch => {
   if (!taskWorker) return;
-  
+
   dispatch( setRequestStatus({ key, type: 'REQUEST' }) );
 
   taskWorker.postMessage({

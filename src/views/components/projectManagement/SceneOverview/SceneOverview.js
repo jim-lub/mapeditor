@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 
 import {
   getActiveProjectId
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import {
   getActiveSceneId,
   getSceneDataById
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import {
   getMapProperties,

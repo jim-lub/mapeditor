@@ -5,12 +5,12 @@ import { bindActionCreators } from 'redux';
 import {
   getActiveProjectId,
   getProjectDataById
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import {
   createScene,
   getCreateSceneStatus
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';

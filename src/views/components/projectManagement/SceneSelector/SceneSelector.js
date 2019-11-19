@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { getActiveProjectId } from 'state/ducks/editor/projects';
+import { getActiveProjectId } from 'state/ducks/projects';
 
 import { useModal } from 'lib/hooks';
 

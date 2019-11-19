@@ -6,12 +6,12 @@ import {
   deleteProject,
   getProjectDataById,
   getDeleteProjectStatus
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import {
   getSceneSortOrderByProjectId,
   getSceneDataById,
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';

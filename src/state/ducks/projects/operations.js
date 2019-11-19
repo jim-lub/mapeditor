@@ -3,7 +3,7 @@ import { firebase } from 'state/lib/firebase';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import { deleteScene } from 'state/ducks/editor/scenes';
+import { deleteScene } from 'state/ducks/scenes';
 import { setCurrentScene, getCurrentScene } from 'state/ducks/editor/map';
 
 export const listenToProjectChanges = ({ userId }) => (dispatch, getState) => {

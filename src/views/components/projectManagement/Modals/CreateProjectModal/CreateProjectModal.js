@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import {
   createProject,
   getCreateProjectStatus
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setCurrentScene } from 'state/ducks/editor/map';
-import { getSceneCollection } from 'state/ducks/editor/scenes';
+import { getSceneCollection } from 'state/ducks/scenes';
 
 import { LinkButton } from 'views/components/LinkButton';
 

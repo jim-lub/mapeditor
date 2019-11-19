@@ -1,8 +1,5 @@
 import { combineReducers } from 'redux';
 
-import { default as projects } from './projects';
-import { default as scenes } from './scenes';
-
 import { default as history } from './history';
 import { default as layers } from './layers';
 import { default as map } from './map';
@@ -16,8 +13,6 @@ import * as operations from './operations';
 import * as selectors from './selectors';
 
 export default combineReducers({
-  projects,
-  scenes,
   history,
   layers,
   requestStatus,

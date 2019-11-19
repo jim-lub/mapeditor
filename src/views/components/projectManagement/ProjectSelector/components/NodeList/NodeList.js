@@ -11,11 +11,11 @@ import {
   getProjectDataById,
   getProjectSortOrder,
   getActiveProjectId
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import {
   getSceneSortOrderByProjectId
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import { Node } from '../../components';
 

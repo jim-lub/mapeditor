@@ -8,14 +8,14 @@ import {
 
 import {
   getActiveProjectId
-} from 'state/ducks/editor/projects';
+} from 'state/ducks/projects';
 
 import {
   setActiveScene,
   getActiveSceneId,
   getSceneDataById,
   getSceneSortOrderByProjectId
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import { Node } from '../../components';
 

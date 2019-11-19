@@ -3,7 +3,7 @@ import { firebase } from 'state/lib/firebase';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import { getActiveProjectId } from 'state/ducks/editor/projects';
+import { getActiveProjectId } from 'state/ducks/projects';
 import {
   setCurrentScene,
   deleteMap

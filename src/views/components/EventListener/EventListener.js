@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getAuthUser } from 'state/ducks/auth';
-import { listenToProjectChanges } from 'state/ducks/editor/projects';
-import { listenToSceneChanges } from 'state/ducks/editor/scenes';
+import { listenToProjectChanges } from 'state/ducks/projects';
+import { listenToSceneChanges } from 'state/ducks/scenes';
 
 const Component = ({ authUser = {}, actions }) => {
   const userId = (authUser) ? authUser.uid : null

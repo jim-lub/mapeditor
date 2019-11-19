@@ -6,7 +6,7 @@ import {
   deleteScene,
   getSceneDataById,
   getDeleteSceneStatus
-} from 'state/ducks/editor/scenes';
+} from 'state/ducks/scenes';
 
 import { getFieldStateErrors } from 'lib/validation';
 import { useAsyncRequestHelper } from 'lib/hooks';
