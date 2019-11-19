@@ -8,8 +8,8 @@ label {
 }
 
 input {
-  background-color: #ffffff;
-  border: solid 1px #d7d9e0;
+  background-color: var(--white);
+  border: solid 1px var(--grey-300);
   border-radius: 3px;
   padding: 8px 10px;
   color: #6e768f;
@@ -18,13 +18,13 @@ input {
 }
 
 input:disabled {
-  background-color: #e8e8e8;
+  background-color: var(--grey-200);
 }
 
 input:focus {
   outline: none;
-  border: solid 1px #5ab0ee;
-  background-color: #f9f9f9;
+  border: solid 1px var(--blue-300);
+  background-color: var(--grey-050);
 }
 
 input[type="text"] {
@@ -41,8 +41,8 @@ input[type="number"] {
 
 textarea {
   outline: none;
-  background-color: #ffffff;
-  border: solid 1px #d7d9e0;
+  background-color: var(--white);
+  border: solid 1px var(--grey-300);
   border-radius: 3px;
   padding: 8px 10px;
   color: #6e768f;
@@ -52,17 +52,17 @@ textarea {
 }
 
 textarea:disabled {
-  background-color: #e8e8e8;
+  background-color: var(--grey-200);
 }
 
 textarea:focus {
-  border: solid 1px #5ab0ee;
-  background-color: #f9f9f9;
+  border: solid 1px var(--blue-300);
+  background-color: var(--grey-050);
 }
 
 select {
-  background-color: #ffffff;
-  border: solid 1px #d7d9e0;
+  background-color: var(--white);
+  border: solid 1px var(--grey-300);
   border-radius: 2px;
   padding: 8px 10px;
   color: #6e768f;
@@ -71,5 +71,6 @@ select {
 }
 
 select:focus {
-  border: solid 1px #5ab0ee;
+  border: solid 1px var(--blue-300);
+  background-color: var(--grey-050);
 }

@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -17,6 +18,7 @@ export class Firebase {
 
     this.auth = app.auth();
     this.db = app.firestore();
+    this.storage = app.storage();
 
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.googleProvider.addScope('email');
@@ -59,4 +61,8 @@ export class Firebase {
   scenes = () =>
     this.db.collection('scenes');
 
+
+  /*** Tilesets API ***/
+  tilesetRef = () =>
+    this.storage.ref().child('tilesets');
 }

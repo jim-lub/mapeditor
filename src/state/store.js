@@ -9,7 +9,7 @@ const appReducer = combineReducers(reducers);
 const logger = createLogger({
   // diff: true,
   collapsed: true,
-  predicate: (getState, action) => (action.type.includes('editor/segments') || action.type.includes('editor/user-input')),
+  predicate: (getState, action) => (!action.type.includes('editor/')),
 });
 
 const rootReducer = (state, action) => {

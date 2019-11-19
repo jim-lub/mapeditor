@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  border: solid 1px var(--grey-400);
+  border-radius: 3px;
+}
+
+.previewContainer {
+  margin: 20px;
+  padding: 1px;
+  border: solid 1px var(--blue-100);
+}
+
+.imagePreview {
+  max-width: 100%;
+}
