@@ -6,7 +6,7 @@
   margin: 0;
   font: 12px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   font-size: 12px;
-  color: #6e768f;
+  color: var(--text-color-dark);
 }
 
 html, body {
@@ -42,11 +42,6 @@ h4 {
 
 h5 {
   font-size: 16px;
-  color: inherit;
-}
-
-span {
-  font-size: inherit;
   color: inherit;
 }
 

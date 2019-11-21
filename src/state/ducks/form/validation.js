@@ -1,5 +1,6 @@
-import isEmpty from 'validator/lib/isEmpty';
-import equals from 'validator/lib/equals';
+import isEmptyValidator from 'validator/lib/isEmpty';
+import isLengthValidator from 'validator/lib/isLength';
+import equalsValidator from 'validator/lib/equals';
 
 export default {
   'required': (value) => isRequired(value),
@@ -9,11 +10,11 @@ export default {
   'number': (value) => isNumber(value)
 }
 
-export const isRequired = (value) => isEmpty(value, { ignore_whitespace: true });
+export const isRequired = (value) => isEmptyValidator(value, { ignore_whitespace: true });
 
-export const isExactMatch = (value, match) => equals(value, match) && (match, value);
+export const isExactMatch = (value, match) => equalsValidator(value, match) && (match, value);
 
-export const isLength = (value, { min = 0, max = undefined }) => isLength(value, { min, max });
+export const isLength = (value, { min = 0, max = undefined }) => !isLengthValidator(value, { min, max });
 
 export const isBoolean = (value) => (typeof value === 'boolean');
 

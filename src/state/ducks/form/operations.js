@@ -1,6 +1,8 @@
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import validation from './validation';
+
 export const initializeForm = ({ id, schema }) => dispatch => {
   const validatedSchema = dispatch( _validateSchema({ schema }) );
 
@@ -46,12 +48,13 @@ export const updateValue = ({ id, step, name, value }) => (dispatch, getState) =
   const state = getState();
   const validationRules = selectors.getValidationRules(state, { id, step, name });
 
-  console.log(validationRules);
+  if (validationRules) {
+    validationRules.forEach(({ type, message, ...rest }) => {
+      (validation[type](value, { ...rest }))
+        ? dispatch( actions.setError({ id, step, name, type, message }) )
+        : dispatch( actions.clearError({ id, step, name, type }) )
+    });
+  }
 
-  dispatch( actions.setValue({
-    id,
-    step,
-    name,
-    value
-  }));
+  return dispatch( actions.setValue({ id, step, name, value }));
 }

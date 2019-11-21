@@ -3,11 +3,17 @@ export default {
   1: {
     'firstName': {
       value: undefined, // auto replace when passing through redux
-      placeholder: 'First name',
-      label: 'First name',
+      placeholder: '1 - 50',
+      label: 'Columns*',
       validation: [
-        { type: 'required' },
-        { type: 'minValue', value: 5 }
+        {
+          type: 'required',
+          message: 'Field is required!'
+        },
+        {
+          type: 'length', min: 5, max: 20,
+          message: 'Value should be between 1 and 50.'
+        }
       ]
     },
     'lastName': {

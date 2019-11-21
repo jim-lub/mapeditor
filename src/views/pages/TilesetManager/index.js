@@ -36,11 +36,11 @@ const ReduxFormTestComponent = () => {
   )
 }
 
-const StepOne = ({ state, update }) => {
+const StepOne = ({ state }) => {
   return (
     <>
-      <Field.Text {...state['firstName']} onChange={update} /> <br /><br/>
-      <Field.Text {...state['lastName']} onChange={update} />
+      <Field.Text name={"firstName"} {...state} />
+      <Field.Text name={"lastName"} {...state} />
     </>
   )
 }
@@ -48,8 +48,8 @@ const StepOne = ({ state, update }) => {
 const StepTwo = ({ state, update }) => {
   return (
     <>
-      <Field.Text {...state['street']} onChange={update} /> <br /><br/>
-      <Field.Text {...state['city']} onChange={update} />
+      <Field.Text name={"street"} {...state} />
+      <Field.Text name={"city"} {...state} />
     </>
   )
 }

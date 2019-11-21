@@ -10,22 +10,22 @@ export const clearForm = ({ id }) => ({
   payload: { id }
 });
 
-export const setValue = ({ id, currentStep, name, value }) => ({
+export const setValue = ({ id, step, name, value }) => ({
   type: types.setValue,
-  payload: { id, currentStep, name, value }
+  payload: { id, step, name, value }
 });
 
-export const clearValue = ({ id, currentStep, name, value }) => ({
+export const clearValue = ({ id, step, name, value }) => ({
   type: types.clearValue,
-  payload: { id, currentStep, name }
+  payload: { id, step, name }
 });
 
-export const setError = ({ id, currentStep, name, error }) => ({
+export const setError = ({ id, step, name, type, message }) => ({
   type: types.setError,
-  payload: { id, currentStep, name, error }
+  payload: { id, step, name, type, message }
 });
 
-export const clearError = ({ id, currentStep, name }) => ({
+export const clearError = ({ id, step, name, type }) => ({
   type: types.clearError,
-  payload: { id, currentStep, name }
+  payload: { id, step, name, type }
 });

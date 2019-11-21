@@ -27,6 +27,10 @@ const Component = ({
   //eslint-disable-next-line
   }, []);
 
+  const handleBlur = ({ name }) => {
+    console.log('blur: ', name)
+  }
+
   const handleChange = ({ name, value }) => {
     actions.updateValue({ id, name, value, step: currentStep })
   }
@@ -43,8 +47,11 @@ const Component = ({
             React.cloneElement(
               components[currentStep - 1],
               {
-                state: formData[currentStep],
-                update: handleChange,
+                state: {
+                  formData: formData[currentStep],
+                  onBlur: handleBlur,
+                  onChange: handleChange
+                }
               }
             ),
           currentStep,

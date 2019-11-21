@@ -1,4 +1,4 @@
-label {
+/* label {
   width: 100px;
   padding: 3px;
   color: #a5abc5;
@@ -73,4 +73,4 @@ select {
 select:focus {
   border: solid 1px var(--blue-300);
   background-color: var(--grey-050);
-}
+} */
