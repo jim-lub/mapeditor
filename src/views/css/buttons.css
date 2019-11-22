@@ -1,27 +1,31 @@
 @import './colors.css';
 
 button {
-    display: inline-block;
-    width: 100%;
-    padding: 15px 25px;
-    margin: 0;
-    text-decoration: none;
-    background-color: #f7f7fa;
-    color: #a5abc5;
-    border: solid 1px var(--grey-400);
-    border-radius: 5px;
-    font-weight: bold;
-    line-height: 1;
-    cursor: pointer;
-    text-align: center;
-    transition: background 250ms ease-in-out, transform 150ms ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+  display: inline-block;
+  width: 100%;
+  padding: 15px 25px;
+  margin: 0;
+  text-decoration: none;
+  background-color: #f7f7fa;
+  color: #a5abc5;
+  border: solid 1px var(--grey-400);
+  border-radius: 5px;
+  font-weight: bold;
+  line-height: 1;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
 }
 
   button:hover,
   button:focus {
     background-color: #fcfcfd;
+  }
+
+  button:focus {
+    padding: 14px 24px;
+    border: solid 2px var(--blue-300);
   }
 
   button:active {
@@ -32,36 +36,20 @@ button {
     background-color: var(--grey-300);
   }
 
-button.green {
-  background-color: #2ec6c8;
-  border: solid 1px #2ea5a7;
-  color: #ffffff;
-}
-
-  button.green:hover,
-  button.green:focus {
-    background-color: #33dbdd;
-  }
-
-  button.green:active {
-    background-color: #29b4b6;
-  }
-
-  button.green:disabled {
-    color: #a5abc5;
-    background-color: #e1e1e1;
-    border: solid 1px #d7d8e0;
-  }
-
 button.blue {
   color: var(--text-color-light-100);
-  background-color: var(--blue-300);
+  background-color: var(--blue-500);
   border: solid 1px var(--blue-700);
 }
 
   button.blue:hover,
   button.blue:focus {
   	background-color: var(--blue-100);
+  }
+
+  button.blue:focus {
+    padding: 14px 24px;
+    border: solid 2px var(--blue-700);
   }
 
   button.blue:active {
@@ -83,6 +71,11 @@ button.red {
   button.red:hover,
   button.red:focus {
     background-color: var(--red-200);
+  }
+
+  button.red:focus {
+    padding: 14px 24px;
+    border: solid 2px var(--red-700);
   }
 
   button.red:active {

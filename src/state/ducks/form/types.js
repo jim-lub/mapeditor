@@ -1,8 +1,9 @@
 export const newForm = "form/NEW";
 export const clearForm = "form/CLEAR";
 
-export const setValue = "form/field/SET_VALUE";
-export const clearValue = "form/field/CLEAR_VALUE";
+export const setFieldValue = "form/field/SET_FIELD_VALUE";
+export const clearFieldValue = "form/field/CLEAR_FIELD_VALUE";
 
-export const setError = "form/field/SET_ERROR";
-export const clearError = "form/field/CLEAR_ERROR";
+export const setFieldErrors = "form/field/SET_FIELD_ERRORS";
+
+export const setFormDisableBoolean = "form/SET_FORM_DISABLE_BOOLEAN";

@@ -1,8 +1,8 @@
 import * as types from './types';
 
-export const newForm = ({ id, schema }) => ({
+export const newForm = ({ id, type, steps, form }) => ({
   type: types.newForm,
-  payload: { id, schema }
+  payload: { id, type, steps, form }
 });
 
 export const clearForm = ({ id }) => ({
@@ -10,22 +10,22 @@ export const clearForm = ({ id }) => ({
   payload: { id }
 });
 
-export const setValue = ({ id, step, name, value }) => ({
-  type: types.setValue,
-  payload: { id, step, name, value }
+export const setFieldValue = ({ id, step, fieldName, fieldValue }) => ({
+  type: types.setFieldValue,
+  payload: { id, step, fieldName, fieldValue }
 });
 
-export const clearValue = ({ id, step, name, value }) => ({
-  type: types.clearValue,
-  payload: { id, step, name }
+export const clearFieldValue = ({ id, step, fieldName }) => ({
+  type: types.clearFieldValue,
+  payload: { id, step, fieldName }
 });
 
-export const setError = ({ id, step, name, type, message }) => ({
-  type: types.setError,
-  payload: { id, step, name, type, message }
+export const setFieldErrors = ({ id, step, fieldName, errors }) => ({
+  type: types.setFieldErrors,
+  payload: { id, step, fieldName, errors }
 });
 
-export const clearError = ({ id, step, name, type }) => ({
-  type: types.clearError,
-  payload: { id, step, name, type }
+export const setFormDisableBoolean = ({ id }) => ({
+  type: types.setFormDisableBoolean,
+  payload: { id }
 });

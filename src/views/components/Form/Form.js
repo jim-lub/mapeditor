@@ -3,10 +3,25 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  initializeForm,
-  updateValue,
+  initializeSingleStepForm,
+  initializeMultiStepForm,
 
-  getFormData
+  validateSingleStepForm,
+  validateMultiStepForm,
+
+  previousStep,
+  nextStep,
+
+  updateFieldValue,
+  submitForm,
+
+  getFormStatus,
+  getCurrentStep,
+  getTotalSteps,
+  getFieldNames,
+  getFieldData,
+  getFieldValue,
+  getFieldErrors
 } from 'state/ducks/form';
 
 import { Loader } from 'views/components/Loader';
@@ -15,62 +30,120 @@ const Component = ({
   id = null,
   schema = {},
   components = [],
-  pending = false,
-  formData,
   children,
+
+  pending = false,
+  disabled = true,
+  currentStep,
+  totalSteps,
   actions
 }) => {
-  const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
-    actions.initializeForm({ id, schema });
-  //eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   actions.initializeForm({ id, schema });
+  // //eslint-disable-next-line
+  // }, []);
+  //
+  // const handleBlur = ({ name }) => {
+  //   actions.validateForm({ id, name, step: currentStep });
+  // }
+  //
+  // const handleChange = ({ name, value, validateWhileTyping }) => {
+  // actions.updateValue({ id, name, value, step: currentStep })
+  // }
 
-  const handleBlur = ({ name }) => {
-    console.log('blur: ', name)
+  return <Loader.Simple />
+
+  const handleClickPrevious = () => {
+    if (currentStep > 1) {
+      actions.previousStep();
+    }
   }
 
-  const handleChange = ({ name, value }) => {
-    actions.updateValue({ id, name, value, step: currentStep })
+  const handleClickNext = () => {
+    if (currentStep < totalSteps) {
+      actions.nextStep();
+    }
   }
 
-  if (!formData) {
+  if (!pending) {
     return <Loader.Simple />
   }
 
+  // return (
+  //   <>
+  //     {
+  //       children({
+  //         Component: React.cloneElement(
+  //           components[currentStep - 1],
+  //           {
+  //             state: {
+  //               formData: formData[currentStep],
+  //               onBlur: handleBlur,
+  //               onChange: handleChange
+  //             }
+  //           }
+  //         ),
+  //         ButtonBack: React.cloneElement(
+  //           <ButtonPrevious />,
+  //           {
+  //             text: (currentStep > 1) ? 'Back' : 'Cancel',
+  //             onClick: handleClickPrevious
+  //           }
+  //         ),
+  //         ButtonContinue: React.cloneElement(
+  //           <ButtonNext />,
+  //           {
+  //             text: (currentStep < totalSteps) ? 'Next' : 'Submit',
+  //             disabled: formDisabled,
+  //             onClick: handleClickNext
+  //           }
+  //         ),
+  //         currentStep,
+  //         totalSteps: Object.keys(formData).length
+  //       })
+  //     }
+  //   </>
+  // )
+}
+
+const ButtonPrevious = ({ text = 'Cancel', disabled = false, onClick }) => {
   return (
-    <>
-      {
-        children({
-          Component:
-            React.cloneElement(
-              components[currentStep - 1],
-              {
-                state: {
-                  formData: formData[currentStep],
-                  onBlur: handleBlur,
-                  onChange: handleChange
-                }
-              }
-            ),
-          currentStep,
-          totalSteps: Object.keys(formData).length
-        })
-      }
-    </>
+    <button style={{minWidth: 100}} disabled={disabled} onClick={onClick}>{ text }</button>
+  )
+}
+
+const ButtonNext = ({ text = 'Submit', disabled = true, onClick }) => {
+  return (
+    <button style={{minWidth: 100}} className={"blue"} disabled={disabled} onClick={onClick}>{ text }</button>
   )
 }
 
 const mapStateToProps = (state, { id }) => {
+  const { pending, disabled } = getFormStatus(state, { id }) || {};
+  const currentStep = getCurrentStep(state, { id })
+
   return {
-    formData: getFormData(state, { id })
+    pending,
+    disabled,
+    currentStep,
+    totalSteps: getTotalSteps(state, { id }),
+    fieldNames: getFieldNames(state, { id, step: currentStep }),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ initializeForm, updateValue }, dispatch)
+    actions: bindActionCreators({
+      initializeSingleStepForm,
+      initializeMultiStepForm,
+      validateSingleStepForm,
+      validateMultiStepForm,
+      previousStep,
+      nextStep,
+      updateFieldValue,
+      submitForm
+    }, dispatch)
   }
 }
 

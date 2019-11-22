@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { concatClassNames } from 'lib/utils';
 
@@ -7,22 +7,36 @@ import { ReactComponent as ErrorIcon } from 'assets/static/icons/form/validation
 import '../form-default.module.css';
 import fieldStyles from '../form-fields.module.css';
 
-export const Text = ({ name, formData, onBlur, onChange }) => {
+export const Text = ({ name, formData, onBlur, autoFocus = false, onChange }) => {
+  const [blurred, setBlurred] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current && autoFocus) {
+      inputRef.current.focus()
+    }
+  }, [inputRef, autoFocus])
+
   const { value = '', label, placeholder, disabled, errors = {} } = formData[name];
   const hasErrors = (Object.keys(errors).length > 0);
 
-  const handleBlur = () => onBlur({ name });
+  const handleBlur = () => setBlurred(true);
 
-  const handleChange = (e) => onChange({ name, value: e.target.value });
+  const handleChange = (e) => {
+    onChange({
+      name,
+      value: e.target.value
+    })
+  };
 
   const inputClassNames = concatClassNames([
     fieldStyles.input,
-    (hasErrors) ? fieldStyles.error : null
+    (hasErrors && blurred) ? fieldStyles.error : null
   ]);
 
   const errorTextClassNames = concatClassNames([
     fieldStyles.errorTextWrapper,
-    (hasErrors) ? null : fieldStyles.collapsed
+    (hasErrors && blurred) ? null : fieldStyles.collapsed
   ]);
 
   return (
@@ -42,10 +56,11 @@ export const Text = ({ name, formData, onBlur, onChange }) => {
           onBlur={handleBlur}
           onChange={handleChange}
           disabled={disabled}
+          ref={inputRef}
         />
 
         {
-          hasErrors &&
+          hasErrors && blurred &&
           <div className={fieldStyles.iconWrapper}>
             <ErrorIcon className={fieldStyles.icon}/>
           </div>
@@ -54,14 +69,9 @@ export const Text = ({ name, formData, onBlur, onChange }) => {
 
       {
         <div className={errorTextClassNames}>
+          .
           {
-            Object.values(errors).map((message) => {
-              return (
-                <>
-                  { message + " " } 
-                </>
-              )
-            })
+            Object.values(errors).map((message) => message + " ")
           }
         </div>
       }
