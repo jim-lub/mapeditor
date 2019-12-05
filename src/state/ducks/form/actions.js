@@ -1,8 +1,8 @@
 import * as types from './types';
 
-export const newForm = ({ id, type, steps, form }) => ({
+export const newForm = ({ id, data, steps }) => ({
   type: types.newForm,
-  payload: { id, type, steps, form }
+  payload: { id, data, steps }
 });
 
 export const clearForm = ({ id }) => ({

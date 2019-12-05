@@ -10,7 +10,7 @@ label {
 
 input {
   background-color: var(--white);
-  border: solid 1px var(--grey-300);
+  border: solid 1px var(--grey-400);
   border-radius: 3px;
   padding: 10px 12px;
   color: #6e768f;
@@ -24,7 +24,7 @@ input:disabled {
 
 input:focus {
   outline: none;
-  border: solid 1px var(--blue-300);
+  border: solid 1px var(--grey-700);
   background-color: var(--grey-050);
 }
 

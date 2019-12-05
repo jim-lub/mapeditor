@@ -37,42 +37,42 @@ SELECTORS -----------------------------------------------
 - getFieldErrors
 */
 
-export const initializeSingleStepForm = () => {
+export const initializeForm = ({ id, schema }) => dispatch => {
+  const steps = schema.map(({ stepName }) => stepName);
 
-}
-export const clearSingleStepForm = () => {
+  const data = schema.reduce((obj, step, index) => {
+    return {
+      ...obj,
+      [step.stepName]: {
+        ...step.fields
+      }
+    }
+  }, {})
 
-}
-
-export const validateSingleStepForm = () => {
-
-}
-
-export const initializeMultiStepForm = () => {
-
-}
-
-export const clearMultiStepForm = () => {
-
+  dispatch( actions.newForm({ id, data, steps }) );
 }
 
-export const validateMultiStepForm = () => {
+export const clearForm = () => dispatch => {
 
 }
 
-export const previousStep = () => {
+export const validateForm = () => dispatch => {
 
 }
 
-export const nextStep = () => {
+export const previousStep = () => dispatch => {
 
 }
 
-export const updateFieldValue = () => {
+export const nextStep = () => dispatch => {
 
 }
 
-export const submitForm = () => {
+export const updateFieldValue = () => dispatch => {
+
+}
+
+export const submitForm = () => dispatch => {
 
 }
 

@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-  initializeSingleStepForm,
-  initializeMultiStepForm,
-
-  validateSingleStepForm,
-  validateMultiStepForm,
+  initializeForm,
+  validateForm,
 
   previousStep,
   nextStep,
@@ -16,6 +13,7 @@ import {
   submitForm,
 
   getFormStatus,
+  getStepNames,
   getCurrentStep,
   getTotalSteps,
   getFieldNames,
@@ -32,12 +30,17 @@ const Component = ({
   components = [],
   children,
 
-  pending = false,
+  pending = true,
   disabled = true,
   currentStep,
   totalSteps,
   actions
 }) => {
+  const formData = {};
+
+  useEffect(() => {
+    actions.initializeForm({ id, schema });
+  }, [id, schema, actions]);
 
   // useEffect(() => {
   //   actions.initializeForm({ id, schema });
@@ -52,7 +55,13 @@ const Component = ({
   // actions.updateValue({ id, name, value, step: currentStep })
   // }
 
-  return <Loader.Simple />
+  // return <Loader.Simple />
+
+  const handleBlur = () => null;
+  const handleChange = () => null;
+
+  const handlePrevious = () => null;
+  const handleNext = () => null;
 
   const handleClickPrevious = () => {
     if (currentStep > 1) {
@@ -66,45 +75,45 @@ const Component = ({
     }
   }
 
-  if (!pending) {
+  if (pending) {
     return <Loader.Simple />
   }
 
-  // return (
-  //   <>
-  //     {
-  //       children({
-  //         Component: React.cloneElement(
-  //           components[currentStep - 1],
-  //           {
-  //             state: {
-  //               formData: formData[currentStep],
-  //               onBlur: handleBlur,
-  //               onChange: handleChange
-  //             }
-  //           }
-  //         ),
-  //         ButtonBack: React.cloneElement(
-  //           <ButtonPrevious />,
-  //           {
-  //             text: (currentStep > 1) ? 'Back' : 'Cancel',
-  //             onClick: handleClickPrevious
-  //           }
-  //         ),
-  //         ButtonContinue: React.cloneElement(
-  //           <ButtonNext />,
-  //           {
-  //             text: (currentStep < totalSteps) ? 'Next' : 'Submit',
-  //             disabled: formDisabled,
-  //             onClick: handleClickNext
-  //           }
-  //         ),
-  //         currentStep,
-  //         totalSteps: Object.keys(formData).length
-  //       })
-  //     }
-  //   </>
-  // )
+  return (
+    <>
+      {
+        children({
+          Component: React.cloneElement(
+            components[currentStep - 1],
+            {
+              state: {
+                formData: formData[currentStep],
+                onBlur: handleBlur,
+                onChange: handleChange
+              }
+            }
+          ),
+          ButtonBack: React.cloneElement(
+            <ButtonPrevious />,
+            {
+              text: (currentStep > 1) ? 'Back' : 'Cancel',
+              onClick: handleClickPrevious
+            }
+          ),
+          ButtonContinue: React.cloneElement(
+            <ButtonNext />,
+            {
+              text: (currentStep < totalSteps) ? 'Next' : 'Submit',
+              disabled,
+              onClick: handleClickNext
+            }
+          ),
+          currentStep,
+          totalSteps
+        })
+      }
+    </>
+  )
 }
 
 const ButtonPrevious = ({ text = 'Cancel', disabled = false, onClick }) => {
@@ -120,25 +129,27 @@ const ButtonNext = ({ text = 'Submit', disabled = true, onClick }) => {
 }
 
 const mapStateToProps = (state, { id }) => {
-  const { pending, disabled } = getFormStatus(state, { id }) || {};
-  const currentStep = getCurrentStep(state, { id })
+  if (!state.form.collection.hasOwnProperty(id)) return {};
+
+  const { pending, disabled } = getFormStatus(state, { id });
+  const stepNames = getStepNames(state, { id });
+  const currentStep = getCurrentStep(state, { id });
+  const totalSteps = getTotalSteps(state, { id });
 
   return {
     pending,
     disabled,
     currentStep,
-    totalSteps: getTotalSteps(state, { id }),
-    fieldNames: getFieldNames(state, { id, step: currentStep }),
+    totalSteps,
+    fieldNames: getFieldNames(state, { id, stepName: stepNames[currentStep - 1] }),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
-      initializeSingleStepForm,
-      initializeMultiStepForm,
-      validateSingleStepForm,
-      validateMultiStepForm,
+      initializeForm,
+      validateForm,
       previousStep,
       nextStep,
       updateFieldValue,

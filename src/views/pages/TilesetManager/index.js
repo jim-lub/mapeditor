@@ -2,32 +2,31 @@ import React from 'react';
 
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
 import { Form, Field, ProgressBar } from 'views/components/Form';
-import reduxFormTestSchema from './reduxFormTestSchema';
+import { schema } from './reduxFormTestSchema';
 
 export const TilesetManager = () => {
   return (
     <div>
-      <div style={{minWidth: 400, maxWidth: 600, margin: "50px auto", backgroundColor: "#fff", border: "solid 1px #e5e5e5"}}>
+      <div style={{minWidth: 400, maxWidth: 600, margin: "50px auto", backgroundColor: "#fff", borderRadius: 6, border: "solid 1px #e5e5e5"}}>
         <ReduxFormTestComponent />
       </div>
     </div>
   )
 }
 
+
 const ReduxFormTestComponent = () => {
-  const schema = reduxFormTestSchema({
+  const data = schema({
     columns: 'initialValue for columns'
-  })
+  });
+
   const steps = [
     <StepOne />,
-    <StepTwo />,
-    <StepOne />,
-    <StepOne />,
-    <StepOne />,
+    <StepTwo />
   ];
 
   return (
-    <Form id={"reduxFormTestComponent"} schema={schema} components={steps}>
+    <Form id="reduxFormTestComponent" schema={data} components={steps}>
       {
         ({ Component, ButtonBack, ButtonContinue, currentStep, totalSteps }) => {
           return (
@@ -55,7 +54,8 @@ const ReduxFormTestComponent = () => {
 const StepOne = ({ state }) => {
   return (
     <div>
-      <Field.Text name={"columns"} autoFocus={true} {...state} />
+      <Field.Text name={"name"} autoFocus={true} {...state} />
+      <Field.Text name={"columns"} {...state} />
       <Field.Text name={"rows"} {...state} />
     </div>
   )
@@ -64,7 +64,8 @@ const StepOne = ({ state }) => {
 const StepTwo = ({ state, update }) => {
   return (
     <>
-      <Field.Text name={"columns"} autoFocus={true} {...state} />
+      <Field.Text name={"testlabel"} autoFocus={true} {...state} />
+      <Field.Text name={"novalidation"} {...state} />
       <Field.Text name={"rows"} {...state} />
     </>
   )

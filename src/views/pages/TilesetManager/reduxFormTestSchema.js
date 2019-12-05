@@ -1,8 +1,8 @@
 import * as validationTypes from 'state/ducks/form/validationTypes';
 
-export const schema = () => ([
+export const schema = ({ columns }) => ([
   {
-    stepName: 'Map',
+    stepName: 'map',
     fields: {
       'name': {
         fieldLabel: 'Map name',
@@ -13,6 +13,7 @@ export const schema = () => ([
       'columns': {
         fieldLabel: 'Columns',
         placeholder: '1- 500',
+        value: columns,
         validation: [{ type: validationTypes.required }, { type: validationTypes.minValue, value: 1 }, { type: validationTypes.maxValue, value: 500 }]
       },
 
@@ -25,7 +26,7 @@ export const schema = () => ([
   },
 
   {
-    stepName: 'Setup',
+    stepName: 'setup',
     fields: {
       'testlabel': {
         fieldLabel: 'Testlabel',
@@ -46,156 +47,3 @@ export const schema = () => ([
     }
   }
 ]);
-
-
-export default ({ columns }) => ({
-  // first step
-  1: {
-    'columns': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Columns*',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        },
-        {
-          type: 'length', min: 5, max: 20,
-          message: 'Value must be between 1 and 50.'
-        }
-      ]
-    },
-    'rows': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Rows*',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        }
-      ]
-    }
-  },
-
-  // second step
-  2: {
-    'columns': {
-      value: columns,
-      placeholder: '1 - 50',
-      label: 'Columns* 2',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        },
-        {
-          type: 'length', min: 5, max: 20,
-          message: 'Value must be between 1 and 50.'
-        }
-      ]
-    },
-    'rows': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Rows* 2',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        }
-      ]
-    }
-  },
-
-  // second step
-  3: {
-    'columns': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Columns* 3',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        },
-        {
-          type: 'length', min: 5, max: 20,
-          message: 'Value must be between 1 and 50.'
-        }
-      ]
-    },
-    'rows': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Rows* 3',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        }
-      ]
-    }
-  },
-
-  4: {
-    'columns': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Columns* 4',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        },
-        {
-          type: 'length', min: 5, max: 20,
-          message: 'Value must be between 1 and 50.'
-        }
-      ]
-    },
-    'rows': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Rows* 4',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        }
-      ]
-    }
-  },
-
-  // second step
-  5: {
-    'columns': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Columns* 5',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        },
-        {
-          type: 'length', min: 5, max: 20,
-          message: 'Value must be between 1 and 50.'
-        }
-      ]
-    },
-    'rows': {
-      value: undefined,
-      placeholder: '1 - 50',
-      label: 'Rows* 5',
-      validation: [
-        {
-          type: 'required',
-          message: 'Field is required!'
-        }
-      ]
-    }
-  },
-
-})

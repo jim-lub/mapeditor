@@ -7,19 +7,19 @@ import * as reducers from './reducers';
 
 const initialState = {
   collection: {
-    'new-map-form': {
-      pending: false,
-      disabled: true,
-      type: 'multi',
-      currentStep: 1,
-      totalSteps: 5,
-      steps: ['Map', 'Setup'],
-      form: {
-        'Map': {
-
-        }
-      }
-    }
+    // 'new-map-form': {
+    //   pending: false,
+    //   disabled: true,
+    //   type: 'multi',
+    //   currentStep: 1,
+    //   totalSteps: 5,
+    //   steps: ['Map', 'Setup'],
+    //   form: {
+    //     'Map': {
+    //
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -36,13 +36,9 @@ export default createReducer( initialState )({
 });
 
 /*** operations ***/
-export const initializeSingleStepForm = operations.initializeSingleStepForm;
-export const clearSingleStepForm = operations.clearSingleStepForm;
-export const validateSingleStepForm = operations.validateSingleStepForm;
-
-export const initializeMultiStepForm = operations.initializeMultiStepForm;
-export const clearMultiStepForm = operations.clearMultiStepForm;
-export const validateMultiStepForm = operations.validateMultiStepForm;
+export const initializeForm = operations.initializeForm;
+export const clearForm = operations.clearForm;
+export const validateForm = operations.validateForm;
 
 export const updateFieldValue = operations.updateFieldValue;
 
@@ -53,6 +49,7 @@ export const submitForm = operations.submitForm;
 
 /*** selectors ***/
 export const getFormStatus = selectors.getFormStatus;
+export const getStepNames = selectors.getStepNames;
 export const getCurrentStep = selectors.getCurrentStep;
 export const getTotalSteps = selectors.getTotalSteps;
 export const getFieldNames = selectors.getFieldNames;

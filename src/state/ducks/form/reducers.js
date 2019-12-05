@@ -1,9 +1,22 @@
 import { deleteKeyValuePairFromObject } from 'state/lib/utils';
 
 export const newForm = (state, action) => {
-  const { id } = action.payload;
+  const { id, data, steps } = action.payload;
 
-  return state;
+  return {
+    ...state,
+    collection: {
+      ...state.collection,
+      [id]: {
+        pending: false,
+        disabled: true,
+        steps,
+        currentStep: 1,
+        totalSteps: steps.length,
+        data
+      }
+    }
+  };
 }
 
 export const clearForm = (state, action) => {

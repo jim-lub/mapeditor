@@ -7,7 +7,7 @@ import { ReactComponent as ErrorIcon } from 'assets/static/icons/form/validation
 import '../form-default.module.css';
 import fieldStyles from '../form-fields.module.css';
 
-export const Text = ({ name, formData, onBlur, autoFocus = false, onChange }) => {
+export const Text = ({ name, formData = {}, onBlur, autoFocus = false, onChange }) => {
   const [blurred, setBlurred] = useState(false);
   const inputRef = useRef(null);
 
@@ -17,7 +17,7 @@ export const Text = ({ name, formData, onBlur, autoFocus = false, onChange }) =>
     }
   }, [inputRef, autoFocus])
 
-  const { value = '', label, placeholder, disabled, errors = {} } = formData[name];
+  const { value = '', label = 'Test', placeholder, disabled, errors = {} } = formData;
   const hasErrors = (Object.keys(errors).length > 0);
 
   const handleBlur = () => setBlurred(true);
