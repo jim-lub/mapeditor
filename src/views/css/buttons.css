@@ -24,8 +24,7 @@ button {
   }
 
   button:focus {
-    padding: 14px 24px;
-    border: solid 2px var(--blue-300);
+    box-shadow: 0 0 2px 1px var(--blue-300);
   }
 
   button:active {
@@ -48,8 +47,7 @@ button.blue {
   }
 
   button.blue:focus {
-    padding: 14px 24px;
-    border: solid 2px var(--blue-700);
+    box-shadow: 0 0 2px 1px var(--blue-700);
   }
 
   button.blue:active {

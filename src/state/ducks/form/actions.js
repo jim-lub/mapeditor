@@ -10,22 +10,22 @@ export const clearForm = ({ id }) => ({
   payload: { id }
 });
 
-export const setFieldValue = ({ id, step, fieldName, fieldValue }) => ({
+export const setFieldValue = ({ id, stepName, fieldName, fieldValue }) => ({
   type: types.setFieldValue,
-  payload: { id, step, fieldName, fieldValue }
+  payload: { id, stepName, fieldName, fieldValue }
 });
 
-export const clearFieldValue = ({ id, step, fieldName }) => ({
+export const clearFieldValue = ({ id, stepName, fieldName }) => ({
   type: types.clearFieldValue,
-  payload: { id, step, fieldName }
+  payload: { id, stepName, fieldName }
 });
 
-export const setFieldErrors = ({ id, step, fieldName, errors }) => ({
+export const setFieldErrors = ({ id, stepName, fieldName, errors }) => ({
   type: types.setFieldErrors,
-  payload: { id, step, fieldName, errors }
+  payload: { id, stepName, fieldName, errors }
 });
 
-export const setFormDisableBoolean = ({ id }) => ({
+export const setFormDisableBoolean = ({ id, boolean }) => ({
   type: types.setFormDisableBoolean,
-  payload: { id }
+  payload: { id, boolean }
 });

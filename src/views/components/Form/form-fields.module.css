@@ -1,13 +1,25 @@
 .wrapper {
   position: relative;
-  margin-top: 0px;
+}
+
+.flexWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.labelWrapper {
+  flex: 0 0 auto;
+  min-width: 25%;
+  max-width: 25%;
+  margin-right: 20px;
+  overflow: hidden;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .inputWrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-top: 2px;
+  flex: 1 1 auto;
 }
 
   .input {
@@ -16,42 +28,51 @@
   }
 
   .input.error {
-    background-color: var(--red-100);
-    border: solid 1px var(--red-400);
+    border: solid 1px var(--red-700);
   }
 
   .input:focus.error {
-    background-color: var(--grey-050);
-    border: solid 1px var(--blue-300);
+    /* background-color: var(--grey-050); */
+    border: solid 1px var(--blue-700);
   }
 
 .iconWrapper {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 4px;
+  right: 4px;
   bottom: 0px;
 }
 
   .icon {
     margin: 8px;
-    width: 24px;
-    height: 24px;
-    opacity: 0.8;
+    width: 16px;
+    height: 16px;
   }
 
 .errorTextWrapper {
   overflow: hidden;
   height: auto;
-  max-height: 30px;
+  max-height: 100px;
   padding: 2px 5px 4px 5px;
   color: var(--red-700);
   font-size: 10px;
   opacity: 1;
   transition-property: max-height, opacity, ease-out;
   transition-duration: .2s, .4s;
+  text-align: right;
 }
 
 .errorTextWrapper.collapsed {
   max-height: 0px;
   opacity: 0;
+}
+
+.errorTextListStyle {
+  font-size: 10px;
+  color: var(--red-700);
+}
+
+.fieldDescWrapper {
+  font-size: 10px;
+  color: var(--grey-500);
 }

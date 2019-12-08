@@ -48,10 +48,10 @@ export const nextStep = operations.nextStep;
 export const submitForm = operations.submitForm;
 
 /*** selectors ***/
+export const getFormData = selectors.getFormData;
 export const getFormStatus = selectors.getFormStatus;
-export const getStepNames = selectors.getStepNames;
-export const getCurrentStep = selectors.getCurrentStep;
-export const getTotalSteps = selectors.getTotalSteps;
+export const getSteps = selectors.getSteps;
+export const getStepIndex = selectors.getStepIndex;
 export const getFieldNames = selectors.getFieldNames;
 export const getFieldData = selectors.getFieldData;
 export const getFieldValue = selectors.getFieldValue;

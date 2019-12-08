@@ -1,11 +1,10 @@
 label {
   width: auto;
-  min-width: 100px; /* needed to not mess up old forms, delete after merging new fields in old forms */
-  padding: 4px;
+  padding: 0px;
+  margin: 0px;
   color: var(--text-color-dark);
   font-size: 11px;
   font-weight: bold;
-  flex-grow: 0;
 }
 
 input {
@@ -19,13 +18,13 @@ input {
 }
 
 input:disabled {
-  background-color: var(--grey-200);
+  background-color: var(--grey-300);
 }
 
 input:focus {
   outline: none;
-  border: solid 1px var(--grey-700);
   background-color: var(--grey-050);
+  border: solid 1px var(--blue-700);
 }
 
 input::placeholder {

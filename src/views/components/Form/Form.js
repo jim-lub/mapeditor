@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
+import useDebouncedEffect from 'use-debounced-effect';
 
 import {
   initializeForm,
@@ -12,14 +14,10 @@ import {
   updateFieldValue,
   submitForm,
 
+  getFormData,
   getFormStatus,
-  getStepNames,
-  getCurrentStep,
-  getTotalSteps,
-  getFieldNames,
-  getFieldData,
-  getFieldValue,
-  getFieldErrors
+  getSteps,
+  getStepIndex
 } from 'state/ducks/form';
 
 import { Loader } from 'views/components/Loader';
@@ -30,47 +28,47 @@ const Component = ({
   components = [],
   children,
 
+  formData,
   pending = true,
   disabled = true,
-  currentStep,
-  totalSteps,
+  steps,
+  stepIndex,
   actions
 }) => {
-  const formData = {};
+  const [debouncedValidationRefresh, setDebouncedValidationRefresh] = useState(false);
 
   useEffect(() => {
     actions.initializeForm({ id, schema });
   }, [id, schema, actions]);
 
-  // useEffect(() => {
-  //   actions.initializeForm({ id, schema });
-  // //eslint-disable-next-line
-  // }, []);
-  //
-  // const handleBlur = ({ name }) => {
-  //   actions.validateForm({ id, name, step: currentStep });
-  // }
-  //
-  // const handleChange = ({ name, value, validateWhileTyping }) => {
-  // actions.updateValue({ id, name, value, step: currentStep })
-  // }
+  // debounce validation while typing
+  useDebouncedEffect(() => {
+    actions.validateForm({ id })
+  }, 150, [debouncedValidationRefresh])
 
-  // return <Loader.Simple />
+  const handleBlur = () => actions.validateForm({ id });
+  const handleChange = ({ name, value }) => {
+    actions.updateFieldValue({
+      id,
+      stepName: steps[stepIndex],
+      fieldName: name,
+      fieldValue: value
+    });
 
-  const handleBlur = () => null;
-  const handleChange = () => null;
+    setDebouncedValidationRefresh(!debouncedValidationRefresh)
+  };
 
   const handlePrevious = () => null;
   const handleNext = () => null;
 
   const handleClickPrevious = () => {
-    if (currentStep > 1) {
+    if (stepIndex > 0) {
       actions.previousStep();
     }
   }
 
   const handleClickNext = () => {
-    if (currentStep < totalSteps) {
+    if (stepIndex < (steps.length - 1)) {
       actions.nextStep();
     }
   }
@@ -84,10 +82,10 @@ const Component = ({
       {
         children({
           Component: React.cloneElement(
-            components[currentStep - 1],
+            components[stepIndex],
             {
               state: {
-                formData: formData[currentStep],
+                formData: formData[ steps[stepIndex] ],
                 onBlur: handleBlur,
                 onChange: handleChange
               }
@@ -96,20 +94,20 @@ const Component = ({
           ButtonBack: React.cloneElement(
             <ButtonPrevious />,
             {
-              text: (currentStep > 1) ? 'Back' : 'Cancel',
+              text: (stepIndex > 0) ? 'Back' : 'Cancel',
               onClick: handleClickPrevious
             }
           ),
           ButtonContinue: React.cloneElement(
             <ButtonNext />,
             {
-              text: (currentStep < totalSteps) ? 'Next' : 'Submit',
+              text: (stepIndex < (steps.length - 1)) ? 'Next' : 'Submit',
               disabled,
               onClick: handleClickNext
             }
           ),
-          currentStep,
-          totalSteps
+          currentStep: stepIndex + 1,
+          totalSteps: steps.length
         })
       }
     </>
@@ -132,16 +130,15 @@ const mapStateToProps = (state, { id }) => {
   if (!state.form.collection.hasOwnProperty(id)) return {};
 
   const { pending, disabled } = getFormStatus(state, { id });
-  const stepNames = getStepNames(state, { id });
-  const currentStep = getCurrentStep(state, { id });
-  const totalSteps = getTotalSteps(state, { id });
+  const steps = getSteps(state, { id });
+  const stepIndex = getStepIndex(state, { id });
 
   return {
     pending,
     disabled,
-    currentStep,
-    totalSteps,
-    fieldNames: getFieldNames(state, { id, stepName: stepNames[currentStep - 1] }),
+    steps,
+    stepIndex,
+    formData: getFormData(state, { id })
   }
 }
 

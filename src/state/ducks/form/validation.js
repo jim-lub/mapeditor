@@ -2,19 +2,21 @@ import isEmptyValidator from 'validator/lib/isEmpty';
 import isLengthValidator from 'validator/lib/isLength';
 import equalsValidator from 'validator/lib/equals';
 
+import * as validationTypes from 'state/ducks/form/validationTypes';
+
 export default {
-  'required': (value) => isRequired(value),
-  'matches': (value, match) => isExactMatch(value, match),
-  'length': (value, { min, max }) => isLength(value, { min, max }),
-  'boolean': (value) => isBoolean(value),
-  'number': (value) => isNumber(value)
+  [validationTypes.required]: (value) => isRequired(value),
+  // [validationTypes.match]: (value, match) => isExactMatch(value, match),
+  [validationTypes.length]: (value, { min, max }) => isLength(value, { min, max }),
+  [validationTypes.boolean]: (value) => isBoolean(value),
+  [validationTypes.number]: (value) => isNumber(value)
 }
 
-export const isRequired = (value) => isEmptyValidator(value, { ignore_whitespace: true });
+export const isRequired = (value) => !isEmptyValidator(value, { ignore_whitespace: true });
 
 export const isExactMatch = (value, match) => equalsValidator(value, match) && (match, value);
 
-export const isLength = (value, { min = 0, max = undefined }) => !isLengthValidator(value, { min, max });
+export const isLength = (value, { min = 0, max = undefined }) => isLengthValidator(value, { min, max });
 
 export const isBoolean = (value) => (typeof value === 'boolean');
 

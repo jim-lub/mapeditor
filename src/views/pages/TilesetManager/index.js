@@ -56,7 +56,7 @@ const StepOne = ({ state }) => {
     <div>
       <Field.Text name={"name"} autoFocus={true} {...state} />
       <Field.Text name={"columns"} {...state} />
-      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"rows"} disabled={true} {...state} />
     </div>
   )
 }
