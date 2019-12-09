@@ -25,7 +25,6 @@ export const schema = ({ columns }) => ([
         fieldLabel: 'Columns',
         fieldDesc: '1-500',
         placeholder: '1- 500',
-        value: columns,
         validation: [{ type: validationTypes.required }, { type: validationTypes.minValue, value: 1 }, { type: validationTypes.maxValue, value: 500 }]
       },
 

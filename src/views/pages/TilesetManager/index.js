@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
-import { Form, Field, ProgressBar } from 'views/components/Form';
+import { Form, Field, ProgressBar2 } from 'views/components/Form';
 import { schema } from './reduxFormTestSchema';
 
 export const TilesetManager = () => {
@@ -25,8 +25,16 @@ const ReduxFormTestComponent = () => {
     <StepTwo />
   ];
 
+  const handleCancel = () => {
+    console.log('closing modal')
+  }
+
+  const handleSubmit = (data) => {
+    console.log(data)
+  }
+
   return (
-    <Form id="reduxFormTestComponent" schema={data} components={steps}>
+    <Form id="reduxFormTestComponent" schema={data} components={steps} onSubmit={handleSubmit} onCancel={handleCancel}>
       {
         ({ Component, ButtonBack, ButtonContinue, currentStep, totalSteps }) => {
           return (
@@ -35,8 +43,8 @@ const ReduxFormTestComponent = () => {
                 {Component}
               </div>
 
-              <div style={{margin: "5px 15px"}}>
-                <ProgressBar currentStep={currentStep} totalSteps={totalSteps} names={['Map', 'Presets', 'Tilesets', 'Swatches', 'Create']}/>
+              <div>
+                <ProgressBar2 currentStep={currentStep} totalSteps={totalSteps} names={['Map', 'Presets', 'Tilesets', 'Swatches', 'Create']}/>
               </div>
 
               <div className="clearfix" style={{padding: 5, backgroundColor: "#e9e9e9", borderRadius: "0 0 4px 4px", boxShadow: "0px -1px 1px #d4d4d4"}}>
@@ -55,8 +63,16 @@ const StepOne = ({ state }) => {
   return (
     <div>
       <Field.Text name={"name"} autoFocus={true} {...state} />
+      <Field.Select name={"columns"} {...state} />
+      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"name"} {...state} />
       <Field.Text name={"columns"} {...state} />
-      <Field.Text name={"rows"} disabled={true} {...state} />
+      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"name"} {...state} />
+      <Field.Text name={"columns"} {...state} />
+      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"rows"} {...state} />
     </div>
   )
 }

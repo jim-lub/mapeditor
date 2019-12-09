@@ -6,21 +6,7 @@ import * as selectors from './selectors';
 import * as reducers from './reducers';
 
 const initialState = {
-  collection: {
-    // 'new-map-form': {
-    //   pending: false,
-    //   disabled: true,
-    //   type: 'multi',
-    //   currentStep: 1,
-    //   totalSteps: 5,
-    //   steps: ['Map', 'Setup'],
-    //   form: {
-    //     'Map': {
-    //
-    //     }
-    //   }
-    // }
-  }
+  collection: {}
 }
 
 export default createReducer( initialState )({
@@ -33,6 +19,7 @@ export default createReducer( initialState )({
   [ types.setFieldErrors ]: (state, action) => reducers.setFieldErrors(state, action),
 
   [ types.setFormDisableBoolean ]: (state, action) => reducers.setFormDisableBoolean(state, action),
+  [ types.setStepIndex ]: (state, action) => reducers.setStepIndex(state, action),
 });
 
 /*** operations ***/

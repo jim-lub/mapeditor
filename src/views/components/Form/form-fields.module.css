@@ -38,41 +38,13 @@
 
 .iconWrapper {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 6px;
   bottom: 0px;
 }
 
   .icon {
     margin: 8px;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
-
-.errorTextWrapper {
-  overflow: hidden;
-  height: auto;
-  max-height: 100px;
-  padding: 2px 5px 4px 5px;
-  color: var(--red-700);
-  font-size: 10px;
-  opacity: 1;
-  transition-property: max-height, opacity, ease-out;
-  transition-duration: .2s, .4s;
-  text-align: right;
-}
-
-.errorTextWrapper.collapsed {
-  max-height: 0px;
-  opacity: 0;
-}
-
-.errorTextListStyle {
-  font-size: 10px;
-  color: var(--red-700);
-}
-
-.fieldDescWrapper {
-  font-size: 10px;
-  color: var(--grey-500);
-}

@@ -31,7 +31,7 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
     onChange({
       name,
       value: e.target.value
-    });
+    })
   };
 
   const inputClassNames = concatClassNames([
@@ -47,7 +47,7 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
       blurred={blurred}
       errors={errors}
     >
-      <input
+      <textarea
         type="text"
         className={inputClassNames}
         name={name}

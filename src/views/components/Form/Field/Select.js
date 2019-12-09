@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Select from 'react-select';
 
 import { concatClassNames } from 'lib/utils';
 
@@ -45,32 +46,22 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
       fieldLabel={fieldLabel}
       fieldDesc={fieldDesc}
       blurred={blurred}
-      errors={errors}
+      errors={{}}
     >
-      <input
-        type="text"
-        className={inputClassNames}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        disabled={disabled}
-        ref={inputRef}
-      />
+      <Select />
 
       {
-        hasErrors && blurred &&
-        <div className={fieldStyles.iconWrapper}>
-          <InvalidIcon className={fieldStyles.icon}/>
-        </div>
+        // hasErrors && blurred &&
+        // <div className={fieldStyles.iconWrapper}>
+        //   <InvalidIcon className={fieldStyles.icon}/>
+        // </div>
       }
 
       {
-        !hasErrors && blurred &&
-        <div className={fieldStyles.iconWrapper}>
-          <ValidIcon className={fieldStyles.icon}/>
-        </div>
+        // !hasErrors && blurred &&
+        // <div className={fieldStyles.iconWrapper}>
+        //   <ValidIcon className={fieldStyles.icon}/>
+        // </div>
       }
     </Row>
   )

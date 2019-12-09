@@ -92,3 +92,18 @@ export const setFormDisableBoolean = (state, action) => {
     }
   }
 }
+
+export const setStepIndex = (state, action) => {
+  const { id, stepIndex } = action.payload;
+
+  return {
+    ...state,
+    collection: {
+      ...state.collection,
+      [id]: {
+        ...state.collection[id],
+        stepIndex
+      }
+    }
+  }
+}

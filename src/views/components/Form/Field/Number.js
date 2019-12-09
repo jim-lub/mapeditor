@@ -28,10 +28,14 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
   };
 
   const handleChange = (e) => {
-    onChange({
-      name,
-      value: e.target.value
-    });
+     const { value } = e.target;
+     
+    if (!isNaN(value)) {
+      onChange({
+        name,
+        value: Number(value).toString()
+      });
+    }
   };
 
   const inputClassNames = concatClassNames([

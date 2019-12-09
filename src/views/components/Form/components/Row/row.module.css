@@ -1,0 +1,54 @@
+.wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto auto;
+  margin-bottom: 6px;
+}
+
+.labelContainer {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  padding-right: 20px;
+  overflow: hidden;
+  text-align: right;
+  white-space: nowrap;
+}
+
+  .fieldDescText {
+    font-size: 10px;
+    color: var(--grey-600);
+  }
+
+.inputContainer {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.errorContainer {
+  overflow: hidden;
+  height: auto;
+  max-height: 100px;
+  grid-column: 2/ 3;
+  grid-row: 2 / 3;
+  padding: 3px 5px 0 5px;
+  text-align: right;
+  opacity: 1;
+  transition-property: max-height, opacity, ease-in-out;
+  transition-duration: .2s, .4s;
+}
+
+.errorContainer.collapsed {
+  max-height: 0px;
+  opacity: 0;
+}
+
+.errorContainer > ul {
+  list-style-type: none;
+}
+
+.errorContainer > ul > li {
+  font-size: 10px;
+  font-style: italic;
+  color: var(--red-700);
+}

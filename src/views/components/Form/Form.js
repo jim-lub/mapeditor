@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'lodash';
 import useDebouncedEffect from 'use-debounced-effect';
 
 import {
@@ -26,6 +25,8 @@ const Component = ({
   id = null,
   schema = {},
   components = [],
+  onSubmit,
+  onCancel,
   children,
 
   formData,
@@ -41,10 +42,14 @@ const Component = ({
     actions.initializeForm({ id, schema });
   }, [id, schema, actions]);
 
+  useEffect(() => {
+    actions.validateForm({ id });
+  }, [id, stepIndex, actions])
+
   // debounce validation while typing
   useDebouncedEffect(() => {
-    actions.validateForm({ id })
-  }, 150, [debouncedValidationRefresh])
+    actions.validateForm({ id });
+  }, 200, [debouncedValidationRefresh]);
 
   const handleBlur = () => actions.validateForm({ id });
   const handleChange = ({ name, value }) => {
@@ -58,18 +63,29 @@ const Component = ({
     setDebouncedValidationRefresh(!debouncedValidationRefresh)
   };
 
-  const handlePrevious = () => null;
-  const handleNext = () => null;
-
-  const handleClickPrevious = () => {
-    if (stepIndex > 0) {
-      actions.previousStep();
+  const handlePrevious = () => {
+    if (stepIndex === 0) {
+      return onCancel();
     }
-  }
 
-  const handleClickNext = () => {
-    if (stepIndex < (steps.length - 1)) {
-      actions.nextStep();
+    actions.previousStep({ id });
+  };
+
+  const handleNext = () => {
+    actions.validateForm({ id });
+
+    if (stepIndex === (steps.length - 1)) {
+      return onSubmit(formData)
+    }
+
+    actions.nextStep({ id });
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (!disabled) {
+      handleNext();
     }
   }
 
@@ -78,7 +94,7 @@ const Component = ({
   }
 
   return (
-    <>
+    <form id={id} onSubmit={handleFormSubmit}>
       {
         children({
           Component: React.cloneElement(
@@ -95,7 +111,7 @@ const Component = ({
             <ButtonPrevious />,
             {
               text: (stepIndex > 0) ? 'Back' : 'Cancel',
-              onClick: handleClickPrevious
+              onClick: handlePrevious
             }
           ),
           ButtonContinue: React.cloneElement(
@@ -103,26 +119,26 @@ const Component = ({
             {
               text: (stepIndex < (steps.length - 1)) ? 'Next' : 'Submit',
               disabled,
-              onClick: handleClickNext
+              onClick: handleNext
             }
           ),
           currentStep: stepIndex + 1,
           totalSteps: steps.length
         })
       }
-    </>
+    </form>
   )
 }
 
 const ButtonPrevious = ({ text = 'Cancel', disabled = false, onClick }) => {
   return (
-    <button style={{minWidth: 100}} disabled={disabled} onClick={onClick}>{ text }</button>
+    <button type="button" style={{minWidth: 100}} disabled={disabled} onClick={onClick}>{ text }</button>
   )
 }
 
 const ButtonNext = ({ text = 'Submit', disabled = true, onClick }) => {
   return (
-    <button style={{minWidth: 100}} className={"blue"} disabled={disabled} onClick={onClick}>{ text }</button>
+    <button type="submit" style={{minWidth: 100}} className={"blue"} disabled={disabled} onSubmit={onClick}>{ text }</button>
   )
 }
 

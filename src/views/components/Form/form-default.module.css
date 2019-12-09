@@ -12,7 +12,7 @@ input {
   border: solid 1px var(--grey-400);
   border-radius: 3px;
   padding: 10px 12px;
-  color: #6e768f;
+  color: var(--text-color-dark);
   font-size: 12px;
   flex-grow: 1;
 }
@@ -48,35 +48,37 @@ textarea {
   background-color: var(--white);
   border: solid 1px var(--grey-400);
   border-radius: 3px;
-  padding: 8px 10px;
-  color: #6e768f;
+  padding: 10px 12px;
+  color: var(--text-color-dark);
   font-size: 12px;
   resize: none;
   flex-grow: 1;
 }
 
 textarea:disabled {
-  background-color: var(--grey-200);
+  background-color: var(--grey-300);
 }
 
 textarea:focus {
-  border: solid 1px var(--blue-300);
+  outline: none;
   background-color: var(--grey-050);
+  border: solid 1px var(--blue-700);
 }
 
 select {
+  outline: none;
   background-color: var(--white);
   border: solid 1px var(--grey-400);
-  border-radius: 2px;
-  padding: 8px 10px;
-  color: #6e768f;
+  border-radius: 3px;
+  padding: 10px 12px;
+  color: var(--text-color-dark);
   font-size: 12px;
   flex-grow: 1;
 }
 
 select:focus {
-  border: solid 1px var(--blue-300);
   background-color: var(--grey-050);
+  border: solid 1px var(--blue-700);
 }
 
 button {

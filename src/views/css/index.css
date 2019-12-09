@@ -51,6 +51,7 @@ h5 {
 
 .bold {
   font-weight: bold;
+  font-size: inherit;
 }
 
 .italic {

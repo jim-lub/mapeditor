@@ -29,3 +29,8 @@ export const setFormDisableBoolean = ({ id, boolean }) => ({
   type: types.setFormDisableBoolean,
   payload: { id, boolean }
 });
+
+export const setStepIndex = ({ id, stepIndex }) => ({
+  type: types.setStepIndex,
+  payload: { id, stepIndex }
+});

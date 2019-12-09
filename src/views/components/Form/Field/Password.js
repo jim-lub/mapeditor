@@ -31,7 +31,7 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
     onChange({
       name,
       value: e.target.value
-    });
+    })
   };
 
   const inputClassNames = concatClassNames([
@@ -48,7 +48,7 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
       errors={errors}
     >
       <input
-        type="text"
+        type="password"
         className={inputClassNames}
         name={name}
         placeholder={placeholder}
