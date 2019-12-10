@@ -1,54 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { signUpWithEmail } from 'state/ducks/auth';
 
-import { getFieldStateErrors } from 'lib/validation';
-import Form, { Field } from 'views/components/Forms';
+import signUpFormSchema from './sign-up-form-schema';
+
+import { Button, Form, Field } from 'views/components/Form';
 
 const Component = ({ actions }) => {
-  const [fieldStateEmail, setFieldStateEmail] = useState();
-  const [fieldStatePassword, setFieldStatePassword] = useState();
-  const [disableSubmit, setDisableSubmit] = useState(true);
-  const fieldStateArray = [fieldStateEmail, fieldStatePassword];
 
-  useEffect(() => {
-   setDisableSubmit(
-     ( getFieldStateErrors(fieldStateArray).length > 0 ) ? true : false
-   );
-  }, [fieldStateArray]);
+  const handleSubmit = (data) => {
+    const { email, password } = data['sign-in'];
 
-  const handleSubmit = () => {
     actions.signUpWithEmail({
-      email: fieldStateEmail.value,
-      password: fieldStatePassword.value
+      email: email.value,
+      password: password.value
     })
   }
 
   return (
+    <Form id="sign-up-form" schema={signUpFormSchema()} components={[<SignUpForm />]} onSubmit={handleSubmit}>
+      {
+        ({ FormComponent, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+          return (
+            <div style={{paddingTop: 7}}>
+              { FormComponent }
+
+              <Button.Next
+                isDisabled={disableNextButton}
+                isLastStep={isLastStep}
+                text={['Sign Up', 'Sign Up']}
+              />
+            </div>
+          )
+        }
+      }
+    </Form>
+  )
+}
+
+const SignUpForm = ({ state }) => {
+  return (
     <>
-    <Form.Group onSubmit={handleSubmit}>
-      <Field.Text
-        name="signupEmail"
-        label="Email"
-        onStateChange={setFieldStateEmail}
-        displayErrors={false}
-        required
-      />
-
-      <Field.Password
-        name="signupPassword"
-        label="Password"
-        onStateChange={setFieldStatePassword}
-        displayErrors={false}
-        required
-      />
-
-      <button type="submit" className="blue" disabled={disableSubmit}>Create account</button>
-    </Form.Group>
+      <Field.Text name="email" {...state} />
+      <Field.Password name="password" {...state} />
+      <Field.Password name="password-confirm" {...state} />
     </>
-  );
+  )
 }
 
 const mapDispatchToProps = (dispatch) => {
