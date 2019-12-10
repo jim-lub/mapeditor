@@ -8,9 +8,10 @@ label {
 }
 
 input {
+  width: 100%;
   background-color: var(--white);
   border: solid 1px var(--grey-400);
-  border-radius: 3px;
+  border-radius: 4px;
   padding: 10px 12px;
   color: var(--text-color-dark);
   font-size: 12px;
@@ -18,21 +19,17 @@ input {
 }
 
 input:disabled {
-  background-color: var(--grey-300);
+  border: solid 1px var(--grey-300);
+  background-color: var(--grey-200);
+  color: var(--grey-500);
 }
 
 input:focus {
   outline: none;
-  background-color: var(--grey-050);
-  border: solid 1px var(--blue-700);
 }
 
 input::placeholder {
   color: var(--grey-400);
-}
-
-input[type="text"] {
-
 }
 
 input[type="password"] {
@@ -47,7 +44,7 @@ textarea {
   outline: none;
   background-color: var(--white);
   border: solid 1px var(--grey-400);
-  border-radius: 3px;
+  border-radius: 4px;
   padding: 10px 12px;
   color: var(--text-color-dark);
   font-size: 12px;
@@ -56,27 +53,11 @@ textarea {
 }
 
 textarea:disabled {
-  background-color: var(--grey-300);
+  background-color: var(--grey-200);
 }
 
 textarea:focus {
   outline: none;
-  background-color: var(--grey-050);
-  border: solid 1px var(--blue-700);
-}
-
-select {
-  outline: none;
-  background-color: var(--white);
-  border: solid 1px var(--grey-400);
-  border-radius: 3px;
-  padding: 10px 12px;
-  color: var(--text-color-dark);
-  font-size: 12px;
-  flex-grow: 1;
-}
-
-select:focus {
   background-color: var(--grey-050);
   border: solid 1px var(--blue-700);
 }

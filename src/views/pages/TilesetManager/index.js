@@ -62,17 +62,11 @@ const ReduxFormTestComponent = () => {
 const StepOne = ({ state }) => {
   return (
     <div>
-      <Field.Text name={"name"} autoFocus={true} {...state} />
-      <Field.Select name={"columns"} {...state} />
-      <Field.Text name={"rows"} {...state} />
-      <Field.Text name={"rows"} {...state} />
-      <Field.Text name={"name"} {...state} />
-      <Field.Text name={"columns"} {...state} />
-      <Field.Text name={"rows"} {...state} />
-      <Field.Text name={"name"} {...state} />
-      <Field.Text name={"columns"} {...state} />
-      <Field.Text name={"rows"} {...state} />
-      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"project-name"} {...state} />
+      <Field.Text name={"scene-name"} autoFocus={true} {...state} />
+      <Field.Select name={"scene-presets"} {...state} />
+      <Field.Number name={"columns"} {...state} />
+      <Field.Number name={"rows"} {...state} />
     </div>
   )
 }

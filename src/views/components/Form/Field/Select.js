@@ -28,17 +28,41 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
     onBlur();
   };
 
-  const handleChange = (e) => {
+  const handleChange = (selectedOption) => {
     onChange({
       name,
-      value: e.target.value
+      value: selectedOption
     });
   };
 
-  const inputClassNames = concatClassNames([
-    fieldStyles.input,
-    (hasErrors && blurred) ? fieldStyles.error : null
-  ]);
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor:
+        state.isSelected
+          ? '#5cb6f7'
+          : (state.isFocused) ? '#c9e9ff' : '#ffffff',
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      border: state.isFocused ? 'solid 1px transparent' : 'solid 1px #bdbdbd', // grey-400
+      outline: 'none',
+      boxShadow: state.isFocused ? '0 0 0 2px #5ab0ee' : 'none', // blue-300
+      padding: '2px 4px',
+      borderRadius: '4px',
+      '&:hover': {
+        outline: 0,
+        border: state.isFocused ? 'solid 1px transparent' : 'solid 1px #bdbdbd',
+        boxShadow: 0,
+      }
+    })
+  }
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
 
   return (
     <Row
@@ -48,7 +72,15 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
       blurred={blurred}
       errors={{}}
     >
-      <Select />
+      <Select
+        value={value}
+        options={options}
+        isDisabled={disabled}
+        styles={customStyles}
+        classNamePrefix={'react-select'}
+        onBlur={handleBlur}
+        onChange={handleChange}
+      />
 
       {
         // hasErrors && blurred &&

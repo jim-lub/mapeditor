@@ -4,8 +4,14 @@ export const schema = ({ columns }) => ([
   {
     stepName: 'map',
     fields: {
-      'name': {
-        fieldLabel: 'Name',
+      'project-name': {
+        fieldLabel: 'Project Name',
+        value: 'SwordQuest',
+        disabled: true
+      },
+
+      'scene-name': {
+        fieldLabel: 'Scene Name',
         placeholder: 'Choose a name for the map',
         validation: [
           {
@@ -21,20 +27,20 @@ export const schema = ({ columns }) => ([
         ]
       },
 
+      'scene-presets': {
+        fieldLabel: 'Scene Presets',
+      },
+
       'columns': {
         fieldLabel: 'Columns',
-        fieldDesc: '1-500',
-        placeholder: '1- 500',
-        validation: [{ type: validationTypes.required }, { type: validationTypes.minValue, value: 1 }, { type: validationTypes.maxValue, value: 500 }]
+        fieldDesc: '1-50',
+        placeholder: '1- 50'
       },
 
       'rows': {
         fieldLabel: 'Rows',
-        fieldDesc: '1-500',
-        placeholder: '1- 500',
-        value: 50,
-        // validation: [{ type: validationTypes.required }, { type: validationTypes.minValue, value: 1 }, { type: validationTypes.maxValue, value: 500 }],
-        disabled: true
+        fieldDesc: '1-50',
+        placeholder: '1- 50',
       }
     }
   },
