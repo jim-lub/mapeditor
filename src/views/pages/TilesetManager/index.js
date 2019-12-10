@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
-import { Form, Field, ProgressBar2 } from 'views/components/Form';
+import { Button, Form, Field, ProgressBar2 } from 'views/components/Form';
 import { schema } from './reduxFormTestSchema';
 
 export const TilesetManager = () => {
@@ -36,20 +36,20 @@ const ReduxFormTestComponent = () => {
   return (
     <Form id="reduxFormTestComponent" schema={data} components={steps} onSubmit={handleSubmit} onCancel={handleCancel}>
       {
-        ({ Component, ButtonBack, ButtonContinue, currentStep, totalSteps }) => {
+        ({ FormComponent, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
           return (
             <div style={{}}>
               <div style={{padding: 15, paddingBottom: 0}}>
-                {Component}
+                { FormComponent }
               </div>
 
               <div>
-                <ProgressBar2 currentStep={currentStep} totalSteps={totalSteps} names={['Map', 'Presets', 'Tilesets', 'Swatches', 'Create']}/>
+                <ProgressBar2 currentStep={currentStep} totalSteps={totalSteps} />
               </div>
 
-              <div className="clearfix" style={{padding: 5, backgroundColor: "#e9e9e9", borderRadius: "0 0 4px 4px", boxShadow: "0px -1px 1px #d4d4d4"}}>
-                  <div style={{float: 'left'}}>{ButtonBack}</div>
-                  <div style={{float: 'right'}}>{ButtonContinue}</div>
+              <div>
+                <Button.Back isFirstStep={isFirstStep} onClick={back} />
+                <Button.Next isDisabled={disableNextButton} isLastStep={isLastStep}/>
               </div>
             </div>
           )
@@ -64,9 +64,12 @@ const StepOne = ({ state }) => {
     <div>
       <Field.Text name={"project-name"} {...state} />
       <Field.Text name={"scene-name"} autoFocus={true} {...state} />
+      <Field.Text name={"scene-name-confirm"} {...state} />
+      <Field.TextArea name={"scene-description"} {...state} />
       <Field.Select name={"scene-presets"} {...state} />
       <Field.Number name={"columns"} {...state} />
       <Field.Number name={"rows"} {...state} />
+      <Field.Password name={"hidden"} {...state} />
     </div>
   )
 }

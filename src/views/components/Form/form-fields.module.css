@@ -1,3 +1,7 @@
+/******
+*  Styling for Select is provided inside the component
+******/
+
 .input {
   width: 100%;
   height: 100%;
@@ -8,7 +12,7 @@
     box-shadow: 0 0 0 2px var(--blue-300);
   }
 
-  .input .error {
+  .input.error {
     border: solid 1px var(--red-700);
   }
 

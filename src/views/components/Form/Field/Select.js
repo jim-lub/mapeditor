@@ -1,27 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
-
-import { concatClassNames } from 'lib/utils';
 
 import { Row } from '../components/Row';
 
-import { ReactComponent as ValidIcon } from 'assets/static/icons/form/valid.svg';
-import { ReactComponent as InvalidIcon } from 'assets/static/icons/form/invalid.svg';
-
 import '../form-default.module.css';
-import fieldStyles from '../form-fields.module.css';
 
-export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) => {
+export default ({ name, formData = {}, onBlur, onChange }) => {
   const [blurred, setBlurred] = useState(false);
-  const inputRef = useRef(null);
-  const { value = '', fieldLabel, fieldDesc, placeholder, disabled, errors = {} } = formData[name];
+  const { value = '', fieldLabel, fieldDesc, options, disabled, errors = {} } = formData[name];
   const hasErrors = Object.keys(errors).length > 0;
-
-  useEffect(() => {
-    if (inputRef.current && autoFocus) {
-      inputRef.current.focus()
-    }
-  }, [inputRef, autoFocus]);
 
   const handleBlur = () => {
     setBlurred(true);
@@ -45,7 +32,11 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
     }),
     control: (provided, state) => ({
       ...provided,
-      border: state.isFocused ? 'solid 1px transparent' : 'solid 1px #bdbdbd', // grey-400
+      border: state.isFocused
+        ? 'solid 1px transparent'
+        : (blurred && hasErrors)
+          ? 'solid 1px #d32f2f'
+          : 'solid 1px #bdbdbd',
       outline: 'none',
       boxShadow: state.isFocused ? '0 0 0 2px #5ab0ee' : 'none', // blue-300
       padding: '2px 4px',
@@ -58,19 +49,13 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
     })
   }
 
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
-
   return (
     <Row
       fieldName={name}
       fieldLabel={fieldLabel}
       fieldDesc={fieldDesc}
       blurred={blurred}
-      errors={{}}
+      errors={errors}
     >
       <Select
         value={value}
@@ -81,20 +66,6 @@ export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) =>
         onBlur={handleBlur}
         onChange={handleChange}
       />
-
-      {
-        // hasErrors && blurred &&
-        // <div className={fieldStyles.iconWrapper}>
-        //   <InvalidIcon className={fieldStyles.icon}/>
-        // </div>
-      }
-
-      {
-        // !hasErrors && blurred &&
-        // <div className={fieldStyles.iconWrapper}>
-        //   <ValidIcon className={fieldStyles.icon}/>
-        // </div>
-      }
     </Row>
   )
 

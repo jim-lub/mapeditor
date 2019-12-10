@@ -32,11 +32,13 @@ const Component = ({
   formData,
   pending = true,
   disabled = true,
-  steps,
-  stepIndex,
+  steps = [],
+  stepIndex = 0,
   actions
 }) => {
   const [debouncedValidationRefresh, setDebouncedValidationRefresh] = useState(false);
+  const isFirstStep = (stepIndex === 0);
+  const isLastStep = (stepIndex === (steps.length - 1));
 
   useEffect(() => {
     actions.initializeForm({ id, schema });
@@ -64,7 +66,7 @@ const Component = ({
   };
 
   const handlePrevious = () => {
-    if (stepIndex === 0) {
+    if (isFirstStep) {
       return onCancel();
     }
 
@@ -74,7 +76,7 @@ const Component = ({
   const handleNext = () => {
     actions.validateForm({ id });
 
-    if (stepIndex === (steps.length - 1)) {
+    if (isLastStep) {
       return onSubmit(formData)
     }
 
@@ -97,7 +99,7 @@ const Component = ({
     <form id={id} onSubmit={handleFormSubmit}>
       {
         children({
-          Component: React.cloneElement(
+          FormComponent: React.cloneElement(
             components[stepIndex],
             {
               state: {
@@ -107,38 +109,16 @@ const Component = ({
               }
             }
           ),
-          ButtonBack: React.cloneElement(
-            <ButtonPrevious />,
-            {
-              text: (stepIndex > 0) ? 'Back' : 'Cancel',
-              onClick: handlePrevious
-            }
-          ),
-          ButtonContinue: React.cloneElement(
-            <ButtonNext />,
-            {
-              text: (stepIndex < (steps.length - 1)) ? 'Next' : 'Submit',
-              disabled,
-              onClick: handleNext
-            }
-          ),
+          back: handlePrevious,
           currentStep: stepIndex + 1,
-          totalSteps: steps.length
+          totalSteps: steps.length,
+          isFirstStep,
+          isLastStep,
+          disableBackButton: false,
+          disableNextButton: disabled
         })
       }
     </form>
-  )
-}
-
-const ButtonPrevious = ({ text = 'Cancel', disabled = false, onClick }) => {
-  return (
-    <button type="button" style={{minWidth: 100}} disabled={disabled} onClick={onClick}>{ text }</button>
-  )
-}
-
-const ButtonNext = ({ text = 'Submit', disabled = true, onClick }) => {
-  return (
-    <button type="submit" style={{minWidth: 100}} className={"blue"} disabled={disabled} onSubmit={onClick}>{ text }</button>
   )
 }
 

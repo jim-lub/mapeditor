@@ -1,7 +1,8 @@
 import * as actions from './actions';
 import * as selectors from './selectors';
+import * as validate from './validation';
 
-import validateFieldValue from './validation';
+import * as validationTypes from 'lib/constants/validationTypes';
 
 export const initializeForm = ({ id, schema }) => dispatch => {
   const steps = schema.map(({ stepName }) => stepName);
@@ -33,11 +34,34 @@ export const validateForm = ({ id }) => (dispatch, getState) => {
     .forEach(([fieldName, { value = '', validation = [] }]) => {
 
       const errors = validation.filter(({ type, ...rest }) => {
-        if (validateFieldValue.hasOwnProperty(type)) {
-          return !validateFieldValue[type](value, { ...rest });
+        switch (type) {
+            case validationTypes.required:
+              console.log(type, value)
+              return dispatch(
+                validate.required({ value })
+              )
+            case validationTypes.matches:
+              return dispatch(
+                validate.matches({ value, id, ...rest })
+              )
+            case validationTypes.minValue:
+              return dispatch(
+                validate.minValue({ value, ...rest })
+              )
+            case validationTypes.maxValue:
+              return dispatch(
+                validate.maxValue({ value, ...rest })
+              )
+            case validationTypes.length:
+              return dispatch(
+                validate.length({ value, ...rest })
+              )
+            case validationTypes.number:
+              return dispatch(
+                validate.number({ value, ...rest })
+              )
+            default: return null
         }
-
-        return false;
       });
 
       if (errors.length > 0) {
