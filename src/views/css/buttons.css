@@ -24,7 +24,8 @@ button {
   }
 
   button:focus {
-    box-shadow: 0 0 2px 1px var(--blue-300);
+    border: solid 1px transparent;
+    box-shadow: 0 0 0 2px var(--blue-300);
   }
 
   button:active {
@@ -47,7 +48,8 @@ button.blue {
   }
 
   button.blue:focus {
-    box-shadow: 0 0 2px 1px var(--blue-700);
+    border: solid 1px var(--light-blue-100);
+    box-shadow: 0 0 0 2px var(--blue-300);
   }
 
   button.blue:active {

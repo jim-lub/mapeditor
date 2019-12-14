@@ -10,10 +10,10 @@ import { ReactComponent as InvalidIcon } from 'assets/static/icons/form/invalid.
 import '../form-default.module.css';
 import fieldStyles from '../form-fields.module.css';
 
-export default ({ name, formData = {}, autoFocus = false, onBlur, onChange }) => {
+export default ({ name, state = {}, autoFocus = false, onBlur, onChange }) => {
   const [blurred, setBlurred] = useState(false);
   const inputRef = useRef(null);
-  const { value = '', fieldLabel, fieldDesc, placeholder, disabled, errors = {} } = formData[name];
+  const { value = '', fieldLabel, fieldDesc, placeholder, disabled, errors = {} } = state[name];
   const hasErrors = Object.keys(errors).length > 0;
 
   useEffect(() => {

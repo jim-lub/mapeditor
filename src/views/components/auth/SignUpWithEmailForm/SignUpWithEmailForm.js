@@ -9,9 +9,8 @@ import signUpFormSchema from './sign-up-form-schema';
 import { Button, Form, Field } from 'views/components/Form';
 
 const Component = ({ actions }) => {
-
   const handleSubmit = (data) => {
-    const { email, password } = data['sign-in'];
+    const { email, password } = data['sign-up'];
 
     actions.signUpWithEmail({
       email: email.value,
@@ -22,10 +21,10 @@ const Component = ({ actions }) => {
   return (
     <Form id="sign-up-form" schema={signUpFormSchema()} components={[<SignUpForm />]} onSubmit={handleSubmit}>
       {
-        ({ FormComponent, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ Component, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
           return (
             <div style={{paddingTop: 7}}>
-              { FormComponent }
+              { Component }
 
               <Button.Next
                 isDisabled={disableNextButton}
@@ -40,12 +39,12 @@ const Component = ({ actions }) => {
   )
 }
 
-const SignUpForm = ({ state }) => {
+const SignUpForm = ({ provided, state }) => {
   return (
     <>
-      <Field.Text name="email" {...state} />
-      <Field.Password name="password" {...state} />
-      <Field.Password name="password-confirm" {...state} />
+      <Field.Text name="email" {...provided} />
+      <Field.Password name="password" {...provided} />
+      <Field.Password name="password-confirm" {...provided} />
     </>
   )
 }

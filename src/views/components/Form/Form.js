@@ -11,7 +11,6 @@ import {
   nextStep,
 
   updateFieldValue,
-  submitForm,
 
   getFormData,
   getFormStatus,
@@ -29,7 +28,7 @@ const Component = ({
   onCancel,
   children,
 
-  formData,
+  formState,
   pending = true,
   disabled = true,
   steps = [],
@@ -77,7 +76,7 @@ const Component = ({
     actions.validateForm({ id });
 
     if (isLastStep) {
-      return onSubmit(formData)
+      return onSubmit(formState)
     }
 
     actions.nextStep({ id });
@@ -99,16 +98,19 @@ const Component = ({
     <form id={id} onSubmit={handleFormSubmit}>
       {
         children({
-          FormComponent: React.cloneElement(
+          // return current step Component, field and state
+          Component: React.cloneElement(
             components[stepIndex],
             {
-              state: {
-                formData: formData[ steps[stepIndex] ],
+              provided: {
                 onBlur: handleBlur,
-                onChange: handleChange
-              }
+                onChange: handleChange,
+                state: formState[ steps[stepIndex] ],
+              },
+              state: formState[ steps[stepIndex] ]
             }
           ),
+
           back: handlePrevious,
           currentStep: stepIndex + 1,
           totalSteps: steps.length,
@@ -134,7 +136,7 @@ const mapStateToProps = (state, { id }) => {
     disabled,
     steps,
     stepIndex,
-    formData: getFormData(state, { id })
+    formState: getFormData(state, { id })
   }
 }
 
@@ -145,8 +147,7 @@ const mapDispatchToProps = (dispatch) => {
       validateForm,
       previousStep,
       nextStep,
-      updateFieldValue,
-      submitForm
+      updateFieldValue
     }, dispatch)
   }
 }

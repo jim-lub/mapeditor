@@ -5,9 +5,9 @@ import { Row } from '../components/Row';
 
 import '../form-default.module.css';
 
-export default ({ name, formData = {}, onBlur, onChange }) => {
+export default ({ name, state = {}, onBlur, onChange }) => {
   const [blurred, setBlurred] = useState(false);
-  const { value = '', fieldLabel, fieldDesc, options, disabled, errors = {} } = formData[name];
+  const { value = '', fieldLabel, fieldDesc, options, disabled, errors = {} } = state[name];
   const hasErrors = Object.keys(errors).length > 0;
 
   const handleBlur = () => {

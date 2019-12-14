@@ -62,6 +62,10 @@ textarea:focus {
   border: solid 1px var(--blue-700);
 }
 
+textarea::placeholder {
+  color: var(--grey-400);
+}
+
 button {
   outline: none;
 }

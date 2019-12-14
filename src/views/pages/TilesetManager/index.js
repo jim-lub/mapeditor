@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { Modal, ModalComponents, useModal } from 'views/components/_Modal';
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
 import { Button, Form, Field, ProgressBar2 } from 'views/components/Form';
 import { schema } from './reduxFormTestSchema';
 
 export const TilesetManager = () => {
+  const [isVisible, openModal, closeModal] = useModal();
+
   return (
     <div>
       <div style={{minWidth: 400, maxWidth: 600, margin: "50px auto", backgroundColor: "#fff", borderRadius: 6, border: "solid 1px #e5e5e5"}}>
-        <ReduxFormTestComponent />
+
+        <button onClick={openModal}>Open Modal</button>
+
+        <Modal isVisible={isVisible} onClose={closeModal}>
+          <ReduxFormTestComponent onClose={closeModal} />
+        </Modal>
       </div>
     </div>
   )
 }
 
 
-const ReduxFormTestComponent = () => {
+const ReduxFormTestComponent = ({ onClose }) => {
   const data = schema({
     columns: 'initialValue for columns'
   });
@@ -30,27 +38,36 @@ const ReduxFormTestComponent = () => {
   }
 
   const handleSubmit = (data) => {
-    console.log(data)
+    console.log(data);
+    onClose();
   }
 
   return (
     <Form id="reduxFormTestComponent" schema={data} components={steps} onSubmit={handleSubmit} onCancel={handleCancel}>
       {
-        ({ FormComponent, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ Component, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
           return (
             <div style={{}}>
               <div style={{padding: 15, paddingBottom: 0}}>
-                { FormComponent }
+                { Component }
               </div>
 
               <div>
                 <ProgressBar2 currentStep={currentStep} totalSteps={totalSteps} />
               </div>
 
-              <div>
-                <Button.Back isFirstStep={isFirstStep} onClick={back} />
-                <Button.Next isDisabled={disableNextButton} isLastStep={isLastStep}/>
-              </div>
+              <ModalComponents.DefaultFooter
+                buttonLeft={{
+                  text: (isFirstStep) ? 'Close' : 'Back',
+                  action: (isFirstStep) ? onClose : back,
+                }}
+
+                buttonRight={{
+                  text: (isLastStep) ? 'Submit' : 'Next',
+                  submit: true,
+                  disabled: disableNextButton
+                }}
+              />
             </div>
           )
         }
@@ -59,27 +76,27 @@ const ReduxFormTestComponent = () => {
   )
 }
 
-const StepOne = ({ state }) => {
+const StepOne = ({ provided, state }) => {
   return (
     <div>
-      <Field.Text name={"project-name"} {...state} />
-      <Field.Text name={"scene-name"} autoFocus={true} {...state} />
-      <Field.Text name={"scene-name-confirm"} {...state} />
-      <Field.TextArea name={"scene-description"} {...state} />
-      <Field.Select name={"scene-presets"} {...state} />
-      <Field.Number name={"columns"} {...state} />
-      <Field.Number name={"rows"} {...state} />
-      <Field.Password name={"hidden"} {...state} />
+      <Field.Text name={"project-name"} {...provided} />
+      <Field.Text name={"scene-name"} autoFocus={true} {...provided} />
+      <Field.Text name={"scene-name-confirm"} {...provided} />
+      <Field.TextArea name={"scene-description"} {...provided} />
+      <Field.Select name={"scene-presets"} {...provided} />
+      <Field.Number name={"columns"} {...provided} />
+      <Field.Number name={"rows"} {...provided} />
+      <Field.Password name={"hidden"} {...provided} />
     </div>
   )
 }
 
-const StepTwo = ({ state, update }) => {
+const StepTwo = ({ provided, state }) => {
   return (
     <>
-      <Field.Text name={"testlabel"} autoFocus={true} {...state} />
-      <Field.Text name={"novalidation"} {...state} />
-      <Field.Text name={"rows"} {...state} />
+      <Field.Text name={"testlabel"} autoFocus={true} {...provided} />
+      <Field.Text name={"novalidation"} {...provided} />
+      <Field.Text name={"rows"} {...provided} />
     </>
   )
 }

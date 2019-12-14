@@ -21,10 +21,10 @@ const Component = ({ actions }) => {
   return (
     <Form id="sign-in-form" schema={signInFormSchema()} components={[<SignInForm />]} onSubmit={handleSubmit}>
       {
-        ({ FormComponent, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ Component, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
           return (
             <div style={{paddingTop: 7}}>
-              { FormComponent }
+              { Component }
 
               <Button.Next
                 isDisabled={disableNextButton}
@@ -39,11 +39,11 @@ const Component = ({ actions }) => {
   )
 }
 
-const SignInForm = ({ state }) => {
+const SignInForm = ({ provided, state }) => {
   return (
     <>
-      <Field.Text name="email" {...state} />
-      <Field.Password name="password" {...state} />
+      <Field.Text name="email" {...provided} />
+      <Field.Password name="password" {...provided} />
     </>
   )
 }

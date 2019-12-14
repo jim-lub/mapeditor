@@ -36,7 +36,6 @@ export const validateForm = ({ id }) => (dispatch, getState) => {
       const errors = validation.filter(({ type, ...rest }) => {
         switch (type) {
             case validationTypes.required:
-              console.log(type, value)
               return dispatch(
                 validate.required({ value })
               )
