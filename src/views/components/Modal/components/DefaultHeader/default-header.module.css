@@ -1,0 +1,5 @@
+.wrapper {
+  margin: 5px 5px;
+  padding: 0px 10px;
+  border-bottom: solid 1px var(--grey-200);
+}

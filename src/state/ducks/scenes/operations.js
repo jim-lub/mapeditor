@@ -1,131 +1,42 @@
 import { firebase } from 'state/lib/firebase';
+import { getAuthUser } from 'state/ducks/auth';
+import { setRequestStatus } from 'state/ducks/editor/requestStatus';
 
 import * as actions from './actions';
-import * as selectors from './selectors';
 
-import { getActiveProjectId } from 'state/ducks/projects';
-import {
-  setCurrentScene,
-  deleteMap
-} from 'state/ducks/editor/map';
+export const listenToSceneChanges = () => (dispatch, getState) => {
+  const authUser = getAuthUser( getState() );
 
-export const listenToSceneChanges = ({ userId }) => (dispatch, getState) => {
-  if (!userId) return () => null;
+  if (!authUser || !authUser.uid) {
+    return;
+  }
 
-  return firebase.scenes()
-    .where("ownerId", "==", userId)
+  firebase.scenes()
+    .where("ownerId", "==", authUser.uid)
     .orderBy("modifiedAt", "desc")
     .onSnapshot(snapshot => {
-      dispatch( actions.setSceneCollectionRequest() );
+      dispatch( setRequestStatus({ key: 'fetchScenes', type: 'REQUEST' }) );
 
-      const sceneCollection = {};
-      const sceneSortOrder = {};
+      const scenes = {};
 
       snapshot.forEach(doc => {
-        // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-        // console.log(source, " data: ", doc.data());
+        const uid = doc.id;
+        const { name, description, createdAt, modifiedAt } = doc.data();
 
-        const { projectId, name, description, createdAt, modifiedAt } = doc.data();
-
-        sceneCollection[doc.id] = {
-          uid: doc.id,
-          projectId,
+        scenes[uid] = {
+          uid,
           name,
           description,
           createdAt: (createdAt) ? createdAt.toDate() : null,
           modifiedAt: (modifiedAt) ? modifiedAt.toDate() : null,
         }
-
-        if ( sceneSortOrder.hasOwnProperty(projectId) ) {
-          if ( sceneSortOrder.hasOwnProperty(doc.id) ) {
-            sceneSortOrder[projectId].push(doc.id);
-          } else {
-            sceneSortOrder[projectId].push(doc.id);
-          }
-        } else {
-          sceneSortOrder[projectId] = [doc.id];
-        }
-
       });
 
-      try {
-        dispatch( actions.setSceneCollectionSuccess({ sceneCollection, sceneSortOrder }) );
-      } catch (error) {
-        dispatch( actions.setSceneCollectionFailure({ error }) );
-      }
+      dispatch( actions.setScenes({ scenes }) );
+      dispatch( setRequestStatus({ key: 'fetchScenes', type: 'SUCCESS' }) );
     });
-};
+}
 
-export const createScene = ({ name, description, mapProperties }) => (dispatch, getState) => {
-  const currentState = getState();
-  const { uid: userId } = currentState.auth.authUser;
-  const projectId = getActiveProjectId( currentState );
+export const createScene = () => dispatch => {
 
-  dispatch( actions.createSceneRequest() );
-
-  firebase.scenes()
-    .add({
-      ownerId: userId,
-      projectId,
-      createdAt: firebase.serverTimestamp,
-      modifiedAt: firebase.serverTimestamp,
-      name,
-      description,
-      mapProperties: {
-        mapSize: mapProperties.mapSize,
-        segmentSize: mapProperties.segmentSize,
-        allowedTileSizes: mapProperties.allowedTileSizes
-      }
-    })
-    .then(sceneRef => {
-      dispatch( actions.createSceneSuccess({ sceneId: sceneRef.id }) );
-    })
-    .catch(error => {
-      dispatch( actions.createSceneFailure({ error }) );
-    })
-};
-
-export const deleteScene = ({ sceneId }) => (dispatch, getState) => {
-  const activeSceneId = selectors.getActiveSceneId( getState() );
-
-  dispatch( actions.deleteSceneRequest() );
-
-
-  Promise.all([
-    dispatch( deleteMap({ uid: sceneId }) ),
-  ])
-    .then(() => {
-      dispatch( setCurrentScene({ uid: null }) )
-      return firebase.scene(sceneId)
-        .delete()
-        .then(() => {
-          if (sceneId === activeSceneId) {
-            dispatch( setActiveScene({ sceneId: null }));
-          }
-
-          dispatch( actions.deleteSceneSuccess() );
-        })
-        .catch(() => {
-          dispatch( actions.deleteSceneFailure() );
-        });
-    })
-};
-
-export const updateScene = ({ sceneId, name, description }) => (dispatch) => {
-  dispatch ( actions.updateSceneRequest() );
-
-  firebase.scene(sceneId)
-    .update({
-      name,
-      description,
-      modifiedAt: firebase.serverTimestamp,
-    })
-    .then(() => {
-      dispatch( actions.updateSceneSuccess() );
-    })
-    .catch(error => {
-      dispatch( actions.updateSceneFailure({ error }) );
-    });
-};
-
-export const setActiveScene = actions.setActiveScene;
+}

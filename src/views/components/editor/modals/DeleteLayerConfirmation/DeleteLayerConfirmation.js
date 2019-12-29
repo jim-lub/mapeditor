@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import { deleteLayer } from 'state/ducks/editor/layers';
 
-import { Form } from 'views/components/Form';
 import { ModalComponents } from 'views/components/Modal';
 
 import styles from './delete-layer-form.module.css';
@@ -14,8 +13,6 @@ const Component = ({ layerId, layerName, actions, onClose }) => {
     actions.deleteLayer({ layerId });
     onClose();
   }
-
-  console.log(layerId)
 
   return (
     <div>

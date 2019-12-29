@@ -5,7 +5,7 @@ import { disableAllEditorInput } from 'state/ducks/editor';
 import { getCurrentScene } from 'state/ducks/editor/map';
 import { getLayerSortOrder } from 'state/ducks/editor/layers';
 
-import { Modal, ModalComponents, useModal } from 'views/components/Modal';
+import { Modal, useModal } from 'views/components/Modal';
 
 import {
   CreateLayerForm,

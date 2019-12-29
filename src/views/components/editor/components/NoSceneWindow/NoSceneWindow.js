@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setCurrentScene } from 'state/ducks/editor/map';
-import { getSceneCollection } from 'state/ducks/scenes';
+// import { getSceneCollection } from 'state/ducks/scenes';
 
 import { LinkButton } from 'views/components/LinkButton';
 
@@ -12,7 +12,7 @@ import { ReactComponent as SceneIcon } from 'assets/static/icons/other/scene.svg
 
 import styles from './noscenewindow.module.css';
 
-const Component = ({ sceneCollection, actions }) => {
+const Component = ({ sceneCollection = [], actions }) => {
   const sceneList = Object.values(sceneCollection);
 
   if (sceneList.length === 0) {
@@ -66,7 +66,7 @@ const Component = ({ sceneCollection, actions }) => {
 
 const mapStateToProps = (state) => {
   return {
-    sceneCollection: getSceneCollection(state)
+    // sceneCollection: getSceneCollection(state)
   }
 }
 

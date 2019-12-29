@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getAuthUser } from 'state/ducks/auth';
-import { listenToProjectChanges } from 'state/ducks/projects';
 import { listenToSceneChanges } from 'state/ducks/scenes';
 
 const Component = ({ authUser = {}, actions }) => {
   const userId = (authUser) ? authUser.uid : null
-  useEffect(() => actions.listenToProjectChanges({ userId }), [userId, actions]);
-  useEffect(() => actions.listenToSceneChanges({ userId }), [userId, actions]);
+  useEffect(() => actions.listenToSceneChanges(), [userId, actions]);
 
   return null;
 }
@@ -22,7 +20,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ listenToProjectChanges, listenToSceneChanges }, dispatch)
+    actions: bindActionCreators({ listenToSceneChanges }, dispatch)
   }
 }
 

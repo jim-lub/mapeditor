@@ -13,7 +13,6 @@ import styles from './create-layer-form.module.css';
 
 const Component = ({ actions, onClose }) => {
   const handleSubmit = (data) => {
-    console.log(data)
     actions.createLayer({
       layerName: data.default['layer-name'].value,
       layerType: data.default['layer-type'].value.value,
@@ -22,6 +21,7 @@ const Component = ({ actions, onClose }) => {
         height: data.default['tile-size-height'].value.value
       }
     });
+
     onClose();
   }
 

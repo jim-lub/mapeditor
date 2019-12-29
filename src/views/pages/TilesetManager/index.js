@@ -48,6 +48,7 @@ const ReduxFormTestComponent = ({ onClose }) => {
         ({ Component, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
           return (
             <div style={{}}>
+              
               <div style={{padding: 15, paddingBottom: 0}}>
                 { Component }
               </div>
