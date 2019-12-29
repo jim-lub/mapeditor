@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Modal, ModalComponents, useModal } from 'views/components/_Modal';
+import { Modal, ModalComponents, useModal } from 'views/components/Modal';
 // import { FileUploader } from 'views/components/tilesets/FileUploader';
 import { Button, Form, Field, ProgressBar2 } from 'views/components/Form';
 import { schema } from './reduxFormTestSchema';
@@ -57,16 +57,21 @@ const ReduxFormTestComponent = ({ onClose }) => {
               </div>
 
               <ModalComponents.DefaultFooter
-                buttonLeft={{
-                  text: (isFirstStep) ? 'Close' : 'Back',
-                  action: (isFirstStep) ? onClose : back,
-                }}
+                buttonLeft={
+                  () => (
+                    <button type="button" onClick={(isFirstStep) ? onClose : back}>
+                      { (isFirstStep) ? 'Close' : 'Back' }
+                    </button>
+                  )
+                }
 
-                buttonRight={{
-                  text: (isLastStep) ? 'Submit' : 'Next',
-                  submit: true,
-                  disabled: disableNextButton
-                }}
+                buttonRight={
+                  () => (
+                    <button type="submit" disabled={disableNextButton} className="blue">
+                      { (isLastStep) ? 'Submit' : 'Next' }
+                    </button>
+                  )
+                }
               />
             </div>
           )

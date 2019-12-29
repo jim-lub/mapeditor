@@ -1,21 +1,10 @@
 import React from 'react';
 
-import { useModal } from 'lib/hooks';
-
-import { CreateLayerModal } from 'views/components/Editor/modules/Layers/Modals';
-
 import { ReactComponent as LayersIcon } from 'assets/static/icons/mood/blue/happy.svg';
 
 import styles from './notification.module.css';
 
 export default ({ width, height }) => {
-  const [CreateLayerModalComponent, openCreateLayerModal] = useModal(CreateLayerModal, { width: 300 });
-
-  const handleCreateLayerClick = (e) => {
-    e.preventDefault();
-    openCreateLayerModal();
-  }
-
   return (
     <>
       <div className={styles.container} style={{width, height}}>
@@ -30,12 +19,11 @@ export default ({ width, height }) => {
 
         <button
           className={"blue " + styles.button}
-          onClick={handleCreateLayerClick}
+          disabled={true}
         >
           Create a layer
         </button>
       </div>
-      <CreateLayerModalComponent />
     </>
   )
 }

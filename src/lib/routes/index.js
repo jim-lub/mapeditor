@@ -1,9 +1,9 @@
-import { SignIn, Dashboard, Projects, TilesetManager, Editor } from 'views/pages';
+import { SignIn, Dashboard, Scenes, TilesetManager, Editor } from 'views/pages';
 import * as ruleTypes from 'views/lib/authorization/ruleTypes';
 
 import { ReactComponent as DashboardIcon } from 'assets/static/icons/sidebar/dashboard.svg';
 import { ReactComponent as EditorIcon } from 'assets/static/icons/sidebar/editor.svg';
-import { ReactComponent as ProjectsIcon } from 'assets/static/icons/sidebar/projects.svg';
+import { ReactComponent as ScenesIcon } from 'assets/static/icons/sidebar/projects.svg';
 import { ReactComponent as TilesetsIcon } from 'assets/static/icons/sidebar/tilesets.svg';
 // import { ReactComponent as AccountSettingsIcon } from 'assets/static/icons/sidebar/account-settings.svg';
 import { ReactComponent as SignInIcon } from 'assets/static/icons/sidebar/signin.svg';
@@ -39,13 +39,13 @@ const routes = [
     icon: EditorIcon
   },
   {
-    path: "/projects",
+    path: "/scenes",
     exact: true,
-    component: Projects,
+    component: Scenes,
     ruleset: [ ruleTypes.IS_SIGNED_IN ],
     redirectTo: '/auth/signin',
-    name: "Projects",
-    icon: ProjectsIcon
+    name: "Scenes",
+    icon: ScenesIcon
   },
   {
     path: "/tilesets",

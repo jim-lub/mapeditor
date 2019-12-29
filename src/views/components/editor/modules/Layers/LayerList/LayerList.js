@@ -65,6 +65,12 @@ const PortalItem = ({
 }) => {
   const usePortal = snapshot.isDragging;
 
+  const handleDeleteLayerModalClick = () => {
+    openDeleteLayerModal({
+      layerId
+    })
+  }
+
   const child = (
     <div
       ref={provided.innerRef}
@@ -75,7 +81,7 @@ const PortalItem = ({
         layerId={layerId}
         isActive={isActive}
         isDragging={snapshot.isDragging}
-        openDeleteLayerModal={openDeleteLayerModal}
+        openDeleteLayerModal={handleDeleteLayerModalClick}
       />
     </div>
   )

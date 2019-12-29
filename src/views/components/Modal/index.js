@@ -1,8 +1,9 @@
-import ModalWrapper from './ModalWrapper';
-import { ModalComponent } from './ModalComponents';
-
-export default ModalWrapper;
+import Modal from './Modal';
+import ModalComponents from './components';
+import { useModal } from './useModal';
 
 export {
-  ModalComponent
-};
+  Modal,
+  ModalComponents,
+  useModal
+}

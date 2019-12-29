@@ -5,12 +5,12 @@ import { disableAllEditorInput } from 'state/ducks/editor';
 import { getCurrentScene } from 'state/ducks/editor/map';
 import { getLayerSortOrder } from 'state/ducks/editor/layers';
 
-import { useModal } from 'lib/hooks';
+import { Modal, ModalComponents, useModal } from 'views/components/Modal';
 
 import {
-  CreateLayerModal,
-  DeleteLayerModal
-} from './Modals';
+  CreateLayerForm,
+  DeleteLayerConfirmation
+} from 'views/components/Editor/modals';
 
 import { LayerList } from './LayerList';
 import { Toolbar } from './Toolbar';
@@ -20,8 +20,8 @@ import { NoLayersNotification } from './NoLayersNotification';
 import styles from './layers.module.css';
 
 const Component = ({ currentScene, layerSortOrder, disableAllInput, contentWidth, contentHeight }) => {
-  const [CreateLayerModalComponent, openCreateLayerModal] = useModal(CreateLayerModal, { width: 300 });
-  const [DeleteLayerModalComponent, openDeleteLayerModal] = useModal(DeleteLayerModal, { width: 300 });
+  const [isVisible_createLayer, openModal_createLayer, closeModal_createLayer] = useModal();
+  const [isVisible_deleteLayer, openModal_deleteLayer, closeModal_deleteLayer, props_deleteLayer] = useModal();
 
   if (!currentScene.uid) return null;
 
@@ -36,17 +36,22 @@ const Component = ({ currentScene, layerSortOrder, disableAllInput, contentWidth
   return (
     <div style={{width: contentWidth, height: contentHeight}}>
       <div className={styles.listWrapper}>
-        <LayerList openDeleteLayerModal={openDeleteLayerModal} />
+        <LayerList openDeleteLayerModal={openModal_deleteLayer} />
       </div>
 
       <div className={styles.toolbarWrapper}>
-        <Toolbar openCreateLayerModal={openCreateLayerModal} />
+        <Toolbar openCreateLayerModal={openModal_createLayer} />
       </div>
 
       { disableAllInput && <Loader.Overlay /> }
 
-      <CreateLayerModalComponent />
-      <DeleteLayerModalComponent />
+      <Modal isVisible={isVisible_createLayer} onClose={closeModal_createLayer}>
+        <CreateLayerForm onClose={closeModal_createLayer} />
+      </Modal>
+
+      <Modal isVisible={isVisible_deleteLayer} onClose={closeModal_deleteLayer}>
+        <DeleteLayerConfirmation onClose={closeModal_deleteLayer} {...props_deleteLayer} />
+      </Modal>
     </div>
   )
 }

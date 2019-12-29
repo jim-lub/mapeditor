@@ -7,7 +7,7 @@ button {
   margin: 0;
   text-decoration: none;
   background-color: #f7f7fa;
-  color: #a5abc5;
+  color: var(--text-color-blue-grey);
   border: solid 1px var(--grey-400);
   border-radius: 5px;
   font-weight: bold;
