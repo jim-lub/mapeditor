@@ -1,14 +1,13 @@
 # Roadmap
 
 ## In development
-- Refactoring CPU intensive code to increase performance ( workers? )
-- Refactoring state code ( cleanup code, performance )
-- Refactoring editor modules ( cleanup code, responsiveness, performance )
+- Refactor state code ( cleanup code, performance )
+- Refactor project- and scene management interface
 - Improving react components ( forms / context menu / modals )
-- Tweaking UX
-- Revamping tools ( get, set, clear actions, size, patterns )
 
 ## Soon
+- Refactor editor modules ( cleanup code, responsiveness, performance )
+- Revamping tools ( get, set, clear actions, size, patterns )
 - Menu bar ( ~~save~~, load, settings, help )
 - Upload tile sets
 - Draw-a-pattern module
@@ -21,7 +20,6 @@
 - Custom cursors
 - Crop / expand map
 - Modify tile sets
-- Refactor project- and scene management interface
 - Export / Import ( json, ??? )
 
 ## Future
@@ -48,6 +46,7 @@
 
 
 ## Completed
+- ~~Refactoring CPU intensive code to increase performance ( workers? )~~
 - ~~History~~
 - ~~Tools ( tile stamp )~~
 - ~~Tile selector module~~
