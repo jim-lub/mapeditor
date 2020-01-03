@@ -31,10 +31,10 @@ export default () => ([
   {
     stepName: 'presets',
     fields: {
-      'preset': {
-        fieldLabel: 'Preset',
+      'segment-size': {
+        fieldLabel: 'Segment size',
         options: [
-          { label: 'DEFAULT #1', value: 'default-1' }
+          { label: '512 x 512px', value: 512 }
         ],
         validation: [
           {
@@ -46,6 +46,7 @@ export default () => ([
 
       'columns': {
         fieldLabel: 'Columns',
+        value: 1,
         validation: [
           {
             type: validationTypes.minValue,
@@ -60,6 +61,7 @@ export default () => ([
 
       'rows': {
         fieldLabel: 'Rows',
+        value: 1,
         validation: [
           {
             type: validationTypes.minValue,

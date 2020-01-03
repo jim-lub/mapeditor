@@ -17,7 +17,7 @@ const Component = ({ layerId, layerName, actions, onClose }) => {
   return (
     <div>
       <div className={styles.warning}>
-        Are you sure you want to delete the layer? This action <span className={styles.bold}>cannot</span> be undone.
+        Are you sure you want to delete this layer? This action <span className={styles.bold}>cannot</span> be undone.
       </div>
 
       <ModalComponents.DefaultFooter

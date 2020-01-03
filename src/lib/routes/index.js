@@ -47,15 +47,15 @@ const routes = [
     name: "Scenes",
     icon: ScenesIcon
   },
-  {
-    path: "/tilesets",
-    exact: true,
-    component: TilesetManager,
-    ruleset: [ ruleTypes.IS_SIGNED_IN ],
-    redirectTo: '/auth/signin',
-    name: "Tilesets",
-    icon: TilesetsIcon
-  },
+  // {
+  //   path: "/tilesets",
+  //   exact: true,
+  //   component: TilesetManager,
+  //   ruleset: [ ruleTypes.IS_SIGNED_IN ],
+  //   redirectTo: '/auth/signin',
+  //   name: "Tilesets",
+  //   icon: TilesetsIcon
+  // },
 
 ];
 
@@ -66,7 +66,7 @@ const nav = [
 
   { name: "Workspace", route: routes[2], icon: "editor_workspace", auth: true },
   { name: "Projects", route: routes[3], icon: "editor_projects", auth: true },
-  { name: "Tilesets", route: routes[4], icon: "editor_tilesets", auth: true },
+  // { name: "Tilesets", route: routes[4], icon: "editor_tilesets", auth: true },
 ]
 
 export {

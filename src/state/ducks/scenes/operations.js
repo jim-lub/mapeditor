@@ -3,6 +3,7 @@ import { getAuthUser } from 'state/ducks/auth';
 import { setRequestStatus } from 'state/ducks/editor/requestStatus';
 
 import * as actions from './actions';
+import * as database from './database';
 
 export const listenToSceneChanges = () => (dispatch, getState) => {
   const authUser = getAuthUser( getState() );
@@ -37,6 +38,4 @@ export const listenToSceneChanges = () => (dispatch, getState) => {
     });
 }
 
-export const createScene = () => dispatch => {
-
-}
+export const createScene = database.createScene;

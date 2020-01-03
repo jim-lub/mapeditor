@@ -2,3 +2,22 @@
   padding: 15px;
   padding-bottom: 0px;
 }
+
+.presetsWrapper {
+  display: grid;
+  grid-template-columns: 65% 35%;
+}
+
+.presetsFieldsWrapper {
+
+}
+
+.presetsSettingsContainer {
+  margin: 0 0 8px 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  border: solid 1px var(--grey-400);
+  background-color: var(--grey-050);
+  border-radius: 5px;
+  font-size: 10px;
+}

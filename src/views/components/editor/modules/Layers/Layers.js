@@ -28,7 +28,15 @@ const Component = ({ currentScene, layerSortOrder, disableAllInput, contentWidth
   if (layerSortOrder.length === 0) {
     return (
       <div style={{width: contentWidth, height: contentHeight, overflow: 'auto'}}>
-        <NoLayersNotification width={contentWidth / 1.5} height={contentHeight / 1.5}/>
+        <NoLayersNotification
+          width={contentWidth / 1.5}
+          height={contentHeight / 1.5}
+          openCreateLayerModal={openModal_createLayer}
+        />
+
+        <Modal width={400} isVisible={isVisible_createLayer} onClose={closeModal_createLayer}>
+          <CreateLayerForm onClose={closeModal_createLayer} />
+        </Modal>
       </div>
     )
   }
@@ -45,11 +53,11 @@ const Component = ({ currentScene, layerSortOrder, disableAllInput, contentWidth
 
       { disableAllInput && <Loader.Overlay /> }
 
-      <Modal isVisible={isVisible_createLayer} onClose={closeModal_createLayer}>
+      <Modal width={400} isVisible={isVisible_createLayer} onClose={closeModal_createLayer}>
         <CreateLayerForm onClose={closeModal_createLayer} />
       </Modal>
 
-      <Modal isVisible={isVisible_deleteLayer} onClose={closeModal_deleteLayer}>
+      <Modal width={400} isVisible={isVisible_deleteLayer} onClose={closeModal_deleteLayer}>
         <DeleteLayerConfirmation onClose={closeModal_deleteLayer} {...props_deleteLayer} />
       </Modal>
     </div>

@@ -4,7 +4,11 @@ import { ReactComponent as LayersIcon } from 'assets/static/icons/other/layers-b
 
 import styles from './nolayersnotification.module.css';
 
-export default ({ width, height }) => {
+export default ({ width, height, openCreateLayerModal }) => {
+  const handleCreateLayerClick = (e) => {
+    e.preventDefault();
+    openCreateLayerModal();
+  }
 
   return (
     <>
@@ -18,7 +22,7 @@ export default ({ width, height }) => {
 
         <button
           className={"blue " + styles.button}
-          disabled={true}
+          onClick={handleCreateLayerClick}
         >
           Create
         </button>

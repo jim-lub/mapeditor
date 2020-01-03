@@ -5,8 +5,7 @@
 .innerWrapper {
   display: flex;
   max-width: 1200px;
-  min-width: 480px;
-  margin: 50px auto;
+  margin: 20px auto;
   background-color: var(--white);
   border: solid 1px var(--grey-400);
   border-radius: 3px;

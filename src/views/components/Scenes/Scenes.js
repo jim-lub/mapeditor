@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getScenes } from 'state/ducks/scenes';
+import { setCurrentScene } from 'state/ducks/editor/map';
 import { getRequestStatus } from 'state/ducks/editor/requestStatus';
 
 import { Modal, useModal } from 'views/components/Modal';
+import { LinkButton } from 'views/components/LinkButton';
 import { CreateSceneForm } from './modals';
 
-const Component = ({ scenes, requestStatus }) => {
+const Component = ({ scenes, requestStatus, actions }) => {
   const [isVisible_createScene, openModal_createScene, closeModal_createScene] = useModal();
 
   if (!requestStatus.initialized || requestStatus.loading) {
@@ -19,15 +21,46 @@ const Component = ({ scenes, requestStatus }) => {
 
   return (
     <div>
+      <div style={{padding: 10, backgroundColor: '#e5e5e5', borderBottom: 'solid 1px #c5c5c5'}}>
+        <button className="blue" onClick={openModal_createScene}>Create scene</button>
+      </div>
       {
-        Object.values(scenes).map(({ name }, index) => {
+        Object.values(scenes).map(({ uid, name }, index) => {
           return (
-            <div key={index}>{ name }</div>
+            <div
+              key={index}
+              className="clearfix"
+              style={{
+                float: 'left',
+                minWidth: 250,
+                margin: 10,
+                padding: 5,
+                borderRadius: 5,
+                border: 'solid 1px #d5d5d5',
+                backgroundColor: '#f5f5f5'
+              }}
+            >
+              <div style={{float: 'left', padding: 7}}>
+                { name }
+              </div>
+
+              <div style={{float: 'right'}}>
+                <LinkButton
+                  onClick={() => actions.setCurrentScene({ uid })}
+                  to="/editor"
+                  className="blue"
+                  style={{
+                    padding: 10,
+                    fontSize: 9
+                  }}
+                >
+                  Open
+                </LinkButton>
+              </div>
+            </div>
           )
         })
       }
-
-      <button onClick={openModal_createScene}>Create scene</button>
 
       <Modal isVisible={isVisible_createScene} onClose={closeModal_createScene}>
         <CreateSceneForm onClose={closeModal_createScene} />
@@ -45,7 +78,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ }, dispatch)
+    actions: bindActionCreators({ setCurrentScene }, dispatch)
   }
 }
 

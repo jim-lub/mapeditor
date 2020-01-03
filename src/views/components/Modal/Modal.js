@@ -22,7 +22,6 @@ export default ({ children, isVisible = false, width = 500, height = 'auto', onC
   };
 
   const handleClose = (e) => {
-    console.log(e)
     e.stopPropagation();
     onClose();
   }

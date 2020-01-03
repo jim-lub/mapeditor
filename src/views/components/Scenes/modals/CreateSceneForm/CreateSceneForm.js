@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { createScene } from 'state/ducks/scenes';
+
 import createSceneFormSchema from './create-scene-form-schema';
 
 import { Form, Field, ProgressBar2 } from 'views/components/Form';
@@ -9,16 +11,24 @@ import { ModalComponents } from 'views/components/Modal';
 
 import styles from './create-scene-form.module.css';
 
-const Component = ({ actions, onClose }) => {
+const Component = ({ requestStatus, actions, onClose }) => {
   const handleSubmit = (data) => {
-    console.log(data)
+    actions.createScene({
+      name: data.defaults['scene-name'].value,
+      description: data.defaults['scene-description'].value,
+      segmentSize: data.presets['segment-size'].value.value,
+      columns: data.presets['columns'].value,
+      rows: data.presets['rows'].value
+    });
+
+    onClose();
   }
 
   return (
     <Form
       id="create-scene-form"
       schema={createSceneFormSchema()}
-      components={[<StepOne />, <StepTwo />]}
+      components={[<Defaults />, <Presets />]}
       onSubmit={handleSubmit}
     >
       {
@@ -56,34 +66,57 @@ const Component = ({ actions, onClose }) => {
   )
 }
 
-const StepOne = ({ provided, state }) => {
+const Defaults = ({ provided, state }) => {
   return (
     <>
-      <Field.Text name="scene-name" {...provided} />
+      <Field.Text name="scene-name" autoFocus {...provided} />
       <Field.TextArea name="scene-description" {...provided} />
     </>
   )
 }
 
-const StepTwo = ({ provided, state }) => {
+const Presets = ({ provided, state }) => {
+  const segmentSize = state['segment-size'].value;
+  const columns = state['columns'].value;
+  const rows = state['rows'].value;
+
   return (
-    <>
-      <Field.Select name="preset" {...provided} />
-      <Field.Number name="columns" {...provided} />
-      <Field.Number name="rows" {...provided} />
-    </>
+    <div className={styles.presetsWrapper}>
+      <div className={styles.presetsFieldsWrapper}>
+        <Field.Select name="segment-size" {...provided} />
+        <Field.Number name="columns" {...provided} />
+        <Field.Number name="rows" {...provided} />
+      </div>
+
+      <div className={styles.presetsSettingsContainer}>
+        <span className="bold">Allowed tile size(s):</span><br />
+        {
+          (segmentSize)
+            ? "16px, 32px, 64px"
+            : "-"
+        }
+        <br />
+
+        <span className="bold">Map size:</span><br />
+        {
+          (segmentSize)
+            ? `${Number(segmentSize.value) * Number(columns)}px x ${Number(segmentSize.value) * Number(rows)}px`
+            : "-"
+        }<br />
+      </div>
+    </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-
+    // requestStatus: getRequestStatus(state, { key: 'createScene' }),
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ }, dispatch)
+    actions: bindActionCreators({ createScene }, dispatch)
   }
 }
 
