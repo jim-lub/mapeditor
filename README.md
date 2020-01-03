@@ -1,15 +1,15 @@
 # Roadmap
 
 ## In development
+- Refactor project- and scene management to a file-based system
+- File uploader ( icons, wallpapers, tilesets, spritesheets )
 - Refactor state code ( cleanup code, performance )
-- Refactor project- and scene management interface
-- Improving react components ( forms / context menu / modals )
+- Improving react components ( context menu )
 
 ## Soon
 - Refactor editor modules ( cleanup code, responsiveness, performance )
 - Revamping tools ( get, set, clear actions, size, patterns )
 - Menu bar ( ~~save~~, load, settings, help )
-- Upload tile sets
 - Draw-a-pattern module
 - Prefabs
 
@@ -46,6 +46,7 @@
 
 
 ## Completed
+- ~~Improving react components ( forms / modals )~~
 - ~~Refactoring CPU intensive code to increase performance ( workers? )~~
 - ~~History~~
 - ~~Tools ( tile stamp )~~
