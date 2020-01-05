@@ -1,0 +1,13 @@
+.wrapper {
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 1000px;
+}
+
+.browserWrapper {
+  margin: 10px;
+}
+
+.creatorWrapper {
+  margin: 10px;
+}

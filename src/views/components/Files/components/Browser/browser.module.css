@@ -1,0 +1,38 @@
+.container {
+  padding: 10px;
+  background-color: var(--white);
+  border: solid 1px var(--grey-300);
+  border-radius: 5px;
+}
+
+.fileRowContainer {
+  display: flex;
+  padding: 5px;
+  border-bottom: solid 1px var(--grey-300);
+}
+
+.fileRowContainer:hover {
+  background-color: var(--rgba-blue-02);
+}
+
+.fileIconWrapper {
+  flex: 0 0 auto;
+}
+
+.fileNameWrapper {
+  flex: 1 1 auto;
+  padding: 1px 0 0 10px;
+}
+
+.fileOptionsWrapper {
+  flex: 0 0 auto;
+}
+
+.spanButton {
+  font-size: 10px;
+}
+
+.spanButton:hover {
+  color: var(--blue-500);
+  text-decoration: underline;
+}

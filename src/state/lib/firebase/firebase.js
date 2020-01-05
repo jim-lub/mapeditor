@@ -61,6 +61,12 @@ export class Firebase {
   scenes = () =>
     this.db.collection('scenes');
 
+  file = uid =>
+    this.db.doc(`files/${uid}`);
+
+  files = () =>
+    this.db.collection('files');
+
 
   /*** Tilesets API ***/
   tilesetRef = () =>
