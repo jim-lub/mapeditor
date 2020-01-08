@@ -36,6 +36,7 @@ export const submitForm = operations.submitForm;
 
 /*** selectors ***/
 export const getFormData = selectors.getFormData;
+export const getNormalizedFormData = selectors.getNormalizedFormData;
 export const getFormStatus = selectors.getFormStatus;
 export const getSteps = selectors.getSteps;
 export const getStepIndex = selectors.getStepIndex;

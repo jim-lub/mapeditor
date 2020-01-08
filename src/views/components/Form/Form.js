@@ -13,6 +13,7 @@ import {
   updateFieldValue,
 
   getFormData,
+  getNormalizedFormData,
   getFormStatus,
   getSteps,
   getStepIndex
@@ -29,6 +30,7 @@ const Component = ({
   children,
 
   formState,
+  normalizedFormState,
   pending = true,
   disabled = true,
   steps = [],
@@ -54,6 +56,8 @@ const Component = ({
 
   const handleBlur = () => actions.validateForm({ id });
   const handleChange = ({ name, value }) => {
+    console.log(normalizedFormState);
+    
     actions.updateFieldValue({
       id,
       stepName: steps[stepIndex],
@@ -136,7 +140,8 @@ const mapStateToProps = (state, { id }) => {
     disabled,
     steps,
     stepIndex,
-    formState: getFormData(state, { id })
+    formState: getFormData(state, { id }),
+    normalizedFormState: getNormalizedFormData(state, { id })
   }
 }
 

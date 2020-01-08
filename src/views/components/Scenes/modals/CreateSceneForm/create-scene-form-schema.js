@@ -1,3 +1,4 @@
+import * as fieldTypes from 'lib/constants/fieldTypes';
 import * as validationTypes from 'lib/constants/validationTypes';
 
 export default () => ([
@@ -5,6 +6,7 @@ export default () => ([
     stepName: 'defaults',
     fields: {
       'scene-name': {
+        fieldType: fieldTypes.text,
         fieldLabel: 'Scene name',
         placeholder: 'Name',
         validation: [
@@ -22,8 +24,9 @@ export default () => ([
       },
 
       'scene-description': {
+        fieldType: fieldTypes.textarea,
         fieldLabel: 'Scene description',
-        placeholder: 'Description'
+        placeholder: 'Description',
       },
     }
   },
@@ -32,6 +35,7 @@ export default () => ([
     stepName: 'presets',
     fields: {
       'segment-size': {
+        fieldType: fieldTypes.select,
         fieldLabel: 'Segment size',
         options: [
           { label: '512 x 512px', value: 512 }
@@ -45,6 +49,7 @@ export default () => ([
       },
 
       'columns': {
+        fieldType: fieldTypes.number,
         fieldLabel: 'Columns',
         value: 1,
         validation: [
@@ -60,6 +65,7 @@ export default () => ([
       },
 
       'rows': {
+        fieldType: fieldTypes.number,
         fieldLabel: 'Rows',
         value: 1,
         validation: [
