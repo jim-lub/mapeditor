@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getFiles } from 'state/ducks/files';
+import { getFiles, updateFile, deleteFile } from 'state/ducks/files';
 
 import fileConstants from 'lib/constants/fileConstants';
 
@@ -19,12 +19,28 @@ const Component = ({ actions }) => {
       });
   }
 
+  const handleUpdate = (uid, fileName) => {
+    actions.updateFile({ uid, fileName })
+      .then(uid => {
+        console.log(`Updated file: ${uid}`)
+        handleRefresh();
+      })
+  }
+
+  const handleDelete = (uid) => {
+    actions.deleteFile({ uid })
+      .then(uid => {
+        console.log(`Deleted file: ${uid}`)
+        handleRefresh();
+      })
+  }
+
   return (
     <div className={styles.container}>
       <button onClick={handleRefresh}>Refresh</button>
 
       {
-        files.map(({ fileName, fileType }, index) => {
+        files.map(({ uid, fileName, fileType }, index) => {
           const { icon, extension } = fileConstants[ fileType ];
 
           return (
@@ -38,7 +54,9 @@ const Component = ({ actions }) => {
               </div>
 
               <div className={styles.fileOptionsWrapper}>
-                <span className={styles.spanButton}>Delete</span>
+                <span className={styles.spanButton} onClick={() => handleUpdate(uid, fileName)}>Update</span>
+                |
+                <span className={styles.spanButton} onClick={() => handleDelete(uid)}>Delete</span>
               </div>
             </div>
           )
@@ -56,7 +74,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ getFiles }, dispatch)
+    actions: bindActionCreators({ getFiles, updateFile, deleteFile }, dispatch)
   }
 }
 

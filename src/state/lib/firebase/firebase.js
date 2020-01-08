@@ -48,13 +48,6 @@ export class Firebase {
   users = () =>
     this.db.collection('users');
 
-
-  /*** Project & Scenes API ***/
-  project = uid =>
-    this.db.doc(`projects/${uid}`);
-  projects = () =>
-    this.db.collection('projects');
-
   scene = uid =>
     this.db.doc(`scenes/${uid}`);
 
@@ -68,7 +61,9 @@ export class Firebase {
     this.db.collection('files');
 
 
-  /*** Tilesets API ***/
-  tilesetRef = () =>
-    this.storage.ref().child('tilesets');
+  /*** storage API ***/
+  storageRef = () =>
+    this.storage.ref();
+
+  TaskEvent = app.storage.TaskEvent;
 }

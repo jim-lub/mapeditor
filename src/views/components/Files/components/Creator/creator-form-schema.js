@@ -17,7 +17,7 @@ export default () => ([
       },
 
       'file-type': {
-        fieldLabel: 'Layer Type',
+        fieldLabel: 'File Type',
         options: [
           ...Object.entries(fileConstants)
             .map(([fileType, { extension }]) => ({
@@ -25,6 +25,17 @@ export default () => ([
               value: fileType
             }))
         ],
+        validation: [
+          {
+            type: validationTypes.required,
+            message: 'Field is required'
+          },
+        ]
+      },
+
+      'file': {
+        fieldLabel: 'Choose a file',
+        placeholder: '',
         validation: [
           {
             type: validationTypes.required,

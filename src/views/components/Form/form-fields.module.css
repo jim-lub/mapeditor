@@ -28,3 +28,35 @@
     width: 12px;
     height: 12px;
   }
+
+.fileInput {
+  width: 100%;
+  background-color: var(--grey-050);
+  border: dashed 1px var(--grey-400);
+  border-radius: 4px;
+  padding: 40px 12px;
+  color: var(--text-color-dark);
+  font-size: 12px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.fileInput:disabled {
+  border: solid 1px var(--grey-300);
+  background-color: var(--grey-200);
+  color: var(--grey-500);
+}
+
+.fileInput:focus {
+  outline: none;
+  border: solid 1px transparent !important;
+  box-shadow: 0 0 0 2px var(--blue-300);
+}
+
+.fileInput.error {
+  border: dashed 1px var(--red-700);
+}
+
+.fileInput.isDragging {
+  border: dashed 2px var(--blue-300);
+}
