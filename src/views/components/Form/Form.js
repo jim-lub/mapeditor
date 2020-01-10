@@ -5,12 +5,17 @@ import useDebouncedEffect from 'use-debounced-effect';
 
 import {
   initializeForm,
+  setFieldTouched,
+  updateFieldValue,
+
+  getFormState,
+
+
   validateForm,
 
   previousStep,
   nextStep,
 
-  updateFieldValue,
 
   getFormData,
   getNormalizedFormData,
@@ -20,8 +25,74 @@ import {
 } from 'state/ducks/form';
 
 import { Loader } from 'views/components/Loader';
+import { Field } from '../Form';
 
 const Component = ({
+  uid,
+  schema,
+  steps = [],
+  formState,
+  children,
+  onSubmit,
+  actions
+}) => {
+  useEffect(() => {
+    actions.initializeForm({ uid, schema });
+  }, [uid, schema, actions]);
+
+  const handleBlur = ({ field }) => {
+    // handle blur actions
+  }
+
+  const handleChange = ({ field, value }) => {
+    actions.updateFieldValue({ uid, field, value });
+  }
+
+  const handleFormSubmit = () => {
+    onSubmit(uid)
+  }
+
+  if (!formState) {
+    return <Loader.Simple />
+  }
+
+  return (
+    <form id={uid} onSubmit={handleFormSubmit}>
+      {
+        children({
+          state: {},
+          provided: {
+            uid,
+            onBlur: handleBlur,
+            onChange: handleChange
+          },0
+          submitDisabled: true
+        })
+      }
+    </form>
+  )
+}
+
+const mapStateToProps = (state, { uid }) => {
+  return {
+    formState: getFormState(state, { uid })
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      initializeForm,
+      setFieldTouched,
+      updateFieldValue
+    }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);
+
+
+const Component2 = ({
   id = null,
   schema = {},
   components = [],
@@ -42,7 +113,7 @@ const Component = ({
   const isLastStep = (stepIndex === (steps.length - 1));
 
   useEffect(() => {
-    actions.initializeForm({ id, schema });
+    actions.initializeForm({ uid: id, schema });
   }, [id, schema, actions]);
 
   useEffect(() => {
@@ -57,7 +128,7 @@ const Component = ({
   const handleBlur = () => actions.validateForm({ id });
   const handleChange = ({ name, value }) => {
     console.log(normalizedFormState);
-    
+
     actions.updateFieldValue({
       id,
       stepName: steps[stepIndex],
@@ -127,34 +198,3 @@ const Component = ({
     </form>
   )
 }
-
-const mapStateToProps = (state, { id }) => {
-  if (!state.form.collection.hasOwnProperty(id)) return {};
-
-  const { pending, disabled } = getFormStatus(state, { id });
-  const steps = getSteps(state, { id });
-  const stepIndex = getStepIndex(state, { id });
-
-  return {
-    pending,
-    disabled,
-    steps,
-    stepIndex,
-    formState: getFormData(state, { id }),
-    normalizedFormState: getNormalizedFormData(state, { id })
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({
-      initializeForm,
-      validateForm,
-      previousStep,
-      nextStep,
-      updateFieldValue
-    }, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Component);

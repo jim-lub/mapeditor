@@ -1,8 +1,8 @@
 import * as types from './types';
 
-export const newForm = ({ id, data, steps }) => ({
+export const newForm = ({ uid, type, steps, fields }) => ({
   type: types.newForm,
-  payload: { id, data, steps }
+  payload: { uid, type, steps, fields }
 });
 
 export const clearForm = ({ id }) => ({
@@ -10,9 +10,14 @@ export const clearForm = ({ id }) => ({
   payload: { id }
 });
 
-export const setFieldValue = ({ id, stepName, fieldName, fieldValue }) => ({
+export const setFieldTouched = ({ uid, field }) => ({
+  type: types.setFieldTouched,
+  payload: { uid, field }
+});
+
+export const setFieldValue = ({ uid, field, value }) => ({
   type: types.setFieldValue,
-  payload: { id, stepName, fieldName, fieldValue }
+  payload: { uid, field, value }
 });
 
 export const clearFieldValue = ({ id, stepName, fieldName }) => ({

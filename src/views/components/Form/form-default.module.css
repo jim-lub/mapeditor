@@ -7,38 +7,17 @@ label {
   font-weight: bold;
 }
 
-input {
-  width: 100%;
-  background-color: var(--white);
-  border: solid 1px var(--grey-400);
-  border-radius: 4px;
-  padding: 10px 12px;
-  color: var(--text-color-dark);
-  font-size: 12px;
-  flex-grow: 1;
-}
+input { }
 
-input:disabled {
-  border: solid 1px var(--grey-300);
-  background-color: var(--grey-200);
-  color: var(--grey-500);
-}
+input:disabled { }
 
-input:focus {
-  outline: none;
-}
+input:focus { }
 
-input::placeholder {
-  color: var(--grey-400);
-}
+input::placeholder { }
 
-input[type="password"] {
+input[type="password"] { }
 
-}
-
-input[type="number"] {
-
-}
+input[type="number"] { }
 
 textarea {
   outline: none;

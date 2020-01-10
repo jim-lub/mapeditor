@@ -1,20 +1,45 @@
-/******
-*  Styling for Select is provided inside the component
-******/
-
 .input {
   width: 100%;
-  height: 100%;
+  padding: 10px 12px;
+  background-color: var(--white);
+  border: solid 1px var(--grey-400);
+  border-radius: 4px;
+  color: var(--text-color-dark);
+  font-size: 12px;
 }
 
+  .input:disabled {
+    border: solid 1px var(--grey-300);
+    background-color: var(--grey-200);
+    color: var(--grey-500);
+  }
+
   .input:focus {
+    outline: none;
     border: solid 1px transparent !important;
     box-shadow: 0 0 0 2px var(--blue-300);
   }
 
-  .input.error {
+  .input::placeholder {
+    color: var(--grey-400);
+  }
+
+  .input .pristine { }
+
+  .input .dirty { }
+
+  .input .touched { }
+
+  .input .untouched { }
+
+  .input .valid { }
+
+  .input.invalid {
     border: solid 1px var(--red-700);
   }
+
+
+
 
 .iconWrapper {
   position: absolute;

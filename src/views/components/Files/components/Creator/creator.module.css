@@ -3,4 +3,5 @@
   background-color: var(--white);
   border: solid 1px var(--grey-300);
   border-radius: 5px;
+  /* max-width: 300px; */
 }

@@ -2,22 +2,42 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as validate from './validation';
 
+import * as fieldTypes from 'lib/constants/fieldTypes';
 import * as validationTypes from 'lib/constants/validationTypes';
 
-export const initializeForm = ({ id, schema }) => dispatch => {
-  const steps = schema.map(({ stepName }) => stepName);
-
-  const data = schema.reduce((obj, step, index) => {
-    return {
-      ...obj,
-      [step.stepName]: {
-        ...step.fields
-      }
-    }
-  }, {})
-
-  dispatch( actions.newForm({ id, data, steps }) );
+export const initializeForm = ({ uid, schema: { type, steps, fields } }) => dispatch => {
+  // validate schema here..
+  dispatch( actions.newForm({ uid, type, steps, fields }) );
 }
+
+export const setFieldTouched = ({ uid, field }) => dispatch => {
+  dispatch( actions.setFieldTouched({ uid, field }) );
+}
+
+export const updateFieldValue = ({ uid, field, value }) => dispatch => {
+  dispatch( actions.setFieldValue({ uid, field, value }));
+}
+
+export const validateFields = ({ uid }) => (dispatch, getState) => {
+  const fieldsArray = Object.entries({});
+
+  fieldsArray.forEach(([field, { type, ...rest }]) => {
+    switch(type) {
+      case fieldTypes.text:
+        return () => null;
+
+      default:
+        console.log('No type specified for field: ' + field)
+        break;
+    }
+  });
+}
+
+const _validateText = () => {
+
+}
+
+
 
 export const clearForm = () => dispatch => null;
 export const submitForm = () => dispatch => null;
@@ -101,4 +121,4 @@ export const nextStep = ({ id }) => (dispatch, getState) => {
   }
 }
 
-export const updateFieldValue = actions.setFieldValue;
+// export const updateFieldValue = actions.setFieldValue;

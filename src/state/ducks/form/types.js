@@ -1,5 +1,6 @@
 export const newForm = "form/NEW";
 export const clearForm = "form/CLEAR";
+export const setFieldTouched = "form/field/SET_FIELD_TOUCHED";
 export const setFieldValue = "form/field/SET_FIELD_VALUE";
 export const clearFieldValue = "form/field/CLEAR_FIELD_VALUE";
 export const setFieldErrors = "form/field/SET_FIELD_ERRORS";

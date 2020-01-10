@@ -15,18 +15,19 @@ const Component = ({ actions }) => {
   const [uploading, setUploading] = useState(false);
 
   const handleSubmit = (data) => {
-    setUploading(true)
-
-    actions.createFile({
-      fileName: data.defaults['file-name'].value,
-      fileType: data.defaults['file-type'].value.value,
-      file: ( data.defaults['file'].value) ? data.defaults['file'].value.file : null,
-      parentId: '12345'
-    })
-    .then(uid => {
-      console.log('created file with id: ' + uid)
-      setUploading(false);
-    })
+    console.log(data)
+    // setUploading(true)
+    //
+    // actions.createFile({
+    //   fileName: data.defaults['file-name'].value,
+    //   fileType: data.defaults['file-type'].value.value,
+    //   file: ( data.defaults['file'].value) ? data.defaults['file'].value.file : null,
+    //   parentId: '12345'
+    // })
+    // .then(uid => {
+    //   console.log('created file with id: ' + uid)
+    //   setUploading(false);
+    // })
   }
 
   if (uploading) {
@@ -39,14 +40,16 @@ const Component = ({ actions }) => {
   }
 
   return (
-    <Form id="creator-form" schema={creatorFormSchema()} components={[<CreatorForm />]} onSubmit={handleSubmit}>
+    <Form uid="creator-form" schema={creatorFormSchema()} onSubmit={handleSubmit}>
       {
-        ({ Component, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ state, provided, submitDisabled }) => {
           return (
             <div className={styles.container}>
-              { Component }
+              <Field.Text field="file-name" autoFocus {...provided} />
+              <Field.Text field="file-name-two" {...provided} />
+              <Field.Text field="file-name-three" {...provided} />
 
-              <button className="blue" disabled={disableNextButton}>Create / upload</button>
+              <button className="blue" disabled={submitDisabled}>Create / upload</button>
             </div>
           )
         }

@@ -1,7 +1,79 @@
 import * as validationTypes from 'lib/constants/validationTypes';
 import fileConstants from 'lib/constants/fileConstants';
 
-export default () => ([
+export default () => ({
+  type: 'form/SINGLE_STEP',
+
+  steps: [
+    {
+      name: 'defaults',
+      fields: ['file-name', 'file-type', 'file']
+    }
+  ],
+
+  fields: {
+
+    'file-name': {
+      label: 'File name',
+      placeholder: 'placeholder',
+      initialValue: 'test',
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        }
+      ]
+    },
+
+    'file-name-two': {
+      label: 'File name 2',
+      placeholder: 'placeholder 2',
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        }
+      ]
+    },
+
+    'file-name-three': {
+      label: 'File name 3',
+      placeholder: 'placeholder 3',
+      disabled: true
+    },
+
+    'file-type': {
+      label: 'File Type',
+      options: [
+        ...Object.entries(fileConstants)
+          .map(([fileType, { extension }]) => ({
+            label: extension,
+            value: fileType
+          }))
+      ],
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        },
+      ]
+    },
+
+    'file': {
+      label: 'Choose a file',
+      placeholder: '',
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        },
+      ]
+    }
+
+  }
+});
+
+export const a = () => ([
   {
     stepName: 'defaults',
     fields: {
