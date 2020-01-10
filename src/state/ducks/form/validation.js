@@ -2,9 +2,7 @@ import isEmptyValidator from 'validator/lib/isEmpty';
 import isLengthValidator from 'validator/lib/isLength';
 import equalsValidator from 'validator/lib/equals';
 
-import * as selectors from './selectors';
-
-export const required = ({ value }) => (dispatch) => {
+export const required = ({ value }) => {
   switch (typeof value) {
     case 'string':
       return isEmptyValidator(value, { ignore_whitespace: true })
@@ -16,16 +14,11 @@ export const required = ({ value }) => (dispatch) => {
   }
 }
 
-export const matches = ({ value, id, stepName, fieldName }) => (dispatch, getState) => {
-  const match = selectors.getFieldData(getState(), { id, stepName, fieldName });
+export const matches = ({ value, match }) => !equalsValidator(value, match.value) && (match.value, value);
+export const length = ({ value, min = 0, max = undefined }) => !isLengthValidator(value, { min, max });
+export const minValue = ({ value, minValue }) => value < minValue;
+export const maxValue = ({ value, maxValue }) => value > maxValue;
 
-  return !equalsValidator(value, match.value) && (match.value, value);
-}
-
-export const minValue = ({ value, minValue }) => () => value < minValue;
-export const maxValue = ({ value, maxValue }) => () => value > maxValue;
-
-export const length = ({ value, min = 0, max = undefined }) =>  () => !isLengthValidator(value, { min, max });
 
 export const number = ({ value }) => (dispatch) => {
   if (typeof value !== 'number') return false;

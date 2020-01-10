@@ -10,6 +10,16 @@ export const initializeForm = ({ uid, schema: { type, steps, fields } }) => disp
   dispatch( actions.newForm({ uid, type, steps, fields }) );
 }
 
+export const validateForm = ({ uid }) => (dispatch, getState) => {
+  const state = getState();
+  const fieldsArray = Object.values( selectors.getFields(state, { uid }) );
+
+  const errors = fieldsArray.filter(({ errors }) => errors.length > 0);
+  const valid = errors.length === 0;
+
+  dispatch( actions.setFormValid({ uid, valid }) );
+}
+
 export const setFieldTouched = ({ uid, field }) => dispatch => {
   dispatch( actions.setFieldTouched({ uid, field }) );
 }
@@ -19,106 +29,61 @@ export const updateFieldValue = ({ uid, field, value }) => dispatch => {
 }
 
 export const validateFields = ({ uid }) => (dispatch, getState) => {
-  const fieldsArray = Object.entries({});
+  const state = getState();
+  const fieldsArray = Object.entries( selectors.getFields(state, { uid }) );
 
-  fieldsArray.forEach(([field, { type, ...rest }]) => {
-    switch(type) {
-      case fieldTypes.text:
-        return () => null;
+  fieldsArray.forEach(([field, { type: fieldType, meta, ...rest }]) => {
+    const errors = dispatch( _validateField({ uid, field, fieldType, ...rest }) );
+    const valid = errors.length === 0;
 
-      default:
-        console.log('No type specified for field: ' + field)
-        break;
+    if (!valid || (valid !== meta.valid)) {
+      dispatch( actions.setFieldErrors({ uid, field, valid, errors }) );
+    };
+  });
+}
+
+const _validateField = ({ uid, fieldType, value = '', validation = [], ...rest }) => (dispatch, getState) => {
+  return validation.filter(({ matchField, type: validationType, ...rest }) => {
+    const match = {};
+
+    if (validationType === validationTypes.matches) {
+      match.value = selectors.getFieldValue(getState(), { uid, field: matchField });
     }
+
+    return _validator({ value, match, ...rest })[fieldType][validationType];
   });
 }
 
-const _validateText = () => {
+const _validator = ({ value, match, ...rest }) => ({
+  [ fieldTypes.text ]: {
+    [ validationTypes.required ]: validate.required({ value, ...rest }),
+    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]: validate.length({ value, ...rest }),
+  },
 
-}
+  [ fieldTypes.textarea ]: {
+    [ validationTypes.required ]: validate.required({ value, ...rest }),
+    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]: validate.length({ value, ...rest }),
+  },
 
+  [ fieldTypes.number ]: {
+    [ validationTypes.required ]: validate.required({ value, ...rest }),
+    [ validationTypes.minValue ]: validate.minValue({ value, ...rest }),
+    [ validationTypes.maxValue ]: validate.maxValue({ value, ...rest }),
+  },
 
+  [ fieldTypes.password ]: {
+    [ validationTypes.required ]: validate.required({ value, ...rest }),
+    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]: validate.length({ value, ...rest }),
+  },
 
-export const clearForm = () => dispatch => null;
-export const submitForm = () => dispatch => null;
+  [ fieldTypes.select ]: {
+    [ validationTypes.required ]: validate.required({ value, ...rest }),
+  },
 
-export const validateForm = ({ id }) => (dispatch, getState) => {
-  const state = getState();
-  const formData = selectors.getFormData(state, { id });
-  const steps = selectors.getSteps(state, { id });
-  const stepIndex = selectors.getStepIndex(state, { id });
-  const stepName = steps[stepIndex];
-  let disableFormSubmit = false;
+  [ fieldTypes.file ]: {
 
-  Object.entries( formData[stepName] )
-    .forEach(([fieldName, { value = '', validation = [] }]) => {
-
-      const errors = validation.filter(({ type, ...rest }) => {
-        switch (type) {
-            case validationTypes.required:
-              return dispatch(
-                validate.required({ value })
-              )
-            case validationTypes.matches:
-              return dispatch(
-                validate.matches({ value, id, ...rest })
-              )
-            case validationTypes.minValue:
-              return dispatch(
-                validate.minValue({ value, ...rest })
-              )
-            case validationTypes.maxValue:
-              return dispatch(
-                validate.maxValue({ value, ...rest })
-              )
-            case validationTypes.length:
-              return dispatch(
-                validate.length({ value, ...rest })
-              )
-            case validationTypes.number:
-              return dispatch(
-                validate.number({ value, ...rest })
-              )
-            default: return null
-        }
-      });
-
-      if (errors.length > 0) {
-        disableFormSubmit = true;
-      }
-
-      dispatch( actions.setFieldErrors({
-        id,
-        stepName,
-        fieldName,
-        errors
-      }) );
-  });
-
-  dispatch( actions.setFormDisableBoolean({
-    id,
-    boolean: disableFormSubmit
-  }) );
-}
-
-export const previousStep = ({ id }) => (dispatch, getState) => {
-  const state = getState();
-  const stepIndex = selectors.getStepIndex(state, { id });
-
-  if (stepIndex > 0) {
-    return dispatch( actions.setStepIndex({ id, stepIndex: stepIndex - 1 }) );
   }
-}
-
-export const nextStep = ({ id }) => (dispatch, getState) => {
-  const state = getState();
-  const steps = selectors.getSteps(state, { id });
-  const stepIndex = selectors.getStepIndex(state, { id });
-  const { disabled } = selectors.getFormStatus(state, { id });
-
-  if (!disabled && stepIndex < (steps.length - 1)) {
-    return dispatch( actions.setStepIndex({ id, stepIndex: stepIndex + 1 }) );
-  }
-}
-
-// export const updateFieldValue = actions.setFieldValue;
+});

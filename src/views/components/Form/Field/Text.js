@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
+  updateFieldValue,
   setFieldTouched,
 
   getFieldMeta,
@@ -39,10 +40,13 @@ const Component = ({ uid, field, autoFocus, meta, placeholder, value = '', onBlu
   }
 
   const handleChange = (e) => {
-    onChange({
+    actions.updateFieldValue({
+      uid,
       field,
       value: e.target.value
-    })
+    });
+
+    onChange({ field });
   }
 
   const inputClassNames = concatClassNames([
@@ -88,6 +92,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({
+      updateFieldValue,
       setFieldTouched
     }, dispatch)
   }

@@ -1,8 +1,5 @@
 export const newForm = "form/NEW";
-export const clearForm = "form/CLEAR";
-export const setFieldTouched = "form/field/SET_FIELD_TOUCHED";
-export const setFieldValue = "form/field/SET_FIELD_VALUE";
-export const clearFieldValue = "form/field/CLEAR_FIELD_VALUE";
-export const setFieldErrors = "form/field/SET_FIELD_ERRORS";
-export const setFormDisableBoolean = "form/SET_FORM_DISABLE_BOOLEAN";
-export const setStepIndex = "form/SET_STEP_INDEX";
+export const setFormValid = "form/SET_VALID";
+export const setFieldErrors = "form/field/SET_ERRORS";
+export const setFieldTouched = "form/field/SET_TOUCHED";
+export const setFieldValue = "form/field/SET_VALUE";

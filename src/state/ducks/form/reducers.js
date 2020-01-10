@@ -19,7 +19,7 @@ export const newForm = (state, action) => {
             meta: {
               touched: false,
               pristine: true,
-              valid: false,
+              valid: true,
               disabled
             }
           }
@@ -32,6 +32,43 @@ export const newForm = (state, action) => {
       }
     }
   };
+}
+
+export const setFormValid = (state, action) => {
+  const { uid, valid } = action.payload;
+
+  return {
+    ...state,
+    [uid]: {
+      ...state[uid],
+      meta: {
+        ...state[uid].meta,
+        valid
+      }
+    }
+  }
+}
+
+export const setFieldErrors = (state, action) => {
+  const { uid, field, valid, errors } = action.payload;
+
+  return {
+    ...state,
+    [uid]: {
+      ...state[uid],
+      fields: {
+        ...state[uid].fields,
+        [field]: {
+          ...state[uid].fields[field],
+          errors,
+          meta: {
+            ...state[uid].fields[field].meta,
+            valid
+          }
+        }
+      }
+    }
+  }
 }
 
 export const setFieldTouched = (state, action) => {
@@ -49,11 +86,14 @@ export const setFieldTouched = (state, action) => {
             touched: true
           }
         }
+      },
+      meta: {
+        ...state[uid].meta,
+        touched: true
       }
     }
   }
 }
-
 
 export const setFieldValue = (state, action) => {
   const { uid, field, value } = action.payload;
@@ -72,114 +112,11 @@ export const setFieldValue = (state, action) => {
             pristine: false
           }
         }
-      }
-    }
-  }
-}
-
-// export const newForm = (state, action) => {
-//   const { id, data, steps } = action.payload;
-//
-//   return {
-//     ...state,
-//     collection: {
-//       ...state.collection,
-//       [id]: {
-//         pending: false,
-//         disabled: true,
-//         steps,
-//         stepIndex: 0,
-//         data
-//       }
-//     }
-//   };
-// }
-
-export const clearForm = (state, action) => {
-  // const { id } = action.payload;
-
-  return state;
-}
-
-export const setFieldValue2 = (state, action) => {
-  const { id, stepName, fieldName, fieldValue } = action.payload;
-
-  return {
-    ...state,
-    collection: {
-      ...state.collection,
-      [id]: {
-        ...state.collection[id],
-        data: {
-          ...state.collection[id].data,
-          [stepName]: {
-            ...state.collection[id].data[stepName],
-            [fieldName]: {
-              ...state.collection[id].data[stepName][fieldName],
-              value: fieldValue
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-export const clearFieldValue = (state, action) => {
-  // const { id } = action.payload;
-
-  return state;
-}
-
-export const setFieldErrors = (state, action) => {
-  const { id, stepName, fieldName, errors } = action.payload;
-
-  return {
-    ...state,
-    collection: {
-      ...state.collection,
-      [id]: {
-        ...state.collection[id],
-        data: {
-          ...state.collection[id].data,
-          [stepName]: {
-            ...state.collection[id].data[stepName],
-            [fieldName]: {
-              ...state.collection[id].data[stepName][fieldName],
-              errors
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-export const setFormDisableBoolean = (state, action) => {
-  const { id, boolean } = action.payload;
-
-  return {
-    ...state,
-    collection: {
-      ...state.collection,
-      [id]: {
-        ...state.collection[id],
-        disabled: boolean
-      }
-    }
-  }
-}
-
-export const setStepIndex = (state, action) => {
-  const { id, stepIndex } = action.payload;
-
-  return {
-    ...state,
-    collection: {
-      ...state.collection,
-      [id]: {
-        ...state.collection[id],
-        stepIndex
+      },
+      meta: {
+        ...state[uid].meta,
+        touched: true,
+        pristine: false
       }
     }
   }

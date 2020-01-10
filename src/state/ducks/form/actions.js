@@ -5,9 +5,14 @@ export const newForm = ({ uid, type, steps, fields }) => ({
   payload: { uid, type, steps, fields }
 });
 
-export const clearForm = ({ id }) => ({
-  type: types.clearForm,
-  payload: { id }
+export const setFormValid = ({ uid, valid }) => ({
+  type: types.setFormValid,
+  payload: { uid, valid }
+})
+
+export const setFieldErrors = ({ uid, field, valid, errors }) => ({
+  type: types.setFieldErrors,
+  payload: { uid, field, valid, errors }
 });
 
 export const setFieldTouched = ({ uid, field }) => ({
@@ -18,24 +23,4 @@ export const setFieldTouched = ({ uid, field }) => ({
 export const setFieldValue = ({ uid, field, value }) => ({
   type: types.setFieldValue,
   payload: { uid, field, value }
-});
-
-export const clearFieldValue = ({ id, stepName, fieldName }) => ({
-  type: types.clearFieldValue,
-  payload: { id, stepName, fieldName }
-});
-
-export const setFieldErrors = ({ id, stepName, fieldName, errors }) => ({
-  type: types.setFieldErrors,
-  payload: { id, stepName, fieldName, errors }
-});
-
-export const setFormDisableBoolean = ({ id, boolean }) => ({
-  type: types.setFormDisableBoolean,
-  payload: { id, boolean }
-});
-
-export const setStepIndex = ({ id, stepIndex }) => ({
-  type: types.setStepIndex,
-  payload: { id, stepIndex }
 });
