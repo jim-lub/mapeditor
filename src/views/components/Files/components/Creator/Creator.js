@@ -6,7 +6,7 @@ import { createFile } from 'state/ducks/files';
 
 import creatorFormSchema from './creator-form-schema';
 
-import { Form, Field } from 'views/components/Form';
+import { Form, Field, FormComponent } from 'views/components/Form';
 import { Loader } from 'views/components/Loader';
 
 import styles from './creator.module.css';
@@ -44,10 +44,18 @@ const Component = ({ actions }) => {
       {
         ({ state, provided, submitDisabled }) => {
           return (
-            <div className={styles.container}>
-              <Field.Text field="file-name" autoFocus {...provided} />
-              <Field.Text field="file-name-two" {...provided} />
-              <Field.Text field="file-name-three" {...provided} />
+            <div className={styles.container} style={{width: 600}}>
+              <FormComponent.Row forField="file-name" {...provided}>
+                <Field.Text field="file-name" autoFocus {...provided} />
+              </FormComponent.Row>
+
+              <FormComponent.Row forField="file-name-two" {...provided}>
+                <Field.Text field="file-name-two" autoFocus {...provided} />
+              </FormComponent.Row>
+
+              <FormComponent.Row forField="file-name-three" {...provided}>
+                <Field.Text field="file-name-three" autoFocus {...provided} />
+              </FormComponent.Row>
 
               <button className="blue" disabled={submitDisabled}>Create / upload</button>
             </div>

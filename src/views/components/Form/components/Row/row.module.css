@@ -1,36 +1,40 @@
-.wrapper {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: auto auto;
-  margin-bottom: 6px;
+.label {
+  width: auto;
+  padding: 0px;
+  margin: 0px;
+  color: var(--text-color-dark);
+  font-size: 11px;
+  font-weight: bold;
 }
 
-.labelContainer {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
+.wrapper {
+  margin: 10px;
+}
+
+.flexWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.labelWrapper {
+  flex: 1 1 25%;
+  min-width: 100px;
+  max-width: 250px;
   padding-right: 20px;
   overflow: hidden;
   text-align: right;
   white-space: nowrap;
 }
 
-  .fieldDescText {
-    font-size: 10px;
-    color: var(--grey-600);
-  }
-
-.inputContainer {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
+.childrenWrapper {
+  flex: 5 1 75%;
 }
 
 .errorContainer {
   overflow: hidden;
   height: auto;
   max-height: 100px;
-  grid-column: 2/ 3;
-  grid-row: 2 / 3;
   padding: 3px 5px 0 5px;
   text-align: right;
   opacity: 1;

@@ -1,0 +1,11 @@
+.wrapper {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.icon {
+  margin: 14px;
+  width: 12px;
+  height: 12px;
+}

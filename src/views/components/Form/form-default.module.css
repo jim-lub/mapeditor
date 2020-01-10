@@ -1,11 +1,4 @@
-label {
-  width: auto;
-  padding: 0px;
-  margin: 0px;
-  color: var(--text-color-dark);
-  font-size: 11px;
-  font-weight: bold;
-}
+label {}
 
 input { }
 
@@ -19,31 +12,13 @@ input[type="password"] { }
 
 input[type="number"] { }
 
-textarea {
-  outline: none;
-  background-color: var(--white);
-  border: solid 1px var(--grey-400);
-  border-radius: 4px;
-  padding: 10px 12px;
-  color: var(--text-color-dark);
-  font-size: 12px;
-  resize: none;
-  flex-grow: 1;
-}
+textarea { }
 
-textarea:disabled {
-  background-color: var(--grey-200);
-}
+textarea:disabled { }
 
-textarea:focus {
-  outline: none;
-  background-color: var(--grey-050);
-  border: solid 1px var(--blue-700);
-}
+textarea:focus { }
 
-textarea::placeholder {
-  color: var(--grey-400);
-}
+textarea::placeholder { }
 
 button {
   outline: none;

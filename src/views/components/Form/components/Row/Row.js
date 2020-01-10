@@ -1,37 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import {
+  getFieldErrors,
+  getFieldLabel,
+  getFieldMeta,
+} from 'state/ducks/form';
 
 import { concatClassNames } from 'lib/utils';
 
 import styles from './row.module.css';
 
-export default ({ fieldName, fieldLabel, fieldDesc, blurred, errors = {}, children }) => {
+const Component = ({ errors = [], label, meta, forField, children }) => {
   const errorContainerClassNames = concatClassNames([
-    styles.errorContainer,
-    ((Object.keys(errors).length > 0) && blurred) ? null : styles.collapsed
-  ]);
+      styles.errorContainer,
+      ((Object.keys(errors).length > 0) && meta.touched) ? null : styles.collapsed
+    ]);
 
-  const renderErrors = () => Object.values(errors).map(({ message = '', type }) => {
-    return (
-      <li key={type}>{ message || type }</li>
-    )
-  })
+    const renderErrors = () => Object.values(errors).map(({ message = '', type }) => {
+      return (
+        <li key={type}>{ message || type }</li>
+      )
+    })
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.labelContainer}>
-        <label htmlFor={fieldName}>
-          { fieldLabel }
-        </label>
+      <div className={styles.flexWrapper}>
+        <div className={styles.labelWrapper}>
+          <label htmlFor={forField} className={styles.label}>
+            { label }
+          </label>
+        </div>
 
-        <br />
-
-        <span className={styles.fieldDescText}>
-          { fieldDesc }
-        </span>
-      </div>
-
-      <div className={styles.inputContainer}>
-        { children }
+        <div className={styles.childrenWrapper}>
+          { children }
+        </div>
       </div>
 
       <div className={errorContainerClassNames}>
@@ -41,5 +44,17 @@ export default ({ fieldName, fieldLabel, fieldDesc, blurred, errors = {}, childr
         </ul>
       </div>
     </div>
-  );
+  )
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const { uid, forField } = ownProps;
+
+  return {
+    errors: getFieldErrors(state, { uid, field: forField }),
+    label: getFieldLabel(state, { uid, field: forField }),
+    meta: getFieldMeta(state, { uid, field: forField })
+  }
+}
+
+export default connect(mapStateToProps)(Component);
