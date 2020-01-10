@@ -28,7 +28,7 @@ export default () => ({
     },
 
     'file-name-two': {
-      type: fieldTypes.text,
+      type: fieldTypes.number,
       label: 'File name 2',
       placeholder: 'placeholder 2',
       validation: [
@@ -37,15 +37,12 @@ export default () => ({
           message: 'Field is required'
         },
         {
-          type: validationTypes.matches,
-          matchField: 'file-name',
-          message: 'Must match file-name'
+          type: validationTypes.minValue,
+          minValue: 5
         },
         {
-          type: validationTypes.length,
-          min: 5,
-          max: 50,
-          message: 'Scene name length must be between 5 and 50 characters'
+          type: validationTypes.maxValue,
+          maxValue: 5000
         }
       ]
     },
@@ -57,33 +54,34 @@ export default () => ({
       disabled: true
     },
 
-    // 'file-type': {
-    //   label: 'File Type',
-    //   options: [
-    //     ...Object.entries(fileConstants)
-    //       .map(([fileType, { extension }]) => ({
-    //         label: extension,
-    //         value: fileType
-    //       }))
-    //   ],
-    //   validation: [
-    //     {
-    //       type: validationTypes.required,
-    //       message: 'Field is required'
-    //     },
-    //   ]
-    // },
-    //
-    // 'file': {
-    //   label: 'Choose a file',
-    //   placeholder: '',
-    //   validation: [
-    //     {
-    //       type: validationTypes.required,
-    //       message: 'Field is required'
-    //     },
-    //   ]
-    // }
+    'file-type': {
+      type: fieldTypes.select,
+      label: 'File Type',
+      options: [
+        ...Object.entries(fileConstants)
+          .map(([fileType, { extension }]) => ({
+            label: extension,
+            value: fileType
+          }))
+      ],
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        },
+      ]
+    },
+
+    'file': {
+      label: 'Choose a file',
+      placeholder: '',
+      validation: [
+        // {
+        //   type: validationTypes.required,
+        //   message: 'Field is required'
+        // },
+      ]
+    }
 
   }
 });

@@ -1,82 +1,97 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  updateFieldValue,
+  setFieldTouched,
+
+  getFieldMeta,
+  getFieldPlaceholder,
+  getFieldValue,
+} from 'state/ducks/form';
 
 import { concatClassNames } from 'lib/utils';
 
-import { Row } from '../components/Row';
-
-import { ReactComponent as ValidIcon } from 'assets/static/icons/form/valid.svg';
-import { ReactComponent as InvalidIcon } from 'assets/static/icons/form/invalid.svg';
+import { ValidationIndicator } from '../components';
 
 import '../form-default.module.css';
+import styles from '../form.module.css';
 import fieldStyles from '../form-fields.module.css';
 
-export default ({ name, state = {}, autoFocus = false, onBlur, onChange }) => {
-  const [blurred, setBlurred] = useState(false);
+const Component = ({ uid, field, autoFocus, meta, placeholder, value = '', onBlur, onChange, actions }) => {
   const inputRef = useRef(null);
-  const { value = '', fieldLabel, fieldDesc, placeholder, disabled, errors = {} } = state[name];
-  const hasErrors = Object.keys(errors).length > 0;
 
   useEffect(() => {
     if (inputRef.current && autoFocus) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
   }, [inputRef, autoFocus]);
 
-  const handleBlur = () => {
-    setBlurred(true);
-    onBlur();
-  };
+  const handleBlur = (e) => {
+    if (!meta.touched) {
+      actions.setFieldTouched({ uid, field });
+    }
+
+    onBlur({ field });
+  }
 
   const handleChange = (e) => {
-     const { value } = e.target;
+    const { value } = e.target;
 
-    if (!isNaN(value)) {
-      onChange({
-        name,
-        value: Number(value).toString()
-      });
-    }
-  };
+   if (!isNaN(value)) {
+     actions.updateFieldValue({
+       uid,
+       field,
+       value: Number(value).toString()
+     });
+
+     onChange({ field });
+   }
+  }
 
   const inputClassNames = concatClassNames([
     fieldStyles.input,
-    (hasErrors && blurred) ? fieldStyles.error : null
+    (meta.touched && meta.valid) ? fieldStyles.valid : null,
+    (meta.touched && !meta.valid) ? fieldStyles.invalid : null,
   ]);
 
   return (
-    <Row
-      fieldName={name}
-      fieldLabel={fieldLabel}
-      fieldDesc={fieldDesc}
-      blurred={blurred}
-      errors={errors}
-    >
+    <div className={styles.wrapper}>
       <input
         type="text"
         className={inputClassNames}
-        name={name}
+        disabled={meta.disabled}
+        name={field}
         placeholder={placeholder}
+        ref={inputRef}
         value={value}
         onBlur={handleBlur}
         onChange={handleChange}
-        disabled={disabled}
-        ref={inputRef}
       />
 
-      {
-        hasErrors && blurred &&
-        <div className={fieldStyles.iconWrapper}>
-          <InvalidIcon className={fieldStyles.icon}/>
-        </div>
-      }
-
-      {
-        !hasErrors && blurred &&
-        <div className={fieldStyles.iconWrapper}>
-          <ValidIcon className={fieldStyles.icon}/>
-        </div>
-      }
-    </Row>
+      <ValidationIndicator touched={meta.touched} valid={meta.valid} />
+    </div>
   )
-
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const { uid, field } = ownProps;
+
+  return {
+    meta: getFieldMeta(state, { uid, field }),
+    placeholder: getFieldPlaceholder(state, { uid, field }),
+    value: getFieldValue(state, { uid, field }),
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      updateFieldValue,
+      setFieldTouched
+    }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

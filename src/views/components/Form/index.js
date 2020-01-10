@@ -4,7 +4,7 @@ import Field from './Field';
 
 import { Row } from './components';
 
-import { ProgressBar } from './components/ProgressBar';
+// import { ProgressBar } from './components/ProgressBar';
 import { ProgressBar2 } from './components/ProgressBar2';
 
 const FormComponent = {

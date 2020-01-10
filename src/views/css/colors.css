@@ -56,6 +56,10 @@
   --red-500: #c06f74;
   --red-700: #b2676b; */
 
+  --rgba-grey-02: rgba(33, 33, 33, 0.2);
+  --rgba-grey-05: rgba(33, 33, 33, 0.5);
+  --rgba-grey-08: rgba(33, 33, 33, 0.8);
+
   --rgba-blue-02: rgba(86, 162, 216, 0.2);
   --rgba-blue-05: rgba(86, 162, 216, 0.5);
   --rgba-blue-08: rgba(86, 162, 216, 0.8);

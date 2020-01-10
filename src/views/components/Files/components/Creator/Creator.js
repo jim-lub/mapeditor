@@ -50,11 +50,19 @@ const Component = ({ actions }) => {
               </FormComponent.Row>
 
               <FormComponent.Row forField="file-name-two" {...provided}>
-                <Field.Text field="file-name-two" autoFocus {...provided} />
+                <Field.Number field="file-name-two" {...provided} />
               </FormComponent.Row>
 
               <FormComponent.Row forField="file-name-three" {...provided}>
-                <Field.Text field="file-name-three" autoFocus {...provided} />
+                <Field.Text field="file-name-three" {...provided} />
+              </FormComponent.Row>
+
+              <FormComponent.Row forField="file-type" {...provided}>
+                <Field.Select field="file-type" {...provided} />
+              </FormComponent.Row>
+
+              <FormComponent.Row forField="file" {...provided}>
+                <Field.File field="file" {...provided} />
               </FormComponent.Row>
 
               <button className="blue" disabled={submitDisabled}>Create / upload</button>

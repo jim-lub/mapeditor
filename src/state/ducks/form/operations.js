@@ -13,11 +13,14 @@ export const initializeForm = ({ uid, schema: { type, steps, fields } }) => disp
 export const validateForm = ({ uid }) => (dispatch, getState) => {
   const state = getState();
   const fieldsArray = Object.values( selectors.getFields(state, { uid }) );
+  const meta = selectors.getFormMeta(state, { uid });
 
   const errors = fieldsArray.filter(({ errors }) => errors.length > 0);
   const valid = errors.length === 0;
 
-  dispatch( actions.setFormValid({ uid, valid }) );
+  if (!valid || (valid !== meta.valid)) {
+    dispatch( actions.setFormValid({ uid, valid }) );
+  };
 }
 
 export const setFieldTouched = ({ uid, field }) => dispatch => {
@@ -33,7 +36,7 @@ export const validateFields = ({ uid }) => (dispatch, getState) => {
   const fieldsArray = Object.entries( selectors.getFields(state, { uid }) );
 
   fieldsArray.forEach(([field, { type: fieldType, meta, ...rest }]) => {
-    const errors = dispatch( _validateField({ uid, field, fieldType, ...rest }) );
+    const errors = dispatch( _validateField({ uid, fieldType, ...rest }) );
     const valid = errors.length === 0;
 
     if (!valid || (valid !== meta.valid)) {
@@ -50,40 +53,53 @@ const _validateField = ({ uid, fieldType, value = '', validation = [], ...rest }
       match.value = selectors.getFieldValue(getState(), { uid, field: matchField });
     }
 
-    return _validator({ value, match, ...rest })[fieldType][validationType];
+    return _validator[fieldType][validationType]({ value, match, ...rest });
   });
 }
 
-const _validator = ({ value, match, ...rest }) => ({
+const _validator = ({
   [ fieldTypes.text ]: {
-    [ validationTypes.required ]: validate.required({ value, ...rest }),
-    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
-    [ validationTypes.length ]: validate.length({ value, ...rest }),
+    [ validationTypes.required ]:
+      ({ value, match, ...rest }) => validate.required({ value, ...rest }),
+    [ validationTypes.matches ]:
+      ({ value, match, ...rest }) => validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]:
+      ({ value, match, ...rest }) => validate.length({ value, ...rest }),
   },
 
   [ fieldTypes.textarea ]: {
-    [ validationTypes.required ]: validate.required({ value, ...rest }),
-    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
-    [ validationTypes.length ]: validate.length({ value, ...rest }),
+    [ validationTypes.required ]:
+      ({ value, match, ...rest }) => validate.required({ value, ...rest }),
+    [ validationTypes.matches ]:
+      ({ value, match, ...rest }) => validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]:
+      ({ value, match, ...rest }) => validate.length({ value, ...rest }),
   },
 
   [ fieldTypes.number ]: {
-    [ validationTypes.required ]: validate.required({ value, ...rest }),
-    [ validationTypes.minValue ]: validate.minValue({ value, ...rest }),
-    [ validationTypes.maxValue ]: validate.maxValue({ value, ...rest }),
+    [ validationTypes.required ]:
+      ({ value, ...rest }) => validate.required({ value, ...rest }),
+    [ validationTypes.minValue ]:
+      ({ value, ...rest }) => validate.minValue({ value, ...rest }),
+    [ validationTypes.maxValue ]:
+      ({ value, ...rest }) => validate.maxValue({ value, ...rest }),
   },
 
   [ fieldTypes.password ]: {
-    [ validationTypes.required ]: validate.required({ value, ...rest }),
-    [ validationTypes.matches ]: validate.matches({ value, match, ...rest }),
-    [ validationTypes.length ]: validate.length({ value, ...rest }),
+    [ validationTypes.required ]:
+      ({ value, ...rest }) => validate.required({ value, ...rest }),
+    [ validationTypes.matches ]:
+      ({ value, match, ...rest }) => validate.matches({ value, match, ...rest }),
+    [ validationTypes.length ]:
+      ({ value, ...rest }) => validate.length({ value, ...rest }),
   },
 
   [ fieldTypes.select ]: {
-    [ validationTypes.required ]: validate.required({ value, ...rest }),
+    [ validationTypes.required ]:
+      ({ value, ...rest }) => validate.required({ value: (value.value) ? value.value : '', ...rest }),
   },
 
   [ fieldTypes.file ]: {
-
+    // file validations
   }
 });

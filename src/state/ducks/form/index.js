@@ -25,11 +25,13 @@ export const updateFieldValue = operations.updateFieldValue;
 export const validateFields = operations.validateFields;
 
 /*** selectors ***/
+export const getFormMeta = selectors.getFormMeta;
+export const getFormState = selectors.getFormState;
+
 export const getFieldErrors = selectors.getFieldErrors;
 export const getFieldLabel = selectors.getFieldLabel;
 export const getFieldMeta = selectors.getFieldMeta;
 export const getFieldPlaceholder = selectors.getFieldPlaceholder;
 export const getFieldValue = selectors.getFieldValue;
 
-export const getFormMeta = selectors.getFormMeta;
-export const getFormState = selectors.getFormState;
+export const getSelectOptions = selectors.getSelectOptions;
