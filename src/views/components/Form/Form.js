@@ -10,6 +10,7 @@ import {
 
   getFormMeta,
   getFormState,
+  getNormalizedFormState
 } from 'state/ducks/form';
 
 import { Loader } from 'views/components/Loader';
@@ -20,6 +21,7 @@ const Component = ({
   steps = [],
   meta,
   formState,
+  normalizedFormState,
   children,
   onSubmit,
   actions
@@ -44,7 +46,9 @@ const Component = ({
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(uid)
+    onSubmit({
+      state: normalizedFormState
+    })
   }
 
   if (!formState) {
@@ -79,7 +83,8 @@ const Component = ({
 const mapStateToProps = (state, { uid }) => {
   return {
     meta: getFormMeta(state, { uid }),
-    formState: getFormState(state, { uid })
+    formState: getFormState(state, { uid }),
+    normalizedFormState: getNormalizedFormState(state, { uid })
   }
 }
 

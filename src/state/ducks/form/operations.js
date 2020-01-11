@@ -5,7 +5,7 @@ import * as validate from './validation';
 import * as fieldTypes from 'lib/constants/fieldTypes';
 import * as validationTypes from 'lib/constants/validationTypes';
 
-export const initializeForm = ({ uid, schema: { type, steps, fields } }) => dispatch => {
+export const initializeForm = ({ uid, schema: { type = '', steps = [], fields = {} } }) => dispatch => {
   // validate schema here..
   dispatch( actions.newForm({ uid, type, steps, fields }) );
 }

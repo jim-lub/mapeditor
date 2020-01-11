@@ -8,8 +8,12 @@ export default () => ({
   steps: [
     {
       name: 'defaults',
+      fields: ['file-name', 'file-name-width', 'file']
+    },
+    {
+      name: 'presets',
       fields: ['file-name', 'file-type', 'file']
-    }
+    },
   ],
 
   fields: {
@@ -27,10 +31,10 @@ export default () => ({
       ]
     },
 
-    'file-name-two': {
+    'file-name-width': {
       type: fieldTypes.number,
-      label: 'File name 2',
-      placeholder: 'placeholder 2',
+      label: 'Size (w, h)',
+      placeholder: '1-5000',
       validation: [
         {
           type: validationTypes.required,
@@ -38,7 +42,7 @@ export default () => ({
         },
         {
           type: validationTypes.minValue,
-          minValue: 5
+          minValue: 1
         },
         {
           type: validationTypes.maxValue,
@@ -73,6 +77,7 @@ export default () => ({
     },
 
     'file': {
+      type: fieldTypes.file,
       label: 'Choose a file',
       placeholder: '',
       validation: [

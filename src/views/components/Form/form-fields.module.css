@@ -44,7 +44,7 @@
 }
 
 .input.file {
-  height: 120px;
+  height: 140px;
   border: dashed 1px var(--grey-400);
   background-color: var(--grey-050);
   text-align: center;

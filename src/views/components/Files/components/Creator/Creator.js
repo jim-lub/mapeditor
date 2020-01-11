@@ -14,8 +14,8 @@ import styles from './creator.module.css';
 const Component = ({ actions }) => {
   const [uploading, setUploading] = useState(false);
 
-  const handleSubmit = (data) => {
-    console.log(data)
+  const handleSubmit = ({ state }) => {
+    console.log(state)
     // setUploading(true)
     //
     // actions.createFile({
@@ -49,8 +49,8 @@ const Component = ({ actions }) => {
                 <Field.Text field="file-name" autoFocus {...provided} />
               </FormComponent.Row>
 
-              <FormComponent.Row forField="file-name-two" {...provided}>
-                <Field.Number field="file-name-two" {...provided} />
+              <FormComponent.Row forField="file-name-width" {...provided}>
+                <Field.Number field="file-name-width" {...provided} />
               </FormComponent.Row>
 
               <FormComponent.Row forField="file-name-three" {...provided}>
@@ -71,19 +71,6 @@ const Component = ({ actions }) => {
         }
       }
     </Form>
-  )
-}
-
-const CreatorForm = ({ provided, state }) => {
-  const file = (state.file.value) ? state.file.value.localURL : null;
-
-  return (
-    <>
-      <Field.Text name="file-name" {...provided} />
-      <Field.Select name="file-type" {...provided} />
-      <Field.File name="file" {...provided} />
-      <img src={file} alt="No file.." style={{maxWidth:"100%"}}/>
-    </>
   )
 }
 

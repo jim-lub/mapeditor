@@ -27,6 +27,7 @@ export const validateFields = operations.validateFields;
 /*** selectors ***/
 export const getFormMeta = selectors.getFormMeta;
 export const getFormState = selectors.getFormState;
+export const getNormalizedFormState = selectors.getNormalizedFormState;
 
 export const getFieldErrors = selectors.getFieldErrors;
 export const getFieldLabel = selectors.getFieldLabel;
