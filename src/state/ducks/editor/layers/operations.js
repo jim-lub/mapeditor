@@ -39,6 +39,7 @@ export const clearStore = () => dispatch => {
 }
 
 export const createLayer = ({ layerType, layerName, tileSize }) => (dispatch, getState) => {
+  console.log(layerType)
   const state = getState();
   const layerId = uuid.create();
   const sortOrder = selectors.getLayerSortOrder( state );

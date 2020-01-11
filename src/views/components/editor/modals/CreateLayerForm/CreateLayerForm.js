@@ -6,19 +6,20 @@ import { createLayer } from 'state/ducks/editor/layers';
 
 import createLayerFormSchema from './create-layer-form-schema';
 
-import { Form, Field } from 'views/components/Form';
+import { Form, Field, FormComponent } from 'views/components/Form';
 import { ModalComponents } from 'views/components/Modal';
 
 import styles from './create-layer-form.module.css';
 
 const Component = ({ actions, onClose }) => {
-  const handleSubmit = (data) => {
+  const handleSubmit = ({ state }) => {
+    console.log(state)
     actions.createLayer({
-      layerName: data.default['layer-name'].value,
-      layerType: data.default['layer-type'].value.value,
+      layerName: state['layer-name'],
+      layerType: state['layer-type'],
       tileSize: {
-        width: data.default['tile-size-width'].value.value,
-        height: data.default['tile-size-height'].value.value
+        width: state['tile-size-width'],
+        height: state['tile-size-height']
       }
     });
 
@@ -26,9 +27,9 @@ const Component = ({ actions, onClose }) => {
   }
 
   return (
-    <Form id="create-layer-form" schema={createLayerFormSchema()} components={[<CreateLayerForm />]} onSubmit={handleSubmit}>
+    <Form uid="create-layer-form" schema={createLayerFormSchema()} onSubmit={handleSubmit}>
       {
-        ({ Component, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ state, provided, submitDisabled }) => {
           return (
             <div>
               <div className={styles.warning}>
@@ -36,7 +37,24 @@ const Component = ({ actions, onClose }) => {
               </div>
 
               <div className={styles.componentWrapper}>
-                { Component }
+                <FormComponent.Row forField="layer-name" {...provided}>
+                  <Field.Text field="layer-name" autoFocus {...provided} />
+                </FormComponent.Row>
+
+                <FormComponent.Row forField="layer-type" {...provided}>
+                  <Field.Select field="layer-type" {...provided} />
+                </FormComponent.Row>
+
+                <FormComponent.Row forField="tile-size-width" disableErrorMessages {...provided}>
+                  <div style={{display: 'flex'}}>
+                    <div style={{flex: 1, marginRight: 10}}>
+                      <Field.Select field="tile-size-width" {...provided} />
+                    </div>
+                    <div style={{flex: 1}}>
+                      <Field.Select field="tile-size-height" {...provided} />
+                    </div>
+                  </div>
+                </FormComponent.Row>
               </div>
 
               <ModalComponents.DefaultFooter
@@ -50,7 +68,7 @@ const Component = ({ actions, onClose }) => {
 
                 buttonRight={
                   () => (
-                    <button type="submit" disabled={disableNextButton} className="blue">
+                    <button type="submit" disabled={submitDisabled} className="blue">
                       Create
                     </button>
                   )
@@ -61,17 +79,6 @@ const Component = ({ actions, onClose }) => {
         }
       }
     </Form>
-  )
-}
-
-const CreateLayerForm = ({ provided, state }) => {
-  return (
-    <>
-      <Field.Text name="layer-name" {...provided} />
-      <Field.Select name="layer-type" {...provided} />
-      <Field.Select name="tile-size-width" {...provided} />
-      <Field.Select name="tile-size-height" {...provided} />
-    </>
   )
 }
 

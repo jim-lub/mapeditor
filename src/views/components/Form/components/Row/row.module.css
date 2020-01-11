@@ -18,17 +18,17 @@
 }
 
 .labelWrapper {
-  flex: 1 1 25%;
+  flex: 1 1 35%;
   min-width: 100px;
   max-width: 250px;
-  padding-right: 20px;
+  padding: 2px 25px 0 0;
   overflow: hidden;
   text-align: right;
   white-space: nowrap;
 }
 
 .childrenWrapper {
-  flex: 5 1 75%;
+  flex: 3 1 65%;
 }
 
 .errorContainer {

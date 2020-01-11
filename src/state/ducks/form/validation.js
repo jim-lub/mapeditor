@@ -3,7 +3,7 @@ import isLengthValidator from 'validator/lib/isLength';
 import equalsValidator from 'validator/lib/equals';
 
 export const required = ({ value, field, ...rest }) => {
-  return isEmptyValidator(value, { ignore_whitespace: true });
+  return isEmptyValidator(value + '', { ignore_whitespace: true });
 }
 export const matches = ({ value, match }) => !equalsValidator(value, match.value) && (match.value, value);
 export const length = ({ value, min = 0, max = undefined }) => !isLengthValidator(value, { min, max });

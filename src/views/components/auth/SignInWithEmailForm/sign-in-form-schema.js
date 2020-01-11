@@ -1,11 +1,13 @@
+import * as fieldTypes from 'lib/constants/fieldTypes';
 import * as validationTypes from 'lib/constants/validationTypes';
 
-export default () => ([
-  {
-    stepName: 'sign-in',
+export default () => ({
+    type: 'form/SINGLE_STEP',
+
     fields: {
       'email': {
-        fieldLabel: 'Email',
+        type: fieldTypes.text,
+        label: 'Email',
         placeholder: 'Email',
         validation: [
           {
@@ -15,7 +17,8 @@ export default () => ([
       },
 
       'password': {
-        fieldLabel: 'Password',
+        type: fieldTypes.password,
+        label: 'Password',
         placeholder: 'Password',
         validation: [
           {
@@ -24,5 +27,4 @@ export default () => ([
         ]
       },
     }
-  }
-]);
+});

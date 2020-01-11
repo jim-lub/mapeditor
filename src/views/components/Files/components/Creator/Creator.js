@@ -50,7 +50,14 @@ const Component = ({ actions }) => {
               </FormComponent.Row>
 
               <FormComponent.Row forField="file-name-width" {...provided}>
-                <Field.Number field="file-name-width" {...provided} />
+                <div style={{display: 'flex'}}>
+                  <div style={{flex: 1, marginRight: 10}}>
+                    <Field.Number field="file-name-width" {...provided} />
+                  </div>
+                  <div style={{flex: 1}}>
+                    <Field.Number field="file-name-height" {...provided} />
+                  </div>
+                </div>
               </FormComponent.Row>
 
               <FormComponent.Row forField="file-name-three" {...provided}>

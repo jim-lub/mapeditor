@@ -1,11 +1,13 @@
+import * as fieldTypes from 'lib/constants/fieldTypes';
 import * as validationTypes from 'lib/constants/validationTypes';
 
-export default () => ([
-  {
-    stepName: 'sign-up',
+export default () => ({
+    type: 'form/SINGLE_STEP',
+
     fields: {
       'email': {
-        fieldLabel: 'Email',
+        type: fieldTypes.password,
+        label: 'Email',
         placeholder: 'Email',
         validation: [
           {
@@ -15,7 +17,8 @@ export default () => ([
       },
 
       'password': {
-        fieldLabel: 'Password',
+        type: fieldTypes.password,
+        label: 'Password',
         placeholder: 'Password',
         validation: [
           {
@@ -25,7 +28,8 @@ export default () => ([
       },
 
       'password-confirm': {
-        fieldLabel: 'Confirm',
+        type: fieldTypes.password,
+        label: 'Confirm',
         placeholder: 'Password',
         validation: [
           {
@@ -33,11 +37,9 @@ export default () => ([
           },
           {
             type: validationTypes.matches,
-            stepName: 'sign-up',
-            fieldName: 'password'
+            matchField: 'password'
           }
         ]
       },
     }
-  }
-]);
+});

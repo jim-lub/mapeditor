@@ -6,45 +6,38 @@ import { signInWithEmail } from 'state/ducks/auth';
 
 import signInFormSchema from './sign-in-form-schema';
 
-import { Button, Form, Field } from 'views/components/Form';
+import { Form, Field, FormComponent } from 'views/components/Form';
 
 const Component = ({ actions }) => {
-  const handleSubmit = (data) => {
-    const { email, password } = data['sign-in'];
-
+  const handleSubmit = ({ state }) => {
     actions.signInWithEmail({
-      email: email.value,
-      password: password.value
+      email: state.email,
+      password: state.password
     });
   }
 
   return (
-    <Form id="sign-in-form" schema={signInFormSchema()} components={[<SignInForm />]} onSubmit={handleSubmit}>
+    <Form uid="sign-in-form" schema={signInFormSchema()} onSubmit={handleSubmit}>
       {
-        ({ Component, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ state, provided, submitDisabled }) => {
           return (
             <div style={{paddingTop: 7}}>
-              { Component }
+              <FormComponent.Row forField="email" {...provided}>
+                <Field.Text field="email" {...provided} />
+              </FormComponent.Row>
 
-              <Button.Next
-                isDisabled={disableNextButton}
-                isLastStep={isLastStep}
-                text={['Sign In', 'Sign In']}
-              />
+              <FormComponent.Row forField="password" {...provided}>
+                <Field.Password field="password" {...provided} />
+              </FormComponent.Row>
+
+              <button type="submit" className="blue" disabled={submitDisabled}>
+                Sign In
+              </button>
             </div>
           )
         }
       }
     </Form>
-  )
-}
-
-const SignInForm = ({ provided, state }) => {
-  return (
-    <>
-      <Field.Text name="email" {...provided} />
-      <Field.Password name="password" {...provided} />
-    </>
   )
 }
 

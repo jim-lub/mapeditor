@@ -11,7 +11,7 @@ import { concatClassNames } from 'lib/utils';
 
 import styles from './row.module.css';
 
-const Component = ({ errors = [], label, meta, forField, children }) => {
+const Component = ({ errors = [], label, meta, forField, disableErrorMessages, children }) => {
   const errorContainerClassNames = concatClassNames([
       styles.errorContainer,
       ((Object.keys(errors).length > 0) && meta.touched) ? null : styles.collapsed
@@ -37,12 +37,15 @@ const Component = ({ errors = [], label, meta, forField, children }) => {
         </div>
       </div>
 
-      <div className={errorContainerClassNames}>
-        <ul>
-          { renderErrors() }
-          <li style={{height: 0}}></li>
-        </ul>
-      </div>
+      {
+        !disableErrorMessages &&
+        <div className={errorContainerClassNames}>
+          <ul>
+            { renderErrors() }
+            <li style={{height: 0}}></li>
+          </ul>
+        </div>
+      }
     </div>
   )
 }

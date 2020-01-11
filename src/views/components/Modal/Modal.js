@@ -32,7 +32,7 @@ export default ({ children, isVisible = false, width = 500, height = 'auto', onC
         <div className={styles.overlay}/>
 
         <div className={styles.modalWrapper}>
-          <div ref={outerElement} className={styles.modal} style={{width, height}}>
+          <div ref={outerElement} className={styles.modal} style={{maxWidth: width, height}}>
             { children }
           </div>
         </div>

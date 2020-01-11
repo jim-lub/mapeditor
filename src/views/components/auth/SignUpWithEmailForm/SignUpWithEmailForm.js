@@ -6,46 +6,42 @@ import { signUpWithEmail } from 'state/ducks/auth';
 
 import signUpFormSchema from './sign-up-form-schema';
 
-import { Button, Form, Field } from 'views/components/Form';
+import { Form, Field, FormComponent } from 'views/components/Form';
 
 const Component = ({ actions }) => {
-  const handleSubmit = (data) => {
-    const { email, password } = data['sign-up'];
-
+  const handleSubmit = ({ state }) => {
     actions.signUpWithEmail({
-      email: email.value,
-      password: password.value
+      email: state.email,
+      password: state.password
     })
   }
 
   return (
-    <Form id="sign-up-form" schema={signUpFormSchema()} components={[<SignUpForm />]} onSubmit={handleSubmit}>
+    <Form uid="sign-up-form" schema={signUpFormSchema()} onSubmit={handleSubmit}>
       {
-        ({ Component, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ state, provided, submitDisabled }) => {
           return (
             <div style={{paddingTop: 7}}>
-              { Component }
+              <FormComponent.Row forField="email" {...provided}>
+                <Field.Text field="email" {...provided} />
+              </FormComponent.Row>
 
-              <Button.Next
-                isDisabled={disableNextButton}
-                isLastStep={isLastStep}
-                text={['Sign Up', 'Sign Up']}
-              />
+              <FormComponent.Row forField="password" {...provided}>
+                <Field.Password field="password" {...provided} />
+              </FormComponent.Row>
+
+              <FormComponent.Row forField="password-confirm" {...provided}>
+                <Field.Password field="password-confirm" {...provided} />
+              </FormComponent.Row>
+
+              <button type="submit" className="blue" disabled={submitDisabled}>
+                Sign Up
+              </button>
             </div>
           )
         }
       }
     </Form>
-  )
-}
-
-const SignUpForm = ({ provided, state }) => {
-  return (
-    <>
-      <Field.Text name="email" {...provided} />
-      <Field.Password name="password" {...provided} />
-      <Field.Password name="password-confirm" {...provided} />
-    </>
   )
 }
 

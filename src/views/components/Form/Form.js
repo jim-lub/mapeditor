@@ -57,13 +57,15 @@ const Component = ({
 
   return (
     <form id={uid} onSubmit={handleFormSubmit}>
-      <span style={{fontWeight: 'bold', color: 'blue'}}>
-        { meta.touched ? ' touched ' : ' untouched ' }
-        -
-        { meta.pristine ? ' pristine ' : ' dirty ' }
-        -
-        { meta.valid ? ' valid ' : ' invalid ' }
-      </span>
+      {/*
+        <span style={{fontWeight: 'bold', color: 'blue'}}>
+          { meta.touched ? ' touched ' : ' untouched ' }
+          -
+          { meta.pristine ? ' pristine ' : ' dirty ' }
+          -
+          { meta.valid ? ' valid ' : ' invalid ' }
+        </span>
+      */}
 
       {
         children({

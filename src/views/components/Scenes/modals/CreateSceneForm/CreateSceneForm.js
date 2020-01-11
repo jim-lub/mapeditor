@@ -6,19 +6,19 @@ import { createScene } from 'state/ducks/scenes';
 
 import createSceneFormSchema from './create-scene-form-schema';
 
-import { Form, Field, ProgressBar2 } from 'views/components/Form';
+import { Form, Field, FormComponent } from 'views/components/Form';
 import { ModalComponents } from 'views/components/Modal';
 
 import styles from './create-scene-form.module.css';
 
 const Component = ({ requestStatus, actions, onClose }) => {
-  const handleSubmit = (data) => {
+  const handleSubmit = ({ state }) => {
     actions.createScene({
-      name: data.defaults['scene-name'].value,
-      description: data.defaults['scene-description'].value,
-      segmentSize: data.presets['segment-size'].value.value,
-      columns: data.presets['columns'].value,
-      rows: data.presets['rows'].value
+      name: state['scene-name'],
+      description: state['scene-description'],
+      segmentSize: state['segment-size'],
+      columns: state['columns'],
+      rows: state['rows']
     });
 
     onClose();
@@ -26,34 +26,54 @@ const Component = ({ requestStatus, actions, onClose }) => {
 
   return (
     <Form
-      id="create-scene-form"
+      uid="create-scene-form"
       schema={createSceneFormSchema()}
-      components={[<Defaults />, <Presets />]}
       onSubmit={handleSubmit}
     >
       {
-        ({ Component, back, currentStep, totalSteps, isFirstStep, isLastStep, disableBackButton, disableNextButton }) => {
+        ({ state, provided, submitDisabled }) => {
           return (
             <div>
               <div className={styles.componentWrapper}>
-                { Component }
-              </div>
 
-              <ProgressBar2 currentStep={currentStep} totalSteps={totalSteps} />
+                <FormComponent.Row forField="scene-name" {...provided}>
+                  <Field.Text field="scene-name" autoFocus {...provided} />
+                </FormComponent.Row>
+
+                <FormComponent.Row forField="scene-description" {...provided}>
+                  <Field.TextArea field="scene-description" {...provided} />
+                </FormComponent.Row>
+
+                <FormComponent.Row forField="segment-size" {...provided}>
+                  <Field.Select field="segment-size" {...provided} />
+                </FormComponent.Row>
+
+                <FormComponent.Row forField="columns" disableErrorMessages {...provided}>
+                  <div style={{display: 'flex'}}>
+                    <div style={{flex: 1, marginRight: 10}}>
+                      <Field.Number field="columns" {...provided} />
+                    </div>
+                    <div style={{flex: 1}}>
+                      <Field.Number field="rows" {...provided} />
+                    </div>
+                  </div>
+                </FormComponent.Row>
+
+              </div>
 
               <ModalComponents.DefaultFooter
                 buttonLeft={
                   () => (
-                    <button type="button" onClick={(isFirstStep) ? onClose : back}>
-                      { (isFirstStep) ? 'Cancel' : 'Back' }
+                    <button type="button" onClick={onClose}>
+                      Cancel
                     </button>
                   )
                 }
 
                 buttonRight={
                   () => (
-                    <button type="submit" disabled={disableNextButton} className="blue">
-                      { (isLastStep) ? 'Create' : 'Next' }
+                    <button type="submit" disabled={submitDisabled} className="blue">
+                      Create
                     </button>
                   )
                 }

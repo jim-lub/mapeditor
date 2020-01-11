@@ -51,6 +51,26 @@ export default () => ({
       ]
     },
 
+    'file-name-height': {
+      type: fieldTypes.number,
+      label: 'Size (w, h)',
+      placeholder: '1-5000',
+      validation: [
+        {
+          type: validationTypes.required,
+          message: 'Field is required'
+        },
+        {
+          type: validationTypes.minValue,
+          minValue: 1
+        },
+        {
+          type: validationTypes.maxValue,
+          maxValue: 5000
+        }
+      ]
+    },
+
     'file-name-three': {
       type: fieldTypes.text,
       label: 'File name 3',
